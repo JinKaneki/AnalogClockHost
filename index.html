@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineer Johan_nlb - Portfolio</title>
+    <style>
+        /* Upgraded Color Palettes */
+        :root {
+            --bg-color: #121214;
+            --text-color: #ececec;
+            --clock-bg: #1a1a1d;
+            --clock-border: #242428;
+            --hand-color: #ffffff;
+            --accent-color: #00f0ff; /* Electric Cyber-Cyan */
+            --shadow-outer: 10px 10px 30px rgba(0, 0, 0, 0.6), -10px -10px 30px rgba(255, 255, 255, 0.02);
+            --shadow-inner: inset 5px 5px 15px rgba(0, 0, 0, 0.5), inset -5px -5px 15px rgba(255, 255, 255, 0.03);
+        }
+
+        /* Light mode palette overrides */
+        body.light-mode {
+            --bg-color: #e6e7ee;
+            --text-color: #31344b;
+            --clock-bg: #e6e7ee;
+            --clock-border: #d1d9e6;
+            --hand-color: #31344b;
+            --accent-color: #005bb5; /* Deep Professional Blue */
+            --shadow-outer: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;
+            --shadow-inner: inset 5px 5px 10px #d1d9e6, inset -5px -5px 10px #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s ease;
+        }
+
+        /* Top Toggle Button */
+        #theme-toggle {
+            position: absolute;
+            top: 30px;
+            background-color: var(--clock-bg);
+            color: var(--text-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: var(--shadow-outer);
+            transition: all 0.3s ease;
+        }
+
+        #theme-toggle:active {
+            box-shadow: var(--shadow-inner);
+        }
+
+        /* Premium Clock Face */
+        .clock {
+            width: 320px;
+            height: 320px;
+            background-color: var(--clock-bg);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: var(--shadow-outer);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.5s ease;
+            margin-bottom: 40px;
+            margin-top: 60px;
+        }
+
+        /* Inner Ring */
+        .clock::before {
+            content: '';
+            position: absolute;
+            width: 290px;
+            height: 290px;
+            border-radius: 50%;
+            box-shadow: var(--shadow-inner);
+        }
+
+        /* Clock Numbers */
+        .number {
+            position: absolute;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        .num-12 { top: 25px; }
+        .num-3 { right: 25px; }
+        .num-6 { bottom: 25px; }
+        .num-9 { left: 25px; }
+
+        /* Clock Hands */
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom;
+            background-color: var(--hand-color);
+            border-radius: 10px;
+            transform: translateX(-50%) rotate(0deg); 
+            transition: background-color 0.5s ease;
+        }
+
+        .hour { width: 6px; height: 85px; z-index: 1; border-radius: 6px 6px 0 0; }
+        .minute { width: 4px; height: 115px; z-index: 2; border-radius: 4px 4px 0 0; }
+        
+        .second { 
+            width: 2px; 
+            height: 135px; 
+            background-color: var(--accent-color); 
+            z-index: 3; 
+            box-shadow: 0 0 10px var(--accent-color); /* Glowing effect */
+        }
+
+        /* Center Pin */
+        .center-dot {
+            width: 16px;
+            height: 16px;
+            background-color: var(--bg-color);
+            border: 3px solid var(--accent-color);
+            border-radius: 50%;
+            position: absolute;
+            z-index: 4;
+            box-shadow: 0 0 10px var(--accent-color);
+        }
+
+        /* Typography */
+        .name-plate {
+            font-size: 1.5rem;
+            letter-spacing: 4px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .name-accent {
+            color: #FFA500;
+        }
+
+        /* Image Block */
+        .image-block {
+            width: 360px;/*180px*/
+            height: 220px;/*180px*/
+            border-radius: 16px; /* Slightly rounded corners look better than sharp squares */
+            overflow: hidden;
+            box-shadow: var(--shadow-outer);
+            margin-bottom: 40px;
+            transition: all 0.5s ease;
+        }
+
+        .image-block img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the image fills the square without stretching */
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="theme-toggle">☀️ Light Mode</button>
+
+    <div class="clock">
+        <div class="number num-12">12</div>
+        <div class="number num-3">3</div>
+        <div class="number num-6">6</div>
+        <div class="number num-9">9</div>
+
+        <div class="hand hour" id="hour"></div>
+        <div class="hand minute" id="minute"></div>
+        <div class="hand second" id="second"></div>
+        <div class="center-dot"></div>
+    </div>
+
+    <div class="name-plate">Engineered by <span class="name-accent">Johan nlb</span>  <p> aka JIN KANEKI <br>
+        JOHN COHEN <br>
+        :) </p>
+    </div>
+    <div>
+        <p>
+           All things serve the beam!
+        </p>
+    </div>
+
+    <div class="image-block">
+        <img id="profile-img" src="images/IMG_BLUE.jpg" alt="Profile Image">
+    </div>
+
+    <script>
+        const hourHand = document.getElementById('hour');
+        const minuteHand = document.getElementById('minute');
+        const secondHand = document.getElementById('second');
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            themeToggle.innerText = body.classList.contains('light-mode') ? '🌙 Dark Mode' : '☀️ Light Mode';
+        });
+
+        function updateClock() {
+            const currentDate = new Date();
+            const secondsRatio = currentDate.getSeconds() / 60;
+            const minutesRatio = (secondsRatio + currentDate.getMinutes()) / 60;
+            const hoursRatio = (minutesRatio + currentDate.getHours()) / 12;
+
+            secondHand.style.transform = `translateX(-50%) rotate(${secondsRatio * 360}deg)`;
+            minuteHand.style.transform = `translateX(-50%) rotate(${minutesRatio * 360}deg)`;
+            hourHand.style.transform = `translateX(-50%) rotate(${hoursRatio * 360}deg)`;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
