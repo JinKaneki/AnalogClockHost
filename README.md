@@ -136,7 +136,7 @@ I set the following CSS custom properties to achieve the **rainbow line effect**
 ├── sw.js                          # Service worker (offline cache)  
 ├── sitemap.xml                    # SEO sitemap  
 ├── images/                        # Slideshow & background images  
-│   └── independentBGImages/       # Optimized mobile background images  
+│   └── independentBG/             # Optimized mobile background images  
 ├── sounds/                        # Audio files (siren, etc.)  
 ├── TTC/                           # Local data  
 │   └── Tao_te_ching.json          # Tao Te Ching chapters  
@@ -172,7 +172,7 @@ The built‑in command runner—a full‑featured terminal emulator with over 50
 `cipher`
 
 **🕵️ Cyber Ops**   
-`kali` `hashcat` `wifite` `flipper` `nmap` `airmon` `raspberry` `gpio`
+`kali` `hashcat` `wifite` `flipper` `nmap` `airmon` `raspberry` `gpio` `portal` `grabimg` `remoteview` `fetchpage`
 
 **🧘 Wisdom & Spirituality**  
 `tao` `wisdom` `sutra` `buddha` `koan` `stoic` `bible` `verse`
@@ -282,6 +282,7 @@ The built‑in command runner—a full‑featured terminal emulator with over 50
 | `iptv us`             | Browse USA channels (any ISO country code). |
 | `iptv cat`            | Browse by category (see full list). |
 | `play iptv <url>`     | Play a stream directly in the terminal. |
+| `ipset`               | Personal curated list (Curiosity Now, MovieSphere, True History, Bon Appétit, France 24 English/Français, BFM TV, 20 Minutes TV, Africa 24 English).|
 | `cowsay [text]`       | An ASCII cow speaks your message |
 | `ascii [1‑7]`         | Display specific cyber‑mystical ASCII art (random if no number) |
 | `hack`                | Simulate a fake hacking sequence (animated) |
@@ -348,6 +349,7 @@ The terminal supports YouTube video embedding, direct audio playback, live radio
 |---------------|-----------------------------|
 | `nasa`        | NASA Live (HD)              |
 | `iss-earth`   | Earth from Space (ISS)      |
+| `science `    | Science Channel             |
 | `lofi`        | Lofi Girl (beats to relax)  |
 | `gumball`     | Amazing World of Gumball    |
 | `topgear`     | Classic Top Gear moments    |
@@ -376,9 +378,25 @@ add -loop at the end to play in a continuous loop. e.g: `play audio ascension -l
 - **`iptv cat animation`** – Browse by category (see full list with `iptv cat`).
 - **`play iptv <url>`** – Play a stream directly in the terminal.
 - **`stop`** – Stops all IPTV streams, audio, and YouTube players.
+- **`ipset`** - to see a curated channel list.
 - Uses the [iptv-org](https://github.com/iptv-org/iptv) public database of free, legal streams.
 
 **Available categories:** animation, auto, business, classic, comedy, cooking, culture, documentary, education, entertainment, family, general, kids, legislative, lifestyle, movies, music, news, outdoor, public, relax, religious, science, series, shop, sports, travel, weather.
+
+## 🔍 Intelligence Gathering Commands
+
+- **`remoteview <url>`** – Extracts and displays all visible text from any webpage.
+- **`portal [--mobile] <url|shortcut>`** – Embeds a live website. Shortcuts: `elitegdx`, `famelack`, `radiogarden`, `f1`.
+- **`fetchpage <url>`** – Shows metadata (title, description, OG tags, Twitter card, etc.).
+- **`grabimg <url>`** – Downloads and displays all images from a page as thumbnails.
+
+**Example usage**
+- remoteview https://en.wikipedia.org/wiki/Cyberpunk  
+- portal elitegdx   OR   portal --mobile famelack
+- fetchpage https://github.com/JinKaneki/EliteGDX  
+- grabimg https://jinkaneki.github.io/EliteGDX/   
+
+**it is now a remote viewing and an intelligence gathering console. Enjoy!**  
 
 ### 🗺️ NetOrbit – Global Packet Map
 
@@ -487,7 +505,9 @@ The "Elite Update" focuses on UI symmetry, stealth interactions, and advanced st
 | 2026‑04‑10 | Added Hide Controls button (top‑left) |
 | 2026‑04‑10 | Improved sticky footer and removed double scrollbars |
 | 2026‑04‑09 | Added responsive Cistercian clock sizes |
-| 2026‑04‑08 | Integrated rainbow colours for Cistercian numerals |
+| 2026‑04‑08 | Integrated rainbow colours for Cistercian numerals | 
+| 2026‑05‑23 | **Remote Viewing Commands** – `remoteview` (full text extraction), `grabimg` (image thumbnails), `fetchpage` (rich metadata), `portal` (interactive iframe embed) – inspired by cyberpunk OSINT fiction and CIA's Project stargate, use `api.allorigins.win` to bypass cross‑origin restrictions |
+| 2026‑05‑15 | **IPTV Enhancements** – Added ability to stream IPTV channels .|
 
 ## 📜 Version 4.0 Change Log(CyberOps) (May 2026)
 
@@ -513,8 +533,8 @@ The "Akashic Update" transforms the dashboard into a comprehensive information r
 | **UI & Mobile Polish** | Compressed terminal output for small screens, fixed ASCII wrapping, login splash responsive font, fullscreen support, `cipher` reference manual. | Automatic |
 
 ---
+- *Version 4.0 makes J_OS a fast persistent information retrieval and intelligence gathering tool, a personal cipher lab, and an ambient workspace companion, all accessible from a single CLI.* 
 
-- *Version 4.0 makes J_OS a fast persistent information retrieval tool, a personal cipher lab, and an ambient workspace companion, all accessible from a single CLI.*
 ---
 
 ### 📱 PWA & Offline Support

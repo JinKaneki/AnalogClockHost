@@ -1761,12 +1761,21 @@
         function playIPTVInTerminal(url, channelName) {
             const containerId = 'iptv-player-' + Date.now();
             const safeName = channelName.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-            const title = channelName
-                ? `<div style="color:var(--accent-color); padding:6px 12px; font-family:monospace; font-size:0.85rem; background:rgba(0,0,0,0.7);">📺 ${channelName}</div>`
+
+             // Build title with a copy button inline
+            const titleHtml = channelName
+                ? `<div style="color:var(--accent-color); padding:6px 12px; font-family:monospace; font-size:0.85rem; background:rgba(0,0,0,0.7); display:flex; justify-content:space-between; align-items:center;">
+                    <span>📺 ${channelName}</span>
+                    <span onclick="navigator.clipboard.writeText('${url}')" 
+                            style="cursor:pointer; font-size:1rem; opacity:0.7; transition:0.2s;"
+                            onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'"
+                            title="Copy stream URL">📋</span>
+                </div>`
                 : '';
+                
             const html = `
             <div id="${containerId}-wrapper" class="iptv-player-wrapper" style="margin:12px 0; border:1px solid var(--accent-color); border-radius:8px; overflow:hidden; background:#000;">
-                ${title}
+                ${titleHtml}
                 <video id="${containerId}" class="iptv-video" controls autoplay width="100%" style="min-height:200px; display:block; background:#000;"></video>
             </div>`;
             
@@ -1783,6 +1792,10 @@
                             <button onclick="playIPTVInTerminal('${url}','${safeName}')" 
                                     style="background:#333; color:#fff; border:1px solid #f00; cursor:pointer;">
                                 RETRY
+                            </button>
+                            <button onclick="navigator.clipboard.writeText('${url}')" 
+                                    style="background:#333; color:#fff; border:1px solid #0f0; cursor:pointer; margin-left:10px;">
+                                📋 COPY URL
                             </button>
                         </div>`;
                 }
@@ -1803,13 +1816,16 @@
                 clearTimeout(timeout);
             }, { once: true });
 
-            video.addEventListener('error', () => {
+           video.addEventListener('error', () => {
                 clearTimeout(timeout);
                 showError();
             });
 
-            // HLS.js for Chrome/Firefox/Edge
-            if (typeof Hls !== 'undefined' && Hls.isSupported()) {
+            // ---- FALLBACK FOR NON-HLS STREAMS ----
+            const isHlsStream = url.includes('.m3u8') || url.includes('.m3u');
+
+            if (isHlsStream && typeof Hls !== 'undefined' && Hls.isSupported()) {
+                // HLS.js for Chrome/Firefox/Edge
                 const hls = new Hls({ maxLoadingDelay: 4 });
                 hls.loadSource(url);
                 hls.attachMedia(video);
@@ -1824,11 +1840,23 @@
                 // Safari native HLS
                 video.src = url;
             } else {
-                clearTimeout(timeout);
-                showError('Your browser does not support HLS streams.');
+                // Native fallback for MP4, TS, etc.
+                video.src = url;
+                // If it fails to load, show error after timeout
+                const nativeTimeout = setTimeout(() => {
+                    if (!hasStartedPlaying && (video.paused || video.readyState < 2)) {
+                        showError('Cannot play this stream format.');
+                    }
+                }, 10000);
+                video.addEventListener('playing', () => {
+                    hasStartedPlaying = true;
+                    clearTimeout(nativeTimeout);
+                    clearTimeout(timeout);
+                }, { once: true });
             }
         }
 
+        window.playIPTVInTerminal = playIPTVInTerminal;
 
         // Curated Akashic frequencies – all HTTPS, no proxy needed
         const stations = {
@@ -2034,6 +2062,7 @@
                 kali [hash|scan|crack|inject|genkey|dragon|arch],  nmap [target], hashcat,<br>
                 flipper [subghz|nfc|badusb|off],<br>
                 raspberry, gpio [status|on|off] [pin]<br>
+                portal, remoteview, grabimg, fetchpage<br>
                 <br>
                 <strong style="color: var(--accent-color);">🧘 WISDOM & SPIRITUALITY</strong><br>
                 tao, wisdom, sutra, buddha, koan, stoic, bible, verse<br>
@@ -4748,6 +4777,7 @@
                     // NASA / Space (embeddable)
                     'nasa':       { name: 'NASA TV', type: 'youtube', url: '21X5lGlDOfg' },  // new working ID
                     'iss-earth':  { name: 'Earth from Space (ISS)', type: 'youtube', url: 'vytmBNhc9ig' },
+                    'science':    { name: 'Science Channel', type: 'youtube', url: 'g0JewZCbRPA' },
 
                     // Entertainment (embeddable)
                     'lofi':       { name: 'Lofi Girl', type: 'youtube', url: 'jfKfPfyJRdk' },
@@ -4883,43 +4913,249 @@
                 }
             },
             'ipset': (args) => {
-                const lang = args[0]?.toLowerCase() || 'en';
+                // personal curated list (HD where possible)
+                const channels = [
+                    { name: '🌟 Curiosity Now', url: 'https://amg00170-curiositystream-amg00170c3-rakuten-us-2289.playouts.now.amagi.tv/ts-us-e2-n2/playlist/amg00170-curiositystreamllcfast-curiositynowrow-rakutenus/cb543d167e6c648e9dd43a60cef046a1f9591fde1d6988693eb5518975d1073edce2a59caa08ff16388f1ede7f0a66413a3e951fda77118fd87eb141453c5728cfffe729a2c05616b7db083429b56a062a866a68ac39437ed0e21f48a238b6720a5aa82a66443d80b846ac725adb80148b61299bce8c37683f03409a5e5afba358b1ebe70847d16da7e74f55902c4de09f43c8821da689d30ec85ed027f8469b93f88c811380d0f30a937f8a91869f430df8fa1bbde51fddf49f7d31996324471051f5d1e2942c19b3378fd8659db1d940ea01c19920fb007ddb52de2780412ff5781235b16480d4d7bd09a64f5db77b2b5785f0b285eb307c9c6be8b6eccf777d94ccd9192dc640d73822349cfc8441ca9355de812a8bb0660a2b80bf71dbcce2cdbfebcd7d952b9c93afd825141a2a4423964dae9f5ade2bf671bc8146720b0317fbda1defaeed731c2e0f8a8955d1533cbcd8808c964e18c2721457ed2f880f5d229c7a3c32b56dca9b3a6d9b2f45d0666ab50b63f23796d21bfca9dfea1128f58f97309841dbf55b82b852d32e563f25bcfd2b5340360df3e674023d7c8308a4e4c3ef730617ffb5aadac54033133607586edfb007112c2311997bbe9d36ab3266eefc2b741517b97e9252/42/1280x720_3329040/index.m3u8' },
+                    { name: '🎬 MovieSphere', url: 'https://moviesphereuk-samsunguk.amagi.tv/720p-vtt/index.m3u8' },
+                    { name: '📜 True History', url: 'https://linear-188.frequency.stream/dist/glewedtv/188/hls/master/playlist_1280x720.m3u8' },
+                    { name: '🍽️ Bon Appétit', url: 'https://bonappetit-samsung.amagi.tv/720p-vtt/index.m3u8' },
+                    { name: '📰 France 24 English', url: 'https://live.france24.com/hls/live/2037218/F24_EN_HI_HLS/master_900.m3u8' },
+                    { name: '📰 France 24 Français', url: 'https://live.france24.com/hls/live/2037179/F24_FR_HI_HLS/master_5000.m3u8' },
+                    { name: '📰 BFM TV', url: 'https://live-cdn-stream-euw1.bfmtv.bct.nextradiotv.com/master.m3u8' },
+                    { name: '📺 20 Minutes TV', url: 'https://live-20minutestv.digiteka.com/1961167769/index.m3u8' },
+                    { name: '🌍 Africa 24 English', url: 'https://edge20.vedge.infomaniak.com/livecast/ik:africa24english/manifest.m3u8' }
+                ];
 
-                const presets = {
-                    en: [
-                        { name: '📰 Bloomberg TV Europe',        url: 'https://bloomberg.com/media-manifest/streams/eu.m3u8' },
-                        { name: '📰 Euronews English',           url: 'https://euronews.alteox.app/hls/en_stream.m3u8' },
-                        { name: '📰 Alhurra (US)',               url: 'https://mbn-ingest-worldsafe.akamaized.net/hls/live/2038900/MBN_Alhurra_Worldsafe_HLS/master.m3u8' },
-                        { name: '📰 CGTN Europe',                url: 'https://raw.githubusercontent.com/Sibprod/streams/main/ressources/dm/py/hls/cgtneurope.m3u8' },
-                        { name: '📰 France 24 English',          url: 'https://a-cdn.klowdtv.com/live2/france24_720p/playlist.m3u8' },
-                        { name: '🌍 Africa 24 English',          url: 'https://edge20.vedge.infomaniak.com/livecast/ik:africa24english/manifest.m3u8' },
-                        { name: '🎬 AKC TV Puppies 24/7',        url: 'https://install.akctvcontrol.com/speed/broadcast/140/desktop-playlist.m3u8' },
-                    ],
-                    fr: [
-                        { name: '📰 TV5Monde Info',              url: 'https://ott.tv5monde.com/Content/HLS/Live/channel(info)/index.m3u8' },
-                        { name: '📰 France 24 (Français)',        url: 'https://a-cdn.klowdtv.com/live2/france24_720p/playlist.m3u8' },
-                        { name: '📰 Euronews French',            url: 'https://2f6c5bf4.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmxheHhUVi1ldV9FdXJvbmV3c0ZyYW5jYWlzX0hMUw/playlist.m3u8' },
-                        { name: '📰 BFM TV',                    url: 'https://live-cdn-stream-euw1.bfmtv.bct.nextradiotv.com/master.m3u8' },
-                        { name: '🌍 Africa 24',                  url: 'https://africa24.vedge.infomaniak.com/livecast/ik:africa24/manifest.m3u8' },
-                        { name: '📺 20 Minutes TV',              url: 'https://live-20minutestv.digiteka.com/1961167769/index.m3u8' },
-                        { name: '📰 CNews',                      url: 'https://raw.githubusercontent.com/Sibprod/streams/main/ressources/dm/py/hls/cnews.m3u8' },
-                    ]
-                };
-
-                const list = presets[lang];
-                if (!list) return '⚠️ Usage: iptv-preset [en|fr]';
-
-                let html = `<b style="color:#0f0;">📺 IPTV Preset – ${lang.toUpperCase()}</b><br><br>`;
-                list.forEach((ch, i) => {
-                    const safeName = ch.name.replace(/'/g, "\\'");  // escape single quotes
-                    // Clickable channel name ,plays in terminal with title
+                let html = `<b style="color:#0f0;">📺 MY PERSONAL IPTV CHANNELS</b><br><br>`;
+                channels.forEach((ch, i) => {
+                    const safeName = ch.name.replace(/'/g, "\\'");
                     html += `<span style="color:#fff;">[${i+1}]</span> <span style="color:#0ff; cursor:pointer; text-decoration:underline;" onclick="playIPTVInTerminal('${ch.url}','${safeName}')">${ch.name}</span>`;
-                    // Also a small copy link for external use
                     html += ` <span style="color:#888;font-size:10px;cursor:pointer;" onclick="navigator.clipboard.writeText('${ch.url}')">📋</span><br>`;
                 });
                 
-                html += `<br><span style="color:#888;">Click a channel name to watch in the terminal. 📋 copies the stream URL.</span>`;
+                html += `<br><span style="color:#888;">Click a channel name to watch. 📋 copies the stream URL.</span>`;
                 return html;
+            },
+            'remoteview': async (args) => {
+                let url = args[0];
+                if (!url) return 'Usage: remoteview [url]\nExample: remoteview https://example.com';
+                if (!url.startsWith('http')) url = 'https://' + url;
+                
+                appendCommandOutput(`📡 Remote viewing ${url}...`);
+                
+                try {
+                    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+                    const response = await fetch(proxyUrl);
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    const html = await response.text();
+                    
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    // Remove all scripts, styles, SVGs
+                    doc.querySelectorAll('script, style, noscript, svg, head').forEach(el => el.remove());
+                    
+                    const bodyText = doc.body ? doc.body.innerText : '';
+                    const cleanText = bodyText.replace(/\s+/g, ' ').trim();
+                    
+                    if (!cleanText) return '⚠️ No readable text found.';
+                    
+                    // Scrollable box for long content
+                    return `
+                    <div style="border-left: 3px solid #0f0; padding-left: 10px; margin: 10px 0;">
+                        <b style="color: #0f0;">🔍 REMOTE VIEW: ${url}</b><br>
+                        <div style="max-height: 400px; overflow-y: auto; background: #0a0a0a; padding: 8px; border-radius: 6px;">
+                            <span style="color: #ccc; font-size: 0.9rem; line-height: 1.4;">${cleanText}</span>
+                        </div>
+                        <span style="color: #888;">(Full page text – scroll inside the box if needed)</span>
+                    </div>`;
+                } catch (err) {
+                    return `⚠️ Remote viewing failed: ${err.message}`;
+                }
+            },
+            'portal': (args) => {
+                let arg = args[0];
+                let isMobile = false;
+                let url = null;
+                
+                // Check for --mobile flag
+                if (arg === '--mobile') {
+                    isMobile = true;
+                    arg = args[1];
+                }
+                
+                // Shortcuts
+                const shortcuts = {
+                    'elitegdx': 'https://jinkaneki.github.io/EliteGDX/',
+                    'famelack': 'https://famelack.com/',
+                    'radiogarden': 'https://radio.garden/',
+                    'f1': 'https://f1live.dpdns.org/'
+                };
+                
+                if (shortcuts[arg]) {
+                    url = shortcuts[arg];
+                } else {
+                    url = arg;
+                }
+                
+                if (!url) return 'Usage: portal [--mobile] [url] or [shortcut]\n--mobile : Force mobile viewport (375px width),\nShortcuts: elitegdx, famelack, radiogarden, f1';
+                if (!url.startsWith('http')) url = 'https://' + url;
+            
+                
+                const frameWidth = isMobile ? '375px' : '100%';
+                const frameHeight = isMobile ? '667px' : '50vh';   //50% of viewpoort height
+                const portalId = 'portal-' + Date.now();
+                
+                return `
+                <div style="margin: 10px 0; border: 1px solid var(--accent-color); border-radius: 8px; overflow: hidden; background: #000;">
+                    <div style="background: #222; padding: 6px 12px; color: #0f0; display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-family: monospace; font-size: 0.9rem;">🌐 PORTAL: ${url}</span>
+                        <a href="${url}" target="_blank" rel="noopener noreferrer" style="color: #ffaa00; text-decoration: none; font-size: 12px; font-weight: bold;">[ESCAPE]</a>
+                    </div>
+                    <div style="display: flex; justify-content: center; background: #111; padding: 5px;">
+                        <iframe id="${portalId}" src="${url}" 
+                            style="width: ${frameWidth}; height: ${frameHeight}; border: none; background: #fff; max-width: 100%;" 
+                            sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation allow-modals"
+                            allow="fullscreen">
+                        </iframe>
+                    </div>
+                    <div style="background: #111; padding: 6px; text-align: center; color: #888; font-size: 10px;">
+                        If blank, site blocks iframes → use ESCAPE.
+                    </div>
+                </div>`;
+            },
+            'fetchpage': async (args) => {
+                let url = args[0];
+                if (!url) return 'Usage: fetchpage [url]\nFetches and displays all available metadata.';
+                if (!url.startsWith('http')) url = 'https://' + url;
+                
+                const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+                appendCommandOutput(`📡 Fetching metadata from ${url}...`);
+                
+                try {
+                    const response = await fetch(proxyUrl);
+                    const html = await response.text();
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    
+                    // Helper to get meta content by name or property
+                    const getMeta = (name, attr = 'name') => {
+                        const selector = `meta[${attr}="${name}"]`;
+                        return doc.querySelector(selector)?.getAttribute('content') || null;
+                    };
+                    
+                    // Basic
+                    const title = doc.querySelector('title')?.innerText || 'No title';
+                    const description = getMeta('description') || getMeta('og:description', 'property') || 'No description';
+                    const keywords = getMeta('keywords') || 'None';
+                    
+                    // Open Graph
+                    const ogTitle = getMeta('og:title', 'property') || '';
+                    const ogImage = getMeta('og:image', 'property') || '';
+                    const ogSite = getMeta('og:site_name', 'property') || '';
+                    
+                    // Twitter
+                    const twitterCard = getMeta('twitter:card') || '';
+                    const twitterSite = getMeta('twitter:site') || '';
+                    
+                    // Other useful
+                    const author = getMeta('author') || '';
+                    const viewport = getMeta('viewport') || '';
+                    const canonical = doc.querySelector('link[rel="canonical"]')?.getAttribute('href') || url;
+                    const lang = doc.documentElement.lang || 'unknown';
+                    
+                    // Build output
+                    let output = `
+                    <div style="border-left: 3px solid #ffaa00; padding-left: 10px; margin: 10px 0;">
+                        <b style="color: #ffaa00;">📄 PAGE METADATA: ${url}</b><br>
+                        <b>🌐 Title:</b> ${title}<br>
+                        <b>📝 Description:</b> ${description}<br>
+                        <b>🏷️ Keywords:</b> ${keywords}<br>
+                        <b>✍️ Author:</b> ${author || 'Not specified'}<br>
+                        <b>🔗 Canonical:</b> <a href="${canonical}" target="_blank">${canonical}</a><br>
+                        <b>🌍 Language:</b> ${lang}<br>`;
+                    
+                    if (ogTitle) output += `<b>📱 Open Graph Title:</b> ${ogTitle}<br>`;
+                    if (ogSite) output += `<b>🏢 Site Name:</b> ${ogSite}<br>`;
+                    if (ogImage) output += `<b>🖼️ OG Image:</b> <a href="${ogImage}" target="_blank">${ogImage.substring(0, 60)}...</a><br>`;
+                    if (twitterCard) output += `<b>🐦 Twitter Card:</b> ${twitterCard} ${twitterSite ? '(' + twitterSite + ')' : ''}<br>`;
+                    if (viewport) output += `<b>📱 Viewport:</b> ${viewport}<br>`;
+                    
+                    output += `</div>`;
+                    return output;
+                    
+                } catch (err) {
+                    return `⚠️ Fetch failed: ${err.message}`;
+                }
+            },
+            'grabimg': async (args) => {
+                let url = args[0];
+                if (!url) return 'Usage: grabimg [url]\nExtracts all image URLs from a webpage.\nExample: grabimg https://example.com';
+                if (!url.startsWith('http')) url = 'https://' + url;
+                
+                appendCommandOutput(`📸 Scanning for images on ${url}...`);
+                
+                try {
+                    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+                    const response = await fetch(proxyUrl);
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    const html = await response.text();
+                    
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    
+                    const resolveUrl = (imgSrc) => {
+                        if (!imgSrc) return null;
+                        if (imgSrc.startsWith('data:image')) return imgSrc;
+                        try {
+                            return new URL(imgSrc, url).href;
+                        } catch {
+                            return null;
+                        }
+                    };
+                    
+                    const imgSet = new Set();
+                    doc.querySelectorAll('img').forEach(img => {
+                        const src = img.getAttribute('src') || img.getAttribute('data-src');
+                        const resolved = resolveUrl(src);
+                        if (resolved) imgSet.add(resolved);
+                    });
+                    
+                    const images = Array.from(imgSet);
+                    if (images.length === 0) return '⚠️ No images found.';
+                    
+                    const displayLimit = 100;
+                    const displayImages = images.slice(0, displayLimit);
+                    const hiddenCount = images.length - displayLimit;
+                    
+                    // Simple flexbox layout – automatically wraps
+                    let output = `
+                    <div style="margin: 10px 0; text-align: left; width: 100%;">
+                        <b style="color:#0f0;">🖼️ GRABIMG: ${url}</b><br>
+                        <span style="color:#ccc;">${images.length} unique images found.</span><br><br>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-start; padding: 0;">`;
+                    
+                    displayImages.forEach((imgUrl, i) => {
+                        output += `
+                            <div style="display: flex; flex-direction: column; align-items: center; width: 80px;">
+                                <a href="${imgUrl}" target="_blank" rel="noopener noreferrer" style="display: block; width: 80px; height: 80px; border: 1px solid var(--accent-color); border-radius: 4px; overflow: hidden; background: #111;">
+                                    <img src="${imgUrl}" style="width: 100%; height: 100%; object-fit: cover;" 
+                                        onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22%3E%3Crect width=%22100%25%22 height=%22100%25%22 fill=%22%23333%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23aaa%22 dy=%22.3em%22%3E404%3C/text%3E%3C/svg%3E';">
+                                </a>
+                                <a href="${imgUrl}" target="_blank" style="color: #0ff; font-size: 10px; margin-top: 4px; text-decoration: none;">Img ${i+1}</a>
+                            </div>`;
+                    });
+                    
+                    output += `</div>`;
+                    if (hiddenCount > 0) {
+                        output += `<div style="color: #888; margin-top: 8px;">+ ${hiddenCount} more images (limit ${displayLimit} per request).</div>`;
+                    }
+                    output += `<div style="color: #888; margin-top: 6px;">💡 Tip: Use <span style="color:#0f0;">remoteview</span> or <span style="color:#0f0;">fetchpage</span> to extract the full page text.</div>`;
+                    output += `</div>`;
+                    
+                    return output;
+                } catch (err) {
+                    return `⚠️ Image scan failed: ${err.message}`;
+                }
             },
             'about': () => {
                 return `
@@ -4928,10 +5164,10 @@
                         <span style="color: #ccc;">J_OS began as a simple ambient clock. Its creator, <strong style="color: #fff;">Johan</strong>, wanted a single screen that could tell time, show beauty, and respond like a real operating system.</span><br><br>
                         <span style="color: #ccc;">Soon it grew:</span>
                         <span style="color: #00f0ff;">Cistercian numerals</span> met <span style="color: #ffaa00;">live NASA feeds</span>.
-                        <span style="color: #0f0;">Tao Te Ching chapters</span> were woven into neural <span style="color: #ff00ff;">"Intersect" flashes</span>.
+                        <span style="color: #0f0;">Images and Tao chapters</span> were woven into neural <span style="color: #ff00ff;">"Intersect" flashes</span>.
                         <span style="color: #ff0;">Radio streams</span> and <span style="color: #0ff;">global news feeds</span> became channels on a cybernetic console.<br><br>
-                        <span style="color: #ccc;;">Today, <strong style="color: #fff;">J_OS</strong> is a digital sanctuary for high‑speed information retrieval – a hacker's command center, a philosopher's scroll, and an artist's canvas.</span><br><br>
-                        <span style="color: #888;">Type <span style="color: #0f0;">help</span> to explore.</span>
+                        <span style="color: #ccc;;">Today, <strong style="color: #fff;">J_OS</strong> is a digital sanctuary for high-speed information retrieval, a remote intelligence gathering console,a hacker's command center, a philosopher's scroll, and an artist's canvas.</span><br><br>
+                        <span style="color: #888;">Type <span style="color: #0f0;">help</span> to explore. Enjoy!</span>
                     </div>
                 `;
             },
