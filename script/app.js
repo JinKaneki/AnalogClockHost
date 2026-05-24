@@ -2047,9 +2047,10 @@
                 shift [n] [msg] : Caesar shift (letters & digits wrap)<br>
                 kryptos [enc|dec] [bin|hex] [text] : Convert text to/from binary or hex stream<br>
                 vigenere [enc|dec] [key] [msg] : Vigenère cipher with keyword<br>
-                mirror [msg] : Atbash mirror cipher (self‑inverse)<br>
+                mirror [msg] : Atbash mirror cipher (self-inverse)<br>
+                stegano [hide|reveal] [cover] [secret] : Steganography<br>
                 reverse [msg] : Reverse every character (TENET inversion)<br>
-                vault [enc|dec] [pw] [msg] : AES‑256 encryption (real, password‑based, handshake key optional)<br>
+                vault [enc|dec] [pw] [msg] : AES-256 encryption (real, password-based, handshake key optional)<br>
                 handshake [set|clear] [key] : Store or clear a personal encryption key locally<br>
                 <br>
                 <strong style="color: var(--accent-color);">🔮 TENET CIPHERS</strong><br>
@@ -2057,7 +2058,7 @@
                 palindrome [check|make|square|tenet]<br>
                 <br>
                 <strong style="color: var(--accent-color);">🕵️ CYBER OPS</strong><br>
-                kali, steg [hide|reveal] [cover] [secret],  wifite,<br>
+                kali, stegano [hide|reveal] [cover] [secret],  wifite,<br>
                 tag [set|get|clear|view] [key] [value],  airmon [iface],<br>
                 kali [hash|scan|crack|inject|genkey|dragon|arch],  nmap [target], hashcat,<br>
                 flipper [subghz|nfc|badusb|off],<br>
@@ -3741,7 +3742,7 @@
                     return '<span style="color: #f00;">DECRYPTION FAILED: Wrong password or corrupt data.</span>';
                 }
             },
-            'steg': (args) => {
+            'stegano': (args) => {
                 // Helper to parse arguments that might be wrapped in quotes
                 const parseArgs = (argArray) => {
                     const fullString = argArray.join(' ');
@@ -3752,8 +3753,8 @@
                 const parsed = parseArgs(args);
                 if (parsed.length < 2) {
                     return `Usage:<br>
-                            <span style="color: #0ff;">steg hide "Public Text" "Secret Message"</span><br>
-                            <span style="color: #0ff;">steg reveal "Public Text"</span>`;
+                            <span style="color: #0ff;">stegano hide "Public Text" "Secret Message"</span><br>
+                            <span style="color: #0ff;">stegano reveal "Public Text"</span>`;
                 }
 
                 const mode = parsed[0].toLowerCase();
@@ -3781,7 +3782,7 @@
 
                     return `
                     <div style="border-left: 2px solid #0f0; padding-left: 10px;">
-                        <span style="color: #0f0; font-weight: bold;">[ STEG: INJECTION SUCCESSFUL ]</span><br>
+                        <span style="color: #0f0; font-weight: bold;">[ STEGANOGRAPHY: INJECTION SUCCESSFUL ]</span><br>
                         <span style="color: #888;">The text below contains your secret. It looks normal, but holds hidden data. Copy it exactly:</span><br><br>
                         <div style="padding: 10px; background: rgba(0, 255, 0, 0.1); color: #fff; font-family: sans-serif;">${stegoText}</div><br>
                         <span style="color: #5d6d7e;">Run <span style="color: #0ff;">steg reveal "${stegoText}"</span> to extract.</span>
@@ -4775,7 +4776,7 @@
             'tv': (args) => {
                 const channels = {
                     // NASA / Space (embeddable)
-                    'nasa':       { name: 'NASA TV', type: 'youtube', url: '21X5lGlDOfg' },  // new working ID
+                    'nasa':       { name: 'NASA TV', type: 'youtube', url: '0FBiyFpV__g' },
                     'iss-earth':  { name: 'Earth from Space (ISS)', type: 'youtube', url: 'vytmBNhc9ig' },
                     'science':    { name: 'Science Channel', type: 'youtube', url: 'g0JewZCbRPA' },
 
@@ -4918,12 +4919,14 @@
                     { name: '🌟 Curiosity Now', url: 'https://amg00170-curiositystream-amg00170c3-rakuten-us-2289.playouts.now.amagi.tv/ts-us-e2-n2/playlist/amg00170-curiositystreamllcfast-curiositynowrow-rakutenus/cb543d167e6c648e9dd43a60cef046a1f9591fde1d6988693eb5518975d1073edce2a59caa08ff16388f1ede7f0a66413a3e951fda77118fd87eb141453c5728cfffe729a2c05616b7db083429b56a062a866a68ac39437ed0e21f48a238b6720a5aa82a66443d80b846ac725adb80148b61299bce8c37683f03409a5e5afba358b1ebe70847d16da7e74f55902c4de09f43c8821da689d30ec85ed027f8469b93f88c811380d0f30a937f8a91869f430df8fa1bbde51fddf49f7d31996324471051f5d1e2942c19b3378fd8659db1d940ea01c19920fb007ddb52de2780412ff5781235b16480d4d7bd09a64f5db77b2b5785f0b285eb307c9c6be8b6eccf777d94ccd9192dc640d73822349cfc8441ca9355de812a8bb0660a2b80bf71dbcce2cdbfebcd7d952b9c93afd825141a2a4423964dae9f5ade2bf671bc8146720b0317fbda1defaeed731c2e0f8a8955d1533cbcd8808c964e18c2721457ed2f880f5d229c7a3c32b56dca9b3a6d9b2f45d0666ab50b63f23796d21bfca9dfea1128f58f97309841dbf55b82b852d32e563f25bcfd2b5340360df3e674023d7c8308a4e4c3ef730617ffb5aadac54033133607586edfb007112c2311997bbe9d36ab3266eefc2b741517b97e9252/42/1280x720_3329040/index.m3u8' },
                     { name: '🎬 MovieSphere', url: 'https://moviesphereuk-samsunguk.amagi.tv/720p-vtt/index.m3u8' },
                     { name: '📜 True History', url: 'https://linear-188.frequency.stream/dist/glewedtv/188/hls/master/playlist_1280x720.m3u8' },
+                    { name: '🌌 Space Live (by SEN)', url: 'https://880ca9c9341c405f83d8664a18cc7134.mediatailor.us-west-2.amazonaws.com/v1/master/ba62fe743df0fe93366eba3a257d792884136c7f/LINEAR-1224-SPACELIVE-LG-UK/mt/lg-uk/1224/hls/master/playlist.m3u8' },
                     { name: '🍽️ Bon Appétit', url: 'https://bonappetit-samsung.amagi.tv/720p-vtt/index.m3u8' },
                     { name: '📰 France 24 English', url: 'https://live.france24.com/hls/live/2037218/F24_EN_HI_HLS/master_900.m3u8' },
                     { name: '📰 France 24 Français', url: 'https://live.france24.com/hls/live/2037179/F24_FR_HI_HLS/master_5000.m3u8' },
                     { name: '📰 BFM TV', url: 'https://live-cdn-stream-euw1.bfmtv.bct.nextradiotv.com/master.m3u8' },
                     { name: '📺 20 Minutes TV', url: 'https://live-20minutestv.digiteka.com/1961167769/index.m3u8' },
-                    { name: '🌍 Africa 24 English', url: 'https://edge20.vedge.infomaniak.com/livecast/ik:africa24english/manifest.m3u8' }
+                    { name: '🌍 Africa 24 English', url: 'https://edge20.vedge.infomaniak.com/livecast/ik:africa24english/manifest.m3u8' },
+                    { name: '🛠️ 5-Minute Crafts', url: 'https://soul-5mincrafteng-rakuten.amagi.tv/playlist.m3u8' },
                 ];
 
                 let html = `<b style="color:#0f0;">📺 MY PERSONAL IPTV CHANNELS</b><br><br>`;

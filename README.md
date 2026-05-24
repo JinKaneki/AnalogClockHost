@@ -238,7 +238,7 @@ The built‑in command runner—a full‑featured terminal emulator with over 50
 | `mirror [msg]`        | Atbash mirror cipher (self‑inverse) |
 | `vault [enc\|dec] [pw] [msg]` | AES‑256‑GCM encryption (real, password‑based) |
 | `handshake [set\|clear] [key]` | Store or clear a personal encryption key locally |
-| `steg [hide\|reveal] "cover" "secret"` | Steganography – hide & extract secret messages inside normal text |
+| `stegano [hide\|reveal] "cover" "secret"` | Steganography – hide & extract secret messages inside normal text |
 | `tag [set\|get\|clear\|view] [key] [value]` | Cipher dictionary – store, retrieve, list, or delete hidden key‑value pairs |
 | `kali [module]`       | Pentest toolbox: hash, scan, crack, inject, genkey, dragon, arch |
 | `wifite`              | Wi‑Fi attack simulation |
@@ -412,11 +412,11 @@ add -loop at the end to play in a continuous loop. e.g: `play audio ascension -l
 
 ### 🕵️ Steganography vs. Tag Store
 
-| Feature               | Steganography (`steg`)                       | Cipher Dictionary (`tag`)               |
+| Feature               | Steganography (`stegano`)                       | Cipher Dictionary (`tag`)               |
 |-----------------------|----------------------------------------------|-----------------------------------------|
 | **Logic**             | Data is hidden inside the text itself.       | Data is hidden in your browser's memory.|
 | **Persistence**       | If you delete the text, the secret is gone.  | If you delete the text, the secret stays in the terminal. |
-| **Portability**       | You can send the "steg" text to a friend; they can reveal it. | If you send the word "Apple" to a friend, they see nothing. |
+| **Portability**       | You can send the "stegano" text to a friend; they can reveal it. | If you send the word "Apple" to a friend, they see nothing. |
 | **The "Reveal"**      | You must Paste the specific invisible‑ink word. | You just type the Keyword (e.g., `tag get Apple`). |
 | **List stored items** | Not applicable – nothing is stored.         | `tag view` – shows all saved keys.      |
 
@@ -471,7 +471,7 @@ The **J_OS // AKASHIC ZERO-POINT KRYPTOS NEURAL CENTER** console now supports:
 - 🖼️ **Ambient visuals** (`walls`, `intersect`, `intersectslow`, `matrix`, `image`, `scroll`)
 - 🧠 **System introspection** (`fastfetch`, `system`, `whoami`, `about`, `ping`, `date`, `spinner`, `stopspinner`, `timer`, `history`, `motd`, `login`, `nuke`)
 - 🔐 **Akashic Cipher Suite** (`encode`/`decode`, `shift`, `kryptos`, `vigenere`, `mirror`, `vault`, `handshake`)
-- 🕵️ **Cyber Ops** (`steg`, `tag`, `kali`)
+- 🕵️ **Cyber Ops** (`stegano`, `tag`, `kali`)
 - 📡 **Network & Communication** (`chat mqtt`, `chat p2p`, `chat firebase`, `status`, `disconnect`, `mesh`, `aprsmap`, `meshmap`)
 - 🎭 **Fun & Entertainment** (`joke`, `riddle`, `poem`, `poetry`, `anime`, `qr`, `cowsay`, `ascii`, `hack`, `react`, `htop`, `fortune`, `rotate`)
 - ⚙️ **Utilities** (`theme`, `clear`, `sudo`, `fetch`, `neofetch`, `history`, `pause`, `shutdown`, `echo`, `ls`, `whoami`)
@@ -523,7 +523,7 @@ The "Akashic Update" transforms the dashboard into a comprehensive information r
 | **Wisdom & Spirituality** | Tao Te Ching, Bible verses, Buddhist sutras, Zen koans, Stoic quotes, Buddha quotes. | `tao`, `bible`, `verse`, `sutra`, `koan`, `stoic`, `buddha`, `wisdom` |
 | **Media Playback** | YouTube video/playlist/tv embedding, direct audio streaming, curated radio stations, live TV feeds (NASA, ISS, Lofi, Gumball). | `play youtube`, `play audio`, `radio [channel]`, `tv [channel]`, `stop` |
 | **Akashic Cipher Suite** | Base64 encode/decode, Caesar shift (with digit wrap), Binary/Hex streams, Vigenère cipher, Atbash mirror, AES‑256‑GCM vault with handshake password. | `encode`, `decode`, `shift`, `kryptos`, `vigenere`, `mirror`, `vault`, `handshake` |
-| **Steganography & Tag Store** | Hide secret messages inside normal text via zero‑width characters; permanent private tag dictionary. | `steg hide/reveal`, `tag set/get/view/clear` |
+| **Steganography & Tag Store** | Hide secret messages inside normal text via zero‑width characters; permanent private tag dictionary. | `stegano hide/reveal`, `tag set/get/view/clear` |
 | **Kali Pentest Suite** | Real SHA‑256 hashing, simulated port scans, brute‑force cracking, payload injection, SSH keygen, Kali dragon banner. | `kali hash/scan/crack/inject/genkey/banner` |
 | **Fun & Utility** | Riddles with reveal, dad jokes, random facts, QR codes, anime top 10, poetry, cowsay, coinflip, 8‑ball, rainbow text. | `joke`, `riddle`, `fact`, `qr`, `anime`, `poem`, `cowsay` |
 | **Visual Effects** | Glitch matrix, terminal scroll bounce, animated fake hacking, React build simulator, text rotation scrambler. | `matrix`, `scroll`, `hack`, `react`, `rotate` |

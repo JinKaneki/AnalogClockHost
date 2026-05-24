@@ -1142,6 +1142,12 @@
             display: flex !important;
             flex-direction: column !important;
         }
+        /* Fullscreen mode – hide close-cmd button, adjust input container */
+        #command-runner:fullscreen #close-cmd-runner,
+        #command-runner:-webkit-full-screen #close-cmd-runner {
+            display: none !important;
+        }
+
 
 
         .matrix-glitch {
