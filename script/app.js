@@ -2003,87 +2003,87 @@
         const commands = {
             // ----- SYNC (return string/HTML instantly) -----
             'help': () => {
-                return `
-                <strong style="color: var(--accent-color);">⚡ SYSTEM & UTILITY</strong><br>
-                help, about, clear, echo [text], whoami, ls, sudo,<br>
-                history, fastfetch, fetchpanel, fetch, neofetch, system,<br>
-                ping, date [utc\|iso\|unix], spinner, stopspinner,<br>
-                timer [seconds], stoptimer, shutdown, nuke :(factory reset)<br>
-                <br>
-                <strong style="color: var(--accent-color);">🧠 NEURAL GRAPH</strong><br>
-                graph : Toggle live neural command graph (Obsidian‑style)<br>
-                brain : Info on how to toggle and Reset the graph<br>
-                <br>
-                <strong style="color: var(--accent-color);">🎨 THEME & UI</strong><br>
-                theme [cyan|magenta|amber|matrix], zoom [in|out|reset]<br>
-                mode [flipper|midnight|matrix|crimson|cyber|hologram|stealth|off], pause<br>
-                <br>
-                <strong style="color: var(--accent-color);">📡 NETWORK & COMMUNICATION</strong><br>
-                chat mqtt : Global public frequency<br>
-                chat p2p : Encrypted peer to peer tunnel<br>
-                chat firebase : Persistent mainframe archive<br>
-                chat -all : Open all three channels at once<br>
-                status : Live connection report (MQTT, P2P, Firebase)<br>
-                disconnect : Terminate all network links safely<br>
-                mesh : Visualize a simulated LoRa mesh network<br>
-                aprsmap [fi|direct] : Live amateur radio map (choose source)<br>
-                netorbit [--green|--red|--violet] : Live world map + packet sniffing<br>
-                <br>
-                <strong style="color: var(--accent-color);">📰 NEWS & INFORMATION</strong><br>
-                news, hackernews, technology, weather[city],<br> 
-                crypto [coin], news -all (news,hackernews,technology)<br>
-                <br>
-                <strong style="color: var(--accent-color);">📚 LEARNING & REFERENCE</strong><br>
-                define [word], learn, wiki [topic], electronics,<br>
-                engineering, physics, biology, space, cstip, fortune, motd<br>
-                <br>
-                <strong style="color: var(--accent-color);">⚙️ ENGINEERING TOOLS</strong><br>
-                case   -> interactive diagnostics: resistor calc, color decode, Ohm's Law, voltage divider, capacitor codes<br>
-                <br>
-                <strong style="color: var(--accent-color);">🔐 AKASHIC CIPHER SUITE</strong><br>
-                cipher : Full usage manual for all ciphers (encrypt/decrypt)<br>
-                encode [msg] : Base64 encode a message<br>
-                decode [b64] : Decode a Base64 string<br>
-                shift [n] [msg] : Caesar shift (letters & digits wrap)<br>
-                kryptos [enc|dec] [bin|hex] [text] : Convert text to/from binary or hex stream<br>
-                vigenere [enc|dec] [key] [msg] : Vigenère cipher with keyword<br>
-                mirror [msg] : Atbash mirror cipher (self-inverse)<br>
-                stegano [hide|reveal] [cover] [secret] : Steganography<br>
-                reverse [msg] : Reverse every character (TENET inversion)<br>
-                vault [enc|dec] [pw] [msg] : AES-256 encryption (real, password-based, handshake key optional)<br>
-                handshake [set|clear] [key] : Store or clear a personal encryption key locally<br>
-                <br>
-                <strong style="color: var(--accent-color);">🔮 TENET CIPHERS</strong><br>
-                reverse [message], sator,<br>
-                palindrome [check|make|square|tenet]<br>
-                <br>
-                <strong style="color: var(--accent-color);">🕵️ CYBER OPS</strong><br>
-                kali, stegano [hide|reveal] [cover] [secret],  wifite,<br>
-                tag [set|get|clear|view] [key] [value],  airmon [iface],<br>
-                kali [hash|scan|crack|inject|genkey|dragon|arch],  nmap [target], hashcat,<br>
-                flipper [subghz|nfc|badusb|off],<br>
-                raspberry, gpio [status|on|off] [pin]<br>
-                portal, remoteview, grabimg, fetchpage<br>
-                <br>
-                <strong style="color: var(--accent-color);">🧘 WISDOM & SPIRITUALITY</strong><br>
-                tao, wisdom, sutra, buddha, koan, stoic, bible, verse<br>
-                <br>
-                <strong style="color: var(--accent-color);">🎭 FUN & ENTERTAINMENT</strong><br>
-                joke, riddle, poem, game, run (Role Player Game), poetry, anime,<br>
-                ascii, banner [text], piano, qr [text], homing,<br>
-                cowsay [text], hack, htop, react, rotate, flow,<br>
-                radio [channel], tv [channel], play, stop,<br>
-                iptv all : list all IPTV channels <br>
-                iptv [country_code] : Browse IPTV channels by country (us, uk, fr, ca, jp, au, …)<br>
-                play iptv <url> : Play an IPTV stream in the terminal ,play youtube,<br>
-                iptv cat : List all available categories<br>
-                iptv cat [category] : Browse by category (animation, news, sports, music…)<br>
-                <br>
-                <strong style="color: var(--accent-color);">🖼️ VISUALS & EFFECTS</strong><br>
-                image, walls, glitch, scroll, intersect, graph, intersectslow, slide<br>
-                slide [src|next|prev|pause|resume] : Control the overlay slideshow<br>
-                <br>
-                `;
+return `
+<strong style="color: var(--accent-color);">⚡ SYSTEM & UTILITY</strong><br>
+help, about, clear, echo [text], whoami, ls, sudo,<br>
+history, fastfetch, fetchpanel, fetch, neofetch, system,<br>
+ping, date [utc\|iso\|unix], spinner, stopspinner,<br>
+timer [seconds], stoptimer, shutdown, nuke :(factory reset)<br>
+<br>
+<strong style="color: var(--accent-color);">🧠 NEURAL GRAPH</strong><br>
+graph : Toggle live neural command graph (Obsidian‑style)<br>
+brain : Info on how to toggle and Reset the graph<br>
+<br>
+<strong style="color: var(--accent-color);">🎨 THEME & UI</strong><br>
+theme [cyan|magenta|amber|matrix], zoom [in|out|reset]<br>
+mode [flipper|midnight|matrix|crimson|cyber|hologram|stealth|off], pause<br>
+<br>
+<strong style="color: var(--accent-color);">📡 NETWORK & COMMUNICATION</strong><br>
+chat mqtt : Global public frequency<br>
+chat p2p : Encrypted peer to peer tunnel<br>
+chat firebase : Persistent mainframe archive<br>
+chat -all : Open all three channels at once<br>
+status : Live connection report (MQTT, P2P, Firebase)<br>
+disconnect : Terminate all network links safely<br>
+mesh : Visualize a simulated LoRa mesh network<br>
+aprsmap [fi|direct] : Live amateur radio map (choose source)<br>
+netorbit [--green|--red|--violet] : Live world map + packet sniffing<br>
+<br>
+<strong style="color: var(--accent-color);">📰 NEWS & INFORMATION</strong><br>
+news, hackernews, technology, weather[city],<br> 
+crypto [coin], news -all (news,hackernews,technology)<br>
+<br>
+<strong style="color: var(--accent-color);">📚 LEARNING & REFERENCE</strong><br>
+define [word], learn, wiki [topic], electronics,<br>
+engineering, physics, biology, space, cstip, fortune, motd<br>
+<br>
+<strong style="color: var(--accent-color);">⚙️ ENGINEERING TOOLS</strong><br>
+case   -> interactive diagnostics: resistor calc, color decode, Ohm's Law, voltage divider, capacitor codes<br>
+<br>
+<strong style="color: var(--accent-color);">🔐 AKASHIC CIPHER SUITE</strong><br>
+cipher : Full usage manual for all ciphers (encrypt/decrypt)<br>
+encode [msg] : Base64 encode a message<br>
+decode [b64] : Decode a Base64 string<br>
+shift [n] [msg] : Caesar shift (letters & digits wrap)<br>
+kryptos [enc|dec] [bin|hex] [text] : Convert text to/from binary or hex stream<br>
+vigenere [enc|dec] [key] [msg] : Vigenère cipher with keyword<br>
+mirror [msg] : Atbash mirror cipher (self-inverse)<br>
+stegano [hide|reveal] [cover] [secret] : Steganography<br>
+reverse [msg] : Reverse every character (TENET inversion)<br>
+vault [enc|dec] [pw] [msg] : AES-256 encryption (real, password-based, handshake key optional)<br>
+handshake [set|clear] [key] : Store or clear a personal encryption key locally<br>
+<br>
+<strong style="color: var(--accent-color);">🔮 TENET CIPHERS</strong><br>
+reverse [message], sator,<br>
+palindrome [check|make|square|tenet]<br>
+<br>
+<strong style="color: var(--accent-color);">🕵️ CYBER OPS</strong><br>
+kali, stegano [hide|reveal] [cover] [secret],  wifite,<br>
+tag [set|get|clear|view] [key] [value],  airmon [iface],<br>
+kali [hash|scan|crack|inject|genkey|dragon|arch],  nmap [target], hashcat,<br>
+flipper [subghz|nfc|badusb|off],<br>
+raspberry, gpio [status|on|off] [pin]<br>
+portal, remoteview, grabimg, fetchpage<br>
+<br>
+<strong style="color: var(--accent-color);">🧘 WISDOM & SPIRITUALITY</strong><br>
+tao, wisdom, sutra, buddha, koan, stoic, bible, verse<br>
+<br>
+<strong style="color: var(--accent-color);">🎭 FUN & ENTERTAINMENT</strong><br>
+joke, riddle, poem, game, run (Role Player Game), poetry, anime,<br>
+ascii, banner [text], piano, qr [text], homing,<br>
+cowsay [text], hack, htop, react, rotate, flow,<br>
+radio [channel], tv [channel], play, stop,<br>
+iptv all : list all IPTV channels <br>
+iptv [country_code] : Browse IPTV channels by country (us, uk, fr, ca, jp, au, …)<br>
+play iptv <url> : Play an IPTV stream in the terminal ,play youtube,<br>
+iptv cat : List all available categories<br>
+iptv cat [category] : Browse by category (animation, news, sports, music…)<br>
+<br>
+<strong style="color: var(--accent-color);">🖼️ VISUALS & EFFECTS</strong><br>
+image, walls, glitch, scroll, intersect, graph, intersectslow, slide<br>
+slide [src|next|prev|pause|resume] : Control the overlay slideshow<br>
+<br>
+`;
             },
             'clear': () => {
                 // Stop all known intervals
@@ -2381,10 +2381,11 @@
                 <span style="color:#ff5733;">██</span><span style="color:#ffd733;">██</span><span style="color:#33ff57;">██</span><span style="color:#00f0ff;">██</span><span style="color:#3357ff;">██</span><span style="color:#f033ff;">██</span>
                 </div>`;
 
-                return `<div style="display: flex; align-items: center; flex-wrap: wrap; padding: 5px; border-left: 2px solid var(--accent-color); background: rgba(0,255,0,0.02);">
-                    ${randomLogo}
-                    ${info}
-                </div>`;
+                return `
+<div style="display: flex; align-items: center; flex-wrap: wrap; padding: 5px; border-left: 2px solid var(--accent-color); background: rgba(0,255,0,0.02);">
+    ${randomLogo}
+    ${info}
+</div>`;
             },
             'tao': () => {
                 if (typeof taoChapters !== 'undefined' && taoChapters.length > 0) {
@@ -2663,15 +2664,15 @@
 
                 if (!sub) {
                     return `
-                        <div style="border-left: 3px solid var(--accent-color); padding-left: 10px;">
-                            <b style="color: var(--accent-color);">[ J_OS COMMUNICATION TRIAD ]</b><br>
-                            <span style="color: #0f0;">chat mqtt</span>  :Global public frequency<br>
-                            <span style="color: #d400ff;">chat p2p</span>  :Encrypted peer‑to‑peer tunnel<br>
-                            <span style="color: #fca311;">chat firebase</span>  :Persistent mainframe archive<br><br>
-                            <span style="color: #fff;">chat -all</span>  :Open all three channels at once<br>
-                            <span style="color: #00a2ff;">status</span>  -Show live connection status for all chat protocols.<br>
-                            <span style="color: #ff0077;">disconnect</span>  -Gracefully shut down all network connections.<br>
-                        </div>`;
+<div style="border-left: 3px solid var(--accent-color); padding-left: 10px;">
+    <b style="color: var(--accent-color);">[ J_OS COMMUNICATION TRIAD ]</b><br>
+    <span style="color: #0f0;">chat mqtt</span>  :Global public frequency<br>
+    <span style="color: #d400ff;">chat p2p</span>  :Encrypted peer‑to‑peer tunnel<br>
+    <span style="color: #fca311;">chat firebase</span>  :Persistent mainframe archive<br><br>
+    <span style="color: #fff;">chat -all</span>  :Open all three channels at once<br>
+    <span style="color: #00a2ff;">status</span>  -Show live connection status for all chat protocols.<br>
+    <span style="color: #ff0077;">disconnect</span>  -Gracefully shut down all network connections.<br>
+</div>`;
                 }
 
                 // 1. MQTT – The Global Frequency (Green #0f0)
@@ -2975,17 +2976,17 @@
                     '<span style="color:#fca311;">SYNCED</span>' : '<span style="color:#555;">DISCONNECTED</span>';
 
                 return `
-                <div style="border: 1px solid #444; padding: 10px; background: rgba(255,255,255,0.05); font-family: monospace;">
-                    <b style="color: var(--accent-color);">[ J_OS SUBSYSTEM REPORT ]</b><br>
-                    ------------------------------------<br>
-                    <span style="color: #0f0;">> NETWORK GATEWAY (MQTT):</span> ${mqttActive}<br>
-                    <span style="color: #ff00ff;">> P2P MESH LINK (WEBRTC):</span> ${p2pActive}<br>
-                    <span style="color: #fca311;">> ARCHIVE ARCHITECTURE:</span> ${firebaseActive}<br>
-                    ------------------------------------<br>
-                    <span style="color: #888;">CPU UTILIZATION:</span> ${Math.floor(Math.random() * 15) + 2}%<br>
-                    <span style="color: #888;">UPTIME:</span> ${Math.floor(performance.now() / 1000)}s<br>
-                    <span style="color: #888;">LOCATION:</span> <span style="color:#fff;">[REDACTED]</span>
-                </div>`;
+<div style="border: 1px solid #444; padding: 10px; background: rgba(255,255,255,0.05); font-family: monospace;">
+    <b style="color: var(--accent-color);">[ J_OS SUBSYSTEM REPORT ]</b><br>
+    ------------------------------------<br>
+    <span style="color: #0f0;">> NETWORK GATEWAY (MQTT):</span> ${mqttActive}<br>
+    <span style="color: #ff00ff;">> P2P MESH LINK (WEBRTC):</span> ${p2pActive}<br>
+    <span style="color: #fca311;">> ARCHIVE ARCHITECTURE:</span> ${firebaseActive}<br>
+    ------------------------------------<br>
+    <span style="color: #888;">CPU UTILIZATION:</span> ${Math.floor(Math.random() * 15) + 2}%<br>
+    <span style="color: #888;">UPTIME:</span> ${Math.floor(performance.now() / 1000)}s<br>
+    <span style="color: #888;">LOCATION:</span> <span style="color:#fff;">[REDACTED]</span>
+</div>`;
             },
             'disconnect': () => {
                 // MQTT
@@ -3051,140 +3052,141 @@
                 const arts = [
                     // 1. TERMINAL POWER – J_OS (magenta)
                         `<pre class="ascii-art" style="color: #ff00ff; font-size: 10px; line-height: 1.2; text-shadow: 0 0 5px #ff00ff;">
-                        ╔══════════════════╗
-                        ║   TERMINAL POWER   ║
-                        ╚══════════════════╝
-                           ▄▄▄▄▄▄▄▄▄
-                                     █  J_OS   █     [@_@]
-                           ▀▀▀▀▀▀▀▀▀
-                        ╔══════════════════╗
-                        ║      CLI POWER     ║
-                        ╚══════════════════╝
+╔══════════════════╗
+║   TERMINAL POWER   ║
+╚══════════════════╝
+    ▄▄▄▄▄▄▄▄▄
+              █  J_OS   █     [@_@]
+    ▀▀▀▀▀▀▀▀▀
+╔══════════════════╗
+║      CLI POWER     ║
+╚══════════════════╝
                         </pre>`,
 
                     // 2. // Kali Linux Dragon
                         `<pre class="ascii-art" style="color: #3498db; font-size: 10px; line-height: 1; text-shadow: 0 0 3px #3498db; font-family: monospace;">
-                         ..........
-                                ..,;:ccc,.
-                             ......''';lxO.
-                      .....''''..........,:ld;
-                                   .';;;:::;,,.x,
-                           ..'''.       0Xxoc:,.  ...
-                              ....            ,ONkc;,;cokOdc',.
-                            .                OMo           ':ddo.
-                                            dMc               :OO;
-                                            0M.                 .:o.
-                        ;Wd
-                            ;XO,
-                                    ,d0Odlc;,..
-                                          ..',;:cdOOd::,.
-                                                  .:dOdo:   'x0l
-                                                      'x0l  
-                                                          cWc   
-                                                    .cNl
-        <span style="color: #00ffff;">[ THE QUIETER YOU BECOME ]</span>
-        <span style="color: #00ffff;">[ THE MORE YOU CAN HEAR  ]</span>
+    ..........
+        ..,;:ccc,.
+        ......''';lxO.
+.....''''..........,:ld;
+            .';;;:::;,,.x,
+    ..'''.       0Xxoc:,.  ...
+        ....            ,ONkc;,;cokOdc',.
+    .                OMo           ':ddo.
+                    dMc               :OO;
+                    0M.                 .:o.
+;Wd
+    ;XO,
+            ,d0Odlc;,..
+                    ..',;:cdOOd::,.
+                            .:dOdo:   'x0l
+                                'x0l  
+                                    cWc   
+                            .cNl
+<span style="color: #00ffff;">[ THE QUIETER YOU BECOME ]</span>
+<span style="color: #00ffff;">[ THE MORE YOU CAN HEAR  ]</span>
                         </pre>`,
 
                     // 3. Debian Swirl (The Universal)
                         `<pre style="color: #ff0055; font-size: 9px; line-height: 1.2; text-shadow: 0 0 4px #ff0055;">
-                            _,nd8888888ba,_
-                         ,d8888888888888888b,
-                        ,888888888888888888888,
-                        d8888888P""'  '""Y88888b
-                       888888P'             'Y888
-                       888888                  888
-                       Y88888       _,aaaa,_    888
-                        Y88888     ,88888888P   88P
-                         'Y8888,   88888888P   ,88'
-                           'Y8888888888888P  ,88'
-                              '""Y8888P""' ,88'
-                               _______,88'
-                            Y888888P'
-                        <span style="color: #ffaa00;">[ KERNEL: DEBIAN STABLE]</span></pre>`,
+_,nd8888888ba,_
+,d8888888888888888b,
+,888888888888888888888,
+d8888888P""'  '""Y88888b
+888888P'             'Y888
+888888                  888
+Y88888       _,aaaa,_    888
+Y88888     ,88888888P   88P
+'Y8888,   88888888P   ,88'
+'Y8888888888888P  ,88'
+'""Y8888P""' ,88'
+_______,88'
+Y888888P'
+<span style="color: #ffaa00;">[ KERNEL: DEBIAN STABLE]</span>
+                        </pre>`,
 
                     // 4. Arch Linux (Kryptos Vector)
 
                         `<pre style="font-size: 9px; line-height: 1.2;">
-                                    <span style="color: #00f0ff;">/\\</span>
-                                    <span style="color: #00f0ff;">/  \\</span>
-                                    <span style="color: #00f0ff;">/ /\\ \\</span>
-                                    <span style="color: #00f0ff;">/ /  \\ \\</span>
-                                    <span style="color: #00f0ff;">/ /    \\ \\</span>
-                                    <span style="color: #00f0ff;">/ /      \\ \\</span>
-                                    <span style="color: #00f0ff;">/ /_      _\\ \\</span>
-                                    <span style="color: #00f0ff;">/___/      \\___\\</span>
-                                    <span style="color: #00f0ff;">/   /        \\   \\</span>
-                                    <span style="color: #00f0ff;">/___/          \\___\\</span>
-                                    <span style="color: #0f0;">[ ROOT PRIVILEGES: GRANTED ]</span>
-                                    <span style="color: #0f0;">[ // J_OS SECURE // ]</span>
+<span style="color: #00f0ff;">/\\</span>
+<span style="color: #00f0ff;">/  \\</span>
+<span style="color: #00f0ff;">/ /\\ \\</span>
+<span style="color: #00f0ff;">/ /  \\ \\</span>
+<span style="color: #00f0ff;">/ /    \\ \\</span>
+<span style="color: #00f0ff;">/ /      \\ \\</span>
+<span style="color: #00f0ff;">/ /_      _\\ \\</span>
+<span style="color: #00f0ff;">/___/      \\___\\</span>
+<span style="color: #00f0ff;">/   /        \\   \\</span>
+<span style="color: #00f0ff;">/___/          \\___\\</span>
+<span style="color: #0f0;">[ ROOT PRIVILEGES: GRANTED ]</span>
+<span style="color: #0f0;">[ // J_OS SECURE // ]</span>
                         </pre>`,
                     
                     // 5. Meditating Monk Zazen – Dhyana Mudra
                     `<pre style="color: #ffaa00; font-size: 9px; line-height: 1.1; text-shadow: 0 0 5px #ffaa00; padding: 10px 0;">
-                                .    *    .
-                               '   . (o) .   '
-                                .  \` - \`  .
-                            ,-.
-                            (   )
-                            __,-' / \\ '-.__
-                            (   /  | | |  \\   )
-                            |\\_\\\\_\\| | |\\_\\_\\|
-                            (      |   |     )
-                            \\\\____( )____/
-                            _,-'         '-._
-                            (       ZAZEN       )
-                            \`-._         _,-'
-                                \`-------'
-                        <span style="color: #0f0;">[ STATUS: NEURAL ALIGNMENT OPTIMAL ]</span>
-                        <span style="color: #f00;">[ RARE ENCOUNTER: LOTUS PERSONA ]</span>
+.    *    .
+'   . (o) .   '
+.  \` - \`  .
+,-.
+(   )
+__,-' / \\ '-.__
+(   /  | | |  \\   )
+|\\_\\\\_\\| | |\\_\\_\\|
+(      |   |     )
+\\\\____( )____/
+_,-'         '-._
+(       ZAZEN       )
+\`-._         _,-'
+\`-------'
+<span style="color: #0f0;">[ STATUS: NEURAL ALIGNMENT OPTIMAL ]</span>
+<span style="color: #f00;">[ RARE ENCOUNTER: LOTUS PERSONA ]</span>
                     </pre>`,
 
                     // 6. Abhaya / Teaching Mudra (raised open hand)
                     `<pre style="color: #ffaa00; font-size: 9px; line-height: 1.1; text-shadow: 0 0 5px #ffaa00; padding: 10px 0;">
-                            .    *    .
-                             '   . (o) .   '
-                            .  \` - \`  .
-                            ,-.
-                            (   )
-                            __,-'  \\ / \`-.__
-                            (   /   |||   \\   )
-                            |\\_\\\\_\\|||_/_/|
-                            (  \\_/     \\_/  )
-                            |   \\_____/   |
-                            |      |      |
-                            |    ,' '.    |
-                            |   (  _  )   |
-                            |    '-' '-'   |
-                        <span style="color: #0f0;">[ STATUS: DHARMA WHEEL SPINNING ]</span>
-                        <span style="color: #f00;">[ RARE ENCOUNTER: TEACHING MUDRA ]</span>
+.    *    .
+'   . (o) .   '
+.  \` - \`  .
+,-.
+(   )
+__,-'  \\ / \`-.__
+(   /   |||   \\   )
+|\\_\\\\_\\|||_/_/|
+(  \\_/     \\_/  )
+|   \\_____/   |
+|      |      |
+|    ,' '.    |
+|   (  _  )   |
+|    '-' '-'   |
+<span style="color: #0f0;">[ STATUS: DHARMA WHEEL SPINNING ]</span>
+<span style="color: #f00;">[ RARE ENCOUNTER: TEACHING MUDRA ]</span>
                     </pre>`,
 
                     // 7. Abhaya Mudra (Fearlessness) – open palm outward
                    `<pre style="color: #ffaa00; font-size: 9px; line-height: 1.1; text-shadow: 0 0 5px #ffaa00; padding: 10px 0;">
-                                .    *    .
-                                '   . (o) .   '
-                                .  \` - \`  .
-                            ,-.
-                            (   )
-                            __,-'  \\ /  \`-.__
-                            (   /   |||   \\   )
-                            |\\_\\\\_\\|||_/_/|
-                            (    \\_______/    )
-                            \\      |      /
-                            \\     |     /
-                            \\    |    /
-                            _||_
-                            /    \\
-                            /  ||  \\
-                            |  /  \\  |
-                            | |    | |
-                            | |    | |
-                            | |    | |
-                            |_|____|_|
-                            \`-...-'
-                        <span style="color: #0f0;">[ STATUS: FEARLESS GATE OPEN ]</span>
-                        <span style="color: #f00;">[ RARE ENCOUNTER: PROTECTION MUDRA ]</span>
+.    *    .
+'   . (o) .   '
+.  \` - \`  .
+,-.
+(   )
+__,-'  \\ /  \`-.__
+(   /   |||   \\   )
+|\\_\\\\_\\|||_/_/|
+(    \\_______/    )
+\\      |      /
+\\     |     /
+\\    |    /
+_||_
+/    \\
+/  ||  \\
+|  /  \\  |
+| |    | |
+| |    | |
+| |    | |
+|_|____|_|
+\`-...-'
+<span style="color: #0f0;">[ STATUS: FEARLESS GATE OPEN ]</span>
+<span style="color: #f00;">[ RARE ENCOUNTER: PROTECTION MUDRA ]</span>
                     </pre>`,
                 ];
 
@@ -3279,15 +3281,15 @@
                 ).join('');
 
                 return `
-                    <div style="color: #0f0; font-family: monospace; line-height: 1.3;">
-                    <strong>CPU</strong> ${bar(cpu)}<br>
-                    <strong>MEM</strong> ${bar(mem)}<br>
-                    <strong>TASKS:</strong> 42 total, 1 running, 41 sleeping<br><br>
-                    <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-                        <tr style="background: #333;"><td>PID</td><td>USER</td><td>CPU%</td><td>COMMAND</td></tr>
-                        ${tasksHtml}
-                    </table>
-                    </div>
+<div style="color: #0f0; font-family: monospace; line-height: 1.3;">
+    <strong>CPU</strong> ${bar(cpu)}<br>
+    <strong>MEM</strong> ${bar(mem)}<br>
+    <strong>TASKS:</strong> 42 total, 1 running, 41 sleeping<br><br>
+    <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+        <tr style="background: #333;"><td>PID</td><td>USER</td><td>CPU%</td><td>COMMAND</td></tr>
+        ${tasksHtml}
+    </table>
+</div>
                 `;
             },
             'rotate': () => {
@@ -3339,18 +3341,18 @@
 
                 if (!sub) {
                     return `
-                    <div style="border: 1px solid #3498db; padding: 12px; background: rgba(52, 152, 219, 0.1); border-radius: 4px; font-family: monospace; font-size: 10px; line-height: 0.8;">
-                        <strong style="color: #fff; background: #0365a6; padding: 0 5px;">🐉 KALI DARK OPERATIONS v2.0</strong><br><br>
-                        <span style="color: #3498db;">> hash [text]</span>      - Generate a real SHA-256 fingerprint<br>
-                        <span style="color: #3498db;">> scan [ip]</span>        - Run an asynchronous port audit<br>
-                        <span style="color: #3498db;">> crack [hash]</span>     - Brute-force simulation (Entropy analysis)<br>
-                        <span style="color: #3498db;">> inject [target]</span>  - Script-kiddie payload delivery<br>
-                        <span style="color: #3498db;">> genkey</span>           - Generate a fake SSH keypair<br>
-                        <span style="color: #3498db;">> dragon</span>           - Display system heraldry(Kali dragon)<br>
-                        <span style="color: #3498db;">> arch</span>             - Display the Linux trinity (Debian, Arch, Kali)
-                        <br>
-                        <span style="color: #888; font-size: 5px;">THE QUIETER YOU BECOME, THE MORE YOU ARE ABLE TO HEAR</span>
-                    </div>`;
+<div style="border: 1px solid #3498db; padding: 12px; background: rgba(52, 152, 219, 0.1); border-radius: 4px; font-family: monospace; font-size: 10px; line-height: 0.8;">
+    <strong style="color: #fff; background: #0365a6; padding: 0 5px;">🐉 KALI DARK OPERATIONS v2.0</strong><br><br>
+    <span style="color: #3498db;">> hash [text]</span>      - Generate a real SHA-256 fingerprint<br>
+    <span style="color: #3498db;">> scan [ip]</span>        - Run an asynchronous port audit<br>
+    <span style="color: #3498db;">> crack [hash]</span>     - Brute-force simulation (Entropy analysis)<br>
+    <span style="color: #3498db;">> inject [target]</span>  - Script-kiddie payload delivery<br>
+    <span style="color: #3498db;">> genkey</span>           - Generate a fake SSH keypair<br>
+    <span style="color: #3498db;">> dragon</span>           - Display system heraldry(Kali dragon)<br>
+    <span style="color: #3498db;">> arch</span>             - Display the Linux trinity (Debian, Arch, Kali)
+    <br>
+    <span style="color: #888; font-size: 5px;">THE QUIETER YOU BECOME, THE MORE YOU ARE ABLE TO HEAR</span>
+</div>`;
                         }
 
                         // --- REAL SHA-256 HASH ---
@@ -3371,16 +3373,16 @@
                             await delay(1200);
 
                             return `
-                    <div style="color: #0f0; font-size: 11px; line-height: 1.3;">
-                        <table style="width: 100%; border-top: 1px solid #333; margin-top: 8px;">
-                            <tr style="color: #888;"><td>PORT</td><td>STATE</td><td>SERVICE</td></tr>
-                            <tr><td>22/tcp</td>   <td style="color: #0f0;">OPEN</td>  <td>ssh</td></tr>
-                            <tr><td>80/tcp</td>   <td style="color: #0f0;">OPEN</td>  <td>http</td></tr>
-                            <tr><td>443/tcp</td>  <td style="color: #0f0;">OPEN</td>  <td>https</td></tr>
-                            <tr><td>3306/tcp</td> <td style="color: #f00;">FILTERED</td> <td>mysql</td></tr>
-                        </table><br>
-                        <span style="color: #ff00ff;">[!] SCAN COMPLETE: 3 active services identified.</span>
-                    </div>`;
+<div style="color: #0f0; font-size: 11px; line-height: 1.3;">
+    <table style="width: 100%; border-top: 1px solid #333; margin-top: 8px;">
+        <tr style="color: #888;"><td>PORT</td><td>STATE</td><td>SERVICE</td></tr>
+        <tr><td>22/tcp</td>   <td style="color: #0f0;">OPEN</td>  <td>ssh</td></tr>
+        <tr><td>80/tcp</td>   <td style="color: #0f0;">OPEN</td>  <td>http</td></tr>
+        <tr><td>443/tcp</td>  <td style="color: #0f0;">OPEN</td>  <td>https</td></tr>
+        <tr><td>3306/tcp</td> <td style="color: #f00;">FILTERED</td> <td>mysql</td></tr>
+    </table><br>
+    <span style="color: #ff00ff;">[!] SCAN COMPLETE: 3 active services identified.</span>
+</div>`;
                         }
 
                 // --- ENTROPY CRACKER (visual) ---
@@ -3429,62 +3431,62 @@
             },
             'cipher': () => {
                 return `
-                <div style="border: 1px solid #00ffff; padding: 12px; background: rgba(0, 255, 255, 0.03); border-radius: 8px; font-size:9px; line-height: 1;">
-                <strong style="color: #00ffff;">📜 AKASHIC CIPHER MANUAL</strong><br>
-                <span style="color: #888;">How to encrypt &amp; decrypt every message type</span><br>
-                <br>
+<div style="border: 1px solid #00ffff; padding: 12px; background: rgba(0, 255, 255, 0.03); border-radius: 8px; font-size:9px; line-height: 1;">
+    <strong style="color: #00ffff;">📜 AKASHIC CIPHER MANUAL</strong><br>
+    <span style="color: #888;">How to encrypt &amp; decrypt every message type</span><br>
+    <br>
 
-                <strong style="color: #0f0;">🔵 Base64 (encode / decode)</strong><br>
-                <span style="color: #fff;">Encrypt:</span> <span onclick="fillInput('encode hello')" style="color: #0f0; cursor:pointer; text-decoration:underline;">encode hello</span><br>
-                <span style="color: #fff;">Decrypt:</span> <span onclick="fillInput('decode aGVsbG8')" style="color: #0f0; cursor:pointer; text-decoration:underline;">decode aGVsbG8=</span><br>
-                <span style="color: #888;">The commands are exact mirrors. No key needed.</span><br>
-                <br>
+    <strong style="color: #0f0;">🔵 Base64 (encode / decode)</strong><br>
+    <span style="color: #fff;">Encrypt:</span> <span onclick="fillInput('encode hello')" style="color: #0f0; cursor:pointer; text-decoration:underline;">encode hello</span><br>
+    <span style="color: #fff;">Decrypt:</span> <span onclick="fillInput('decode aGVsbG8')" style="color: #0f0; cursor:pointer; text-decoration:underline;">decode aGVsbG8=</span><br>
+    <span style="color: #888;">The commands are exact mirrors. No key needed.</span><br>
+    <br>
 
-                <strong style="color: #0f0;">🟢 Caesar Shift (shift)</strong><br>
-                <span style="color: #fff;">Encrypt:</span> <span onclick="fillInput('shift 3 hello')" style="color: #0f0; cursor:pointer; text-decoration:underline;">shift 3 hello</span> → khoor<br>
-                <span style="color: #fff;">Decrypt:</span> <span onclick="fillInput('shift -3 khoor')" style="color: #0f0; cursor:pointer; text-decoration:underline;">shift -3 khoor</span> → hello<br>
-                <span style="color: #888;">Use the negative of the encryption number. Digits wrap as well.</span><br>
-                <br>
+    <strong style="color: #0f0;">🟢 Caesar Shift (shift)</strong><br>
+    <span style="color: #fff;">Encrypt:</span> <span onclick="fillInput('shift 3 hello')" style="color: #0f0; cursor:pointer; text-decoration:underline;">shift 3 hello</span> → khoor<br>
+    <span style="color: #fff;">Decrypt:</span> <span onclick="fillInput('shift -3 khoor')" style="color: #0f0; cursor:pointer; text-decoration:underline;">shift -3 khoor</span> → hello<br>
+    <span style="color: #888;">Use the negative of the encryption number. Digits wrap as well.</span><br>
+    <br>
 
-                <strong style="color: #0f0;">🟡 Vigenère (vigenere)</strong><br>
-                <span style="color: #fff;">Encrypt:</span> <span onclick="fillInput('vigenere enc secret hello')" style="color: #0f0; cursor:pointer; text-decoration:underline;">vigenere enc secret hello</span><br>
-                <span style="color: #fff;">Decrypt:</span> <span onclick="fillInput('vigenere dec secret')" style="color: #0f0; cursor:pointer; text-decoration:underline;">vigenere dec secret &lt;ciphertext&gt;</span><br>
-                <span style="color: #888;">You must use the same keyword and change the first argument to 'dec'.</span><br>
-                <br>
+    <strong style="color: #0f0;">🟡 Vigenère (vigenere)</strong><br>
+    <span style="color: #fff;">Encrypt:</span> <span onclick="fillInput('vigenere enc secret hello')" style="color: #0f0; cursor:pointer; text-decoration:underline;">vigenere enc secret hello</span><br>
+    <span style="color: #fff;">Decrypt:</span> <span onclick="fillInput('vigenere dec secret')" style="color: #0f0; cursor:pointer; text-decoration:underline;">vigenere dec secret &lt;ciphertext&gt;</span><br>
+    <span style="color: #888;">You must use the same keyword and change the first argument to 'dec'.</span><br>
+    <br>
 
-                <strong style="color: #0f0;">🟣 Atbash Mirror (mirror)</strong><br>
-                <span style="color: #fff;">Encrypt &amp; Decrypt:</span> <span onclick="fillInput('mirror hello')" style="color: #0f0; cursor:pointer; text-decoration:underline;">mirror hello</span> → svool (then mirror again to get back)<br>
-                <span style="color: #888;">It's its own inverse – no extra step needed.</span><br>
-                <br>
+    <strong style="color: #0f0;">🟣 Atbash Mirror (mirror)</strong><br>
+    <span style="color: #fff;">Encrypt &amp; Decrypt:</span> <span onclick="fillInput('mirror hello')" style="color: #0f0; cursor:pointer; text-decoration:underline;">mirror hello</span> → svool (then mirror again to get back)<br>
+    <span style="color: #888;">It's its own inverse – no extra step needed.</span><br>
+    <br>
 
-                <strong style="color: #ff0000;">🔴 Reverse Cipher (reverse)</strong><br>
-                <span style="color: #fff;">Encrypt &amp; Decrypt:</span> <span onclick="fillInput('reverse hello')" style="color: #0f0; cursor:pointer; text-decoration:underline;">reverse hello</span> → olleh (reverse again to get back)<br>
-                <span style="color: #888;">It's its own inverse – no extra step needed. Try "tenet" for a surprise.</span><br>
-                <br>
+    <strong style="color: #ff0000;">🔴 Reverse Cipher (reverse)</strong><br>
+    <span style="color: #fff;">Encrypt &amp; Decrypt:</span> <span onclick="fillInput('reverse hello')" style="color: #0f0; cursor:pointer; text-decoration:underline;">reverse hello</span> → olleh (reverse again to get back)<br>
+    <span style="color: #888;">It's its own inverse – no extra step needed. Try "tenet" for a surprise.</span><br>
+    <br>
 
-                <strong style="color: #0f0;">🔴 AES‑256 Vault (vault)</strong><br>
-                <span style="color: #fff;">Encrypt:</span> <span onclick="fillInput('vault enc mypassword hello')" style="color: #0f0; cursor:pointer; text-decoration:underline;">vault enc mypassword hello</span><br>
-                <span style="color: #fff;">Decrypt:</span> <span onclick="fillInput('vault dec mypassword')" style="color: #0f0; cursor:pointer; text-decoration:underline;">vault dec mypassword &lt;hex_ciphertext&gt;</span><br>
-                <span style="color: #888;">You can omit the password if you've stored one with <span style="color: #0f0;">handshake set mykey</span>.<br>
-                The ciphertext includes a random IV – safe to reuse the same key.</span><br>
-                <br>
+    <strong style="color: #0f0;">🔴 AES‑256 Vault (vault)</strong><br>
+    <span style="color: #fff;">Encrypt:</span> <span onclick="fillInput('vault enc mypassword hello')" style="color: #0f0; cursor:pointer; text-decoration:underline;">vault enc mypassword hello</span><br>
+    <span style="color: #fff;">Decrypt:</span> <span onclick="fillInput('vault dec mypassword')" style="color: #0f0; cursor:pointer; text-decoration:underline;">vault dec mypassword &lt;hex_ciphertext&gt;</span><br>
+    <span style="color: #888;">You can omit the password if you've stored one with <span style="color: #0f0;">handshake set mykey</span>.<br>
+    The ciphertext includes a random IV – safe to reuse the same key.</span><br>
+    <br>
 
-                <strong style="color: #0f0;">⚫ Kryptos Stream (kryptos)</strong><br>
-                <span style="color: #fff;">Encrypt:</span> <span onclick="fillInput('kryptos bin hello')" style="color: #0f0; cursor:pointer; text-decoration:underline;">kryptos bin hello</span> → 01101000 01100101 ...<br>
-                <span style="color: #fff;">Encrypt:</span> <span onclick="fillInput('kryptos hex hello')" style="color: #0f0; cursor:pointer; text-decoration:underline;">kryptos hex hello</span> → 68 65 6C 6C 6F<br>
-                <span style="color: #fff;">Decrypt:</span> <span onclick="fillInput('kryptos dec bin')" style="color: #0f0; cursor:pointer; text-decoration:underline;">kryptos dec bin 01101000 01100101 ...</span> → hello<br>
-                <span style="color: #fff;">Decrypt:</span> <span onclick="fillInput('kryptos dec hex')" style="color: #0f0; cursor:pointer; text-decoration:underline;">kryptos dec hex 68 65 6C 6C 6F</span> → hello<br>
-                <br>
+    <strong style="color: #0f0;">⚫ Kryptos Stream (kryptos)</strong><br>
+    <span style="color: #fff;">Encrypt:</span> <span onclick="fillInput('kryptos bin hello')" style="color: #0f0; cursor:pointer; text-decoration:underline;">kryptos bin hello</span> → 01101000 01100101 ...<br>
+    <span style="color: #fff;">Encrypt:</span> <span onclick="fillInput('kryptos hex hello')" style="color: #0f0; cursor:pointer; text-decoration:underline;">kryptos hex hello</span> → 68 65 6C 6C 6F<br>
+    <span style="color: #fff;">Decrypt:</span> <span onclick="fillInput('kryptos dec bin')" style="color: #0f0; cursor:pointer; text-decoration:underline;">kryptos dec bin 01101000 01100101 ...</span> → hello<br>
+    <span style="color: #fff;">Decrypt:</span> <span onclick="fillInput('kryptos dec hex')" style="color: #0f0; cursor:pointer; text-decoration:underline;">kryptos dec hex 68 65 6C 6C 6F</span> → hello<br>
+    <br>
 
-                <strong style="color: #0f0;">🤝 Handshake (handshake)</strong><br>
-                <span style="color: #fff;">Store a password:</span> <span onclick="fillInput('handshake set mysecret')" style="color: #0f0; cursor:pointer; text-decoration:underline;">handshake set mysecret</span><br>
-                <span style="color: #fff;">Clear:</span> <span style="color: #0f0;">handshake clear</span><br>
-                <span style="color: #888;">Stored only in your browser's local storage – never leaves your machine.</span><br>
-                <br>
+    <strong style="color: #0f0;">🤝 Handshake (handshake)</strong><br>
+    <span style="color: #fff;">Store a password:</span> <span onclick="fillInput('handshake set mysecret')" style="color: #0f0; cursor:pointer; text-decoration:underline;">handshake set mysecret</span><br>
+    <span style="color: #fff;">Clear:</span> <span style="color: #0f0;">handshake clear</span><br>
+    <span style="color: #888;">Stored only in your browser's local storage – never leaves your machine.</span><br>
+    <br>
 
-                <span style="color: #555;">────────────────────────</span><br>
-                <span style="color: #00ffff;">Type any example to execute directly.</span>
-                </div>`;
+    <span style="color: #555;">────────────────────────</span><br>
+    <span style="color: #00ffff;">Type any example to execute directly.</span>
+</div>`;
             },
 
             // ========== AKASHIC CIPHER SUITE ==========
@@ -3595,10 +3597,10 @@
                 const text = args.slice(2).join(' ');
                 
                 if (!['enc', 'dec'].includes(mode) || !key || !text) 
-                    return `Usage: vigenere [enc|dec] [keyword] [message]
-                    Encrypt: vigenere enc secret hello world
-                    Decrypt: vigenere dec secret [ciphertext]
-                    The same keyword must be used for both encryption and decryption.`;
+                    return `Usage: vigenere [enc|dec] [keyword] [message] 
+Encrypt: vigenere enc secret hello world
+Decrypt: vigenere dec secret [ciphertext]
+The same keyword must be used for both encryption and decryption.`;
 
                 let result = "";
                 for (let i = 0, j = 0; i < text.length; i++) {
@@ -3639,20 +3641,20 @@
                 // TENET Easter egg
                 if (text.toLowerCase() === 'tenet') {
                     return `
-                        <div style="border-left: 3px solid #ff0000; padding-left: 10px;">
-                            <span style="color: #ff0000;">⏳ TENET REMAINS UNCHANGED</span><br>
-                            <span style="color: #fff;">"What's happened, happened. Time is a flat circle."</span><br>
-                            <span style="color: #0ff;">TENET</span> → <span style="color: #ffaa00;">TENET</span>
-                        </div>`;
+<div style="border-left: 3px solid #ff0000; padding-left: 10px;">
+    <span style="color: #ff0000;">⏳ TENET REMAINS UNCHANGED</span><br>
+    <span style="color: #fff;">"What's happened, happened. Time is a flat circle."</span><br>
+    <span style="color: #0ff;">TENET</span> → <span style="color: #ffaa00;">TENET</span>
+</div>`;
                 }
 
                 const reversed = text.split('').reverse().join('');
                 return `
-                    <div style="border-left: 3px solid #ff0000; padding-left: 10px; margin: 5px 0;">
-                        <span style="color: #888;">Original:</span> <span style="color: #fff;">${text}</span><br>
-                        <span style="color: #ff0000;">▼ INVERTED ▼</span><br>
-                        <span style="color: #00f0ff; font-weight: bold;">${reversed}</span>
-                    </div>
+<div style="border-left: 3px solid #ff0000; padding-left: 10px; margin: 5px 0;">
+    <span style="color: #888;">Original:</span> <span style="color: #fff;">${text}</span><br>
+    <span style="color: #ff0000;">▼ INVERTED ▼</span><br>
+    <span style="color: #00f0ff; font-weight: bold;">${reversed}</span>
+</div>
                 `;
             },
             // 8. HANDSHAKE – store/retrieve personal key (private, local)
@@ -3687,13 +3689,15 @@
                     pw = args[1];
                     text = args.slice(2).join(' ');
                 } else {
-                    return `Usage: vault [enc|dec] [password] [message/hex]
-                    If a handshake key is set, password can be omitted.
-                    Examples:
-                    vault enc secret hello
-                    vault dec secret [hex_cipher]
-                    vault enc hello      (uses stored handshake key)
-                    vault dec <hex>      (uses stored handshake key)`;
+                    return `
+Usage: vault [enc|dec] [password] [message/hex]<br>
+
+If a handshake key is set, password can be omitted.
+Examples:
+vault enc secret hello
+vault dec secret [hex_cipher]
+vault enc hello      (uses stored handshake key)
+vault dec <hex>      (uses stored handshake key)`;
                 }
                 if (!['enc', 'dec'].includes(mode)) return '⚠️ Mode must be "enc" or "dec".';
 
@@ -3752,9 +3756,10 @@
 
                 const parsed = parseArgs(args);
                 if (parsed.length < 2) {
-                    return `Usage:<br>
-                            <span style="color: #0ff;">stegano hide "Public Text" "Secret Message"</span><br>
-                            <span style="color: #0ff;">stegano reveal "Public Text"</span>`;
+                    return `
+                    Usage:<br>
+<span style="color: #0ff;">stegano hide "Public Text" "Secret Message"</span><br>
+<span style="color: #0ff;">stegano reveal "Public Text"</span>`;
                 }
 
                 const mode = parsed[0].toLowerCase();
@@ -3781,12 +3786,12 @@
                     const stegoText = publicText[0] + invisibleString + publicText.slice(1);
 
                     return `
-                    <div style="border-left: 2px solid #0f0; padding-left: 10px;">
-                        <span style="color: #0f0; font-weight: bold;">[ STEGANOGRAPHY: INJECTION SUCCESSFUL ]</span><br>
-                        <span style="color: #888;">The text below contains your secret. It looks normal, but holds hidden data. Copy it exactly:</span><br><br>
-                        <div style="padding: 10px; background: rgba(0, 255, 0, 0.1); color: #fff; font-family: sans-serif;">${stegoText}</div><br>
-                        <span style="color: #5d6d7e;">Run <span style="color: #0ff;">steg reveal "${stegoText}"</span> to extract.</span>
-                    </div>`;
+<div style="border-left: 2px solid #0f0; padding-left: 10px;">
+    <span style="color: #0f0; font-weight: bold;">[ STEGANOGRAPHY: INJECTION SUCCESSFUL ]</span><br>
+    <span style="color: #888;">The text below contains your secret. It looks normal, but holds hidden data. Copy it exactly:</span><br><br>
+    <div style="padding: 10px; background: rgba(0, 255, 0, 0.1); color: #fff; font-family: sans-serif;">${stegoText}</div><br>
+    <span style="color: #5d6d7e;">Run <span style="color: #0ff;">steg reveal "${stegoText}"</span> to extract.</span>
+</div>`;
                 }
 
                 if (mode === 'reveal') {
@@ -3812,11 +3817,11 @@
                     }
 
                     return `
-                    <div style="border-left: 2px solid #ff00ff; padding-left: 10px;">
-                        <span style="color: #ff00ff; font-weight: bold;">[ STEG: EXTRACTION SUCCESSFUL ]</span><br><br>
-                        <span style="color: #fff; font-size: 1.1em;">PAYLOAD: </span>
-                        <span style="color: #0f0; text-shadow: 0 0 5px #0f0;">${secretMsg}</span>
-                    </div>`;
+<div style="border-left: 2px solid #ff00ff; padding-left: 10px;">
+    <span style="color: #ff00ff; font-weight: bold;">[ STEG: EXTRACTION SUCCESSFUL ]</span><br><br>
+    <span style="color: #fff; font-size: 1.1em;">PAYLOAD: </span>
+    <span style="color: #0f0; text-shadow: 0 0 5px #0f0;">${secretMsg}</span>
+</div>`;
                 }
 
                 return '⚠️ Unknown mode. Use "hide" or "reveal".';
@@ -3882,21 +3887,21 @@
                     currentAudio.play().catch(e => console.warn('Arcade audio failed:', e));
 
                     return `
-                    <div style="border: 1px solid #ff8200; padding: 10px; text-align: center;">
-                        <b style="color: #ff8200;">[ J_OS ARCADE MODULE ]</b><br>
-                        <div style="margin: 5px 0;">
-                            <img src="images/PokemonGo.jpeg" style="max-width: 220px; height: auto; border-radius: 8px; margin-bottom: 5px;">
-                        </div>
-                        <div>
-                            <span onclick="fillInput('game snake')" style="color: #fbff00; cursor:pointer; text-decoration:underline;">game snake</span> : Classic Canvas Snake (Keyboard / Swipe / D‑pad)<br>
-                            <span onclick="fillInput('game dodge')" style="color: #fca311; cursor:pointer; text-decoration:underline;">game dodge</span> : Gyroscope Obstacle Avoidance<br>
-                            <span onclick="fillInput('game marble')" style="color: #ef476f; cursor:pointer; text-decoration:underline;">game marble</span> : Gyroscope Ball Maze<br>
-                            <span onclick="fillInput('game asteroids')" style="color: #fb00ff; cursor:pointer; text-decoration:underline;">game asteroids</span> : Space Rock Dodger (D‑pad)<br>
-                            <span onclick="fillInput('game flappy')" style="color: #09ff00; cursor:pointer; text-decoration:underline;">game flappy</span> : Cyber‑Bird Flap (Tap to Flap)<br>
-                            <span onclick="fillInput('game memory')" style="color: #ff0000; cursor:pointer; text-decoration:underline;">game memory</span> : Emoji memory match (Tap cards to flip)<br>
-                            <span onclick="fillInput('game dino')" style="color: #00d0ff; cursor:pointer; text-decoration:underline;">game dino</span> : Cyber‑packet runner (avoid firewall obstacles)<br>
-                        </div>
-                    </div>`;
+<div style="border: 1px solid #ff8200; padding: 10px; text-align: center;">
+    <b style="color: #ff8200;">[ J_OS ARCADE MODULE ]</b><br>
+    <div style="margin: 5px 0;">
+        <img src="images/PokemonGo.jpeg" style="max-width: 220px; height: auto; border-radius: 8px; margin-bottom: 5px;">
+    </div>
+    <div>
+        <span onclick="fillInput('game snake')" style="color: #fbff00; cursor:pointer; text-decoration:underline;">game snake</span> : Classic Canvas Snake (Keyboard / Swipe / D‑pad)<br>
+        <span onclick="fillInput('game dodge')" style="color: #fca311; cursor:pointer; text-decoration:underline;">game dodge</span> : Gyroscope Obstacle Avoidance<br>
+        <span onclick="fillInput('game marble')" style="color: #ef476f; cursor:pointer; text-decoration:underline;">game marble</span> : Gyroscope Ball Maze<br>
+        <span onclick="fillInput('game asteroids')" style="color: #fb00ff; cursor:pointer; text-decoration:underline;">game asteroids</span> : Space Rock Dodger (D‑pad)<br>
+        <span onclick="fillInput('game flappy')" style="color: #09ff00; cursor:pointer; text-decoration:underline;">game flappy</span> : Cyber‑Bird Flap (Tap to Flap)<br>
+        <span onclick="fillInput('game memory')" style="color: #ff0000; cursor:pointer; text-decoration:underline;">game memory</span> : Emoji memory match (Tap cards to flip)<br>
+        <span onclick="fillInput('game dino')" style="color: #00d0ff; cursor:pointer; text-decoration:underline;">game dino</span> : Cyber‑packet runner (avoid firewall obstacles)<br>
+    </div>
+</div>`;
                 }
 
                 const canvasId = 'game-canvas-' + Date.now();
@@ -4091,13 +4096,13 @@
 
                 if (!sub) {
                     return `
-                        <div style="border-left: 3px solid #ff0000; padding-left: 10px;">
-                            <b style="color: #ff0000;">[ TENET PALINDROME ENGINE ]</b><br>
-                            <span onclick="fillInput('palindrome check racecar')" style="color: #0f0; cursor:pointer; text-decoration:underline;">palindrome check [word]</span>  :Verify if a word reads the same backward<br>
-                            <span onclick="fillInput('palindrome square')" style="color: #0f0; cursor:pointer; text-decoration:underline;">palindrome square</span>  :Display the ancient Sator Square<br>
-                            <span onclick="fillInput('palindrome tenet')" style="color: #0f0; cursor:pointer; text-decoration:underline;">palindrome tenet</span> :the TENET principle<br>
-                            <span onclick="fillInput('palindrome make ')" style="color: #0f0; cursor:pointer; text-decoration:underline;">palindrome make [word]</span> :Mirror text into a palindrome <br>
-                        </div>`;
+<div style="border-left: 3px solid #ff0000; padding-left: 10px;">
+    <b style="color: #ff0000;">[ TENET PALINDROME ENGINE ]</b><br>
+    <span onclick="fillInput('palindrome check racecar')" style="color: #0f0; cursor:pointer; text-decoration:underline;">palindrome check [word]</span>  :Verify if a word reads the same backward<br>
+    <span onclick="fillInput('palindrome square')" style="color: #0f0; cursor:pointer; text-decoration:underline;">palindrome square</span>  :Display the ancient Sator Square<br>
+    <span onclick="fillInput('palindrome tenet')" style="color: #0f0; cursor:pointer; text-decoration:underline;">palindrome tenet</span> :the TENET principle<br>
+    <span onclick="fillInput('palindrome make ')" style="color: #0f0; cursor:pointer; text-decoration:underline;">palindrome make [word]</span> :Mirror text into a palindrome <br>
+</div>`;
                 }
 
                 if (sub === 'check') {
@@ -4106,66 +4111,66 @@
                     const reversed = cleaned.split('').reverse().join('');
                     const isPalindrome = cleaned === reversed && cleaned.length > 0;
                     return `
-                        <div style="border-left: 3px solid ${isPalindrome ? '#0f0' : '#f00'}; padding-left: 10px;">
-                            <span style="color: #888;">Word:</span> <span style="color: #fff;">${text}</span><br>
-                            <span style="color: #888;">Reversed:</span> <span style="color: #0ff;">${cleaned.split('').reverse().join('')}</span><br>
-                            <span style="color: ${isPalindrome ? '#0f0' : '#f00'}; font-weight: bold;">
-                                ${isPalindrome ? '✅ PALINDROME CONFIRMED' : '❌ NOT A PALINDROME'}
-                            </span>
-                        </div>`;
+<div style="border-left: 3px solid ${isPalindrome ? '#0f0' : '#f00'}; padding-left: 10px;">
+    <span style="color: #888;">Word:</span> <span style="color: #fff;">${text}</span><br>
+    <span style="color: #888;">Reversed:</span> <span style="color: #0ff;">${cleaned.split('').reverse().join('')}</span><br>
+    <span style="color: ${isPalindrome ? '#0f0' : '#f00'}; font-weight: bold;">
+        ${isPalindrome ? '✅ PALINDROME CONFIRMED' : '❌ NOT A PALINDROME'}
+    </span>
+</div>`;
                 }
 
                 if (sub === 'square' || sub === 'sator') {
                     return `
-                        <div style="border: 2px solid #ff0000; padding: 15px; text-align: center; background: rgba(255,0,0,0.05);">
-                            <b style="color: #ff0000;">◆ SATOR SQUARE ◆</b><br>
-                            <span style="color: #888;">The Ancient Palindrome – Pompeii, 79 AD</span><br><br>
-                            <pre style="color: #ffaa00; font-size: 16px; line-height: 1.5; text-align: center; display: inline-block;">
-                S A T O R
-                A R E P O
-                T E N E T
-                O P E R A
-                R O T A S
-                            </pre>
-                            <br>
-                            <span style="color: #0f0;">Reads the same: left→right, right→left, top→bottom, bottom→top</span><br>
-                            <span style="color: #ff0000;">"The Sower Arepo holds the wheels with care."</span>
-                        </div>
+<div style="border: 2px solid #ff0000; padding: 15px; text-align: center; background: rgba(255,0,0,0.05);">
+    <b style="color: #ff0000;">◆ SATOR SQUARE ◆</b><br>
+    <span style="color: #888;">The Ancient Palindrome – Pompeii, 79 AD</span><br><br>
+    <pre style="color: #ffaa00; font-size: 16px; line-height: 1.5; text-align: center; display: inline-block;">
+S A T O R
+A R E P O
+T E N E T
+O P E R A
+R O T A S
+    </pre>
+    <br>
+    <span style="color: #0f0;">Reads the same: left→right, right→left, top→bottom, bottom→top</span><br>
+    <span style="color: #ff0000;">"The Sower Arepo holds the wheels with care."</span>
+</div>
 
-                        <div style="border: 2px solid #ffaa00; padding: 15px; text-align: center; background: rgba(255,170,0,0.05); margin-top: 15px;">
-                            <b style="color: #ffaa00;">✝️ THE PATER NOSTER ANAGRAM</b><br>
-                            <span style="color: #ccc;">Early Christian Secret Code (Crux Dissimulata)</span><br><br>
-                            <pre style="color: #ffaa00; font-size: 14px; line-height: 1.2; display: inline-block; text-align: center;">
-                        A
-                        P
-                        A
-                        T
-                        E
-                        R
-                        A P A T E R N O S T E R O
-                        O
-                        S
-                        T
-                        E
-                        R
-                        O
-                            </pre>
-                            <br>
-                            <span style="color: #0f0;">"PATER NOSTER"</span> – <span style="color: #fff;">Our Father</span>, the opening of the Lord's Prayer<br>
-                            <span style="color: #ffaa00;">A</span> and <span style="color: #ffaa00;">O</span> – Alpha and Omega, the Beginning and the End<br>
-                            <span style="color: #888;">The cross hides the prayer, offering a cryptic sign of faith during persecution.</span>
-                        </div>
+<div style="border: 2px solid #ffaa00; padding: 15px; text-align: center; background: rgba(255,170,0,0.05); margin-top: 15px;">
+    <b style="color: #ffaa00;">✝️ THE PATER NOSTER ANAGRAM</b><br>
+    <span style="color: #ccc;">Early Christian Secret Code (Crux Dissimulata)</span><br><br>
+    <pre style="color: #ffaa00; font-size: 14px; line-height: 1.2; display: inline-block; text-align: center;">
+A
+P
+A
+T
+E
+R
+A P A T E R N O S T E R O
+O
+S
+T
+E
+R
+O
+    </pre>
+    <br>
+    <span style="color: #0f0;">"PATER NOSTER"</span> – <span style="color: #fff;">Our Father</span>, the opening of the Lord's Prayer<br>
+    <span style="color: #ffaa00;">A</span> and <span style="color: #ffaa00;">O</span> – Alpha and Omega, the Beginning and the End<br>
+    <span style="color: #888;">The cross hides the prayer, offering a cryptic sign of faith during persecution.</span>
+</div>
                     `;
                 }
 
                 if (sub === 'tenet') {
                     return `
-                        <div style="border-left: 3px solid #ff0000; padding-left: 10px;">
-                            <b style="color: #ff0000;">⏳ TENET PRINCIPLE</b><br>
-                            <span style="color: #fff;">"What's happened, happened."</span><br>
-                            <span style="color: #0ff;">TENET</span> → <span style="color: #ffaa00;">TENET</span><br>
-                            <span style="color: #888;">Time flows both ways. The palindrome is invariant.</span>
-                        </div>`;
+<div style="border-left: 3px solid #ff0000; padding-left: 10px;">
+    <b style="color: #ff0000;">⏳ TENET PRINCIPLE</b><br>
+    <span style="color: #fff;">"What's happened, happened."</span><br>
+    <span style="color: #0ff;">TENET</span> → <span style="color: #ffaa00;">TENET</span><br>
+    <span style="color: #888;">Time flows both ways. The palindrome is invariant.</span>
+</div>`;
                 }
 
                 if (sub === 'make') {
@@ -4173,11 +4178,11 @@
                     const reversed = text.split('').reverse().join('');
                     const palindrome = text + reversed;
                     return `
-                        <div style="border-left: 3px solid #ff0000; padding-left: 10px;">
-                            <span style="color: #888;">Original:</span> <span style="color: #fff;">${text}</span><br>
-                            <span style="color: #ff0000;">▼ MIRRORED PALINDROME ▼</span><br>
-                            <span style="color: #00f0ff;">${palindrome}</span>
-                        </div>`;
+<div style="border-left: 3px solid #ff0000; padding-left: 10px;">
+    <span style="color: #888;">Original:</span> <span style="color: #fff;">${text}</span><br>
+    <span style="color: #ff0000;">▼ MIRRORED PALINDROME ▼</span><br>
+    <span style="color: #00f0ff;">${palindrome}</span>
+</div>`;
                 }
 
                 return 'Usage: palindrome [check|square|tenet|make]';
@@ -4255,14 +4260,14 @@
                 // ── HELP (default) ──
                 return `
                     <div style="border-left: 3px solid #ffaa00; padding-left: 10px;">
-                        <b style="color: #ffaa00;">◆ SATOR WORD SQUARE ◆</b><br>
-                        <span style="color: #ccc;">A 4x4 grid where every row and column spells a word.</span><br><br>
-                        <span style="color: #0f0;">sator new</span>  :Start a puzzle<br>
-                        <span style="color: #0f0;">sator A1 S</span>  :Place letter S at column A, row 1<br>
-                        <span style="color: #0f0;">sator reveal</span>  :Show the solution<br>
-                        <span style="color: #0f0;">palindrome square</span>  :View the SATOR square and the Pater Noster anagram<br>
-                        <br>
-                        <span style="color: #ff00aa;">Words: SAGA, AREA, GERO, AAOA (Latin, [SAGA] tale, [AREA] open space, [GERO] I carry, [AAOA] a name)</span>
+<b style="color: #ffaa00;">◆ SATOR WORD SQUARE ◆</b><br>
+<span style="color: #ccc;">A 4x4 grid where every row and column spells a word.</span><br><br>
+<span style="color: #0f0;">sator new</span>  :Start a puzzle<br>
+<span style="color: #0f0;">sator A1 S</span>  :Place letter S at column A, row 1<br>
+<span style="color: #0f0;">sator reveal</span>  :Show the solution<br>
+<span style="color: #0f0;">palindrome square</span>  :View the SATOR square and the Pater Noster anagram<br>
+<br>
+<span style="color: #ff00aa;">Words: SAGA, AREA, GERO, AAOA (Latin, [SAGA] tale, [AREA] open space, [GERO] I carry, [AAOA] a name)</span>
                     </div>`;
             },
             'banner': (args) => {
@@ -4536,21 +4541,21 @@
                 // Show help when no arguments or just "play"
                 if (args.length === 0) {
                     return `
-                        <strong style="color: #00f0ff;">🎬 PLAY COMMAND</strong><br>
-                        <span style="color: #888;">Usage:</span><br>
-                        <span style="color: #0f0;">play youtube &lt;id_or_url&gt;</span>  -Embed YouTube player<br>
-                        <span style="color: #0f0;">play audio &lt;url&gt;</span>  -Play direct audio file (MP3, OGG, WAV)<br>
-                        <span style="color: #0f0;">play audio &lt;preset&gt;</span>  -Play a built-in sound<br>
-                        <span style="color: #0f0;">play iptv <url></span> -Play an IPTV stream in the terminal<br>
-                        <br>
-                        <span style="color: #888;">Built-in audio presets:</span><br>
-                        <span style="color: #ff4d00;">siren</span>, <span style="color: #00d0ff;">bell</span>, <span style="color: #ffdd00;">gong</span>, <span style="color: #00a6ff;">ascension</span>, <span style="color: #d400ff;">medit</span>, <span style="color: #00ff4c;">elite</span>, <span style="color: #ffff00;">deeptown</span><br>
-                        <br>
-                        <span style="color: #888;">Examples:</span><br>
-                        play youtube dQw4w9WgXcQ<br>
-                        play yt url<br>
-                        play audio https://example.com/song.mp3<br>
-                        play audio bell
+<strong style="color: #00f0ff;">🎬 PLAY COMMAND</strong><br>
+<span style="color: #888;">Usage:</span><br>
+<span style="color: #0f0;">play youtube &lt;id_or_url&gt;</span>  -Embed YouTube player<br>
+<span style="color: #0f0;">play audio &lt;url&gt;</span>  -Play direct audio file (MP3, OGG, WAV)<br>
+<span style="color: #0f0;">play audio &lt;preset&gt;</span>  -Play a built-in sound<br>
+<span style="color: #0f0;">play iptv <url></span> -Play an IPTV stream in the terminal<br>
+<br>
+<span style="color: #888;">Built-in audio presets:</span><br>
+<span style="color: #ff4d00;">siren</span>, <span style="color: #00d0ff;">bell</span>, <span style="color: #ffdd00;">gong</span>, <span style="color: #00a6ff;">ascension</span>, <span style="color: #d400ff;">medit</span>, <span style="color: #00ff4c;">elite</span>, <span style="color: #ffff00;">deeptown</span><br>
+<br>
+<span style="color: #888;">Examples:</span><br>
+play youtube dQw4w9WgXcQ<br>
+play yt url<br>
+play audio https://example.com/song.mp3<br>
+play audio bell
                     `;
                 }
 
@@ -4683,12 +4688,12 @@
                         channelList += `<span onclick="fillInput('radio ${ch}')" style="cursor:pointer; text-decoration:underline; color:#ffdd00;">${ch}</span>  `;
                     }
                     return `
-                        <strong style="color: #00ffff;">📻 AKASHIC RADIO FREQUENCIES</strong><br>
-                        <span style="color: #888;">Available channels:</span><br>
-                        ${channelList}<br>
-                        <br>
-                        <span style="color: #888;">Usage:</span> <span style="color: #00f7ff;">radio &lt;channel&gt;</span><br>
-                        <span style="color: #888;">Example:</span> radio defcon
+<strong style="color: #00ffff;">📻 AKASHIC RADIO FREQUENCIES</strong><br>
+<span style="color: #888;">Available channels:</span><br>
+${channelList}<br>
+<br>
+<span style="color: #888;">Usage:</span> <span style="color: #00f7ff;">radio &lt;channel&gt;</span><br>
+<span style="color: #888;">Example:</span> radio defcon
                     `;
                 }
 
@@ -4758,19 +4763,19 @@
                     : `${uptimeMin}m ${uptimeSec % 60}s`;
 
                 return `
-                    <div style="border: 1px solid #00ffff; padding: 8px 12px; background: rgba(0, 255, 255, 0.05); border-radius: 6px; font-size: 8px; line-height: 0.9;">
-                        <strong style="color: #00ffff; font-size: 10px;">// AKASHIC NEURAL LINK STATUS //</strong><br>
-                        <span style="color: #555;">────────────────────────</span><br>
-                        <span style="color: #888;">USER:</span> <span style="color: #fff;">Johan</span><br>
-                        <span style="color: #888;">ACCESS:</span> ${authStatus}<br>
-                        <span style="color: #888;">UPTIME:</span> <span style="color: #fff;">${uptimeStr}</span><br>
-                        <span style="color: #888;">AUDIO FEED:</span> <span style="color: #ff00ff;">${currentFeed}</span><br>
-                        <span style="color: #888;">VISUAL:</span> ${visualStatus}<br>
-                        <span style="color: #888;">CPU CORES:</span> <span style="color: #fff;">${navigator.hardwareConcurrency || '?'}</span><br>
-                        <span style="color: #888;">MEMORY:</span> <span style="color: #fff;">${navigator.deviceMemory || '?'} GB</span><br>
-                        <span style="color: #555;">────────────────────────</span><br>
-                        <span style="color: #00ffff; font-size: 10px;">SYSTEM STABILITY: 99.9%</span>
-                    </div>
+<div style="border: 1px solid #00ffff; padding: 8px 12px; background: rgba(0, 255, 255, 0.05); border-radius: 6px; font-size: 8px; line-height: 0.9;">
+    <strong style="color: #00ffff; font-size: 10px;">// AKASHIC NEURAL LINK STATUS //</strong><br>
+    <span style="color: #555;">────────────────────────</span><br>
+    <span style="color: #888;">USER:</span> <span style="color: #fff;">Johan</span><br>
+    <span style="color: #888;">ACCESS:</span> ${authStatus}<br>
+    <span style="color: #888;">UPTIME:</span> <span style="color: #fff;">${uptimeStr}</span><br>
+    <span style="color: #888;">AUDIO FEED:</span> <span style="color: #ff00ff;">${currentFeed}</span><br>
+    <span style="color: #888;">VISUAL:</span> ${visualStatus}<br>
+    <span style="color: #888;">CPU CORES:</span> <span style="color: #fff;">${navigator.hardwareConcurrency || '?'}</span><br>
+    <span style="color: #888;">MEMORY:</span> <span style="color: #fff;">${navigator.deviceMemory || '?'} GB</span><br>
+    <span style="color: #555;">────────────────────────</span><br>
+    <span style="color: #00ffff; font-size: 10px;">SYSTEM STABILITY: 99.9%</span>
+</div>
                 `;
             },
             'tv': (args) => {
@@ -4795,11 +4800,11 @@
                         channelList += `<span onclick="fillInput('tv ${ch}')" style="cursor:pointer; text-decoration:underline; color:#ffdd00;">${ch}</span>  `;
                     }
                     return `
-                        <strong style="color: #00ffff;">📺 AKASHIC VISUAL UPLINK</strong><br>
-                        <span style="color: #888;">Available feeds:</span><br>
-                        ${channelList}<br><br>
-                        <span style="color: #00d0ff;">Usage:</span> <span style="color: #0f0;">tv &lt;channel&gt;</span><br>
-                        <span style="color: #888;">Example:</span> tv gumball
+<strong style="color: #00ffff;">📺 AKASHIC VISUAL UPLINK</strong><br>
+<span style="color: #888;">Available feeds:</span><br>
+${channelList}<br><br>
+<span style="color: #00d0ff;">Usage:</span> <span style="color: #0f0;">tv &lt;channel&gt;</span><br>
+<span style="color: #888;">Example:</span> tv gumball
                     `;
                 }
 
@@ -4917,7 +4922,9 @@
                 // personal curated list (HD where possible)
                 const channels = [
                     { name: '🌟 Curiosity Now', url: 'https://amg00170-curiositystream-amg00170c3-rakuten-us-2289.playouts.now.amagi.tv/ts-us-e2-n2/playlist/amg00170-curiositystreamllcfast-curiositynowrow-rakutenus/cb543d167e6c648e9dd43a60cef046a1f9591fde1d6988693eb5518975d1073edce2a59caa08ff16388f1ede7f0a66413a3e951fda77118fd87eb141453c5728cfffe729a2c05616b7db083429b56a062a866a68ac39437ed0e21f48a238b6720a5aa82a66443d80b846ac725adb80148b61299bce8c37683f03409a5e5afba358b1ebe70847d16da7e74f55902c4de09f43c8821da689d30ec85ed027f8469b93f88c811380d0f30a937f8a91869f430df8fa1bbde51fddf49f7d31996324471051f5d1e2942c19b3378fd8659db1d940ea01c19920fb007ddb52de2780412ff5781235b16480d4d7bd09a64f5db77b2b5785f0b285eb307c9c6be8b6eccf777d94ccd9192dc640d73822349cfc8441ca9355de812a8bb0660a2b80bf71dbcce2cdbfebcd7d952b9c93afd825141a2a4423964dae9f5ade2bf671bc8146720b0317fbda1defaeed731c2e0f8a8955d1533cbcd8808c964e18c2721457ed2f880f5d229c7a3c32b56dca9b3a6d9b2f45d0666ab50b63f23796d21bfca9dfea1128f58f97309841dbf55b82b852d32e563f25bcfd2b5340360df3e674023d7c8308a4e4c3ef730617ffb5aadac54033133607586edfb007112c2311997bbe9d36ab3266eefc2b741517b97e9252/42/1280x720_3329040/index.m3u8' },
+                    { name: '🔎 Mystery TV', url: 'https://aenetworks-mysterytv-rakuten.amagi.tv/playlist.m3u8' },
                     { name: '🎬 MovieSphere', url: 'https://moviesphereuk-samsunguk.amagi.tv/720p-vtt/index.m3u8' },
+                    { name: '🇨🇳 CGTN', url: 'https://amg00405-rakutentv-cgtn-rakuten-i9tar.amagi.tv/master.m3u8' },
                     { name: '📜 True History', url: 'https://linear-188.frequency.stream/dist/glewedtv/188/hls/master/playlist_1280x720.m3u8' },
                     { name: '🌌 Space Live (by SEN)', url: 'https://880ca9c9341c405f83d8664a18cc7134.mediatailor.us-west-2.amazonaws.com/v1/master/ba62fe743df0fe93366eba3a257d792884136c7f/LINEAR-1224-SPACELIVE-LG-UK/mt/lg-uk/1224/hls/master/playlist.m3u8' },
                     { name: '🍽️ Bon Appétit', url: 'https://bonappetit-samsung.amagi.tv/720p-vtt/index.m3u8' },
@@ -5132,7 +5139,7 @@
                     
                     // Simple flexbox layout – automatically wraps
                     let output = `
-                    <div style="margin: 10px 0; text-align: left; width: 100%;">
+                    <div style="margin: 10px 0; text-align: center; width: 100%;">
                         <b style="color:#0f0;">🖼️ GRABIMG: ${url}</b><br>
                         <span style="color:#ccc;">${images.length} unique images found.</span><br><br>
                         <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-start; padding: 0;">`;
@@ -5162,50 +5169,51 @@
             },
             'about': () => {
                 return `
-                    <div style="border-left: 2px solid #ff00ff; padding: 8px 12px; line-height: 1.5;">
-                        <span style="color: #ff00ff; font-weight: bold; text-shadow: 0 0 5px #ff00ff;">// AKASHIC ORIGIN //</span><br>
-                        <span style="color: #ccc;">J_OS began as a simple ambient clock. Its creator, <strong style="color: #fff;">Johan</strong>, wanted a single screen that could tell time, show beauty, and respond like a real operating system.</span><br><br>
-                        <span style="color: #ccc;">Soon it grew:</span>
-                        <span style="color: #00f0ff;">Cistercian numerals</span> met <span style="color: #ffaa00;">live NASA feeds</span>.
-                        <span style="color: #0f0;">Images and Tao chapters</span> were woven into neural <span style="color: #ff00ff;">"Intersect" flashes</span>.
-                        <span style="color: #ff0;">Radio streams</span> and <span style="color: #0ff;">global news feeds</span> became channels on a cybernetic console.<br><br>
-                        <span style="color: #ccc;;">Today, <strong style="color: #fff;">J_OS</strong> is a digital sanctuary for high-speed information retrieval, a remote intelligence gathering console,a hacker's command center, a philosopher's scroll, and an artist's canvas.</span><br><br>
-                        <span style="color: #888;">Type <span style="color: #0f0;">help</span> to explore. Enjoy!</span>
-                    </div>
+<div style="border-left: 2px solid #ff00ff; padding: 8px 12px; line-height: 1.5;">
+    <span style="color: #ff00ff; font-weight: bold; text-shadow: 0 0 5px #ff00ff;">// AKASHIC ORIGIN //</span><br>
+    <span style="color: #ccc;">J_OS began as a simple ambient clock. Its creator, <strong style="color: #fff;">Johan</strong>, wanted a single screen that could tell time, show beauty, and respond like a real operating system.</span><br><br>
+    <span style="color: #ccc;">Soon it grew:</span>
+    <span style="color: #00f0ff;">Cistercian numerals</span> met <span style="color: #ffaa00;">live NASA feeds</span>.
+    <span style="color: #0f0;">Images and Tao chapters</span> were woven into neural <span style="color: #ff00ff;">"Intersect" flashes</span>.
+    <span style="color: #ff0;">Radio streams</span> and <span style="color: #0ff;">global news feeds</span> became channels on a cybernetic console.<br><br>
+    <span style="color: #ccc;;">Today, <strong style="color: #fff;">J_OS</strong> is a digital sanctuary for high-speed information retrieval, a remote intelligence gathering console,a hacker's command center, a philosopher's scroll, and an artist's canvas.</span><br><br>
+    <span style="color: #888;">Type <span style="color: #0f0;">help</span> to explore. Enjoy!</span>
+</div>
                 `;
             },
             'login': () => {
                 isAuthorized = true;
                 return `
-                <pre class="login-art" style="color: #00ff00; text-shadow: 0 0 5px #00ff00;">
-                                    <span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">/\\</span>
-                                    <span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">/  \\</span>
-                                    <span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">/    \\</span>
-                                    <span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">/  <span style="color: #fff; text-shadow: 0 0 10px #fff;">◈</span>   \\</span>
-                                    <span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">/ /  \\   \\</span>
-                                    <span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">/ / <span style="color: #fff; text-shadow: 0 0 10px #fff;">()</span> \\   \\</span>
-                                    <span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">/ /______\\   \\</span>
-                                    <span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">/______________\\</span>
-                                    <span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">\\              /</span>
-                                    <span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">\\            /</span>
-                                    <span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">\\          /</span>
-                                    <span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">\\        /</span>
-                                    <span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">\\      /</span>
-                                    <span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">\\    /</span>
-                                    <span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">\\  /</span>
-                                    <span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">\\/</span>
+                <pre class="login-art" style="color: #00ff00; text-shadow: 0 0 5px #00ff00; text-align: center; display: block; margin: 0 auto;">
+<span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">/\\</span>
+<span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">/  \\</span>
+<span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">/    \\</span>
+<span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">/   <span style="color: #fff; text-shadow: 0 0 10px #fff;">◈</span>  \\</span>
+<span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">/  /  \\  \\</span>
+<span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">/  / <span style="color: #fff; text-shadow: 0 0 10px #fff;">()</span> \\  \\</span>
+<span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">/  /______\\  \\</span>
+<span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">/______________\\</span>
+<span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">\\              /</span>
+<span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">\\            /</span>
+<span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">\\          /</span>
+<span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">\\        /</span>
+<span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">\\      /</span>
+<span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">\\    /</span>
+<span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">\\  /</span>
+<span style="color: #00ffff; text-shadow: 0 0 8px #00ffff;">\\/</span>
 
-                        ██╗        ██████╗ ███████╗
-                        ██║       ██╔═══██╗██╔════╝
-                        ██║       ██║   ██║███████╗
-                    ██   ██║       ██║   ██║╚════██║
-                    ╚█████╔╝       ╚██████╔╝███████║
-                    ╚════╝         ╚═════╝ ╚══════╝
-                <span class="login-status-text" style="color: #00ffff; font-weight: bold; letter-spacing: 1px; text-shadow: 0 0 8px #00ffff;">// AKASHIC ZERO-POINT KRYPTOS NEURAL CENTER //</span>  
-                <span class="login-status-text">> SYNCING NEURAL PATHWAYS.................... [ STABLE ]
-                > DECRYPTING AKASHIC RECORDS................. [ VERIFIED ]
-                > WELCOME BACK.</span>
-                <span style="color: #ff03ff; text-shadow: none; display: block; margin-top: 2px;">Type 'about' for The story behind J_OS<br>Type 'help' for a list of commands</span>
+      ██╗      ██████╗ ███████╗
+      ██║     ██╔═══██╗██╔════╝
+      ██║     ██║   ██║███████╗
+██╗   ██║     ██║   ██║╚════██║
+╚██████╔╝     ╚██████╔╝███████║
+ ╚═════╝       ╚═════╝ ╚══════╝
+
+<span class="login-status-text" style="color: #00ffff; font-weight: bold; letter-spacing: 0.7px;text-shadow: 0 0 8px #00ffff;">   // AKASHIC ZERO-POINT KRYPTOS CENTER //</span>  
+<span class="login-status-text">> SYNCING PATHWAYS    ....... [STABLE] 
+> DECRYPTING RECORDS ....... [VERIFIED]
+> WELCOME</span>
+            <span style="color: #ff03ff; text-shadow: none; display: block;">Type 'about' for a story behind J_OS<br>Type 'help'  for a list of commands</span>
                 </pre>`;
             },
 
@@ -5489,15 +5497,16 @@
                 appendCommandHTML('<span style="color: #888;">[*] Scanning for wireless targets…</span>');
                 await new Promise(r => setTimeout(r, 2500));
                 commands['stopspinner']();
-                return `<pre style="color: #0ff; font-size: 10px;">
-            NUM  ESSID                   CH  ENCR  POWER   CLIENTS
-            ---  ----------------------  --  ----  -----   -------
-            [1]  Home_Network_5G         6   WPA2  -42db   3
-            [2]  Starbucks_WiFi          11  OPEN  -68db   12
-            [3]  Tesla_Guest             1   WPA2  -80db   0
-            [4]  Airport_Free_WiFi       36  OPEN  -55db   8
-            </pre>
-            <span style="color: #ffff00;">[!] Select target index to begin handshake capture…</span>`;
+                return `
+<pre style="color: #0ff; font-size: 10px;">
+NUM  ESSID                   CH  ENCR  POWER   CLIENTS
+---  ----------------------  --  ----  -----   -------
+[1]  Home_Network_5G         6   WPA2  -42db   3
+[2]  Starbucks_WiFi          11  OPEN  -68db   12
+[3]  Tesla_Guest             1   WPA2  -80db   0
+[4]  Airport_Free_WiFi       36  OPEN  -55db   8
+</pre>
+<span style="color: #ffff00;">[!] Select target index to begin handshake capture…</span>`;
             },
             'airmon': async (args) => {
                 const iface = args[0] || 'wlan0';
@@ -5594,16 +5603,17 @@
                 appendCommandHTML(`<span style="color: #0ff;">[~] Nmap scan report for ${target}</span>`);
                 await new Promise(r => setTimeout(r, 1500));
                 commands['stopspinner']();
-                return `<pre style="color: #0f0; font-size: 10px;">
-            PORT      STATE    SERVICE
-            22/tcp    open     ssh
-            80/tcp    open     http
-            443/tcp   closed   https
-            3306/tcp  open     mysql
-            8080/tcp  filtered http-proxy
-            MAC Address: XX:XX:XX:XX:XX:XX (Unknown)
-            </pre>
-            <span style="color: #0ff;">[!] Scan finished: 3 open ports.</span>`;
+                return `
+<pre style="color: #0f0; font-size: 10px;">
+PORT      STATE    SERVICE
+22/tcp    open     ssh
+80/tcp    open     http
+443/tcp   closed   https
+3306/tcp  open     mysql
+8080/tcp  filtered http-proxy
+MAC Address: XX:XX:XX:XX:XX:XX (Unknown)
+</pre>
+<span style="color: #0ff;">[!] Scan finished: 3 open ports.</span>`;
             },
             'flipper': (args) => {
                 const sub = args[0]?.toLowerCase();
@@ -5612,22 +5622,22 @@
                 if (sub === 'subghz') {
                     terminal.classList.add('flipper-theme');
                     return `
-            <div class="ascii-art" style="text-align: center;">
-                <pre>
-                    .-------.
-                   /   o   o \\
-                   |    _____  |
-                   \\  '-----' /
-                    '-------'
-                <-- "Hack the planet!"
-                </pre>
-                <b>FLIPPER ZERO – SUB‑GHZ EMULATOR</b><br>
-                Frequency: 433.92 MHz<br>
-                [~] Reading raw signal…<br>
-                [+] Signal captured: "Tesla_Charge_Open"<br>
-                [!] Emulating…<br>
-                <span style="color: #ff0;">Theme active. Type <b>flipper off</b> to exit.</span>
-            </div>`;
+                    <div class="ascii-art" style="text-align: center;">
+<pre>
+.-------.
+/   o   o \\
+|    _____  |
+\\  '-----' /
+'-------'
+<-- "Hack the planet!"
+</pre>
+<b>FLIPPER ZERO – SUB‑GHZ EMULATOR</b><br>
+Frequency: 433.92 MHz<br>
+[~] Reading raw signal…<br>
+[+] Signal captured: "Tesla_Charge_Open"<br>
+[!] Emulating…<br>
+<span style="color: #ff0;">Theme active. Type <b>flipper off</b> to exit.</span>
+                    </div>`;
                 }
 
                 if (sub === 'off') {
@@ -5638,65 +5648,65 @@
                 if (sub === 'nfc') {
                     return `
                     <div style="color: #ff8200; font-family: monospace; line-height: 1.1; text-align: center;">
-                        <pre style="color: #ff8200; display: inline-block; text-align: left;">
-                        (•)
-                         |
-                      ___|___
-                     |  ___  |
-                     | |___| |
-                     |_______|
-                        </pre>
-                        <br>
-                        <b>NFC READER ACTIVE</b><br>
-                        [~] Place tag on Flipper…<br>
-                        [+] UID: 04 A1 B2 C3 D4 E5<br>
-                        [+] SAK: 08 (MIFARE Classic 1K)<br>
-                        <span style="color: #ff0;">Type <b>flipper off</b> to exit Flipper mode.</span>
+<pre style="color: #ff8200; display: inline-block; text-align: center;">
+(•)
+|
+___|___
+|  ___  |
+| |___| |
+|_______|
+</pre>
+<br>
+<b>NFC READER ACTIVE</b><br>
+[~] Place tag on Flipper…<br>
+[+] UID: 04 A1 B2 C3 D4 E5<br>
+[+] SAK: 08 (MIFARE Classic 1K)<br>
+<span style="color: #ff0;">Type <b>flipper off</b> to exit Flipper mode.</span>
                     </div>`;
                 }
 
                 if (sub === 'badusb') {
-                    return`
-                        <div style="color: #ff8200; font-family: monospace; line-height: 1.1; text-align: center;">
-                        <pre style="color: #ff8200; display: inline-block; text-align: left;">
-                     _________________________
-                    | [  ]               (O) |
-                    |      _____________     |
-                    |     |             |    |
-                    |     |  FLIPPER    |  ^ |
-                    |     |   ZERO      | < >|
-                    |     |_____________|  v |
-                    |________________________|
-                        </pre>
-                        <br>
-                        <b>BADUSB MODE ACTIVE</b><br>
-                        [!] Injecting payload…<br>
-                        [*] Opening reverse shell on attacker IP…<br>
-                        [+] Connection established.<br>
-                        <span style="color: #ff0;">Type <b>flipper off</b> to exit Flipper mode.</span>
+                    return `
+                    <div style="color: #ff8200; font-family: monospace; line-height: 1.1; text-align: center;">
+<pre style="color: #ff8200; display: inline-block; text-align: center;">
+_________________________
+| [  ]               (O) |
+|      _____________     |
+|     |             |    |
+|     |  FLIPPER    |  ^ |
+|     |   ZERO      | < >|
+|     |_____________|  v |
+|________________________|
+</pre>
+<br>
+<b>BADUSB MODE ACTIVE</b><br>
+[!] Injecting payload…<br>
+[*] Opening reverse shell on attacker IP…<br>
+[+] Connection established.<br>
+<span style="color: #ff0;">Type <b>flipper off</b> to exit Flipper mode.</span>
                     </div>`;
-                    }
+                }
 
                 return `
                     <div style="color: #ff8200; font-family: monospace; line-height: 1.1; text-align: center;">
-                        <pre style="color: #ff8200; display: inline-block; text-align: left;">
-                      .-~~~-.
-                     /       \\
-                    |  O   O  |
-                    |    ^    |
-                      \\_____/
-                        </pre>
-                        <br>
-                        <b>FLIPPER ZERO – MULTI‑TOOL</b><br>
-                        <span style="color: #fff;">Available modules:</span><br>
-                        <span style="color: #0f0;">subghz</span> – Sub‑GHz emulator<br>
-                        <span style="color: #0f0;">nfc</span> – NFC card reader<br>
-                        <span style="color: #0f0;">badusb</span> – BadUSB injector<br>
-                        <span style="color: #0f0;">off</span> – Exit Flipper mode<br>
-                        <br>
-                        <span style="color: #888;">Example: flipper subghz</span>
-                        <br><br>
-                        <pre style="color: #ff8200; display: inline-block; text-align: left;">
+<pre style="color: #ff8200; display: inline-block; text-align: center;">
+.-~~~-.
+/       \\
+|  O   O  |
+|    ^    |
+\\_____/
+</pre>
+<br>
+<b>FLIPPER ZERO – MULTI‑TOOL</b><br>
+<span style="color: #fff;">Available modules:</span><br>
+<span style="color: #0f0;">subghz</span> – Sub‑GHz emulator<br>
+<span style="color: #0f0;">nfc</span> – NFC card reader<br>
+<span style="color: #0f0;">badusb</span> – BadUSB injector<br>
+<span style="color: #0f0;">off</span> – Exit Flipper mode<br>
+<br>
+<span style="color: #888;">Example: flipper subghz</span>
+<br><br>
+<pre style="color: #ff8200; display: inline-block; text-align: left;">
         __________      _                           
        / ____/ / /___  ____  ___  _____            
       / /_  / / / __ \\/ __ \\/ _ \\/ ___/            
@@ -5706,7 +5716,7 @@
                                      / / / /_/ / /_/ /
                                     / /_/ ____/ ____/ 
                                 /____/_/   /_/     
-                        </pre>
+</pre>
                     </div>`;
             },
             'zoom': (args) => {
@@ -5750,23 +5760,23 @@
                 const coreVolt = (Math.random() * 0.3 + 1.1).toFixed(2);
                 return `
             <div style="border-left: 3px solid #c51a4a; padding-left: 10px;">
-                <pre style="color: #c51a4a; line-height: 1.2; font-size: 9px;">
-                .~~.   .~~.
-                '. \\ ' ' / .'
-                 .~ .~~~..~.
-                : .~.'~'.~. :
-                ~ (   ) (   ) ~
-                ( : '~'.~.'~' : )
-                ~ .~ (   ) ~. ~
-                 (  : '~' :  )
-                 '~ .~~~. ~'
-                '~'
-                </pre>
-                <span style="color: #0f0;">CPU Temp:</span> ${cpuTemp}°C<br>
-                <span style="color: #0f0;">GPU Temp:</span> ${gpuTemp}°C<br>
-                <span style="color: #0f0;">Core Volt:</span> ${coreVolt}V<br>
-                <span style="color: #0f0;">Uptime:</span> ${uptime}<br>
-                <span style="color: #0f0;">GPIO Status:</span> 17 pins available<br>
+<pre style="color: #c51a4a; line-height: 1.2; font-size: 9px;">
+.~~.   .~~.
+'. \\ ' ' / .'
+.~ .~~~..~.
+: .~.'~'.~. :
+~ (   ) (   ) ~
+( : '~'.~.'~' : )
+~ .~ (   ) ~. ~
+(  : '~' :  )
+'~ .~~~. ~'
+'~'
+</pre>
+<span style="color: #0f0;">CPU Temp:</span> ${cpuTemp}°C<br>
+<span style="color: #0f0;">GPU Temp:</span> ${gpuTemp}°C<br>
+<span style="color: #0f0;">Core Volt:</span> ${coreVolt}V<br>
+<span style="color: #0f0;">Uptime:</span> ${uptime}<br>
+<span style="color: #0f0;">GPIO Status:</span> 17 pins available<br>
             </div>`;
             },
             'gpio': (args) => {
@@ -5779,22 +5789,22 @@
                     }
                     return `
             <div style="color: #0f0; font-family: monospace; line-height: 1.1;">
-                <pre style="color: #0f0; font-size: 8px; line-height: 1;">
-            +----------------------------+
-             |()2#################40() +---+
-             | 1#################39    |USB|
-             |#D  Pi Model B+ / 4  +-+ +---+
-             |#I       \\/      +--+| | +---+
-             |#S  ()()         |CAM+-+ |USB|
-             |#P  ()           +--+#   +---+
-             |#Y  #     +----+     |       |
-             |()+---+   |HDMI|   +-+  +--+ |
-             +--|PWR|---+----+---|V|--|NET|+
-              +---+            +-+  +--+
-                </pre>
-                <strong style="color: #00ff00;">GPIO STATUS</strong><br>
-                ${pins.slice(0, 10).join('<br>')}<br>
-                <span style="color: #888;">… and 30 more pins</span>
+<pre style="color: #0f0; font-size: 8px; line-height: 1;">
++----------------------------+
+|()2#################40() +---+
+| 1#################39    |USB|
+|#D  Pi Model B+ / 4  +-+ +---+
+|#I       \\/      +--+| | +---+
+|#S  ()()         |CAM+-+ |USB|
+|#P  ()           +--+#   +---+
+|#Y  #     +----+     |       |
+|()+---+   |HDMI|   +-+  +--+ |
++--|PWR|---+----+---|V|--|NET|+
++---+            +-+  +--+
+</pre>
+<strong style="color: #00ff00;">GPIO STATUS</strong><br>
+${pins.slice(0, 10).join('<br>')}<br>
+<span style="color: #888;">… and 30 more pins</span>
             </div>`;
                 }
                 if (sub === 'on' || sub === 'off') {
@@ -5982,14 +5992,14 @@
                 const r = riddles[Math.floor(Math.random() * riddles.length)];
                 
                 return `
-                    <div style="border-left: 2px solid #ffaa00; padding-left: 10px; margin: 5px 0;">
-                        🤔 <strong style="color: #ffaa00;">RIDDLE</strong><br>
-                        <span style="color: #ffffff;">${r.q}</span><br>
-                        <details style="margin-top: 8px; color: #888;">
-                            <summary style="cursor: pointer; color: #00f0ff;">Reveal Answer</summary>
-                            <span style="color: #4aff9e;">${r.a}</span>
-                        </details>
-                    </div>
+<div style="border-left: 2px solid #ffaa00; padding-left: 10px; margin: 5px 0;">
+    🤔 <strong style="color: #ffaa00;">RIDDLE</strong><br>
+    <span style="color: #ffffff;">${r.q}</span><br>
+    <details style="margin-top: 8px; color: #888;">
+        <summary style="cursor: pointer; color: #00f0ff;">Reveal Answer</summary>
+        <span style="color: #4aff9e;">${r.a}</span>
+    </details>
+</div>
                 `;
             },
             'learn': async () => {
@@ -6363,11 +6373,11 @@
                 const f = formulas[Math.floor(Math.random() * formulas.length)];
                 
                 return `
-                    <div style="border-left: 2px solid #00f0ff; padding-left: 10px; margin: 5px 0;">
-                        ⚛️ <strong style="color: #00f0ff;">${f.name.toUpperCase()}</strong><br>
-                        <span style="color: #fff; font-size: 1.1rem; font-family: 'Courier New', monospace;">${f.eq}</span><br>
-                        <span style="color: #888;">${f.desc}</span>
-                    </div>
+<div style="border-left: 2px solid #00f0ff; padding-left: 10px; margin: 5px 0;">
+    ⚛️ <strong style="color: #00f0ff;">${f.name.toUpperCase()}</strong><br>
+    <span style="color: #fff; font-size: 1.1rem; font-family: 'Courier New', monospace;">${f.eq}</span><br>
+    <span style="color: #888;">${f.desc}</span>
+</div>
                 `;
             },
             'biology': () => {
@@ -6561,18 +6571,18 @@
                 
                 if (item.type === 'formula') {
                     return `
-                        <div style="border-left: 2px solid #00ff00; padding-left: 10px; margin: 5px 0;">
-                            ⚡ <strong style="color: #00ff00;">${item.name.toUpperCase()}</strong><br>
-                            <span style="color: #fff; font-size: 1.1rem; font-family: 'Courier New', monospace;">${item.eq}</span><br>
-                            <span style="color: #888;">${item.desc}</span>
-                        </div>
+<div style="border-left: 2px solid #00ff00; padding-left: 10px; margin: 5px 0;">
+    ⚡ <strong style="color: #00ff00;">${item.name.toUpperCase()}</strong><br>
+    <span style="color: #fff; font-size: 1.1rem; font-family: 'Courier New', monospace;">${item.eq}</span><br>
+    <span style="color: #888;">${item.desc}</span>
+</div>
                     `;
                 } else {
                     return `
-                        <div style="border-left: 2px solid #00ff00; padding-left: 10px; margin: 5px 0;">
-                            ⚡ <strong style="color: #00ff00; font-size: 0.8rem;">DID YOU KNOW?</strong><br>
-                            <span style="color: #ffffff;">${item.desc}</span>
-                        </div>
+<div style="border-left: 2px solid #00ff00; padding-left: 10px; margin: 5px 0;">
+    ⚡ <strong style="color: #00ff00; font-size: 0.8rem;">DID YOU KNOW?</strong><br>
+    <span style="color: #ffffff;">${item.desc}</span>
+</div>
                     `;
                 }
             },
@@ -6603,49 +6613,49 @@
                 const f = facts[Math.floor(Math.random() * facts.length)];
                 
                 return `
-                    <div style="border-left: 2px solid #ffaa00; padding-left: 10px; margin: 5px 0;">
-                        ⚙️ <strong style="color: #ffaa00;">ENGINEERING FEAT</strong><br>
-                        <span style="color: #ffffff;">${f}</span>
-                    </div>
+<div style="border-left: 2px solid #ffaa00; padding-left: 10px; margin: 5px 0;">
+    ⚙️ <strong style="color: #ffaa00;">ENGINEERING FEAT</strong><br>
+    <span style="color: #ffffff;">${f}</span>
+</div>
                 `;
             },
             'case': (args) => {
                 if (args.length === 0) {
                     return `
-                        <div style="border: 1px solid #ffaa00; padding: 12px; border-radius: 6px; background: rgba(255,170,0,0.05);">
-                            <strong style="color: #ffaa00; font-size: 1.1rem;">🛠️ ENGINEERING CASE SIMULATOR</strong><br>
-                            <span style="color: #ccc;">A field toolkit for quick diagnostics, calculations, and decoding.</span><br><br>
-                            
-                            <strong style="color: var(--accent-color);">📋 QUICK REFERENCE</strong><br>
-                            <span style="color: #888;">Usage: case &lt;tool&gt; [parameters]</span><br><br>
-                            
-                            <strong style="color: #0f0;">⚡ LED Resistor</strong><br>
-                            <span onclick="fillInput('case resistor 12v led')" style="color: #fff;">case resistor 12v led</span> <span style="color: #888; cursor:pointer; text-decoration:underline;">→ calc resistor for 12V supply, 2V LED</span><br>
-                            <span style="color: #fff;">case resistor 9v 3.2v 0.02</span> <span style="color: #888;">→ custom LED (3.2V, 20mA)</span><br><br>
-                            
-                            <strong style="color: #0f0;">🎨 Resistor Color Decode</strong><br>
-                            <span onclick="fillInput('case decode brown black red')" style="color: #fff; cursor:pointer; text-decoration:underline;">case decode brown black red</span> <span style="color: #888;">→ 1kΩ ±5% (default gold)</span><br>
-                            <span style="color: #fff;">case decode yellow violet orange gold</span> <span style="color: #888;">→ 47kΩ ±5%</span><br><br>
-                            
-                            <strong style="color: #0f0;">🔌 Ohm's Law</strong><br>
-                            <span onclick="fillInput('case ohmslaw V 0.02 1000')" style="color: #fff; cursor:pointer; text-decoration:underline;">case ohmslaw V 0.02 1000</span> <span style="color: #888;">→ V = I × R (20mA × 1kΩ = 20V)</span><br>
-                            <span onclick="fillInput('case ohmslaw I 5 220')" style="color: #fff; cursor:pointer; text-decoration:underline;">case ohmslaw I 5 220</span> <span style="color: #888;">→ I = V / R (5V / 220Ω = 22.7mA)</span><br>
-                            <span onclick="fillInput('case ohmslaw R 12 0.5')" style="color: #fff; cursor:pointer; text-decoration:underline;">case ohmslaw R 12 0.5</span> <span style="color: #888;">→ R = V / I (12V / 0.5A = 24Ω)</span><br><br>
-                            
-                            <strong style="color: #0f0;">📊 Voltage Divider</strong><br>
-                            <span onclick="fillInput('case vdivider 5 10000 10000')" style="color: #fff; cursor:pointer; text-decoration:underline;">case vdivider 5 10000 10000</span> <span style="color: #888;">→ 5V with two 10kΩ → 2.5V out</span><br><br>
-                            
-                            <strong style="color: #0f0;">🔗 Series / Parallel</strong><br>
-                            <span onclick="fillInput('case series 100 220 330')" style="color: #fff; cursor:pointer; text-decoration:underline;">case series 100 220 330</span> <span style="color: #888;">→ 650Ω total</span><br>
-                            <span onclick="fillInput('case parallel 100 100')" style="color: #fff; cursor:pointer; text-decoration:underline;">case parallel 100 100</span> <span style="color: #888;">→ 50Ω total</span><br><br>
-                            
-                            <strong style="color: #0f0;">🔋 Capacitor Code</strong><br>
-                            <span onclick="fillInput('case capacitor 104')" style="color: #fff; cursor:pointer; text-decoration:underline;">case capacitor 104</span> <span style="color: #888;">→ 100nF (0.1µF)</span><br>
-                            <span onclick="fillInput('case capacitor 472')" style="color: #fff; cursor:pointer; text-decoration:underline;">case capacitor 472</span> <span style="color: #888;">→ 4.7nF</span><br><br>
-                            
-                            <span style="color: #888;">Type a command above to run diagnostics.</span>
-                        </div>
-                    `;
+<div style="border: 1px solid #ffaa00; padding: 12px; border-radius: 6px; background: rgba(255,170,0,0.05);">
+    <strong style="color: #ffaa00; font-size: 1.1rem;">🛠️ ENGINEERING CASE SIMULATOR</strong><br>
+    <span style="color: #ccc;">A field toolkit for quick diagnostics, calculations, and decoding.</span><br><br>
+    
+    <strong style="color: var(--accent-color);">📋 QUICK REFERENCE</strong><br>
+    <span style="color: #888;">Usage: case &lt;tool&gt; [parameters]</span><br><br>
+    
+    <strong style="color: #0f0;">⚡ LED Resistor</strong><br>
+    <span onclick="fillInput('case resistor 12v led')" style="color: #fff;">case resistor 12v led</span> <span style="color: #888; cursor:pointer; text-decoration:underline;">→ calc resistor for 12V supply, 2V LED</span><br>
+    <span style="color: #fff;">case resistor 9v 3.2v 0.02</span> <span style="color: #888;">→ custom LED (3.2V, 20mA)</span><br><br>
+    
+    <strong style="color: #0f0;">🎨 Resistor Color Decode</strong><br>
+    <span onclick="fillInput('case decode brown black red')" style="color: #fff; cursor:pointer; text-decoration:underline;">case decode brown black red</span> <span style="color: #888;">→ 1kΩ ±5% (default gold)</span><br>
+    <span style="color: #fff;">case decode yellow violet orange gold</span> <span style="color: #888;">→ 47kΩ ±5%</span><br><br>
+    
+    <strong style="color: #0f0;">🔌 Ohm's Law</strong><br>
+    <span onclick="fillInput('case ohmslaw V 0.02 1000')" style="color: #fff; cursor:pointer; text-decoration:underline;">case ohmslaw V 0.02 1000</span> <span style="color: #888;">→ V = I × R (20mA × 1kΩ = 20V)</span><br>
+    <span onclick="fillInput('case ohmslaw I 5 220')" style="color: #fff; cursor:pointer; text-decoration:underline;">case ohmslaw I 5 220</span> <span style="color: #888;">→ I = V / R (5V / 220Ω = 22.7mA)</span><br>
+    <span onclick="fillInput('case ohmslaw R 12 0.5')" style="color: #fff; cursor:pointer; text-decoration:underline;">case ohmslaw R 12 0.5</span> <span style="color: #888;">→ R = V / I (12V / 0.5A = 24Ω)</span><br><br>
+    
+    <strong style="color: #0f0;">📊 Voltage Divider</strong><br>
+    <span onclick="fillInput('case vdivider 5 10000 10000')" style="color: #fff; cursor:pointer; text-decoration:underline;">case vdivider 5 10000 10000</span> <span style="color: #888;">→ 5V with two 10kΩ → 2.5V out</span><br><br>
+    
+    <strong style="color: #0f0;">🔗 Series / Parallel</strong><br>
+    <span onclick="fillInput('case series 100 220 330')" style="color: #fff; cursor:pointer; text-decoration:underline;">case series 100 220 330</span> <span style="color: #888;">→ 650Ω total</span><br>
+    <span onclick="fillInput('case parallel 100 100')" style="color: #fff; cursor:pointer; text-decoration:underline;">case parallel 100 100</span> <span style="color: #888;">→ 50Ω total</span><br><br>
+    
+    <strong style="color: #0f0;">🔋 Capacitor Code</strong><br>
+    <span onclick="fillInput('case capacitor 104')" style="color: #fff; cursor:pointer; text-decoration:underline;">case capacitor 104</span> <span style="color: #888;">→ 100nF (0.1µF)</span><br>
+    <span onclick="fillInput('case capacitor 472')" style="color: #fff; cursor:pointer; text-decoration:underline;">case capacitor 472</span> <span style="color: #888;">→ 4.7nF</span><br><br>
+    
+    <span style="color: #888;">Type a command above to run diagnostics.</span>
+</div>
+`;
                 }
 
                 const tool = args[0].toLowerCase();
@@ -6679,11 +6689,11 @@
                     const formatted = val >= 1000 ? `${(val/1000).toFixed(1)}kΩ` : `${val}Ω`;
                     
                     return `
-                        <div style="border-left: 2px solid #ffaa00; padding-left: 10px;">
-                            🔍 <strong style="color: #ffaa00;">RESISTOR DECODE</strong><br>
-                            <span style="color: #fff;">${c1.toUpperCase()} (${colorMap[c1]}) | ${c2.toUpperCase()} (${colorMap[c2]}) | ${c3.toUpperCase()} (×${Math.pow(10, colorMap[c3])})</span><br>
-                            <span style="color: #00ff00;">📐 VALUE: ${formatted}  ${tolerance}</span>
-                        </div>
+<div style="border-left: 2px solid #ffaa00; padding-left: 10px;">
+    🔍 <strong style="color: #ffaa00;">RESISTOR DECODE</strong><br>
+    <span style="color: #fff;">${c1.toUpperCase()} (${colorMap[c1]}) | ${c2.toUpperCase()} (${colorMap[c2]}) | ${c3.toUpperCase()} (×${Math.pow(10, colorMap[c3])})</span><br>
+    <span style="color: #00ff00;">📐 VALUE: ${formatted}  ${tolerance}</span>
+</div>
                     `;
                 }
 
@@ -6708,10 +6718,10 @@
                     if (isNaN(ledV) || isNaN(ledI)) return '⚠️ Invalid LED parameters.';
                     if (supplyV <= ledV) {
                         return `
-                            <div style="border-left: 3px solid #888; padding-left: 10px;">
-                                🔌 <strong style="color: #888;">INSUFFICIENT POWER</strong><br>
-                                <span style="color: #fff;">Source (${supplyV}V) is below LED forward voltage (${ledV}V). No light emitted.</span>
-                            </div>
+<div style="border-left: 3px solid #888; padding-left: 10px;">
+    🔌 <strong style="color: #888;">INSUFFICIENT POWER</strong><br>
+    <span style="color: #fff;">Source (${supplyV}V) is below LED forward voltage (${ledV}V). No light emitted.</span>
+</div>
                         `;
                     }
                     
@@ -6768,10 +6778,10 @@
                     else return '⚠️ Unknown variable. Use V, I, or R.';
                     
                     return `
-                        <div style="border-left: 2px solid #00f0ff; padding-left: 10px;">
-                            ⚡ <strong style="color: #00f0ff;">OHM'S LAW</strong><br>
-                            <span style="color: #fff;">${solveFor} = ${result.toFixed(3)}</span>
-                        </div>
+<div style="border-left: 2px solid #00f0ff; padding-left: 10px;">
+    ⚡ <strong style="color: #00f0ff;">OHM'S LAW</strong><br>
+    <span style="color: #fff;">${solveFor} = ${result.toFixed(3)}</span>
+</div>
                     `;
                 }
 
@@ -6784,11 +6794,11 @@
                     if (isNaN(vin) || isNaN(r1) || isNaN(r2)) return '⚠️ Invalid numbers.';
                     const vout = vin * r2 / (r1 + r2);
                     return `
-                        <div style="border-left: 2px solid #ffaa00; padding-left: 10px;">
-                            🔌 <strong style="color: #ffaa00;">VOLTAGE DIVIDER</strong><br>
-                            <span style="color: #fff;">Vin = ${vin}V, R1 = ${r1}Ω, R2 = ${r2}Ω</span><br>
-                            <span style="color: #00ff00;">📊 Vout = ${vout.toFixed(3)}V</span>
-                        </div>
+<div style="border-left: 2px solid #ffaa00; padding-left: 10px;">
+    🔌 <strong style="color: #ffaa00;">VOLTAGE DIVIDER</strong><br>
+    <span style="color: #fff;">Vin = ${vin}V, R1 = ${r1}Ω, R2 = ${r2}Ω</span><br>
+    <span style="color: #00ff00;">📊 Vout = ${vout.toFixed(3)}V</span>
+</div>
                     `;
                 }
 
@@ -6799,11 +6809,11 @@
                     const invSum = resistors.reduce((sum, r) => sum + 1/r, 0);
                     const req = 1 / invSum;
                     return `
-                        <div style="border-left: 2px solid #ff00ff; padding-left: 10px;">
-                            🔗 <strong style="color: #ff00ff;">PARALLEL RESISTANCE</strong><br>
-                            <span style="color: #fff;">${resistors.join('Ω || ')}Ω</span><br>
-                            <span style="color: #00ff00;">📊 Equivalent: ${req.toFixed(3)}Ω</span>
-                        </div>
+<div style="border-left: 2px solid #ff00ff; padding-left: 10px;">
+    🔗 <strong style="color: #ff00ff;">PARALLEL RESISTANCE</strong><br>
+    <span style="color: #fff;">${resistors.join('Ω || ')}Ω</span><br>
+    <span style="color: #00ff00;">📊 Equivalent: ${req.toFixed(3)}Ω</span>
+</div>
                     `;
                 }
 
@@ -6813,11 +6823,11 @@
                     if (resistors.length < 2) return '⚠️ Need at least two resistor values.';
                     const req = resistors.reduce((sum, r) => sum + r, 0);
                     return `
-                        <div style="border-left: 2px solid #ff00ff; padding-left: 10px;">
-                            🔗 <strong style="color: #ff00ff;">SERIES RESISTANCE</strong><br>
-                            <span style="color: #fff;">${resistors.join('Ω + ')}Ω</span><br>
-                            <span style="color: #00ff00;">📊 Equivalent: ${req.toFixed(3)}Ω</span>
-                        </div>
+<div style="border-left: 2px solid #ff00ff; padding-left: 10px;">
+    🔗 <strong style="color: #ff00ff;">SERIES RESISTANCE</strong><br>
+    <span style="color: #fff;">${resistors.join('Ω + ')}Ω</span><br>
+    <span style="color: #00ff00;">📊 Equivalent: ${req.toFixed(3)}Ω</span>
+</div>
                     `;
                 }
 
@@ -6829,11 +6839,11 @@
                     const nF = pF / 1000;
                     const uF = pF / 1000000;
                     return `
-                        <div style="border-left: 2px solid #ffff00; padding-left: 10px;">
-                            🔋 <strong style="color: #ffff00;">CAPACITOR DECODE</strong><br>
-                            <span style="color: #fff;">Code: ${code}</span><br>
-                            <span style="color: #00ff00;">📊 ${pF}pF = ${nF.toFixed(2)}nF = ${uF.toFixed(3)}µF</span>
-                        </div>
+<div style="border-left: 2px solid #ffff00; padding-left: 10px;">
+    🔋 <strong style="color: #ffff00;">CAPACITOR DECODE</strong><br>
+    <span style="color: #fff;">Code: ${code}</span><br>
+    <span style="color: #00ff00;">📊 ${pF}pF = ${nF.toFixed(2)}nF = ${uF.toFixed(3)}µF</span>
+</div>
                     `;
                 }
 
