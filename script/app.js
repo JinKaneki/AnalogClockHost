@@ -1958,6 +1958,26 @@
             cmdOutput.scrollTop = cmdOutput.scrollHeight;
         }
     
+        function typewriterWelcome() {
+            const welcomeSpan = document.getElementById('login-welcome');
+            if (!welcomeSpan) return;
+            
+            const text = "> WEEEEEEEELLLLLLLCOOOOOOOOOMMMMMMMMME!";
+            let i = 0;
+            welcomeSpan.textContent = "";  // clear placeholder
+            
+            function typeNext() {
+                if (i < text.length) {
+                    welcomeSpan.textContent += text[i];
+                    i++;
+                    setTimeout(typeNext, 80); // speed
+                    // Auto-scroll the terminal output
+                    const cmdOut = document.getElementById('cmd-output');
+                    if (cmdOut) cmdOut.scrollTop = cmdOut.scrollHeight;
+                }
+            }
+            typeNext();
+        }
 
        openCmdBtn.addEventListener('click', () => {
             cmdRunnerDiv.style.display = 'block';
@@ -1973,6 +1993,9 @@
                 
                 // 1. Inject the login splash
                 appendCommandHTML(commands['login']());
+
+                // Trigger typewriter after the HTML is inserted
+                setTimeout(() => typewriterWelcome(), 50);
             }
             
             cmdInput.focus();
@@ -1998,6 +2021,17 @@
 
         // Global command history array
         let commandHistory = [];
+
+        // Helper to escape HTML special characters
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
 
         // ---------- COMMAND MAP (Sync + Async) ----------
         const commands = {
@@ -2404,7 +2438,7 @@ slide [src|next|prev|pause|resume] : Control the overlay slideshow<br>
                     "📡 ONYX Console: All systems nominal.",
                     "📡 Phantom Shell secure. No threats detected.",
                     "📡 Signal-9 Kiosk: Awaiting input.",
-                    "🌀 You are the observer and the observed.",
+                    "🍁 You are the observer and the observed.",
                     "✨ The terminal is a mirror. What do you see?",
                 ];
                 const msg = motds[Math.floor(Math.random() * motds.length)];
@@ -2727,7 +2761,11 @@ slide [src|next|prev|pause|resume] : Control the overlay slideshow<br>
                     client.on('message', (topic, message) => {
                         const msg = message.toString();
                         if (window._mqttLastSent === msg) { window._mqttLastSent = null; return; }
-                        logDiv.innerHTML += `<div>${msg}</div>`;
+                        
+                        // Safe DOM creation – no innerHTML for untrusted content
+                        const msgDiv = document.createElement('div');
+                        msgDiv.textContent = msg;   // escapes any HTML
+                        logDiv.appendChild(msgDiv);
                         logDiv.scrollTop = logDiv.scrollHeight;
                     });
 
@@ -2856,9 +2894,11 @@ slide [src|next|prev|pause|resume] : Control the overlay slideshow<br>
                             setStatus('Connected', '#0f0');
                         });
                         connection.on('data', (data) => {
-                            logDiv.innerHTML += `<div>${data}</div>`;
+                            const msgDiv = document.createElement('div');
+                            msgDiv.textContent = data;   // escapes any HTML
+                            logDiv.appendChild(msgDiv);
                             logDiv.scrollTop = logDiv.scrollHeight;
-                        });
+                        })
                         connection.on('close', () => {
                             logDiv.innerHTML += '<div style="color:#f00;">🔌 Tunnel closed.</div>';
                             setStatus('Disconnected', '#f00');
@@ -2898,10 +2938,10 @@ slide [src|next|prev|pause|resume] : Control the overlay slideshow<br>
                 }
                 // 3. Firebase – The Mainframe Archive (Amber #fca311)
                 if (sub === 'firebase') {
+                    // Remove existing chat UI and detach listener to avoid duplicates
                     const old = document.getElementById('firebase-chat-box');
                     if (old) {
-                        // Critical: remove previous listener to prevent duplicate messages
-                        if (window._chatRef) window._chatRef.off();
+                        if (window._chatRef) window._chatRef.off(); // detach previous listener
                         old.remove();
                     }
 
@@ -2910,16 +2950,19 @@ slide [src|next|prev|pause|resume] : Control the overlay slideshow<br>
                         return '';
                     }
 
+                    // Create chat container
                     const output = document.getElementById('cmd-output');
                     const container = document.createElement('div');
                     container.id = 'firebase-chat-box';
                     container.style.cssText = 'border: 1px solid #fca311; padding: 10px; margin-top: 10px;';
 
+                    // Log area (message display)
                     const logDiv = document.createElement('div');
                     logDiv.id = 'firebase-log';
                     logDiv.style.cssText = 'height:150px; overflow-y:auto; font-family:monospace; font-size:12px; background:#111; color:#fca311; padding:5px; margin-bottom:8px;';
                     container.appendChild(logDiv);
 
+                    // Input row
                     const msgRow = document.createElement('div');
                     msgRow.style.cssText = 'display:flex;';
                     const msgInput = document.createElement('input');
@@ -2932,36 +2975,80 @@ slide [src|next|prev|pause|resume] : Control the overlay slideshow<br>
                     msgRow.appendChild(msgInput);
                     msgRow.appendChild(sendBtn);
                     container.appendChild(msgRow);
-
                     output.appendChild(container);
 
-                    // Node ID for the archive
+                    // Unique node ID for this user
                     const nodeId = 'ARCH-' + Math.random().toString(16).slice(2, 5).toUpperCase();
 
-                    // Reference to chat messages
-                    const chatRef = window.db.ref('elitegdx/chat');
-                    window._chatRef = chatRef;
+                    // ---------- DATABASE REFERENCES ----------
+                    // Write reference – used to push new messages
+                    const writeRef = window.db.ref('elitegdx/chat');
+                    // Read reference – ordered by timestamp, limited to last 50
+                    const readRef = writeRef.orderByChild('timestamp').limitToLast(50);
+                    window._chatRef = readRef;  // store for cleanup later
 
-                    chatRef.limitToLast(20).on('child_added', (snap) => {
+                    let lastDate = null;  // track date changes to insert headers
+
+                    // Listen for new messages (and existing ones)
+                    readRef.on('child_added', (snap) => {
                         const msg = snap.val();
-                        logDiv.innerHTML += `<div><span style="color:#888;">[${msg.time}]</span> <b style="color:#fff;">${msg.user}:</b> ${msg.text}</div>`;
-                        logDiv.scrollTop = logDiv.scrollHeight;
+                        const logDivNow = document.getElementById('firebase-log');
+                        if (!logDivNow) return;
+
+                        // Insert date header if the message's date is different from the last one
+                        if (msg.date && lastDate !== msg.date) {
+                            const dateHeader = document.createElement('div');
+                            dateHeader.style.cssText = 'color: #ffaa00; font-weight: bold; margin-top: 8px; border-bottom: 1px solid #fca311;';
+                            dateHeader.textContent = `📅 ${msg.date}`;
+                            logDivNow.appendChild(dateHeader);
+                            lastDate = msg.date;
+                        }
+
+                        // Create message div safely (no innerHTML for user content)
+                        const msgDiv = document.createElement('div');
+
+                        // Time span
+                        const timeSpan = document.createElement('span');
+                        timeSpan.style.color = '#888';
+                        timeSpan.textContent = `[${msg.time}] `;
+
+                        // Username (bold)
+                        const userB = document.createElement('b');
+                        userB.style.color = '#fff';
+                        userB.textContent = `${msg.user}: `;
+
+                        // Message text (safe)
+                        const textNode = document.createTextNode(msg.text);
+
+                        // Assemble
+                        msgDiv.appendChild(timeSpan);
+                        msgDiv.appendChild(userB);
+                        msgDiv.appendChild(textNode);
+                        logDivNow.appendChild(msgDiv);
+                        logDivNow.scrollTop = logDivNow.scrollHeight;
                     });
 
+                    // Function to send a new message
                     const sendMessage = () => {
                         const text = msgInput.value.trim();
                         if (!text) return;
-                        chatRef.push({
+                        const now = new Date();
+                        // Push to the write reference (not the read query)
+                        writeRef.push({
                             user: nodeId,
                             text: text,
-                            time: new Date().toLocaleTimeString()
+                            timestamp: now.getTime(),
+                            date: now.toLocaleDateString(),
+                            time: now.toLocaleTimeString()
                         });
                         msgInput.value = '';
                         msgInput.focus();
                     };
 
                     sendBtn.addEventListener('click', sendMessage);
-                    msgInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
+                    msgInput.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') sendMessage();
+                    });
 
                     return '';
                 }
@@ -4517,16 +4604,16 @@ O
                 startRpgPlaylist();
 
                 appendCommandHTML(`
-                    <div style="border-left: 3px solid #ff00ff; padding-left: 10px; line-height: 1.4;">
-                        <b style="color: #ff00ff;">[ AKASHIC INTRUSION DETECTED ]</b><br>
-                        You are <span style="color: #0ff;">Neo‑J</span>, a neural operative wired into the Akashic mainframe.
-                        A rogue AI named <span style="color: #f00;">KRYPTOS</span> has locked you out. You must break back in.<br><br>
-                        <span style="color: #0f0;">[1]</span> Attempt to bypass the firewall<br>
-                        <span style="color: #0f0;">[2]</span> Search for a backdoor access point<br>
-                        <span style="color: #0f0;">[3]</span> Run a diagnostic on your neural link
-                    </div>
-                    <span style="color: #888;">Type a number and press Enter.</span>
-                    <span style="color: #ffbf00;">type 'exit' to exit the RPG mode</span>
+<div style="border-left: 3px solid #ff00ff; padding-left: 10px; line-height: 1.4;">
+    <b style="color: #ff00ff;">[ AKASHIC INTRUSION DETECTED ]</b><br>
+    You are <span style="color: #0ff;">Neo‑J</span>, a neural operative wired into the Akashic mainframe.
+    A rogue AI named <span style="color: #f00;">KRYPTOS</span> has locked you out. You must break back in.<br><br>
+    <span style="color: #0f0;">[1]</span> Attempt to bypass the firewall<br>
+    <span style="color: #0f0;">[2]</span> Search for a backdoor access point<br>
+    <span style="color: #0f0;">[3]</span> Run a diagnostic on your neural link
+</div>
+<span style="color: #888;">Type a number and press Enter.</span>
+<span style="color: #ffbf00;">type 'exit' to exit the RPG mode</span>
                 `);
                 return '';
             },
@@ -4969,15 +5056,20 @@ ${channelList}<br><br>
                     
                     if (!cleanText) return '⚠️ No readable text found.';
                     
-                    // Scrollable box for long content
-                    return `
-                    <div style="border-left: 3px solid #0f0; padding-left: 10px; margin: 10px 0;">
-                        <b style="color: #0f0;">🔍 REMOTE VIEW: ${url}</b><br>
-                        <div style="max-height: 400px; overflow-y: auto; background: #0a0a0a; padding: 8px; border-radius: 6px;">
-                            <span style="color: #ccc; font-size: 0.9rem; line-height: 1.4;">${cleanText}</span>
-                        </div>
-                        <span style="color: #888;">(Full page text – scroll inside the box if needed)</span>
-                    </div>`;
+                    const container = document.createElement('div');
+                    container.style.cssText = 'border-left: 3px solid #0f0; padding-left: 10px; margin: 10px 0;';
+                    const title = document.createElement('b');
+                    title.style.color = '#0f0';
+                    title.textContent = `🔍 REMOTE VIEW: ${url}`;
+                    const textSpan = document.createElement('span');
+                    textSpan.style.color = '#ccc';
+                    textSpan.style.fontSize = '0.9rem';
+                    textSpan.style.lineHeight = '1.4';
+                    textSpan.textContent = cleanText;
+                    container.appendChild(title);
+                    container.appendChild(document.createElement('br'));
+                    container.appendChild(textSpan);
+                    return container.outerHTML;
                 } catch (err) {
                     return `⚠️ Remote viewing failed: ${err.message}`;
                 }
@@ -5028,8 +5120,8 @@ ${channelList}<br><br>
                             allow="fullscreen">
                         </iframe>
                     </div>
-                    <div style="background: #111; padding: 6px; text-align: center; color: #888; font-size: 10px;">
-                        If blank, site blocks iframes → use ESCAPE.
+                    <div style="background: #111; padding: 5px; text-align: center; color: #888; font-size: 6px;">
+                        If blank, site blocks iframes: use ESCAPE.
                     </div>
                 </div>`;
             },
@@ -5075,20 +5167,20 @@ ${channelList}<br><br>
                     
                     // Build output
                     let output = `
-                    <div style="border-left: 3px solid #ffaa00; padding-left: 10px; margin: 10px 0;">
-                        <b style="color: #ffaa00;">📄 PAGE METADATA: ${url}</b><br>
-                        <b>🌐 Title:</b> ${title}<br>
-                        <b>📝 Description:</b> ${description}<br>
-                        <b>🏷️ Keywords:</b> ${keywords}<br>
-                        <b>✍️ Author:</b> ${author || 'Not specified'}<br>
-                        <b>🔗 Canonical:</b> <a href="${canonical}" target="_blank">${canonical}</a><br>
-                        <b>🌍 Language:</b> ${lang}<br>`;
-                    
-                    if (ogTitle) output += `<b>📱 Open Graph Title:</b> ${ogTitle}<br>`;
-                    if (ogSite) output += `<b>🏢 Site Name:</b> ${ogSite}<br>`;
-                    if (ogImage) output += `<b>🖼️ OG Image:</b> <a href="${ogImage}" target="_blank">${ogImage.substring(0, 60)}...</a><br>`;
-                    if (twitterCard) output += `<b>🐦 Twitter Card:</b> ${twitterCard} ${twitterSite ? '(' + twitterSite + ')' : ''}<br>`;
-                    if (viewport) output += `<b>📱 Viewport:</b> ${viewport}<br>`;
+<div style="border-left: 3px solid #ffaa00; padding-left: 10px; margin: 10px 0;">
+    <b style="color: #ffaa00;">📄 PAGE METADATA: ${url}</b><br>
+    <b>🌐 Title:</b> ${title}<br>
+    <b>📝 Description:</b> ${description}<br>
+    <b>🏷️ Keywords:</b> ${keywords}<br>
+    <b>✍️ Author:</b> ${author || 'Not specified'}<br>
+    <b>🔗 Canonical:</b> <a href="${canonical}" target="_blank">${canonical}</a><br>
+    <b>🌍 Language:</b> ${lang}<br>`;
+
+if (ogTitle) output += `<b>📱 Open Graph Title:</b> ${ogTitle}<br>`;
+if (ogSite) output += `<b>🏢 Site Name:</b> ${ogSite}<br>`;
+if (ogImage) output += `<b>🖼️ OG Image:</b> <a href="${ogImage}" target="_blank">${ogImage.substring(0, 60)}...</a><br>`;
+if (twitterCard) output += `<b>🐦 Twitter Card:</b> ${twitterCard} ${twitterSite ? '(' + twitterSite + ')' : ''}<br>`;
+if (viewport) output += `<b>📱 Viewport:</b> ${viewport}<br>`;
                     
                     output += `</div>`;
                     return output;
@@ -5139,20 +5231,20 @@ ${channelList}<br><br>
                     
                     // Simple flexbox layout – automatically wraps
                     let output = `
-                    <div style="margin: 10px 0; text-align: center; width: 100%;">
-                        <b style="color:#0f0;">🖼️ GRABIMG: ${url}</b><br>
-                        <span style="color:#ccc;">${images.length} unique images found.</span><br><br>
-                        <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-start; padding: 0;">`;
-                    
-                    displayImages.forEach((imgUrl, i) => {
-                        output += `
-                            <div style="display: flex; flex-direction: column; align-items: center; width: 80px;">
-                                <a href="${imgUrl}" target="_blank" rel="noopener noreferrer" style="display: block; width: 80px; height: 80px; border: 1px solid var(--accent-color); border-radius: 4px; overflow: hidden; background: #111;">
-                                    <img src="${imgUrl}" style="width: 100%; height: 100%; object-fit: cover;" 
-                                        onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22%3E%3Crect width=%22100%25%22 height=%22100%25%22 fill=%22%23333%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23aaa%22 dy=%22.3em%22%3E404%3C/text%3E%3C/svg%3E';">
-                                </a>
-                                <a href="${imgUrl}" target="_blank" style="color: #0ff; font-size: 10px; margin-top: 4px; text-decoration: none;">Img ${i+1}</a>
-                            </div>`;
+<div style="margin: 10px 0; text-align: center; width: 100%;">
+    <b style="color:#0f0;">🖼️ GRABIMG: ${url}</b><br>
+    <span style="color:#ccc;">${images.length} unique images found.</span><br><br>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-start; padding: 0;">`;
+
+    displayImages.forEach((imgUrl, i) => {
+    output += `
+    <div style="display: flex; flex-direction: column; align-items: center; width: 80px;">
+    <a href="${imgUrl}" target="_blank" rel="noopener noreferrer" style="display: block; width: 80px; height: 80px; border: 1px solid var(--accent-color); border-radius: 4px; overflow: hidden; background: #111;">
+    <img src="${imgUrl}" style="width: 100%; height: 100%; object-fit: cover;" 
+    onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22%3E%3Crect width=%22100%25%22 height=%22100%25%22 fill=%22%23333%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23aaa%22 dy=%22.3em%22%3E404%3C/text%3E%3C/svg%3E';">
+    </a>
+    <a href="${imgUrl}" target="_blank" style="color: #0ff; font-size: 10px; margin-top: 4px; text-decoration: none;">Img ${i+1}</a>
+</div>`;
                     });
                     
                     output += `</div>`;
@@ -5206,14 +5298,13 @@ ${channelList}<br><br>
       ██║     ██╔═══██╗██╔════╝
       ██║     ██║   ██║███████╗
 ██╗   ██║     ██║   ██║╚════██║
-╚██████╔╝     ╚██████╔╝███████║
- ╚═════╝       ╚═════╝ ╚══════╝
-
-<span class="login-status-text" style="color: #00ffff; font-weight: bold; letter-spacing: 0.7px;text-shadow: 0 0 8px #00ffff;">   // AKASHIC ZERO-POINT KRYPTOS CENTER //</span>  
+╚██████╔╝████╗╚██████╔╝███████║
+ ╚═════╝ ╚═══╝ ╚═════╝ ╚══════╝
+<span class="login-status-text" style="color: #00ffff; font-weight: bold; letter-spacing: 0.7px;text-shadow: 0 0 8px #00ffff;">  // AKASHIC ZERO-POINT KRYPTOS N CENTER //</span>  
 <span class="login-status-text">> SYNCING PATHWAYS    ....... [STABLE] 
 > DECRYPTING RECORDS ....... [VERIFIED]
-> WELCOME</span>
-            <span style="color: #ff03ff; text-shadow: none; display: block;">Type 'about' for a story behind J_OS<br>Type 'help'  for a list of commands</span>
+<span id="login-welcome" style="color: #ffff00; display: block;"></span>
+<span style="color: #ff03ff; text-shadow: none; display: block;">Type 'about' for a story behind J_OS<br>Type 'help'  for a list of commands</span>
                 </pre>`;
             },
 
@@ -5376,11 +5467,11 @@ ${channelList}<br><br>
                     loadingLine.remove();
 
                     let outputHtml = `
-                        <div style="border-left: 2px solid #ffaa00; padding: 10px; margin: 10px 0; background: rgba(255,170,0,0.05); border-radius: 4px; font-size: 1.1rem;">
-                            🌍 <strong style="color: #ffaa00;">${name}, ${country}</strong><br>
-                            <span style="font-size: 1.3rem;">${emoji}  ${temp}°C</span><br>
-                            <span style="color: #aaa;">Wind: ${wind} km/h</span>
-                        </div>`;
+<div style="border-left: 2px solid #ffaa00; padding: 10px; margin: 10px 0; background: rgba(255,170,0,0.05); border-radius: 4px; font-size: 1.1rem;">
+    🌍 <strong style="color: #ffaa00;">${name}, ${country}</strong><br>
+    <span style="font-size: 1.3rem;">${emoji}  ${temp}°C</span><br>
+    <span style="color: #aaa;">Wind: ${wind} km/h</span>
+</div>`;
 
                     // If no city was given, add relevant hints
                     if (!city) {
@@ -5406,47 +5497,44 @@ ${channelList}<br><br>
                     if (!resp.ok) throw new Error('Not found');
                     const data = await resp.json();
 
-                    let output = `<strong style="color: var(--accent-color);">📘 ${word}</strong>`;
+                    let output = `<strong style="color: var(--accent-color);">📘 ${escapeHtml(word)}</strong>`;
 
-                    // Loop through each separate entry (e.g., "jack" as a name, "jack" as a device)
                     data.forEach((entry, entryIndex) => {
-                        // Add a separator between different word origins
                         if (entryIndex > 0) output += `<br><span style="color: #555;">──────────</span>`;
 
-                        // Add phonetics if available
                         const phonetic = entry.phonetics?.find(p => p.text) || entry.phonetics?.[0];
                         if (phonetic?.text) {
-                            output += `<br><span style="color: #888;">/${phonetic.text}/</span>`;
+                            output += `<br><span style="color: #888;">/${escapeHtml(phonetic.text)}/</span>`;
                         }
 
-                        // Process each part of speech for this entry
                         entry.meanings.forEach(meaning => {
-                            output += `<br><br><strong style="color: #ffaa00;">${meaning.partOfSpeech}</strong>`;
-                            
+                            output += `<br><br><strong style="color: #ffaa00;">${escapeHtml(meaning.partOfSpeech)}</strong>`;
+
                             meaning.definitions.forEach((def, i) => {
-                                output += `<br>  ${i + 1}. ${def.definition}`;
+                                output += `<br>  ${i + 1}. ${escapeHtml(def.definition)}`;
                                 if (def.example) {
-                                    output += `<br><span style="color: #666;">     “${def.example}”</span>`;
+                                    output += `<br><span style="color: #666;">     “${escapeHtml(def.example)}”</span>`;
                                 }
                             });
 
                             if (meaning.synonyms?.length) {
-                                output += `<br>  <span style="color: #0f0;">Synonyms:</span> ${meaning.synonyms.join(', ')}`;
+                                const escapedSynonyms = meaning.synonyms.map(s => escapeHtml(s)).join(', ');
+                                output += `<br>  <span style="color: #0f0;">Synonyms:</span> ${escapedSynonyms}`;
                             }
                             if (meaning.antonyms?.length) {
-                                output += `<br>  <span style="color: #f55;">Antonyms:</span> ${meaning.antonyms.join(', ')}`;
+                                const escapedAntonyms = meaning.antonyms.map(a => escapeHtml(a)).join(', ');
+                                output += `<br>  <span style="color: #f55;">Antonyms:</span> ${escapedAntonyms}`;
                             }
                         });
                     });
 
-                    // Add source attribution
                     if (data[0]?.sourceUrls?.length) {
-                        output += `<br><br><span style="color: #555; font-size: 0.7rem;">Source: ${data[0].sourceUrls[0]}</span>`;
+                        output += `<br><br><span style="color: #555; font-size: 0.7rem;">Source: ${escapeHtml(data[0].sourceUrls[0])}</span>`;
                     }
 
                     return output;
                 } catch (e) {
-                    return `Could not define "${word}".`;
+                    return `Could not define "${escapeHtml(word)}".`;
                 }
             },
             'wiki': async (args) => {
@@ -5461,10 +5549,24 @@ ${channelList}<br><br>
                         return '⚠️ Topic too broad or not found.';
                     }
                     commands['stopspinner']();
-                    return `<div style="border-left: 3px solid #3498db; padding-left: 10px; line-height: 1.4;">
-                                <b style="color: #3498db; font-size: 1.2em;">${data.title}</b><br><br>
-                                <span style="color: #ccc;">${data.extract}</span>
-                            </div>`;
+
+                    // Build safe DOM elements (textContent prevents XSS)
+                    const extractDiv = document.createElement('div');
+                    extractDiv.style.cssText = 'border-left: 3px solid #3498db; padding-left: 10px; line-height: 1.4;';
+                    
+                    const title = document.createElement('b');
+                    title.style.cssText = 'color: #3498db; font-size: 1.2em;';
+                    title.textContent = data.title;
+                    
+                    const extractText = document.createElement('span');
+                    extractText.style.color = '#ccc';
+                    extractText.textContent = data.extract;
+                    
+                    extractDiv.appendChild(title);
+                    extractDiv.appendChild(document.createElement('br'));
+                    extractDiv.appendChild(extractText);
+                    
+                    return extractDiv.outerHTML;  // safe HTML from DOM
                 } catch (e) {
                     commands['stopspinner']();
                     return '⚠️ Wikipedia uplink failed.';

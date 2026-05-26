@@ -787,25 +787,26 @@
         <button id="magic-mirror-btn"  class="mirror-mode-btn">Enter Mirror Mode</button>
     </div>
     
-    <!-- Fastfetch‑style system info panel -->
+    <!-- neofetch‑style system info panel -->
     <div style="text-align: center; margin: 20px auto;">
         <button id="toggle-fetch-btn" class="action-btn">🖥️ RUN JOHAN_OS</button>
     </div>
 
     <div id="neofetch-container" style="visibility: hidden; font-family: 'Courier New', monospace; background: rgba(0, 0, 0, 0.502); backdrop-filter: blur(2px); border: 1px solid var(--accent-color); border-radius: 32px; padding: 20px; width: fit-content; max-width: 95%; margin: 0 auto; display: flex; flex-wrap: nowrap; align-items: center; justify-content: center; gap: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.5);">
-        <pre id="ascii-art" style="margin: 10px;padding: 10px; color: #ff00ff; font-size: 15px; line-height: 1.3; white-space: pre;">
-     _  ____  _   _   _   _   _    ____  ____      \   /
-       | |/ __ \| | | | / \ | \ | |  / __ \/ ___|  --  \ /  --
-    _  | | |  | | |_| |/ _ \|  \| |  ||  | \___ \  (  \ | /  )
-  | |_| | |__| |  _  / ___ \ |\  |__||__| |___)|   \  \|/  /
-  \____/\____/|_| |__/  \__\  \_|_______/____/     -- | --
-        
-        </pre>
-        <p style="font-family: 'Segoe UI'; font-size: 10px; color: rgb(255, 255, 0);white-space: nowrap;">[@ @]<br> -</p>
-        <div id="system-info" style="border-left: 1px solid var(--accent-color);color: orange; padding-left: 20px; font-size: 0.85rem; line-height: 1.4;">
+<pre id="ascii-art" style="margin: 10px; padding: 10px; color: #ff00ff; font-size: 15px; line-height: 1.2; white-space: pre; text-align: left;">
+      ██╗ ██████╗ ██╗  ██╗ █████╗ ███╗   ██╗       ██████╗ ███████╗🍁   \^^^/   🍁
+      ██║██╔═══██╗██║  ██║██╔══██╗████╗  ██║      ██╔═══██╗██╔════╝🍁 __ \ / __ 🍁
+      ██║██║   ██║███████║███████║██╔██╗ ██║      ██║   ██║███████╗🍁(  \ | /  )🍁
+ ██   ██║██║   ██║██╔══██║██╔══██║██║╚██╗██║      ██║   ██║╚════██║🍁 \  \|/  / 🍁
+ ╚█████╔╝╚██████╔╝██║  ██║██║  ██║██║ ╚████║█████╗╚██████╔╝███████║🍁  -- | --  🍁
+  ╚════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚════╝ ╚═════╝ ╚══════╝🍁  /  |  \  🍁
+</pre>
+        <p style="font-family: 'Segoe UI'; font-size: 10px; color: rgb(255, 255, 0); white-space: nowrap;">[@ @]<br> -</p>
+        <div id="system-info" style="border-left: 1px solid var(--accent-color); color: orange; padding-left: 20px; font-size: 0.75rem; line-height: 1.0;">
             <!-- data will be inserted here -->
         </div>
     </div>
+
     <!-- Command runner -->
     <div id="command-runner" style="display: none;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2px;">
