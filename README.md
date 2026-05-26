@@ -1,4 +1,5 @@
-# Elite Gems Dashboard: Persistent Ambient Dashboard Fancy Analog/Digital/Cistercian Clock AOD 🕰️
+# Elite Gems Dashboard
+## Persistent Ambient Dashboard Fancy Analog/Digital/Cistercian Clock AOD 🕰️
 
 **An "Always-On" productivity clock and personal gallery engineered for professional workspaces.**
 **An ambient, cyber‑punk inspired dashboard with multiple clock faces, a rotating image gallery, and a powerful built‑in terminal command runner(CLI).**
