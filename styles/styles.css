@@ -1680,7 +1680,7 @@
             /* Shrink the ASCII art */
             #neofetch-container pre {
                 font-size: 4px !important;   /* very small, but still readable */
-                line-height: 0.9 !important;
+                line-height: 0.8 !important;
                 margin: 0;
                 white-space: pre;            /* keep ASCII shape, no wrapping */
             }
