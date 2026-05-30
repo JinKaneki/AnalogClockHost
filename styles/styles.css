@@ -1148,7 +1148,33 @@
             display: none !important;
         }
 
+        /* When ANY element goes fullscreen, override the wrapper height. Normal mode height is set inline (250px) */
+        :fullscreen .yt-video-container {
+            height: 70vh !important;
+        }
 
+        /* Safari fallback */
+        :-webkit-full-screen .yt-video-container {
+            height: 70vh !important;
+        }
+
+        /* Default IPTV video – respects inline min-height:200px */
+        .iptv-video {
+            width: 100%;
+            /* No extra height – let the video decide */
+        }
+
+        /* When in fullscreen, force the video to be 85vh tall */
+        :fullscreen .iptv-video {
+            height: 80vh !important;
+            min-height: 80vh !important;
+        }
+
+        /* Fallback for Safari */
+        :-webkit-full-screen .iptv-video {
+            height: 80vh !important;
+            min-height: 80vh !important;
+        }
 
         .matrix-glitch {
             animation: glitch 0.2s infinite;
@@ -1808,6 +1834,14 @@
             .terminal-title :nth-child(5),
             .terminal-title :nth-child(6) { /* ZERO-POINT, KRYPTOS, NEURAL CENTER */
                 font-size: 0.5rem !important;
+            }
+
+            #command-runner:fullscreen .yt-video-container {
+                height: 25vh !important;
+            }
+            #command-runner:fullscreen .iptv-video {
+                height: 25vh !important;
+                min-height: 20vh !important;
             }
 
             .site-footer {

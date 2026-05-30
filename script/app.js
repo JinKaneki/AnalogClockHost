@@ -1371,7 +1371,7 @@
         // Optional: refresh every 10 minutes
         setInterval(fetchDailyQuote, 600000);
 
-        // --- TAO TE CHING RANDOM CHAPTER (local JSON) ---
+        // --- TAO TE CHING RANDOM CHAPTER ---
         let taoChapters = [];
         let taoLoaded = false;
 
@@ -1413,7 +1413,7 @@
         // Load the JSON and show first random chapter
         loadTaoTeChing();
        
-        // --- YOHAN TE CHING ---
+        // --- YOHAN TE CHING RANDOM CHAPTER ---
         let yohanChapters = [];
         let yohanLoaded = false;
 
@@ -1768,7 +1768,7 @@
             // Create new player in the fresh container
             try {
                 youtubePlayer = new YT.Player(containerId, {
-                    height: '250',
+                    height: '100%',
                     width: '100%',
                     videoId: videoId,
                     playerVars: {
@@ -4709,8 +4709,8 @@ play audio bell
                     
                     // 1. Create and append the container HTML immediately
                     const containerHtml = `
-                        <div style="margin: 12px 0; border: 1px solid var(--accent-color); border-radius: 8px; overflow: hidden; background: #000; box-shadow: 0 0 15px rgba(0,255,0,0.2);">
-                            <div id="${containerId}" style="width: 100%; min-height: 200px;"></div>
+                        <div class="yt-video-container" style="margin: 12px 0; border: 1px solid var(--accent-color); border-radius: 8px; overflow: hidden; background: #000; box-shadow: 0 0 15px rgba(0,255,0,0.2); height: 250px; width: 100%;">
+                            <div id="${containerId}" style="width: 100%; height: 100%;"></div>
                         </div>
                     `;
                     appendCommandHTML(containerHtml);

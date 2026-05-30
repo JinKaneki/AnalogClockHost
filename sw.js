@@ -1,4 +1,4 @@
-const CACHE_NAME = 'elite-gems-v5';  
+const CACHE_NAME = 'elite-gems-v6';  
 
 // Pre‑cache the absolute essentials
 const PRECACHE_URLS = [
@@ -6,6 +6,7 @@ const PRECACHE_URLS = [
   './index.html',
   './manifest.json',
   './TTC/tao-te-ching.json',
+  './TTC/yohan-te-ching.json',
   './sounds/civil-defense-siren.mp3',
   'https://unpkg.com/cistercian-numerals',
   './images/indepedentBG/ORIGINBACKG.jpeg',
@@ -20,6 +21,7 @@ const PRECACHE_URLS = [
   './images/AbyssalWave.png',
   './images/OrangeHairedWomen.jpg',
   './images/indepedentBG/BeautyOnBlade.jpg',
+  './images/indepedentBG/YHNH.png',
   './images/ChillVibes.jpg',
   './images/Kali.png'
 ];

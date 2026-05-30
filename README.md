@@ -128,10 +128,11 @@ I set the following CSS custom properties to achieve the **rainbow line effect**
 ### 📜 Wisdom & Quotes
 - **Online quote API** – random quotes from `dummyjson.com` (falls back to local cache).
 - **Tao Te Ching widget** – random chapters from a local JSON file (81 chapters).
+- **YHN Te Ching widget** – random chapters from a local JSON file (81 chapters).
 
 
 ## 📁 Project Structure
-/
+/  
 ├── index.html                     # Main dashboard (all HTML)  
 ├── manifest.json                  # PWA manifest  
 ├── sw.js                          # Service worker (offline cache)  
@@ -140,7 +141,8 @@ I set the following CSS custom properties to achieve the **rainbow line effect**
 │   └── independentBG/             # Optimized mobile background images  
 ├── sounds/                        # Audio files (siren, etc.)  
 ├── TTC/                           # Local data  
-│   └── Tao_te_ching.json          # Tao Te Ching chapters  
+│   └── Tao-te-ching.json          # Tao Te Ching chapters  
+│   └── YHN-te-ching.json          # YHN Te Ching chapters  
 ├── styles/
 │   └── styles.css                 # Main Stylesheet  
 ├── script/
@@ -176,7 +178,7 @@ The built‑in command runner—a full‑featured terminal emulator with over 50
 `kali` `hashcat` `wifite` `flipper` `nmap` `airmon` `raspberry` `gpio` `portal` `grabimg` `remoteview` `fetchpage`
 
 **🧘 Wisdom & Spirituality**  
-`tao` `wisdom` `sutra` `buddha` `koan` `stoic` `bible` `verse`
+`tao` `wisdom` `sutra` `buddha` `koan` `stoic` `bible` `verse` `yhn`
 
 **🎭 Fun & Entertainment**  
 `joke` `riddle` `game` `run` `poem` `ascii` `poetry` `anime` `qr` `radio` `tv` `play youtube` `play audio` `play iptv` `stop` `cowsay` `hack` `htop` `react` `rotate`  `banner` `piano` `homing` `iptv all`
@@ -262,6 +264,7 @@ The built‑in command runner—a full‑featured terminal emulator with over 50
 | `nuke`                | Factory reset – clears localStorage, stops animations, resets terminal |
 | `tao`                 | Random Tao Te Ching chapter |
 | `wisdom`              | Inspirational quote |
+| `yhn`                 | Random YHN Te Ching chapter |
 | `sutra`               | Buddhist teaching from the Pali Canon |
 | `buddha`              | Quote from Buddha, Dogen, Thich Nhat Hanh |
 | `koan`                | Random Zen koan |
