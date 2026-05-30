@@ -156,6 +156,7 @@
             ascension: './sounds/Ascension.mp3',
             medit:     './sounds/MeditMusic.mp3',
             deeptown:  './sounds/DeepTown-Routine_128k.mp3',
+            wot:       './sounds/The-Wheel-of-Time128k.mp3',
             elite:     './sounds/AyanoSinister-Schemes_128k.mp3',
             cote:      './sounds/COTE A-Class-Arisu_128k.mp3'
         };
@@ -1100,9 +1101,10 @@
         let bgMode = 'off'; // off 'sync' or 'independent'
         const independentBgImages = [
             'images/indepedentBG/ORIGINBACKG.jpeg',
-            'images/indepedentBG/IMGBACKG.jpeg',
-            'images/indepedentBG/TheAlchemistV2.jpg',
             'images/indepedentBG/Ataraxia.jpg',
+            'images/indepedentBG/YHNH.png',
+            'images/indepedentBG/TheAlchemistV2.jpg',
+            'images/indepedentBG/IMGBACKG.jpeg',
             'images/indepedentBG/BuddhaMobile.jpg',
             'images/indepedentBG/CalisMobile.jpeg',
             'images/indepedentBG/CoolMobileBG.jpeg',
@@ -1153,6 +1155,7 @@
         const galleryImages = [
             'images/IMG_BLUE.jpg',
             'images/OkamiKitsune.jpg',
+            'images/YHNH.png',
             'images/OrangeHairedWomen.jpg',
             'images/BuddhaEyes.jpg',
             'images/Vagabond.jpg',
@@ -1962,7 +1965,7 @@
             const welcomeSpan = document.getElementById('login-welcome');
             if (!welcomeSpan) return;
             
-            const text = "> WEEEEEEEELLLLLLLCOOOOOOOOOMMMMMMMMME!";
+            const text = "WEEEEEEEELLLLLLLCOOOOOOOOOMMMMMMMMME!";
             let i = 0;
             welcomeSpan.textContent = "";  // clear placeholder
             
@@ -4636,7 +4639,7 @@ O
 <span style="color: #0f0;">play iptv <url></span> -Play an IPTV stream in the terminal<br>
 <br>
 <span style="color: #888;">Built-in audio presets:</span><br>
-<span style="color: #ff4d00;">siren</span>, <span style="color: #00d0ff;">bell</span>, <span style="color: #ffdd00;">gong</span>, <span style="color: #00a6ff;">ascension</span>, <span style="color: #d400ff;">medit</span>, <span style="color: #00ff4c;">elite</span>, <span style="color: #ffff00;">deeptown</span><br>
+<span style="color: #ff4d00;">siren</span>, <span style="color: #00d0ff;">bell</span>, <span style="color: #ffdd00;">gong</span>, <span style="color: #00a6ff;">ascension</span>, <span style="color: #d400ff;">medit</span>, <span style="color: #00ff4c;">elite</span>, <span style="color: #ffff00;">deeptown</span>, <span style="color: #bababa;">WoT</span><br>
 <br>
 <span style="color: #888;">Examples:</span><br>
 play youtube dQw4w9WgXcQ<br>
@@ -4687,9 +4690,10 @@ play audio bell
 
                     // Determine what to play
                     const first = audioArgs[0] || '';
+                    const presetKey = first.toLowerCase();   // case‑insensitive lookup
                     let url;
-                    if (audioPresets[first]) {
-                        url = audioPresets[first];            // known preset
+                    if (audioPresets[presetKey]) {
+                        url = audioPresets[presetKey];            // known preset
                     } else {
                         url = audioArgs.join(' ');           // treat remainder as a custom URL
                         if (!url) return '⚠️ Please provide an audio URL or a preset name.<br>type "play" to see how to use it';
@@ -4706,8 +4710,10 @@ play audio bell
                     currentAudio.play().catch(e => {
                         appendCommandOutput(`⚠️ Audio playback failed: ${e.message}`, true);
                     });
+                    // Display the name as originally typed
+                    const displayName = audioPresets[presetKey] ? first : (url.length > 50 ? url.substring(0, 47) + '...' : url);
+                    return `<div class="active-transmission">🔊 NEURAL AUDIO STREAM STARTED: ${displayName}${loop ? ' (loop)' : ''}</div>`;
 
-                    return `<div class="active-transmission">🔊 NEURAL AUDIO STREAM STARTED: ${first || 'custom URL'}${loop ? ' (loop)' : ''}</div>`;
                 }
 
                 if (type === 'iptv') {
@@ -5264,12 +5270,14 @@ if (viewport) output += `<b>📱 Viewport:</b> ${viewport}<br>`;
 <div style="border-left: 2px solid #ff00ff; padding: 8px 12px; line-height: 1.5;">
     <span style="color: #ff00ff; font-weight: bold; text-shadow: 0 0 5px #ff00ff;">// AKASHIC ORIGIN //</span><br>
     <span style="color: #ccc;">J_OS began as a simple ambient clock. Its creator, <strong style="color: #fff;">Johan</strong>, wanted a single screen that could tell time, show beauty, and respond like a real operating system.</span><br><br>
-    <span style="color: #ccc;">Soon it grew:</span>
-    <span style="color: #00f0ff;">Cistercian numerals</span> met <span style="color: #ffaa00;">live NASA feeds</span>.
-    <span style="color: #0f0;">Images and Tao chapters</span> were woven into neural <span style="color: #ff00ff;">"Intersect" flashes</span>.
-    <span style="color: #ff0;">Radio streams</span> and <span style="color: #0ff;">global news feeds</span> became channels on a cybernetic console.<br><br>
-    <span style="color: #ccc;;">Today, <strong style="color: #fff;">J_OS</strong> is a digital sanctuary for high-speed information retrieval, a remote intelligence gathering console,a hacker's command center, a philosopher's scroll, and an artist's canvas.</span><br><br>
-    <span style="color: #888;">Type <span style="color: #0f0;">help</span> to explore. Enjoy!</span>
+    <span style="color: #ccc;">Soon it grew:</span><br>
+    <span style="color: #00f0ff;">Cistercian numerals</span> met <span style="color: #ffaa00;">live NASA feeds</span>.<br>
+    <span style="color: #0f0;">Images and Tao chapters</span> were woven into neural <span style="color: #ff00ff;">"Intersect" flashes</span>.<br>
+    <span style="color: #ff0;">Radio streams</span> and <span style="color: #0ff;">global news feeds</span> became channels on a cybernetic console.<br>
+    <span style="color: #ffaa00;">Remote viewing, image grabbing, and metadata fetching</span> transformed the terminal into an <span style="color: #0f0;">intelligence gathering console</span>.<br>
+    <span style="color: #0ff;">Live website portals, HLS streams, and personal IPTV lists</span> turned it into a true media hub.<br><br>
+    <span style="color: #ccc;">Today, <strong style="color: #fff;">J_OS</strong> is a digital sanctuary for high‑speed information retrieval – a hacker's command center, a philosopher's scroll, and an artist's canvas. It's now a remote intelligence console. Enjoy!</span><br><br>
+    <span style="color: #888;">Type <span style="color: #0f0;">help</span> to explore.</span>
 </div>
                 `;
             },
@@ -5303,6 +5311,7 @@ if (viewport) output += `<b>📱 Viewport:</b> ${viewport}<br>`;
 <span class="login-status-text" style="color: #00ffff; font-weight: bold; letter-spacing: 0.7px;text-shadow: 0 0 8px #00ffff;">  // AKASHIC ZERO-POINT KRYPTOS N CENTER //</span>  
 <span class="login-status-text">> SYNCING PATHWAYS    ....... [STABLE] 
 > DECRYPTING RECORDS ....... [VERIFIED]
+<span style="font-family: 'Segoe UI'; font-size: 7px; color: rgb(255, 255, 0); white-space: nowrap;">[@ @]<br> -</span>
 <span id="login-welcome" style="color: #ffff00; display: block;"></span>
 <span style="color: #ff03ff; text-shadow: none; display: block;">Type 'about' for a story behind J_OS<br>Type 'help'  for a list of commands</span>
                 </pre>`;
