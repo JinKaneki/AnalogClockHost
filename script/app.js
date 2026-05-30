@@ -1413,6 +1413,48 @@
         // Load the JSON and show first random chapter
         loadTaoTeChing();
        
+        // --- YOHAN TE CHING ---
+        let yohanChapters = [];
+        let yohanLoaded = false;
+
+        async function loadYohanTeChing() {
+            try {
+                const response = await fetch('./TTC/yohan-te-ching.json');
+                if (!response.ok) throw new Error('Yohan Te Ching JSON not found');
+                yohanChapters = await response.json();
+                yohanLoaded = true;
+                displayRandomYohanChapter();
+            } catch (error) {
+                console.error('Failed to load Yohan Te Ching:', error);
+                const yohanText = document.getElementById('yohan-quote-text');
+                if (yohanText) yohanText.innerText = 'The ridge is silent, waiting for your step.';
+            }
+        }
+
+        function displayRandomYohanChapter() {
+            if (!yohanLoaded || yohanChapters.length === 0) return;
+            const randomIndex = Math.floor(Math.random() * yohanChapters.length);
+            const chapter = yohanChapters[randomIndex];
+            const textElement = document.getElementById('yohan-quote-text');
+            const authorElement = document.getElementById('yohan-quote-author');
+            if (textElement) {
+                // Format: Chapter X: Title\n\nText (with line breaks)
+                const formattedText = `Chapter ${chapter.chapter}: ${chapter.title}<br><br>${chapter.text.replace(/\n/g, '<br>')}`;
+                textElement.innerHTML = formattedText;
+            }
+            if (authorElement) {
+                authorElement.innerHTML = `— YHNH (Yohan D. Awakened)`;
+            }
+        }
+
+        // Attach event listener to the Yohan button
+        const newYohanBtn = document.getElementById('new-yohan-chapter-btn');
+        if (newYohanBtn) {
+            newYohanBtn.addEventListener('click', displayRandomYohanChapter);
+        }
+
+        // Load the Yohan Te Ching JSON and show first random chapter
+        loadYohanTeChing();
 
 
         // --- ELITE 4-STATE CLOCK TOGGLE (Classic / Glass / Digital / Cistercian) ---
@@ -2103,7 +2145,7 @@ raspberry, gpio [status|on|off] [pin]<br>
 portal, remoteview, grabimg, fetchpage<br>
 <br>
 <strong style="color: var(--accent-color);">🧘 WISDOM & SPIRITUALITY</strong><br>
-tao, wisdom, sutra, buddha, koan, stoic, bible, verse<br>
+tao, stoic, buddha, bible, verse, koan, sutra, wisdom, yhn<br>
 <br>
 <strong style="color: var(--accent-color);">🎭 FUN & ENTERTAINMENT</strong><br>
 joke, riddle, poem, game, run (Role Player Game), poetry, anime,<br>
@@ -2430,6 +2472,13 @@ slide [src|next|prev|pause|resume] : Control the overlay slideshow<br>
                     return `<span style="color: #ffffff;">Chapter ${chapter.chapter}:</span><br><span style="color: #4a9eff;">${chapter.text.replace(/\n/g, '<br>')}</span>`;
                 }
                 return 'Tao Te Ching not loaded.';
+            },
+            'yhn': () => {
+                if (yohanLoaded && yohanChapters.length > 0) {
+                    const chapter = yohanChapters[Math.floor(Math.random() * yohanChapters.length)];
+                    return `<span style="color: #ffffff;">Chapter ${chapter.chapter}: ${chapter.title}</span><br><span style="color: #ffaa00;">${chapter.text.replace(/\n/g, '<br>')}</span>`;
+                }
+                return 'Yohan Te Ching not loaded yet.';
             },
             'motd': () => {
                 const motds = [
