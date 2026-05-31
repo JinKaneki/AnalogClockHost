@@ -1850,17 +1850,20 @@
 
             /* Magic Mirror button (Enter Mirror Mode) */
             .mirror-mode-btn {
-                font-size: 0.5rem !important;
+                font-size: 0.6rem !important;
                 padding: 4px 8px;
             }
 
             /* RUN JOHAN_OS button (action-btn) */
             .action-btn {
-                font-size: 0.5rem !important;
+                font-size: 0.6rem !important;
                 padding: 4px 8px;
             }
             .mobile-quote {
                 font-size: 0.5rem !important;
+            }
+            .wiki-ref {
+                font-size: 0.7rem !important;
             }
 
             .site-footer {
