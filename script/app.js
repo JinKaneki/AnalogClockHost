@@ -157,6 +157,7 @@
             medit:     './sounds/MeditMusic.mp3',
             deeptown:  './sounds/DeepTown-Routine_128k.mp3',
             wot:       './sounds/The-Wheel-of-Time128k.mp3',
+            wotsedai:  './sounds/WOTMoiraine-Sedai128k.mp3',
             elite:     './sounds/AyanoSinister-Schemes_128k.mp3',
             cote:      './sounds/COTE A-Class-Arisu_128k.mp3'
         };
@@ -4513,10 +4514,10 @@ O
                     return `🧠 Graph layout switched to <b>${graphLayout.toUpperCase()}</b>.`;
                 }
                 return `🧠 <b>NEURAL GRAPH COMMANDS</b><br>
-                        <span style="color:#0f0;">graph</span>  -Toggle the live graph overlay<br>
-                        <span style="color:#0f0;">brain clear</span>  -Delete all nodes and connections<br>
-                        <span style="color:#0f0;">brain layout [1-4]</span>  -Freeform(1), Circle(2), Grid(3), Fibonacci(4)<br>
-                        <span style="color:#0f0;">brain layout</span>  -Cycle to next layout`;
+        <span style="color:#0f0;">graph</span>  -Toggle the live graph overlay<br>
+        <span style="color:#0f0;">brain clear</span>  -Delete all nodes and connections<br>
+        <span style="color:#0f0;">brain layout [1-4]</span>  -Freeform(1), Circle(2), Grid(3), Fibonacci(4)<br>
+        <span style="color:#0f0;">brain layout</span>  -Cycle to next layout`;
             },
            'slide': (args) => {
                 const sub = args[0]?.toLowerCase();
@@ -4688,7 +4689,7 @@ O
 <span style="color: #0f0;">play iptv <url></span> -Play an IPTV stream in the terminal<br>
 <br>
 <span style="color: #888;">Built-in audio presets:</span><br>
-<span style="color: #ff4d00;">siren</span>, <span style="color: #00d0ff;">bell</span>, <span style="color: #ffdd00;">gong</span>, <span style="color: #00a6ff;">ascension</span>, <span style="color: #d400ff;">medit</span>, <span style="color: #00ff4c;">elite</span>, <span style="color: #ffff00;">deeptown</span>, <span style="color: #bababa;">WoT</span><br>
+<span style="color: #ff4d00;">siren</span>, <span style="color: #00d0ff;">bell</span>, <span style="color: #ffdd00;">gong</span>, <span style="color: #00a6ff;">ascension</span>, <span style="color: #d400ff;">medit</span>, <span style="color: #00ff4c;">elite</span>, <span style="color: #ffff00;">deeptown</span>, <span style="color: #bababa;">WoT</span>, <span style="color: #ff0084;">wotsedai</span><br>
 <br>
 <span style="color: #888;">Examples:</span><br>
 play youtube dQw4w9WgXcQ<br>
