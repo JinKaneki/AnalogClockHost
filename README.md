@@ -373,6 +373,7 @@ The `play audio` command now accepts shortcut names:
 - `play audio deeptown` – DeepTown routine (used in RPG)
 - `play audio elite` – Ayano Sinister Schemes (used in RPG)
 - `play audio cote` – COTE A‑Class Arisu (used in RPG)
+- `play audio WoT` – the Wheel of Time theme
 
 add -loop at the end to play in a continuous loop. e.g: `play audio ascension -loop` until you type `stop`
 
@@ -390,7 +391,7 @@ add -loop at the end to play in a continuous loop. e.g: `play audio ascension -l
 ## 🔍 Intelligence Gathering Commands
 
 - **`remoteview <url>`** – Extracts and displays all visible text from any webpage.
-- **`portal [--mobile] <url|shortcut>`** – Embeds a live website. Shortcuts: `elitegdx`, `famelack`, `radiogarden`, `f1`.
+- **`portal [--mobile] <url|shortcut>`** – Embeds a live website. Shortcuts: `elitegdx`, `famelack`, `f1`,`opensea`,`earthcam`,etc.
 - **`fetchpage <url>`** – Shows metadata (title, description, OG tags, Twitter card, etc.).
 - **`grabimg <url>`** – Downloads and displays all images from a page as thumbnails.
 
@@ -413,6 +414,7 @@ add -loop at the end to play in a continuous loop. e.g: `play audio ascension -l
 `slide next` – Skip to the next image  
 `slide prev` – Go back to the previous image  
 `slide pause` / `slide resume` – Pause / resume the timer
+`slide info/status` – show slide status 
 
 ### 🕵️ Steganography vs. Tag Store
 

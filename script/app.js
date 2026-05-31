@@ -2091,22 +2091,22 @@ ping, date [utc\|iso\|unix], spinner, stopspinner,<br>
 timer [seconds], stoptimer, shutdown, nuke :(factory reset)<br>
 <br>
 <strong style="color: var(--accent-color);">🧠 NEURAL GRAPH</strong><br>
-graph : Toggle live neural command graph (Obsidian‑style)<br>
+graph : Toggle live neural command graph (Obsidian‑style),<br>
 brain : Info on how to toggle and Reset the graph<br>
 <br>
 <strong style="color: var(--accent-color);">🎨 THEME & UI</strong><br>
-theme [cyan|magenta|amber|matrix], zoom [in|out|reset]<br>
+theme [cyan|magenta|amber|matrix], zoom [in|out|reset],<br>
 mode [flipper|midnight|matrix|crimson|cyber|hologram|stealth|off], pause<br>
 <br>
 <strong style="color: var(--accent-color);">📡 NETWORK & COMMUNICATION</strong><br>
-chat mqtt : Global public frequency<br>
-chat p2p : Encrypted peer to peer tunnel<br>
-chat firebase : Persistent mainframe archive<br>
-chat -all : Open all three channels at once<br>
-status : Live connection report (MQTT, P2P, Firebase)<br>
-disconnect : Terminate all network links safely<br>
-mesh : Visualize a simulated LoRa mesh network<br>
-aprsmap [fi|direct] : Live amateur radio map (choose source)<br>
+chat mqtt : Global public frequency,<br>
+chat p2p : Encrypted peer to peer tunnel,<br>
+chat firebase : Persistent mainframe archive,<br>
+chat -all : Open all three channels at once,<br>
+status : Live connection report (MQTT, P2P, Firebase),<br>
+disconnect : Terminate all network links safely,<br>
+mesh : Visualize a simulated LoRa mesh network,<br>
+aprsmap [fi|direct] : Live amateur radio map (choose source),<br>
 netorbit [--green|--red|--violet] : Live world map + packet sniffing<br>
 <br>
 <strong style="color: var(--accent-color);">📰 NEWS & INFORMATION</strong><br>
@@ -2118,19 +2118,19 @@ define [word], learn, wiki [topic], electronics,<br>
 engineering, physics, biology, space, cstip, fortune, motd<br>
 <br>
 <strong style="color: var(--accent-color);">⚙️ ENGINEERING TOOLS</strong><br>
-case   -> interactive diagnostics: resistor calc, color decode, Ohm's Law, voltage divider, capacitor codes<br>
+case   :-> interactive diagnostics: resistor calc, color decode, Ohm's Law, voltage divider, capacitor codes<br>
 <br>
 <strong style="color: var(--accent-color);">🔐 AKASHIC CIPHER SUITE</strong><br>
-cipher : Full usage manual for all ciphers (encrypt/decrypt)<br>
-encode [msg] : Base64 encode a message<br>
-decode [b64] : Decode a Base64 string<br>
-shift [n] [msg] : Caesar shift (letters & digits wrap)<br>
-kryptos [enc|dec] [bin|hex] [text] : Convert text to/from binary or hex stream<br>
-vigenere [enc|dec] [key] [msg] : Vigenère cipher with keyword<br>
-mirror [msg] : Atbash mirror cipher (self-inverse)<br>
-stegano [hide|reveal] [cover] [secret] : Steganography<br>
-reverse [msg] : Reverse every character (TENET inversion)<br>
-vault [enc|dec] [pw] [msg] : AES-256 encryption (real, password-based, handshake key optional)<br>
+cipher : Full usage manual for all ciphers (encrypt/decrypt),<br>
+encode [msg] : Base64 encode a message,<br>
+decode [b64] : Decode a Base64 string,<br>
+shift [n] [msg] : Caesar shift (letters & digits wrap),<br>
+kryptos [enc|dec] [bin|hex] [text] : Convert text to/from binary or hex stream,<br>
+vigenere [enc|dec] [key] [msg] : Vigenère cipher with keyword,<br>
+mirror [msg] : Atbash mirror cipher (self-inverse),<br>
+stegano [hide|reveal] [cover] [secret] : Steganography,<br>
+reverse [msg] : Reverse every character (TENET inversion),<br>
+vault [enc|dec] [pw] [msg] : AES-256 encryption (real, password-based, handshake key optional),<br>
 handshake [set|clear] [key] : Store or clear a personal encryption key locally<br>
 <br>
 <strong style="color: var(--accent-color);">🔮 TENET CIPHERS</strong><br>
@@ -2153,14 +2153,14 @@ joke, riddle, poem, game, run (Role Player Game), poetry, anime,<br>
 ascii, banner [text], piano, qr [text], homing,<br>
 cowsay [text], hack, htop, react, rotate, flow,<br>
 radio [channel], tv [channel], play, stop,<br>
-iptv all : list all IPTV channels <br>
-iptv [country_code] : Browse IPTV channels by country (us, uk, fr, ca, jp, au, …)<br>
+iptv all : list all IPTV channels,<br>
+iptv [country_code] : Browse IPTV channels by country (us, uk, fr, ca, jp, au, …),<br>
 play iptv <url> : Play an IPTV stream in the terminal ,play youtube,<br>
-iptv cat : List all available categories<br>
-iptv cat [category] : Browse by category (animation, news, sports, music…)<br>
+iptv cat : List all available categories,<br>
+iptv cat [category] : Browse by category (animation, news, sports, music…),<br>
 <br>
 <strong style="color: var(--accent-color);">🖼️ VISUALS & EFFECTS</strong><br>
-image, walls, glitch, scroll, intersect, graph, intersectslow, slide<br>
+image, walls, glitch, scroll, intersect, graph, intersectslow, slide,<br>
 slide [src|next|prev|pause|resume] : Control the overlay slideshow<br>
 <br>
 `;
@@ -4688,15 +4688,25 @@ O
 <span style="color: #0f0;">play audio &lt;preset&gt;</span>  -Play a built-in sound<br>
 <span style="color: #0f0;">play iptv <url></span> -Play an IPTV stream in the terminal<br>
 <br>
-<span style="color: #888;">Built-in audio presets:</span><br>
-<span style="color: #ff4d00;">siren</span>, <span style="color: #00d0ff;">bell</span>, <span style="color: #ffdd00;">gong</span>, <span style="color: #00a6ff;">ascension</span>, <span style="color: #d400ff;">medit</span>, <span style="color: #00ff4c;">elite</span>, <span style="color: #ffff00;">deeptown</span>, <span style="color: #bababa;">WoT</span>, <span style="color: #ff0084;">wotsedai</span><br>
+<span style="color: #888;">Built-in audio presets (click to fill command):</span><br>
+<span style="color: #ff4d00; cursor:pointer; text-decoration:underline;" onclick="fillInput('play audio siren')">siren</span>, 
+<span style="color: #00d0ff; cursor:pointer; text-decoration:underline;" onclick="fillInput('play audio bell')">bell</span>, 
+<span style="color: #ffdd00; cursor:pointer; text-decoration:underline;" onclick="fillInput('play audio gong')">gong</span>, 
+<span style="color: #00a6ff; cursor:pointer; text-decoration:underline;" onclick="fillInput('play audio ascension')">ascension</span>, 
+<span style="color: #d400ff; cursor:pointer; text-decoration:underline;" onclick="fillInput('play audio medit')">medit</span>, 
+<span style="color: #00ff4c; cursor:pointer; text-decoration:underline;" onclick="fillInput('play audio elite')">elite</span>, 
+<span style="color: #ffff00; cursor:pointer; text-decoration:underline;" onclick="fillInput('play audio deeptown')">deeptown</span>, 
+<span style="color: #bababa; cursor:pointer; text-decoration:underline;" onclick="fillInput('play audio wot')">WoT</span>, 
+<span style="color: #ff0084; cursor:pointer; text-decoration:underline;" onclick="fillInput('play audio wotsedai')">wotsedai</span><br>
 <br>
 <span style="color: #888;">Examples:</span><br>
 play youtube dQw4w9WgXcQ<br>
 play yt url<br>
 play audio https://example.com/song.mp3<br>
 play audio bell
-                    `;
+    `;
+
+
                 }
 
                 const type = args[0].toLowerCase();
@@ -5134,52 +5144,80 @@ ${channelList}<br><br>
                 let arg = args[0];
                 let isMobile = false;
                 let url = null;
-                
-                // Check for --mobile flag
+
                 if (arg === '--mobile') {
                     isMobile = true;
                     arg = args[1];
                 }
-                
+
                 // Shortcuts
                 const shortcuts = {
                     'elitegdx': 'https://jinkaneki.github.io/EliteGDX/',
                     'famelack': 'https://famelack.com/',
                     'radiogarden': 'https://radio.garden/',
-                    'f1': 'https://f1live.dpdns.org/'
+                    'f1': 'https://f1live.dpdns.org/',
+                    // ===== WorldWideView Trafic =====
+                    'flightradar24': 'https://www.flightradar24.com/', // Live air traffic
+                    'opensea': 'https://map.openseamap.org/',         // Live ship traffic
+                    'earthcam': 'https://www.earthcam.com/',          // Public webcams
+
+                    // ===== New Satellite Shortcuts =====
+                    'azmth': 'https://azmth.space/',                 // Live 3D satellite globe
+                    'heavens': 'https://www.heavens-above.com/',     // Satellite predictions & star charts
+                    'keeptrack': 'https://app.keeptrack.space/',         // 3D orbital debris tracking
+                    // ====================================
                 };
-                
-                if (shortcuts[arg]) {
+
+                // If a shortcut is provided, resolve it
+                if (arg && shortcuts[arg]) {
                     url = shortcuts[arg];
-                } else {
+                } else if (arg) {
                     url = arg;
                 }
-                
-                if (!url) return 'Usage: portal [--mobile] [url] or [shortcut]\n--mobile : Force mobile viewport (375px width),\nShortcuts: elitegdx, famelack, radiogarden, f1';
-                if (!url.startsWith('http')) url = 'https://' + url;
-            
-                
-                const frameWidth = isMobile ? '375px' : '100%';
-                const frameHeight = isMobile ? '667px' : '50vh';   //50% of viewpoort height
-                const portalId = 'portal-' + Date.now();
-                
-                return `
-                <div style="margin: 10px 0; border: 1px solid var(--accent-color); border-radius: 8px; overflow: hidden; background: #000;">
-                    <div style="background: #222; padding: 6px 12px; color: #0f0; display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-family: monospace; font-size: 0.9rem;">🌐 PORTAL: ${url}</span>
-                        <a href="${url}" target="_blank" rel="noopener noreferrer" style="color: #ffaa00; text-decoration: none; font-size: 12px; font-weight: bold;">[ESCAPE]</a>
-                    </div>
-                    <div style="display: flex; justify-content: center; background: #111; padding: 5px;">
-                        <iframe id="${portalId}" src="${url}" 
-                            style="width: ${frameWidth}; height: ${frameHeight}; border: none; background: #fff; max-width: 100%;" 
-                            sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation allow-modals"
-                            allow="fullscreen">
-                        </iframe>
-                    </div>
-                    <div style="background: #111; padding: 5px; text-align: center; color: #888; font-size: 6px;">
-                        If blank, site blocks iframes: use ESCAPE.
-                    </div>
-                </div>`;
+
+                // If we have a valid URL (either from shortcut or direct input)
+                if (url) {
+                    if (!url.startsWith('http')) url = 'https://' + url;
+
+                    const frameWidth = isMobile ? '375px' : '100%';
+                    const frameHeight = isMobile ? '667px' : '50vh';
+                    const portalId = 'portal-' + Date.now();
+
+                    return `
+                    <div style="margin: 10px 0; border: 1px solid var(--accent-color); border-radius: 8px; overflow: hidden; background: #000;">
+                        <div style="background: #222; padding: 6px 12px; color: #0f0; display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-family: monospace; font-size: 0.9rem;">🌐 PORTAL: ${url}</span>
+                            <a href="${url}" target="_blank" rel="noopener noreferrer" style="color: #ffaa00; text-decoration: none; font-size: 12px; font-weight: bold;">[ESCAPE]</a>
+                        </div>
+                        <div style="display: flex; justify-content: center; background: #111; padding: 5px;">
+                            <iframe id="${portalId}" src="${url}" 
+                                style="width: ${frameWidth}; height: ${frameHeight}; border: none; background: #fff; max-width: 100%;" 
+                                sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation allow-modals"
+                                allow="fullscreen">
+                            </iframe>
+                        </div>
+                        <div style="background: #111; padding: 5px; text-align: center; color: #888; font-size: 6px;">
+                            If blank, site blocks iframes: use ESCAPE.
+                        </div>
+                    </div>`;
+                }
+
+// No valid argument – show clickable shortcuts list
+const shortcutList = Object.keys(shortcuts);
+const colors = ['#ff00ff', '#00ffff', '#ffaa00', '#0f0', '#f00', '#ff6600', '#ff0066', '#66ff00', '#00ffcc', '#cc00ff', '#ffff00', '#ff3366'];
+let shortcutsHtml = '<div style="margin: 10px 0; display: column; flex-wrap: wrap; gap: 10px;">'; shortcutList.forEach((key, idx) => {const color = colors[idx % colors.length];
+shortcutsHtml += `<span style="cursor: pointer; color: ${color}; text-decoration: underline; padding: 2px 8px; border-radius: 12px; background: rgba(0,0,0,0.3);" onclick="fillInput('portal ${key}')">${key}</span>`;
+});
+shortcutsHtml += '</div>';
+
+return `
+<div style="border-left: 3px solid var(--accent-color); padding-left: 10px;">
+    <b style="color: var(--accent-color);">🌐 PORTAL COMMAND</b><br>
+    <span style="color: #ccc;">Usage: portal [--mobile] &lt;url|shortcut&gt;</span><br>
+    <span style="color: #888;">--mobile : Force mobile viewport (375px width)</span><br><br>
+    <span style="color: #0f0;">Available shortcuts (click to fill command):</span><br>${shortcutsHtml}<br>
+    <span style="color: #888;">Or type a direct URL.</span>
+</div>`;
             },
             'fetchpage': async (args) => {
                 let url = args[0];
@@ -5790,7 +5828,7 @@ MAC Address: XX:XX:XX:XX:XX:XX (Unknown)
 |    _____  |
 \\  '-----' /
 '-------'
-<-- "Hack the planet!"
+"Hack the planet!"
 </pre>
 <b>FLIPPER ZERO – SUB‑GHZ EMULATOR</b><br>
 Frequency: 433.92 MHz<br>
