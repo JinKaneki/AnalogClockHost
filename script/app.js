@@ -1809,7 +1809,7 @@
 
              // Build title with a copy button inline
             const titleHtml = channelName
-                ? `<div style="color:var(--accent-color); padding:6px 12px; font-family:monospace; font-size:0.85rem; background:rgba(0,0,0,0.7); display:flex; justify-content:space-between; align-items:center;">
+                ? `<div style="color:var(--accent-color); padding:4px 8px; font-family:monospace; font-size:0.5rem; background:rgba(0,0,0,0.7); display:flex; justify-content:space-between; align-items:center;">
                     <span>📺 ${channelName}</span>
                     <span onclick="navigator.clipboard.writeText('${url}')" 
                             style="cursor:pointer; font-size:1rem; opacity:0.7; transition:0.2s;"

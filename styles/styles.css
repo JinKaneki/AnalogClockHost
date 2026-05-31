@@ -263,8 +263,8 @@
             letter-spacing: 2px; /* Optional: a bit more spacing for impact */
             font-weight: 800;
             text-transform: uppercase;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
+            margin-bottom: 5px;
+            padding-bottom: 5px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
@@ -685,7 +685,7 @@
             justify-content: center;
             align-items: center;
             gap: 8px;                /* reduced gap for smaller look */
-            margin: 10px 0 15px 0;
+            margin: 10px 0 5px 0;
         }
 
         /* Adjust size of each Cistercian numeral */
@@ -1161,19 +1161,19 @@
         /* Default IPTV video – respects inline min-height:200px */
         .iptv-video {
             width: 100%;
-            /* No extra height – let the video decide */
+            height: 20vh;
         }
 
         /* When in fullscreen, force the video to be 85vh tall */
         :fullscreen .iptv-video {
-            height: 80vh !important;
-            min-height: 80vh !important;
+            height: 75vh !important;
+            min-height: 70vh !important;
         }
 
         /* Fallback for Safari */
         :-webkit-full-screen .iptv-video {
-            height: 80vh !important;
-            min-height: 80vh !important;
+            height: 75vh !important;
+            min-height: 70vh !important;
         }
 
         .matrix-glitch {
@@ -1608,14 +1608,14 @@
 
         
             .name-plate.main-title {
-                padding: 0 20px 10px 20px; /* prevents text touching screen edges */
+                padding: 0 20px 5px 20px; /* prevents text touching screen edges */
                 text-align: center;   /* keeps it neat */
                 font-size: 0.9rem;    /* slightly smaller on mobile if needed */
                 margin-bottom: 10px;  /* less bottom margin */
                 letter-spacing: 2px;
             }
             #info-section .name-plate {
-                padding: 0 20px 20px 20px; /* Top, Right, Bottom, Left */
+                padding: 0 20px 0px 20px; /* Top, Right, Bottom, Left */
                 text-align: center;   /* keeps it neat */
                 font-size: 0.5rem;    /* slightly smaller if needed */
                 margin-bottom: 5px;  /* less bottom margin */
@@ -1840,7 +1840,7 @@
                 height: 25vh !important;
             }
             #command-runner:fullscreen .iptv-video {
-                height: 25vh !important;
+                height: 20vh !important;
                 min-height: 20vh !important;
             }
 
