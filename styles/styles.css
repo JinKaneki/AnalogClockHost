@@ -174,8 +174,8 @@
 
         /* Premium Clock Face */
         .clock {
-            width: 520px; /* was 320*/
-            height: 520px; /* was 320*/
+            width: 400px; /* was 320*/
+            height: 400px; /* was 320*/
             background-color: var(--clock-bg);
             border-radius: 50%;
             position: relative;
@@ -192,8 +192,8 @@
         .clock::before {
             content: '';
             position: absolute;
-            width: 490px; /* was 290*/
-            height: 490px; /* was 290*/
+            width: 375px; /* was 290*/
+            height: 375px; /* was 290*/
             border-radius: 50%;
             box-shadow: var(--shadow-inner);
         }
@@ -223,12 +223,12 @@
             transition: background-color 0.5s ease;
         }
 
-        .hour { width: 6px; height: 115px; z-index: 1; border-radius: 6px 6px 0 0; }
-        .minute { width: 4px; height: 150px; z-index: 2; border-radius: 4px 4px 0 0; }
+        .hour { width: 6px; height: 100px; z-index: 1; border-radius: 6px 6px 0 0; }
+        .minute { width: 4px; height: 145px; z-index: 2; border-radius: 4px 4px 0 0; }
         
         .second { 
             width: 2px; 
-            height: 240px; 
+            height: 185px; 
             background-color: var(--accent-color); 
             z-index: 3; 
             box-shadow: 0 0 10px var(--accent-color); /* Glowing effect */
@@ -259,9 +259,9 @@
         /* Main title bigger */
         .name-plate.main-title {
             text-align: center;
-            font-size: 1.7rem; /* Adjust as you like */
-            letter-spacing: 2px; /* Optional: a bit more spacing for impact */
-            font-weight: 800;
+            font-size: 1.7rem;  /* Adjust as you like */
+            letter-spacing: 2px;  /* Optional: a bit more spacing for impact */
+            font-weight: bold;
             text-transform: uppercase;
             margin-bottom: 5px;
             padding-bottom: 5px;
@@ -271,8 +271,8 @@
         /* Author info (inside #info-section) larger */
         #info-section .name-plate {
             text-align: center;
-            font-size: 1.0rem; /* Adjust as you like */
-            letter-spacing: 1px; /* Optional: a bit more spacing for impact */
+            font-size: 1.0rem; 
+            letter-spacing: 1px; 
             font-weight: bold;
             text-transform: uppercase;
             margin-bottom: 5px;
@@ -1577,8 +1577,8 @@
                 left: 20px;
             }
             .hide-controls-btn {
-                padding: 6px 12px;
-                font-size: 0.7rem;
+                padding: 4px 8px;
+                font-size: 0.5rem !important;
             }
         
 
@@ -1842,6 +1842,25 @@
             #command-runner:fullscreen .iptv-video {
                 height: 20vh !important;
                 min-height: 20vh !important;
+            }
+
+            .controls button {
+                font-size: 0.5rem !important;
+            }
+
+            /* Magic Mirror button (Enter Mirror Mode) */
+            .mirror-mode-btn {
+                font-size: 0.5rem !important;
+                padding: 4px 8px;
+            }
+
+            /* RUN JOHAN_OS button (action-btn) */
+            .action-btn {
+                font-size: 0.5rem !important;
+                padding: 4px 8px;
+            }
+            .mobile-quote {
+                font-size: 0.5rem !important;
             }
 
             .site-footer {
