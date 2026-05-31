@@ -5152,20 +5152,30 @@ ${channelList}<br><br>
 
                 // Shortcuts
                 const shortcuts = {
+                    // ===== Miscellaneous =====
                     'elitegdx': 'https://jinkaneki.github.io/EliteGDX/',
                     'famelack': 'https://famelack.com/',
-                    'radiogarden': 'https://radio.garden/',
+                    'citywalki': 'https://www.citywalki.com/',          // virtual walking tour platform
                     'f1': 'https://f1live.dpdns.org/',
+                    'radiogarden': 'https://radio.garden/',
+
                     // ===== WorldWideView Trafic =====
-                    'flightradar24': 'https://www.flightradar24.com/', // Live air traffic
-                    'opensea': 'https://map.openseamap.org/',         // Live ship traffic
-                    'earthcam': 'https://www.earthcam.com/',          // Public webcams
+                    'flightradar24': 'https://www.flightradar24.com/',  // Live air traffic
+                    'opensea': 'https://map.openseamap.org/',           // Live ship traffic
+                    'earthcam': 'https://www.earthcam.com/',            // Public webcams
+                    'windview': 'https://earth.nullschool.net/',        // Global weather & wind patterns
+                    'citywalks': 'https://citywalks.live/',             // Virtual tours worldwide
 
                     // ===== New Satellite Shortcuts =====
-                    'azmth': 'https://azmth.space/',                 // Live 3D satellite globe
-                    'heavens': 'https://www.heavens-above.com/',     // Satellite predictions & star charts
-                    'keeptrack': 'https://app.keeptrack.space/',         // 3D orbital debris tracking
+                    'azmth': 'https://azmth.space/',                  // Live 3D satellite globe
+                    'heavens': 'https://www.heavens-above.com/',      // Satellite predictions & star charts
+                    'keeptrack': 'https://app.keeptrack.space/',      // 3D orbital debris tracking
                     // ====================================
+
+                    // ===== ENTERTAINMENT & STREAMING =====
+                    'moviesjoy': 'https://flixnet.site/moviesjoy/',   // Movie streaming
+                    'hianime': 'https://hianime.ad/home/',            // Anime hub
+                    'streamgoblin': 'https://streamgoblin.com/',      // General streaming
                 };
 
                 // If a shortcut is provided, resolve it
@@ -5180,7 +5190,7 @@ ${channelList}<br><br>
                     if (!url.startsWith('http')) url = 'https://' + url;
 
                     const frameWidth = isMobile ? '375px' : '100%';
-                    const frameHeight = isMobile ? '667px' : '50vh';
+                    const frameHeight = isMobile ? '667px' : '60vh';
                     const portalId = 'portal-' + Date.now();
 
                     return `
