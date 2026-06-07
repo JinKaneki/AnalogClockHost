@@ -1,4 +1,4 @@
-const CACHE_NAME = 'elite-gems-v6';  
+const CACHE_NAME = 'elite-gems-v7';  
 
 // Pre‑cache the absolute essentials
 const PRECACHE_URLS = [
@@ -23,7 +23,8 @@ const PRECACHE_URLS = [
   './images/indepedentBG/BeautyOnBlade.jpg',
   './images/indepedentBG/YHNH.png',
   './images/ChillVibes.jpg',
-  './images/Kali.png'
+  './images/Kali.png',
+  './images/YHNH.png'
 ];
 
 // ***** INSTALL – pre‑cache essential files *****

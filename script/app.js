@@ -760,7 +760,7 @@
             const ua = navigator.userAgent;
             if (ua.includes('Win')) return 'Windows';
             if (ua.includes('Mac')) return 'macOS';
-            if (ua.includes('Linux')) return 'Linux / Pi';
+            if (ua.includes('Linux')) return 'Linux';
             if (ua.includes('Android')) return 'Android';
             return 'Unknown OS';
         }
@@ -1202,7 +1202,6 @@
             'images/SubmissiveOtakuGirl.jpg',
             'images/sakuyamon_the_cherry_blossom.jpg',
             'images/Glowing Chameleon.jpg',
-            'images/Calisthenics.jpeg',
             'images/Beautyfullness.jpg',
             'images/SmileyGrafitti.jpg',
             'images/F1.jpg',
@@ -2156,7 +2155,7 @@ radio [channel], tv [channel], play, stop,<br>
 iptv all : list all IPTV channels,<br>
 iptv [country_code] : Browse IPTV channels by country (us, uk, fr, ca, jp, au, …),<br>
 play iptv <url> : Play an IPTV stream in the terminal ,play youtube,<br>
-iptv cat : List all available categories,<br>
+iptv cat : List all available categories, ipset,<br>
 iptv cat [category] : Browse by category (animation, news, sports, music…),<br>
 <br>
 <strong style="color: var(--accent-color);">🖼️ VISUALS & EFFECTS</strong><br>
