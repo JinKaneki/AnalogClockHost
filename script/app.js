@@ -790,7 +790,7 @@
         }
 
         const typewriterElement = document.getElementById('typewriter');
-        const names = ["JIN KANEKI", "JOHN COHEN","@_@","THE OBSERVER","DARK SAMURAI","THE WANDERER","JIN LEE","KANJIN","Johan D. Awakened","How many names have you counted?",":)"];
+        const names = ["JIN KANEKI", "JOHN COHEN","@_@","THE OBSERVER","0_0","How many names have you counted?","THE WANDERER","JIN LEE","!_0","KANJIN","Johan D. Awakened","How many names have you counted?","*_0",":)"];
         let nameIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
