@@ -1149,6 +1149,9 @@
             'images/indepedentBG/kaneki_kenJin_TKG.jpg',
             'images/indepedentBG/june-17-solstice-sunset.png',
             'images/indepedentBG/Eugenics.jpg',
+            'images/indepedentBG/chameleonBg.jpg',
+            'images/indepedentBG/SSYHVHBg.jpg',
+            'images/indepedentBG/TreeOfLife.jpeg',
             //'images/indepedentBG/',
         ];
 
@@ -1215,7 +1218,12 @@
             'images/SoulNature.jpg',
             'images/JcohenDreamax.jpeg',
             'images/NelsonMandelaQuote.jpeg',
-            'images/MahoragaWheel.jpeg'
+            'images/MahoragaWheel.jpeg',
+            'images/EinSof.jpeg',
+            'images/Screenshot_YHVH.jpg',
+            'images/AllisOneisAll.jpeg',
+            'images/Kircher-Diagram_of_the_names_of_God.jpg',
+            'images/SoularSystem.png'
         ];
 
         let slideshowSource = galleryImages;   // default
