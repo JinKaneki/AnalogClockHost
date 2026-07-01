@@ -1126,8 +1126,6 @@
             'images/indepedentBG/ChameleoMobile.jpg',
             'images/indepedentBG/KidGoku.jpg',
             'images/indepedentBG/AnAngel.jpg',
-            'images/indepedentBG/LuffyVsCp0.jpg',
-            'images/indepedentBG/Nika.jpg',
             'images/indepedentBG/FireForce.jpg',
             'images/indepedentBG/BluSage.jpg',
             'images/indepedentBG/Angel.jpg',
@@ -1152,6 +1150,7 @@
             'images/indepedentBG/chameleonBg.jpg',
             'images/indepedentBG/SSYHVHBg.jpg',
             'images/indepedentBG/TreeOfLife.jpeg',
+            'images/indepedentBG/NikaBack.jpeg',
             //'images/indepedentBG/',
         ];
 
