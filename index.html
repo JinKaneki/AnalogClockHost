@@ -156,6 +156,38 @@
             <span class="cist-sep">-</span>
             <cistercian-number id="cist-day" value="7"></cistercian-number>
         </div>
+
+        <!-- COSMIC ASTROLABE (The Mazzaroth) -->
+        <div id="cosmic-wrapper" style="display: none; flex-direction: column; align-items: center; width: 100%; margin-top: 20px;">
+            <canvas id="cosmic-canvas" width="400" height="400"></canvas>
+
+        <div class="cosmic-controls" style="margin-top: 25px; display: flex; flex-direction: column; gap: 12px; align-items: center; width: 100%; max-width: 400px;">
+                <div style="font-family: monospace; color: #ffaa00; font-size: 12px; letter-spacing: 2px;">ANCHOR: GREAT PYRAMID (GIZA)</div>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <input type="number" id="cosmic-lat" value="29.9792" step="0.0001" style="width: 85px; background: #111; color: #0f0; border: 1px solid #0f0; padding: 4px; text-align: center; border-radius: 4px; font-family: monospace;" title="Latitude">
+                    <input type="number" id="cosmic-lon" value="31.1342" step="0.0001" style="width: 85px; background: #111; color: #0f0; border: 1px solid #0f0; padding: 4px; text-align: center; border-radius: 4px; font-family: monospace;" title="Longitude">
+                </div>
+                <div id="cosmic-time-display" style="color: #fff; font-family: monospace; font-size: 12px; margin: 5px 0; text-shadow: 0 0 5px #0ff;"></div>
+                
+                <!-- Row 1: Play/Pause, Sync Now, Speed -->
+                <div style="display: flex; gap: 4px; flex-wrap: nowrap; justify-content: center;">
+                    <button class="hide-controls-btn cosmic-btn" id="c-prev-hr">-1 HR</button>
+                    <button class="hide-controls-btn cosmic-btn" id="c-play-pause" style="color:#ffaa00; border-color:#ffaa00;">⏸PAUSE</button>
+                    <button class="hide-controls-btn cosmic-btn" id="c-now" style="color:#0f0; border-color:#0f0;">SYNCNOW</button>
+                    <button class="hide-controls-btn cosmic-btn" id="c-speed" style="color:#ffaa00; border-color:#ffaa00;">⚡1x</button>
+                    <button class="hide-controls-btn cosmic-btn" id="c-next-hr">+1 HR</button>
+                </div>
+                
+                <!-- Row 2: Day and Month jumps -->
+                <div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: center;">
+                    <button class="hide-controls-btn cosmic-btn" id="c-prev-day">-1 DAY</button>
+                    <button class="hide-controls-btn cosmic-btn" id="c-next-day">+1 DAY</button>
+                    <button class="hide-controls-btn cosmic-btn" id="c-prev-mo">-1 MO</button>
+                    <button class="hide-controls-btn cosmic-btn" id="c-next-mo">+1 MO</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Spacer that pushes the exit Mirror button down -->
         <div id="mirror-spacer" style="flex: 1; min-height: 1200px; display: none;"></div>
         <!-- Exit Mirror Mode button (hidden by default) -->
@@ -796,6 +828,53 @@
         </div>
     </div>
     
+    <!-- FLAT EARTH PROJECTION DOME (Glass + Stretch) -->
+    <!-- ===== FLAT EARTH PROJECTION (Double – Circular + Stretched) ===== -->
+    <div id="flat-earth-section" style="display: flex; flex-direction: column; align-items: center; width: 100%; margin: 60px auto 80px auto; max-width: 800px; padding: 0 15px; box-sizing: border-box;">
+        <h3 class="title-accent" style="margin-bottom: 20px; font-size: 1.4rem; letter-spacing: 2px;">FLAT EARTH PROJECTION</h3>
+        
+        <!-- ===== CIRCULAR CANVAS ===== -->
+        <div style="position: relative; width: 400px; height: 400px; max-width: 90vw; max-height: 90vw; aspect-ratio: 1/1; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+            <canvas id="fe-canvas" width="400" height="400" style="background: transparent !important; border-radius: 50%; box-shadow: 0 0 35px rgba(0, 240, 255, 0.15); width: 100% !important; height: 100% !important; aspect-ratio: 1/1; cursor: crosshair;"></canvas>
+        </div>
+        
+        <!-- ===== CONTROLS (shared) ===== -->
+        <div class="cosmic-controls" style="margin-top: 30px; display: flex; flex-direction: column; gap: 12px; align-items: center; width: 100%; max-width: 500px;">
+            <div style="font-family: monospace; color: #00f0ff; font-size: 8px; letter-spacing: 2px;">ANCHOR: GREAT PYRAMID (GIZA)</div>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <input type="number" id="fe-lat" value="29.9792" step="0.0001" style="width: 90px; background: #111; color: #00f0ff; border: 1px solid #00f0ff; padding: 6px; text-align: center; border-radius: 4px; font-family: monospace;" title="Latitude">
+                <input type="number" id="fe-lon" value="31.1342" step="0.0001" style="width: 90px; background: #111; color: #00f0ff; border: 1px solid #00f0ff; padding: 6px; text-align: center; border-radius: 4px; font-family: monospace;" title="Longitude">
+            </div>
+            <div id="fe-time-display" style="color: #fff; font-family: monospace; font-size: 12px; margin: 8px 0; text-shadow: 0 0 5px #00f0ff;"></div>
+            
+            <!-- Row 1: Play/Pause, Sync, Speed -->
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;">
+                <button class="hide-controls-btn cosmic-btn" id="fe-prev-hr" style="color:#00f0ff; border-color:#00f0ff;">-1HR</button>
+                <button class="hide-controls-btn cosmic-btn" id="fe-play-pause" style="color:#ffaa00; border-color:#ffaa00;">⏸PAUSE</button>
+                <button class="hide-controls-btn cosmic-btn" id="fe-now" style="color:#0f0; border-color:#0f0;">SYNCNOW</button>
+                <button class="hide-controls-btn cosmic-btn" id="fe-speed" style="color:#ffaa00; border-color:#ffaa00;">⚡1x</button>
+                <button class="hide-controls-btn cosmic-btn" id="fe-next-hr" style="color:#00f0ff; border-color:#00f0ff;">+1HR</button>
+            </div>
+            
+            <!-- Row 2: Day and Month jumps -->
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;">
+                <button class="hide-controls-btn cosmic-btn" id="fe-prev-day" style="color:#00f0ff; border-color:#00f0ff;">-1DAY</button>
+                <button class="hide-controls-btn cosmic-btn" id="fe-next-day" style="color:#00f0ff; border-color:#00f0ff;">+1DAY</button>
+                <button class="hide-controls-btn cosmic-btn" id="fe-prev-mo" style="color:#00f0ff; border-color:#00f0ff;">-1MO</button>
+                <button class="hide-controls-btn cosmic-btn" id="fe-next-mo" style="color:#00f0ff; border-color:#00f0ff;">+1MO</button>
+            </div>
+        </div>
+        
+        <!-- ===== STRETCHED (ELLIPTICAL) CANVAS – Elliptical Container ===== -->
+        <div style="position: relative; width: 400px; max-width: 90vw; margin: 30px auto 0 auto; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 100%; aspect-ratio: 1.7 / 1; border-radius: 50%; overflow: hidden; box-shadow: 0 0 35px rgba(0, 240, 255, 0.15); background: transparent;">
+                <canvas id="fe-stretched-canvas" style="width: 100% !important; height: 100% !important; display: block; cursor: crosshair;"></canvas>
+            </div>
+        </div>
+        
+        <div style="font-family: monospace; color: #ffaa00; font-size: 11px; margin-top: 10px; letter-spacing: 1px;">⬡ STRETCHED PROJECTION</div>
+    </div>
+
     <!-- Yohan Te Ching Widget -->
     <div id="yohan-quote-container" style="text-align: center; max-width: 600px; box-sizing: border-box; margin: 325px auto 20px auto; padding: 275px 20px 0 20px;">
         <p id="yohan-quote-text" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: small; font-weight: bold;">Loading Yohan Te Ching...</p>

@@ -1,5 +1,5 @@
         window.addEventListener('load', () => {
-            const bootStatuses = ["J-OS BOOTING", "AKASHIC SYNC", "NEURAL LINK ACTIVE"];
+            const bootStatuses = ["J-OS BOOTING", "AKASHIC SYNC"];
             triggerGhost(bootStatuses[Math.floor(Math.random() * bootStatuses.length)]);
         });
 
@@ -31,6 +31,38 @@
                 requestWakeLock();
             }
         });
+
+        // ---- GLOBAL EPHEMERIS DATA (can be overridden by fetch) ----
+        const EPHEMERIS = {
+            refDate: new Date(Date.UTC(2026, 6, 8, 22, 34, 0)),
+            refLon: {
+                Sun: 106.7667, Moon: 31.2, Mercury: 113.2833, Venus: 149.1333,
+                Mars: 67.1667, Jupiter: 121.8833, Saturn: 14.4833,
+                Uranus: 64.0833, Neptune: 4.4167, Pluto: 304.7
+            },
+            dailyMotion: {
+                Sun: 0.95972, Moon: 13.2986, Mercury: 1.00417, Venus: 0.97556,
+                Mars: 0.66611, Jupiter: 0.2175, Saturn: -0.01917,
+                Uranus: 0.02667, Neptune: -0.015, Pluto: -0.02139
+            }
+        };
+
+        async function fetchUpdatedEphemeris() {
+            try {
+                const response = await fetch('./data/ephemeris.json'); // or a CDN URL
+                if (!response.ok) throw new Error('Network error');
+                const data = await response.json();
+                // Validate structure
+                if (data.refDate && data.refLon && data.dailyMotion) {
+                    EPHEMERIS.refDate = new Date(data.refDate);
+                    Object.assign(EPHEMERIS.refLon, data.refLon);
+                    Object.assign(EPHEMERIS.dailyMotion, data.dailyMotion);
+                    console.log('✅ Ephemeris updated from external source');
+                }
+            } catch (e) {
+                console.warn('⚠️ Using default ephemeris (fetch failed)', e.message);
+            }
+        }
 
         // ── NEURAL GRAPH STATE ──
         let nodes = [];
@@ -606,7 +638,7 @@
             const uptimeHours = Math.floor(uptimeMin / 60);
             const uptimeStr = uptimeHours > 0 ? `${uptimeHours}h ${uptimeMin % 60}m` : `${uptimeMin}m ${uptimeSec % 60}s`;
 
-            // --- Dynamic package count (number of commands in your 'commands' object) ---
+            // --- Dynamic package count (number of commands in 'commands' object) ---
             const packageCount = (typeof commands === 'object' && commands) ? Object.keys(commands).length : 42;
 
             const themeMode = document.body.classList.contains('light-mode') ? 'Light Mode' : 'Cyber-Dark';
@@ -781,7 +813,7 @@
                 if (fetchContainer.style.visibility === 'hidden') {
                     if (!dataFetched) await fetchSystemInfo();
                     fetchContainer.style.visibility = 'visible';
-                    playTick(true);   // optional sound feedback (uses your existing playTick)
+                    playTick(true);   // optional sound feedback (uses existing playTick)
                 } else {
                     fetchContainer.style.visibility = 'hidden';
                     playTick(true);
@@ -825,8 +857,10 @@
         }
 
         // Start the effect
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(type, 1000); // Wait 1 second after page load to start
+        document.addEventListener('DOMContentLoaded', async () => {
+            await fetchUpdatedEphemeris();  // wait for fetch (or fail silently)
+            initFlatEarthClock();
+            setTimeout(type, 1000);  // Wait 1 second after page load to start
         });
 
         const hourHand = document.getElementById('hour');
@@ -1154,7 +1188,7 @@
             //'images/indepedentBG/',
         ];
 
-        // Gallery images for Intersect flash (from your slideshow blocks)
+        // Gallery images for Intersect flash (from slideshow blocks)
         const galleryImages = [
             'images/IMG_BLUE.jpg',
             'images/OkamiKitsune.jpg',
@@ -1468,10 +1502,10 @@
         const styleBtn = document.getElementById('zen-toggle-btn');
         const analogClock = document.getElementById('analog-clock');
         const digitalClock = document.getElementById('digital-clock');
-        const cistercianClock = document.getElementById('cistercian-wrapper');// <-- NEW
+        const cistercianClock = document.getElementById('cistercian-wrapper');
 
-        // State: 0 = Classic, 1 = Glass, 2 = Digital , 3 = Cistercian ,
-        const clockModes = ['classic', 'glass', 'digital','cistercian'];
+        // State: 0 = Classic, 1 = Glass, 2 = Digital , 3 = Cistercian , 4 = Cosmic, 5 = Celestial
+        const clockModes = ['classic', 'glass', 'digital', 'cistercian', 'cosmic', 'celestial'];
         let currentModeIndex = 0;
 
         // Set initial button text
@@ -1482,12 +1516,17 @@
             'classic': '🕰️ CLASSIC MODE',
             'glass': '💎 GLASS MODE',
             'digital': '📟 DIGITAL MODE',
-            'cistercian': '🧮 CISTERCIAN MODE' // <-- NEW
+            'cistercian': '🧮 CISTERCIAN MODE',
+            'cosmic': '🌌 COSMIC CLOCK',
+            'celestial': '🌀 CELESTIAL WHEEL'
         };
 
         styleBtn.addEventListener('click', () => {
             currentModeIndex = (currentModeIndex + 1) % clockModes.length;
             const mode = clockModes[currentModeIndex];
+
+            const cosmicWrapper = document.getElementById('cosmic-wrapper');
+            const cosmicCanvas = document.getElementById('cosmic-canvas');
 
             playTick(true); // sound feedback
 
@@ -1496,6 +1535,8 @@
             analogClock.style.display = 'flex';
             digitalClock.style.display = 'none';
             cistercianClock.style.display = 'none';
+            cosmicWrapper.style.display = 'none';
+            document.querySelector('.timepiece-wrapper').classList.remove('cosmic-glass-active');
             styleBtn.classList.remove('zen-active');
             styleBtn.style.borderColor = "var(--clock-border)";
             styleBtn.style.color = "var(--text-color)";
@@ -1521,6 +1562,27 @@
                 styleBtn.innerText = "🧮 STYLE: CISTERCIAN";
                 styleBtn.classList.add('zen-active');
                 styleBtn.style.borderColor = "var(--clock-border)";
+            } else if (mode === 'cosmic') {
+                analogClock.style.display = 'none';
+                digitalClock.style.display = 'none';
+                cistercianClock.style.display = 'none';
+                cosmicWrapper.style.display = 'flex';
+                styleBtn.innerText = "🌌 STYLE: COSMIC";
+                styleBtn.classList.add('zen-active');
+                styleBtn.style.borderColor = "var(--clock-border)";
+                // Initialize the cosmic engine only once
+                if (!window._cosmicInit) initCosmicClock();
+            } else if (mode === 'celestial') {
+                analogClock.style.display = 'flex';
+                analogClock.classList.add('zen-mode'); // transparent glass
+                digitalClock.style.display = 'none';
+                cistercianClock.style.display = 'none';
+                cosmicWrapper.style.display = 'flex';
+                styleBtn.innerText = "🌀 STYLE: CELESTIAL";
+                styleBtn.classList.add('zen-active');
+                styleBtn.style.borderColor = "var(--clock-border)";
+                document.querySelector('.timepiece-wrapper').classList.add('cosmic-glass-active');
+                if (!window._cosmicInit) initCosmicClock();
             }
 
             // Show ghost message
@@ -1537,34 +1599,123 @@
         const infoSection = document.getElementById('info-section');
         const contentBlocks = document.querySelectorAll('.content-blocks'); // both slideshow and the extra one
         let cleanViewMode = 0; // 0 = all visible, 1 = info hidden, 2 = both hidden
-
+        
         function updateCleanView() {
+            // Define mode
+            const mode = clockModes[currentModeIndex];
+            const isCosmicOrCelestial = (mode === 'cosmic' || mode === 'celestial');
+
+            // Get the controls container more reliably
+            const cosmicWrapper = document.getElementById('cosmic-wrapper');
+            const cosmicCanvas = document.getElementById('cosmic-canvas');
+            const cosmicControls = cosmicWrapper ? cosmicWrapper.querySelector('.cosmic-controls') : null;
+            const feSection = document.getElementById('flat-earth-section');
+            
             if (cleanViewMode === 0) {
-                // All visible
-                infoSection.style.display = ''; // restore default
+                // ---- ALL VISIBLE ----
+                infoSection.style.display = '';
                 contentBlocks.forEach(el => {
                     el.style.opacity = '1';
                     el.style.pointerEvents = 'auto';
                 });
-                hideBtn.innerText = '🖥️ CLEAN VIEW: OFF';
+
+                // Restore cosmic/celestial visibility
+                if (cosmicWrapper) {
+                    cosmicWrapper.style.display = isCosmicOrCelestial ? 'flex' : 'none';
+                    if (cosmicControls) cosmicControls.style.display = 'flex';
+                }
+                // Ensure analog clock is visible if celestial mode
+                if (mode === 'celestial') {
+                    analogClock.style.display = 'flex';
+                    analogClock.classList.add('zen-mode');
+                } else if (mode === 'cosmic') {
+                    analogClock.style.display = 'none';
+                }
+
+                // FLAT EARTH – RESTORE CONTROLS FULL (all visible)
+                if (feSection) {
+                    const container = feSection.querySelector('.cosmic-controls');
+                    if (container) container.style.display = 'flex';
+                    const feControls = feSection.querySelectorAll('#fe-time-display, input, .cosmic-btn');
+                    feControls.forEach(el => el.style.display = '');
+                    const feCanvas = document.getElementById('fe-canvas');
+                    const feStretched = document.getElementById('fe-stretched-canvas');
+                    if (feCanvas) feCanvas.style.display = '';
+                    if (feStretched) feStretched.style.display = '';
+                }
+
+                hideBtn.innerText = '🖥️ CLEANVIEW: OFF';
                 hideBtn.style.color = '#f6ff00'; // Solid Yellow/Magenta
             } else if (cleanViewMode === 1) {
-                // Info hidden, images visible
+                // ---- TEXT OFF (info hidden, images visible) ----
                 infoSection.style.display = 'none';
                 contentBlocks.forEach(el => {
                     el.style.opacity = '1';
                     el.style.pointerEvents = 'auto';
                 });
-                hideBtn.innerText = '🖥️ CLEAN VIEW:(text off)';
+
+                if (cosmicWrapper) {
+                    cosmicWrapper.style.display = isCosmicOrCelestial ? 'flex' : 'none';
+                    if (cosmicControls) cosmicControls.style.display = 'flex';
+                }
+                if (mode === 'celestial') {
+                    analogClock.style.display = 'flex';
+                    analogClock.classList.add('zen-mode');
+                } else if (mode === 'cosmic') {
+                    analogClock.style.display = 'none';
+                } 
+
+                // FLAT EARTH CONTROLS – RESTORE FULL
+                if (feSection) {
+                    const container = feSection.querySelector('.cosmic-controls');
+                    if (container) container.style.display = 'flex';
+                    const feControls = feSection.querySelectorAll('#fe-time-display, input, .cosmic-btn');
+                    feControls.forEach(el => el.style.display = '');
+                    const feCanvas = document.getElementById('fe-canvas');
+                    const feStretched = document.getElementById('fe-stretched-canvas');
+                    if (feCanvas) feCanvas.style.display = '';
+                    if (feStretched) feStretched.style.display = '';
+                }
+
+                hideBtn.innerText = '🖥️CLEANVIEW:(text off)';
                 hideBtn.style.color = '#ffb835'; // Orange
-            } else { // mode 2
-                // Everything hidden (info + images)
+            } else { // mode 2: FULL CLEAN VIEW (info + images hidden)
                 infoSection.style.display = 'none';
                 contentBlocks.forEach(el => {
                     el.style.opacity = '0';
                     el.style.pointerEvents = 'none';
                 });
-                hideBtn.innerText = '🖥️ CLEAN VIEW: ON(full)';
+
+                // ---- Cosmic / Celestial: keep wheel visible, hide controls ----
+                if (cosmicWrapper && isCosmicOrCelestial) {
+                    cosmicWrapper.style.display = 'flex';
+                    if (cosmicControls) cosmicControls.style.display = 'none'; // hide anchor, time, buttons
+                    if (cosmicCanvas) cosmicCanvas.style.display = 'block';
+                    // For celestial, keep analog clock visible too
+                    if (mode === 'celestial') {
+                        analogClock.style.display = 'flex';
+                        analogClock.classList.add('zen-mode');
+                    } else {
+                        analogClock.style.display = 'none';
+                    }
+                    // Make sure canvas is visible
+                } else if (cosmicWrapper) {
+                    cosmicWrapper.style.display = 'none';
+                } 
+
+                // FLAT EARTH – keep canvases, hide controls
+                if (feSection) {
+                    const container = feSection.querySelector('.cosmic-controls');
+                    if (container) container.style.display = 'none';
+                    const feControls = feSection.querySelectorAll('#fe-time-display, input, .cosmic-btn');
+                    feControls.forEach(el => el.style.display = 'none');
+                    const feCanvas = document.getElementById('fe-canvas');
+                    const feStretched = document.getElementById('fe-stretched-canvas');
+                    if (feCanvas) feCanvas.style.display = 'block';
+                    if (feStretched) feStretched.style.display = 'block';
+                }
+                
+                hideBtn.innerText = '🖥️CLEANVIEW: ON(full)';
                 hideBtn.style.color = '#00fffb'; // Cyber Cyan
             }
         }
@@ -1686,7 +1837,7 @@
         themeSelect.addEventListener('change', (e) => {
             applyColorTheme(e.target.value);
             
-            // Optional: Play your mechanical sound and trigger the ghost notification
+            // Play mechanical sound and trigger the ghost notification
             if (typeof playTick === 'function') playTick(true);
             if (typeof triggerGhost === 'function') triggerGhost(`THEME: ${e.target.value.toUpperCase()}`);
         });
@@ -1716,7 +1867,7 @@
                     reject(new Error('YouTube API timeout – check network or ad‑blocker'));
                 }, 10000);
 
-                // Save any previously assigned callback (none in your code, but safe)
+                // Save any previously assigned callback (none in code, but safe)
                 const previousCallback = window.onYouTubeIframeAPIReady;
                 window.onYouTubeIframeAPIReady = () => {
                     clearTimeout(timeout);
@@ -4633,7 +4784,7 @@ O
                 for (let i = 0; i < t.text.length; i++) {
                     textSpan.innerHTML += t.text[i];
 
-                    // Use your existing audio engine for soft ticks
+                    // Use existing audio engine for soft ticks
                     if (typeof playTick === 'function' && i % 2 === 0) playTick();
 
                     // Randomised typing speed – feels like a human thinking
@@ -7807,34 +7958,57 @@ ${pins.slice(0, 10).join('<br>')}<br>
             '#quote-widget', '#dynamic-quote-container',   // online quote
             '#xterm-modal', '.hide-controls-toggle-wrapper',
             '.theme-switch-wrapper', '.text-wrapper', '#neofetch-container',
-            '.timepiece-wrapper .clock', '#digital-clock', '#cistercian-wrapper',
             '#cistercian-date-row', '.small-cist-date', '#perm-cist-clock',
             '#open-fetch-btn', '#edit-ascii-btn', '#open-xterm',
             '#open-btop', '#theme-select', '#color-theme-select', '#alarm-panel'
         ];
 
         function enterMagicMirror() {
+
             if (magicMirrorActive) return;
 
             // Determine active clock
             const analog = document.getElementById('analog-clock');
             const digital = document.getElementById('digital-clock');
             const cistercian = document.getElementById('cistercian-wrapper');
+            const cosmic = document.getElementById('cosmic-wrapper');
+            
+            const mode = clockModes[currentModeIndex];
+            
             let activeClock = null;
-            let activeDisplay = null;
+            let activeDisplay = 'flex';
 
-            if (analog && getComputedStyle(analog).display !== 'none') {
-                activeClock = analog;
-                activeDisplay = 'flex';
-            } else if (digital && getComputedStyle(digital).display !== 'none') {
-                activeClock = digital;
-                activeDisplay = 'flex';
-            } else if (cistercian && getComputedStyle(cistercian).display !== 'none') {
-                activeClock = cistercian;
-                activeDisplay = 'flex';
+            // Hide all clocks first, then show the active one
+            if (analog) analog.style.display = 'none';
+            if (digital) digital.style.display = 'none';
+            if (cistercian) cistercian.style.display = 'none';
+            if (cosmic) cosmic.style.display = 'none';
+            document.querySelector('.timepiece-wrapper').classList.remove('cosmic-glass-active');
+
+            // Show the active clock based on current mode
+            if (mode === 'classic' || mode === 'glass') {
+                if (analog) {
+                    analog.style.display = 'flex';
+                    if (mode === 'glass') analog.classList.add('zen-mode');
+                }
+            } else if (mode === 'digital') {
+                if (digital) digital.style.display = 'flex';
+            } else if (mode === 'cistercian') {
+                if (cistercian) cistercian.style.display = 'flex';
+            } else if (mode === 'cosmic') {
+                if (cosmic) cosmic.style.display = 'flex';
+                if (analog) analog.style.display = 'none';
+            } else if (mode === 'celestial') {
+                // Show analog clock (glass mode) + cosmic overlay
+                if (analog) {
+                    analog.style.display = 'flex';
+                    analog.classList.add('zen-mode');
+                }
+                if (cosmic) cosmic.style.display = 'flex';
+                document.querySelector('.timepiece-wrapper').classList.add('cosmic-glass-active');
             }
 
-            // Store original styles and hide each element
+            // Store original styles and hide other UI elements (but NOT clocks)
             elementsToHide.forEach(selector => {
                 const el = document.querySelector(selector);
                 if (el && el !== magicMirrorBtn && el !== mirrorExitBtn) {
@@ -7843,19 +8017,11 @@ ${pins.slice(0, 10).join('<br>')}<br>
                         display: el.style.display || computed.display,
                         visibility: el.style.visibility || computed.visibility
                     });
-                    // Hide the element (set display to 'none' for most; for visibility-based, also set visibility)
                     el.style.display = 'none';
                     if (computed.visibility === 'hidden') el.style.visibility = 'hidden';
                 }
             });
 
-            // Show the active clock
-            if (activeClock) {
-                activeClock.style.display = activeDisplay;
-            } else {
-                const fallback = document.getElementById('analog-clock');
-                if (fallback) fallback.style.display = 'flex';
-            }
 
             // Hide main title
             const mainTitle = document.querySelector('.name-plate.main-title');
@@ -7874,10 +8040,8 @@ ${pins.slice(0, 10).join('<br>')}<br>
             document.getElementById('mirror-exit-btn').style.display = 'inline-block'; // or 'block'
             document.getElementById('mirror-spacer').style.display = 'block';
 
-            // Hide the JOHAN_OS button (targeting its parent div to hide the margin too)
+            // Hide JOHAN_OS button and neofetch
             document.getElementById('toggle-fetch-btn').parentElement.style.display = 'none';
-
-            // Hide the fastfetch container completely
             document.getElementById('neofetch-container').style.display = 'none';
             // Show exit button
             if (mirrorExitBtn) mirrorExitBtn.style.display = 'block';
@@ -7905,11 +8069,13 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 mainTitle.style.visibility = titleStyles.visibility;
             }
 
-            // Remove mirror-mode class (removes spacer min-height)
+            // Remove mirror-mode class and celestial overlay
             document.body.classList.remove('mirror-mode');
+            document.querySelector('.timepiece-wrapper').classList.remove('cosmic-glass-active');
 
-            // Hide exit button
+            // Hide exit button and spacer(min-height)
             if (mirrorExitBtn) mirrorExitBtn.style.display = 'none';
+            document.getElementById('mirror-spacer').style.display = 'none';
 
             magicMirrorActive = false;
             magicMirrorBtn.style.display = 'inline-block';
@@ -7920,8 +8086,42 @@ ${pins.slice(0, 10).join('<br>')}<br>
 
             // Bring back the JOHAN_OS button
             document.getElementById('toggle-fetch-btn').parentElement.style.display = 'block';
-            // Bring back the fastfetch container (MUST be 'flex' to preserve your layout!)
+            // Bring back the fastfetch container (MUST be 'flex' to preserve layout!)
             document.getElementById('neofetch-container').style.display = 'flex';
+
+            // Restore active clock display after exiting mirror
+            const mode = clockModes[currentModeIndex];
+            const analog = document.getElementById('analog-clock');
+            const digital = document.getElementById('digital-clock');
+            const cistercian = document.getElementById('cistercian-wrapper');
+            const cosmic = document.getElementById('cosmic-wrapper');
+
+            if (analog) analog.style.display = 'none';
+            if (digital) digital.style.display = 'none';
+            if (cistercian) cistercian.style.display = 'none';
+            if (cosmic) cosmic.style.display = 'none';
+            document.querySelector('.timepiece-wrapper').classList.remove('cosmic-glass-active');
+
+            if (mode === 'classic' || mode === 'glass') {
+                if (analog) {
+                    analog.style.display = 'flex';
+                    if (mode === 'glass') analog.classList.add('zen-mode');
+                }
+            } else if (mode === 'digital') {
+                if (digital) digital.style.display = 'flex';
+            } else if (mode === 'cistercian') {
+                if (cistercian) cistercian.style.display = 'flex';
+            } else if (mode === 'cosmic') {
+                if (cosmic) cosmic.style.display = 'flex';
+                if (analog) analog.style.display = 'none';
+            } else if (mode === 'celestial') {
+                if (analog) {
+                    analog.style.display = 'flex';
+                    analog.classList.add('zen-mode');
+                }
+                if (cosmic) cosmic.style.display = 'flex';
+                document.querySelector('.timepiece-wrapper').classList.add('cosmic-glass-active');
+            }
 
             if (window._perfectMirrorActive) {
                 const taoWidget = document.getElementById('tao-quote-container');
@@ -9134,6 +9334,794 @@ ${pins.slice(0, 10).join('<br>')}<br>
 
             gameLoop();
         }
+
+
+
+        // =========================================================================
+        // === COSMIC MAZZAROTH WHEEL ENGINE (Glass Mode) ===
+        // =========================================================================
+        function initCosmicClock() {
+            window._cosmicInit = true;
+
+            const canvas = document.getElementById('cosmic-canvas');
+            const ctx = canvas.getContext('2d');
+            const timeDisplay = document.getElementById('cosmic-time-display');
+            const latInput = document.getElementById('cosmic-lat');
+            const lonInput = document.getElementById('cosmic-lon');
+
+
+            // Zodiac data
+            const ZODIAC = ['♈︎','♉︎','♊︎','♋︎','♌︎','♍︎','♎︎','♏︎','♐︎','♑︎','♒︎','♓︎'];
+            const ELEMENTS = ['Fire','Earth','Air','Water','Fire','Earth','Air','Water','Fire','Earth','Air','Water'];
+            const ELEMENT_COLORS = {
+                Fire: '#ff6666',
+                Earth: '#66ff66',
+                Air: '#777d80',
+                Water: '#0565ff'
+            };
+
+            const PLANETS = {
+                'Sun':    { sym: '☉', col: '#ffaa00' },
+                'Moon':   { sym: '☽', col: '#ececec' },
+                'Mercury':{ sym: '☿', col: '#00f0ff' },
+                'Venus':  { sym: '♀', col: '#ff00ff' },
+                'Mars':   { sym: '♂', col: '#ff3333' },
+                'Jupiter':{ sym: '♃', col: '#4aff9e' },
+                'Saturn': { sym: '♄', col: '#ffd733' },
+                'Uranus': { sym: '♅', col: '#00ced1' },
+                'Neptune':{ sym: '♆', col: '#4169e1' },
+                'Pluto':  { sym: '♇', col: '#8b4513' }
+            };
+
+            let simTime = new Date();
+            let isPlaying = true;
+            let speedMultiplier = 1;
+            let animFrame;
+            let lastTimestamp = 0;
+
+            // ---- Astronomical helpers ----
+            function getJulianDay(date) {
+                const year = date.getUTCFullYear();
+                const month = date.getUTCMonth() + 1;
+                const day = date.getUTCDate() + (date.getUTCHours() + date.getUTCMinutes()/60 + date.getUTCSeconds()/3600) / 24;
+                let a = Math.floor((14 - month) / 12);
+                let y = year + 4800 - a;
+                let m = month + 12 * a - 3;
+                let jd = day + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
+                return jd;
+            }
+
+            function getGMST(jd) {
+                const T = (jd - 2451545.0) / 36525.0;
+                let gmst = 280.46061837 + 360.98564736629 * (jd - 2451545.0) + 0.000387933 * T * T - T * T * T / 38710000.0;
+                return ((gmst % 360) + 360) % 360;
+            }
+
+            function getPlanetPosition(planet, date) {
+                const days = (date - EPHEMERIS.refDate) / (1000 * 60 * 60 * 24);
+                const lon = EPHEMERIS.refLon[planet] + EPHEMERIS.dailyMotion[planet] * days;
+                return ((lon % 360) + 360) % 360;
+            }
+
+            function getACMC(date, lat, lon) {
+                const jd = getJulianDay(date);
+                const gmstDeg = getGMST(jd);
+                let lst = (gmstDeg + lon) % 360;
+                if (lst < 0) lst += 360;
+
+                const lstRad = lst * Math.PI / 180;
+                const latRad = lat * Math.PI / 180;
+                const epsRad = 23.439 * Math.PI / 180;
+
+                let mcRad = Math.atan2(Math.sin(lstRad), Math.cos(lstRad) * Math.cos(epsRad));
+                let mcDeg = ((mcRad * 180 / Math.PI) % 360 + 360) % 360;
+
+                let num = Math.cos(lstRad);
+                let den = -(Math.sin(lstRad) * Math.cos(epsRad) + Math.tan(latRad) * Math.sin(epsRad));
+                let acRad = Math.atan2(num, den);
+                let acDeg = ((acRad * 180 / Math.PI) % 360 + 360) % 360;
+
+                return { ac: acDeg, mc: mcDeg };
+            }
+
+            // ---- Drawing ----
+            function drawCosmicClock(timestamp) {
+                // ---- 1. Match canvas size to display ----
+                const rect = canvas.getBoundingClientRect();
+                const displayWidth = rect.width;
+                const displayHeight = rect.height;
+                if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
+                    canvas.width = displayWidth;
+                    canvas.height = displayHeight;
+                }
+
+                if (!timestamp) timestamp = performance.now();
+                if (lastTimestamp === 0) lastTimestamp = timestamp;
+                const delta = (timestamp - lastTimestamp) / 1000;
+                lastTimestamp = timestamp;
+
+                if (isPlaying) {
+                    const deltaMs = delta * 1000 * speedMultiplier;
+                    simTime = new Date(simTime.getTime() + deltaMs);
+                }
+
+                const cx = canvas.width / 2;
+                const cy = canvas.height / 2;
+                const rOuter = Math.min(canvas.width, canvas.height) * 0.42;
+                const rZodiac = rOuter * 0.88;
+                const rPlanets = rOuter * 0.68;
+                const rTicks = rOuter * 0.92;
+                
+
+                // ---- COMPLETELY CLEAR with NO background ----
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const lat = parseFloat(latInput.value) || 29.9792;
+                const lon = parseFloat(lonInput.value) || 31.1342;
+
+                timeDisplay.innerText = `[ TIME: ${simTime.toUTCString()} ]`;
+
+                const planetData = {};
+                for (const p in PLANETS) {
+                    planetData[p] = getPlanetPosition(p, simTime);
+                }
+                const angles = getACMC(simTime, lat, lon);
+                const ac = angles.ac;
+                const mc = angles.mc;
+
+                const getAngle = (lonDeg) => Math.PI - (lonDeg * Math.PI / 180);
+
+                // ---- Draw transparent zodiac segments ----
+                for (let i = 0; i < 12; i++) {
+                    const startAngle = getAngle(i * 30);
+                    const endAngle = getAngle((i + 1) * 30);
+                    const elem = ELEMENTS[i];
+                    const color = ELEMENT_COLORS[elem];
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, rZodiac - 5, endAngle, startAngle);
+                    ctx.arc(cx, cy, rZodiac - 30, startAngle, endAngle, true);
+                    ctx.closePath();
+                    ctx.fillStyle = color + '15'; // 15% opacity
+                    ctx.fill();
+                }
+
+                // ---- Outer Ring (thin) ----
+                ctx.lineWidth = 1.5;
+                ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+                ctx.beginPath();
+                ctx.arc(cx, cy, rOuter, 0, 2 * Math.PI);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.arc(cx, cy, rZodiac - 5, 0, 2 * Math.PI);
+                ctx.stroke();
+
+                // ---- Degree Tick Marks (millimeter bars) ----
+                for (let i = 0; i < 360; i += 5) {
+                    const angle = getAngle(i);
+                    const outer = i % 30 === 0 ? rTicks + 8 : (i % 10 === 0 ? rTicks + 4 : rTicks);
+                    const inner = rTicks - 4;
+                    ctx.beginPath();
+                    ctx.moveTo(cx + outer * Math.cos(angle), cy + outer * Math.sin(angle));
+                    ctx.lineTo(cx + inner * Math.cos(angle), cy + inner * Math.sin(angle));
+                    ctx.strokeStyle = i % 30 === 0 ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.15)';
+                    ctx.lineWidth = i % 30 === 0 ? 2 : 1;
+                    ctx.stroke();
+                }
+
+                // ---- Cardinal axes ----
+                ctx.lineWidth = 1;
+                ctx.setLineDash([4, 6]);
+                ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+                const a0 = getAngle(0);
+                ctx.beginPath();
+                ctx.moveTo(cx + (rOuter - 5) * Math.cos(a0), cy + (rOuter - 5) * Math.sin(a0));
+                ctx.lineTo(cx - (rOuter - 5) * Math.cos(a0), cy - (rOuter - 5) * Math.sin(a0));
+                ctx.stroke();
+                const a90 = getAngle(90);
+                ctx.beginPath();
+                ctx.moveTo(cx + (rOuter - 5) * Math.cos(a90), cy + (rOuter - 5) * Math.sin(a90));
+                ctx.lineTo(cx - (rOuter - 5) * Math.cos(a90), cy - (rOuter - 5) * Math.sin(a90));
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // ---- Zodiac Signs (with custom colors) ----
+                ctx.font = '24px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                for (let i = 0; i < 12; i++) {
+                    const symAngle = getAngle(i * 30 + 15);
+                    const elem = ELEMENTS[i];
+                    const color = ELEMENT_COLORS[elem];
+                    ctx.fillStyle = color;
+                    ctx.shadowColor = color;
+                    ctx.shadowBlur = 12;
+                    ctx.fillText(ZODIAC[i], cx + (rZodiac + 3) * Math.cos(symAngle), cy + (rZodiac + 3) * Math.sin(symAngle));
+                }
+                ctx.shadowBlur = 0;
+
+                // ---- Planets ----
+                ctx.font = '20px Arial';
+                for (const p in planetData) {
+                    const lonDeg = planetData[p];
+                    const angle = getAngle(lonDeg);
+
+                    ctx.beginPath();
+                    ctx.moveTo(cx + 30 * Math.cos(angle), cy + 30 * Math.sin(angle));
+                    ctx.lineTo(cx + rPlanets * Math.cos(angle), cy + rPlanets * Math.sin(angle));
+                    ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+                    ctx.stroke();
+
+                    ctx.fillStyle = PLANETS[p].col;
+                    ctx.shadowColor = PLANETS[p].col;
+                    ctx.shadowBlur = 15;
+                    ctx.fillText(PLANETS[p].sym, cx + rPlanets * Math.cos(angle), cy + rPlanets * Math.sin(angle));
+                }
+                ctx.shadowBlur = 0;
+
+                // ---- AC / MC Crosshair ----
+                const acAngle = getAngle(ac);
+                const mcAngle = getAngle(mc);
+
+                // AC = Orange/Yellow
+                ctx.lineWidth = 2.5;
+                ctx.strokeStyle = 'rgba(255, 200, 0, 0.6)';
+                ctx.shadowColor = '#ffaa00';
+                ctx.shadowBlur = 10;
+                ctx.beginPath();
+                ctx.moveTo(cx + (rOuter - 10) * Math.cos(acAngle), cy + (rOuter - 10) * Math.sin(acAngle));
+                ctx.lineTo(cx - (rOuter - 10) * Math.cos(acAngle), cy - (rOuter - 10) * Math.sin(acAngle));
+                ctx.stroke();
+                ctx.fillStyle = '#ffaa00';
+                ctx.font = '13px monospace';
+                ctx.shadowBlur = 12;
+                ctx.fillText('AC', cx + (rOuter + 18) * Math.cos(acAngle), cy + (rOuter + 18) * Math.sin(acAngle));
+
+                // MC = Royal blue
+                ctx.strokeStyle = 'rgba(65, 105, 225, 0.6)';
+                ctx.shadowColor = '#4169e1';
+                ctx.beginPath();
+                ctx.moveTo(cx + (rOuter - 10) * Math.cos(mcAngle), cy + (rOuter - 10) * Math.sin(mcAngle));
+                ctx.lineTo(cx - (rOuter - 10) * Math.cos(mcAngle), cy - (rOuter - 10) * Math.sin(mcAngle));
+                ctx.stroke();
+                ctx.fillStyle = '#4169e1';
+                ctx.shadowBlur = 10;
+                ctx.fillText('MC', cx + (rOuter + 18) * Math.cos(mcAngle), cy + (rOuter + 18) * Math.sin(mcAngle));
+                ctx.shadowBlur = 0;
+
+                // ---- Center dot ----
+                ctx.beginPath();
+                ctx.arc(cx, cy, 12, 0, 2 * Math.PI);
+                ctx.fillStyle = 'rgba(10,10,26,0.6)';
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(0, 240, 255, 0.3)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                // Title
+                ctx.fillStyle = '#FFD700';
+                ctx.font = 'bold 12px monospace';
+                ctx.shadowColor = '#FFD700';
+                ctx.shadowBlur = 8;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('🌀', cx, cy - 2);
+                ctx.shadowBlur = 0;
+
+                animFrame = requestAnimationFrame(drawCosmicClock);
+            }
+
+            // ---- 3. Resize handling ----
+            const resizeObserver = new ResizeObserver(() => {
+                if (animFrame) cancelAnimationFrame(animFrame);
+                lastTimestamp = 0;
+                drawCosmicClock();
+            });
+            resizeObserver.observe(canvas);
+
+            window.addEventListener('resize', () => {
+                if (animFrame) cancelAnimationFrame(animFrame);
+                lastTimestamp = 0;
+                drawCosmicClock();
+            });
+
+            // ---- 4. Start the loop ----
+            drawCosmicClock();
+
+            // ---- Controls ----
+            document.getElementById('c-play-pause').onclick = (e) => {
+                isPlaying = !isPlaying;
+                e.target.innerText = isPlaying ? "⏸PAUSE" : "▶PLAY";
+                if (isPlaying) lastTimestamp = 0;
+            };
+            document.getElementById('c-now').onclick = () => {
+                isPlaying = true;
+                document.getElementById('c-play-pause').innerText = "⏸PAUSE";
+                simTime = new Date();
+                lastTimestamp = 0;
+            };
+            const addTime = (ms) => {
+                isPlaying = false;
+                document.getElementById('c-play-pause').innerText = "▶PLAY";
+                simTime = new Date(simTime.getTime() + ms);
+                lastTimestamp = 0;
+            };
+            document.getElementById('c-next-hr').onclick = () => addTime(3600000);
+            document.getElementById('c-prev-hr').onclick = () => addTime(-3600000);
+            document.getElementById('c-next-day').onclick = () => addTime(86400000);
+            document.getElementById('c-prev-day').onclick = () => addTime(-86400000);
+            document.getElementById('c-next-mo').onclick = () => addTime(86400000 * 30);
+            document.getElementById('c-prev-mo').onclick = () => addTime(-86400000 * 30);
+
+            // ---- Speed cycle: 1x → 60x → 600x →1440x → 6000x  → 60000x → 600000x ----
+            const speedBtn = document.getElementById('c-speed');
+            const speeds = [1, 60, 600, 1440, 6000, 60000, 600000, 6000000];
+            let speedIndex = 0;
+            speedBtn.innerText = `⚡1x`;
+            speedBtn.onclick = () => {
+                speedIndex = (speedIndex + 1) % speeds.length;
+                speedMultiplier = speeds[speedIndex];
+                speedBtn.innerText = `⚡${speedMultiplier}x`;
+                lastTimestamp = 0;
+            };
+
+            drawCosmicClock();
+        }
+
+
+
+        // =========================================================================
+        // === FLAT EARTH PROJECTION – CIRCULAR + STRETCHED (Glass + Dark Hue) ===
+        // =========================================================================
+        function initFlatEarthClock() {
+            const canvas = document.getElementById('fe-canvas');
+            const stretchedCanvas = document.getElementById('fe-stretched-canvas');
+            if (!canvas || !stretchedCanvas) return;
+
+            const ctx = canvas.getContext('2d');
+            const stretchedCtx = stretchedCanvas.getContext('2d');
+            
+            const timeDisplay = document.getElementById('fe-time-display');
+            const latInput = document.getElementById('fe-lat');
+            const lonInput = document.getElementById('fe-lon');
+
+            const PLANETS = {
+                'Sun':    { sym: '☉', col: '#ffaa00', size: 24 },
+                'Moon':   { sym: '☽', col: '#ececec', size: 18 },
+                'Mercury':{ sym: '☿', col: '#00f0ff', size: 14 },
+                'Venus':  { sym: '♀', col: '#ff00ff', size: 16 },
+                'Mars':   { sym: '♂', col: '#ff3333', size: 16 },
+                'Jupiter':{ sym: '♃', col: '#4aff9e', size: 20 },
+                'Saturn': { sym: '♄', col: '#ffd733', size: 18 }
+            };
+
+            const ZODIAC = ['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+            const ZODIAC_STRETCHED = ['♈︎','♉︎','♊︎','♋︎','♌︎','♍︎','♎︎','♏︎','♐︎','♑︎','♒︎','♓︎'];
+
+
+            // ---- State (shared) ----
+            let simTime = new Date();
+            let isPlaying = true;
+            let speedMultiplier = 1;
+            const stretchFactor = 1.7;          // fixed stretch for elliptical version
+            let lastTimestamp = 0;
+            let animFrame;
+
+            // ---- Helpers ----
+            function getJulianDay(date) {
+                const year = date.getUTCFullYear();
+                const month = date.getUTCMonth() + 1;
+                const day = date.getUTCDate() + (date.getUTCHours() + date.getUTCMinutes()/60 + date.getUTCSeconds()/3600) / 24;
+                let a = Math.floor((14 - month) / 12);
+                let y = year + 4800 - a;
+                let m = month + 12 * a - 3;
+                return day + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
+            }
+
+            function getGMST(jd) {
+                const T = (jd - 2451545.0) / 36525.0;
+                let gmst = 280.46061837 + 360.98564736629 * (jd - 2451545.0) + 0.000387933 * T * T - T * T * T / 38710000.0;
+                return ((gmst % 360) + 360) % 360;
+            }
+
+            function getPlanetPosition(planet, date) {
+                const days = (date - EPHEMERIS.refDate) / (1000 * 60 * 60 * 24);
+                const lon = EPHEMERIS.refLon[planet] + EPHEMERIS.dailyMotion[planet] * days;
+                return ((lon % 360) + 360) % 360;
+            }
+
+            function getDeclination(lon) {
+                const eps = 23.439 * Math.PI / 180;
+                const lonRad = lon * Math.PI / 180;
+                const sinDec = Math.sin(lonRad) * Math.sin(eps);
+                return Math.asin(sinDec) * 180 / Math.PI;
+            }
+
+            function getACMC(date, lat, lon) {
+                const jd = getJulianDay(date);
+                const gmstDeg = getGMST(jd);
+                let lst = (gmstDeg + lon) % 360;
+                if (lst < 0) lst += 360;
+                const lstRad = lst * Math.PI / 180;
+                const latRad = lat * Math.PI / 180;
+                const epsRad = 23.439 * Math.PI / 180;
+                let mcRad = Math.atan2(Math.sin(lstRad), Math.cos(lstRad) * Math.cos(epsRad));
+                let mcDeg = ((mcRad * 180 / Math.PI) % 360 + 360) % 360;
+                let num = Math.cos(lstRad);
+                let den = -(Math.sin(lstRad) * Math.cos(epsRad) + Math.tan(latRad) * Math.sin(epsRad));
+                let acRad = Math.atan2(num, den);
+                let acDeg = ((acRad * 180 / Math.PI) % 360 + 360) % 360;
+                return { ac: acDeg, mc: mcDeg };
+            }
+
+            // ============================================================
+            // 1. CIRCULAR FLAT EARTH
+            // ============================================================
+            function drawCircular() {
+                const rect = canvas.getBoundingClientRect();
+                if (canvas.width !== rect.width || canvas.height !== rect.height) {
+                    canvas.width = rect.width;
+                    canvas.height = rect.height;
+                }
+
+                const cx = canvas.width / 2;
+                const cy = canvas.height / 2;
+                const rDisc = Math.min(cx, cy) * 0.92;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Background disc
+                ctx.beginPath();
+                ctx.arc(cx, cy, rDisc, 0, 2 * Math.PI);
+                ctx.fillStyle = '#06060c';
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(0, 240, 255, 0.12)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                const lat = parseFloat(latInput.value) || 29.9792;
+                const lon = parseFloat(lonInput.value) || 31.1342;
+                const planetData = {};
+                for (const p in PLANETS) {
+                    const lonDeg = getPlanetPosition(p, simTime);
+                    const dec = getDeclination(lonDeg);
+                    const stretch = (90 - dec) / 113.44;
+                    const radius = rDisc * 0.92 * stretch;
+                    const angle = Math.PI - (lonDeg * Math.PI / 180);
+                    planetData[p] = {
+                        x: cx + radius * Math.cos(angle),
+                        y: cy + radius * Math.sin(angle),
+                        lon: lonDeg,
+                        dec: dec,
+                        stretch: stretch
+                    };
+                }
+
+                // Tropical rings
+                ctx.setLineDash([2, 5]);
+                ctx.lineWidth = 1;
+                const rCancer = rDisc * 0.92 * ((90 - 23.44) / 113.44);
+                ctx.strokeStyle = 'rgba(255, 50, 50, 0.12)';
+                ctx.beginPath(); ctx.arc(cx, cy, rCancer, 0, 2*Math.PI); ctx.stroke();
+                const rEquator = rDisc * 0.92 * (90 / 113.44);
+                ctx.strokeStyle = 'rgba(0, 240, 255, 0.15)';
+                ctx.beginPath(); ctx.arc(cx, cy, rEquator, 0, 2*Math.PI); ctx.stroke();
+                ctx.strokeStyle = 'rgba(255, 200, 0, 0.12)';
+                ctx.beginPath(); ctx.arc(cx, cy, rDisc * 0.92, 0, 2*Math.PI); ctx.stroke();
+                ctx.setLineDash([]);
+                    
+
+                // ---- Zodiac signs (circular, subtle glow) ----
+                const zR = rDisc * 0.97;
+                ctx.font = '16px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                for (let i = 0; i < 12; i++) {
+                    const angle = Math.PI - (i * 30 * Math.PI / 180);
+                    const x = cx + zR * Math.cos(angle);
+                    const y = cy + zR * Math.sin(angle);
+                    
+                    // Stronger glow – colour matching the element
+                    const colors = ['#ff6666','#66ff66','#777d80','#0565ff','#ff6666','#66ff66','#777d80','#0565ff','#ff6666','#66ff66','#777d80','#0565ff'];
+                    ctx.shadowColor = colors[i];
+                    ctx.shadowBlur = 18;
+                    ctx.fillStyle = colors[i];
+                    ctx.fillText(ZODIAC[i], x, y);
+                }
+                ctx.shadowBlur = 0; // Reset for other drawings
+
+                // Day/Night spotlight
+                const sun = planetData['Sun'];
+                if (sun) {
+                    const sunX = sun.x;
+                    const sunY = sun.y;
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, rDisc, 0, 2 * Math.PI);
+                    ctx.clip();
+                    ctx.fillStyle = 'rgba(3, 3, 12, 0.75)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.globalCompositeOperation = 'destination-out';
+                    const spotRad = rDisc * 0.85;
+                    const grad = ctx.createRadialGradient(sunX, sunY, 10, sunX, sunY, spotRad);
+                    grad.addColorStop(0, 'rgba(0,0,0,1)');
+                    grad.addColorStop(0.3, 'rgba(0,0,0,0.85)');
+                    grad.addColorStop(0.6, 'rgba(0,0,0,0.5)');
+                    grad.addColorStop(1, 'rgba(0,0,0,0)');
+                    ctx.beginPath();
+                    ctx.arc(sunX, sunY, spotRad, 0, 2 * Math.PI);
+                    ctx.fillStyle = grad;
+                    ctx.fill();
+                    ctx.restore();
+                }
+
+                // Draw planets
+                for (const p in planetData) {
+                    const d = planetData[p];
+                    const planet = PLANETS[p];
+                    ctx.shadowColor = planet.col;
+                    ctx.shadowBlur = 18;
+                    ctx.fillStyle = planet.col;
+                    ctx.font = `${planet.size}px Arial`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(planet.sym, d.x, d.y);
+                }
+                ctx.shadowBlur = 0;
+
+                // AC/MC lines
+                const angles = getACMC(simTime, lat, lon);
+                const ac = angles.ac;
+                const mc = angles.mc;
+                const rLine = rDisc * 0.95;
+                const acAngle = Math.PI - (ac * Math.PI / 180);
+                ctx.beginPath();
+                ctx.moveTo(cx + 20 * Math.cos(acAngle), cy + 20 * Math.sin(acAngle));
+                ctx.lineTo(cx + rLine * Math.cos(acAngle), cy + rLine * Math.sin(acAngle));
+                ctx.strokeStyle = 'rgba(255,200,0,0.4)';
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([3, 5]);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.fillStyle = '#ffaa00';
+                ctx.font = '11px monospace';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('AC', cx + (rLine + 15) * Math.cos(acAngle), cy + (rLine + 15) * Math.sin(acAngle));
+
+                const mcAngle = Math.PI - (mc * Math.PI / 180);
+                ctx.beginPath();
+                ctx.moveTo(cx + 20 * Math.cos(mcAngle), cy + 20 * Math.sin(mcAngle));
+                ctx.lineTo(cx + rLine * Math.cos(mcAngle), cy + rLine * Math.sin(mcAngle));
+                ctx.strokeStyle = 'rgba(0,255,100,0.4)';
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([3, 5]);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.fillStyle = '#00ff66';
+                ctx.fillText('MC', cx + (rLine + 15) * Math.cos(mcAngle), cy + (rLine + 15) * Math.sin(mcAngle));
+
+                // Polaris center
+                ctx.beginPath();
+                ctx.arc(cx, cy, 4, 0, 2 * Math.PI);
+                ctx.fillStyle = '#00ffff';
+                ctx.shadowColor = '#00ffff';
+                ctx.shadowBlur = 12;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+
+            // ============================================================
+            // 2. STRETCHED FLAT EARTH (Glass + Dark Hue + Outer Ellipse)
+            // ============================================================
+            function drawStretched() {
+                // Get the container size (not the canvas size directly)
+                const container = stretchedCanvas.parentElement;
+                const rect = container.getBoundingClientRect();
+                const displayWidth = rect.width;
+                const displayHeight = rect.height;
+                
+                if (stretchedCanvas.width !== displayWidth || stretchedCanvas.height !== displayHeight) {
+                    stretchedCanvas.width = displayWidth;
+                    stretchedCanvas.height = displayHeight;
+                }
+
+
+                const cx = stretchedCanvas.width / 2;
+                const cy = stretchedCanvas.height / 2;
+                const baseRadius = Math.min(cx, cy) * 0.92;
+                const rx = baseRadius * stretchFactor;
+                const ry = baseRadius / stretchFactor;
+
+                stretchedCtx.clearRect(0, 0, stretchedCanvas.width, stretchedCanvas.height);
+
+                // ---- DARK HUE BACKGROUND (semi-transparent) ----
+                stretchedCtx.fillStyle = 'rgba(6, 6, 12, 0.75)';
+                stretchedCtx.fillRect(0, 0, stretchedCanvas.width, stretchedCanvas.height);
+
+                // ---- OUTER ELLIPSE (clear, visible) ----
+                stretchedCtx.beginPath();
+                stretchedCtx.ellipse(cx, cy, rx, ry, 0, 0, 2 * Math.PI);
+                stretchedCtx.strokeStyle = 'rgba(0, 240, 255, 0.25)';
+                stretchedCtx.lineWidth = 2;
+                stretchedCtx.stroke();
+
+                // ---- Zodiac signs on ellipse (stretched, strong glow) ----
+                const rZodiac = baseRadius * 0.88;
+                stretchedCtx.font = '18px Arial';
+                stretchedCtx.textAlign = 'center';
+                stretchedCtx.textBaseline = 'middle';
+                for (let i = 0; i < 12; i++) {
+                    const angle = Math.PI - ((i * 30 + 15) * Math.PI / 180);
+                    const x = cx + rZodiac * Math.cos(angle) * stretchFactor;
+                    const y = cy + rZodiac * Math.sin(angle) / stretchFactor;
+                    
+                    // Stronger glow – colour matching the element
+                    const colors = ['#ff6666','#66ff66','#777d80','#0565ff','#ff6666','#66ff66','#777d80','#0565ff','#ff6666','#66ff66','#777d80','#0565ff'];
+                    stretchedCtx.shadowColor = colors[i];
+                    stretchedCtx.shadowBlur = 18;
+                    stretchedCtx.fillStyle = colors[i];
+                    stretchedCtx.fillText(ZODIAC_STRETCHED[i], x, y);
+                }
+                stretchedCtx.shadowBlur = 0; // Reset
+
+                // ---- Planets on ellipse ----
+                const lat = parseFloat(latInput.value) || 29.9792;
+                const lon = parseFloat(lonInput.value) || 31.1342;
+                const planetData = {};
+                for (const p in PLANETS) {
+                    const lonDeg = getPlanetPosition(p, simTime);
+                    const dec = getDeclination(lonDeg);
+                    const stretch = (90 - dec) / 113.44;
+                    const radius = baseRadius * 0.92 * stretch;
+                    const angle = Math.PI - (lonDeg * Math.PI / 180);
+                    planetData[p] = {
+                        x: cx + radius * Math.cos(angle) * stretchFactor,
+                        y: cy + radius * Math.sin(angle) / stretchFactor,
+                        lon: lonDeg,
+                        dec: dec,
+                        stretch: stretch
+                    };
+                }
+
+                for (const p in planetData) {
+                    const d = planetData[p];
+                    const planet = PLANETS[p];
+                    stretchedCtx.shadowColor = planet.col;
+                    stretchedCtx.shadowBlur = 15;
+                    stretchedCtx.fillStyle = planet.col;
+                    stretchedCtx.font = `${planet.size}px Arial`;
+                    stretchedCtx.textAlign = 'center';
+                    stretchedCtx.textBaseline = 'middle';
+                    stretchedCtx.fillText(planet.sym, d.x, d.y);
+                }
+                stretchedCtx.shadowBlur = 0;
+
+                // ---- AC/MC lines (stretched) ----
+                const angles = getACMC(simTime, lat, lon);
+                const ac = angles.ac;
+                const mc = angles.mc;
+                const rLine = baseRadius * 0.9;
+
+                // AC (orange)
+                const acAngle = Math.PI - (ac * Math.PI / 180);
+                const acX1 = cx + rLine * Math.cos(acAngle) * stretchFactor;
+                const acY1 = cy + rLine * Math.sin(acAngle) / stretchFactor;
+                const acX2 = cx - rLine * Math.cos(acAngle) * stretchFactor;
+                const acY2 = cy - rLine * Math.sin(acAngle) / stretchFactor;
+                stretchedCtx.beginPath();
+                stretchedCtx.moveTo(acX1, acY1);
+                stretchedCtx.lineTo(acX2, acY2);
+                stretchedCtx.strokeStyle = 'rgba(255,200,0,0.5)';
+                stretchedCtx.lineWidth = 2;
+                stretchedCtx.setLineDash([3, 5]);
+                stretchedCtx.stroke();
+                stretchedCtx.setLineDash([]);
+                stretchedCtx.fillStyle = '#ffaa00';
+                stretchedCtx.font = '12px monospace';
+                stretchedCtx.textAlign = 'center';
+                stretchedCtx.textBaseline = 'middle';
+                stretchedCtx.fillText('AC', acX1 + 15, acY1 + 15);
+
+                // MC (green)
+                const mcAngle = Math.PI - (mc * Math.PI / 180);
+                const mcX1 = cx + rLine * Math.cos(mcAngle) * stretchFactor;
+                const mcY1 = cy + rLine * Math.sin(mcAngle) / stretchFactor;
+                const mcX2 = cx - rLine * Math.cos(mcAngle) * stretchFactor;
+                const mcY2 = cy - rLine * Math.sin(mcAngle) / stretchFactor;
+                stretchedCtx.beginPath();
+                stretchedCtx.moveTo(mcX1, mcY1);
+                stretchedCtx.lineTo(mcX2, mcY2);
+                stretchedCtx.strokeStyle = 'rgba(0,255,100,0.5)';
+                stretchedCtx.lineWidth = 2;
+                stretchedCtx.setLineDash([3, 5]);
+                stretchedCtx.stroke();
+                stretchedCtx.setLineDash([]);
+                stretchedCtx.fillStyle = '#00ff66';
+                stretchedCtx.fillText('MC', mcX1 + 15, mcY1 + 15);
+
+                // ---- Center dot ----
+                stretchedCtx.beginPath();
+                stretchedCtx.arc(cx, cy, 4, 0, 2 * Math.PI);
+                stretchedCtx.fillStyle = '#00ffff';
+                stretchedCtx.shadowColor = '#00ffff';
+                stretchedCtx.shadowBlur = 12;
+                stretchedCtx.fill();
+                stretchedCtx.shadowBlur = 0;
+
+                // ---- Label ----
+                stretchedCtx.fillStyle = 'rgba(255, 170, 0, 0.3)';
+                stretchedCtx.font = '10px monospace';
+                stretchedCtx.textAlign = 'center';
+                stretchedCtx.textBaseline = 'bottom';
+                stretchedCtx.fillText('⬡ STRETCHED PROJECTION', cx, stretchedCanvas.height - 10);
+            }
+
+            // ---- Main Loop ----
+            function drawFlatEarth(timestamp) {
+                if (!timestamp) timestamp = performance.now();
+                if (lastTimestamp === 0) lastTimestamp = timestamp;
+                const delta = (timestamp - lastTimestamp) / 1000;
+                lastTimestamp = timestamp;
+
+                if (isPlaying) {
+                    simTime = new Date(simTime.getTime() + delta * 1000 * speedMultiplier);
+                }
+
+                if (timeDisplay) {
+                    timeDisplay.innerText = `[ PROJECTION TIME: ${simTime.toUTCString()} ]`;
+                }
+
+                drawCircular();
+                drawStretched();
+
+                animFrame = requestAnimationFrame(drawFlatEarth);
+            }
+
+            // ---- Controls ----
+            document.getElementById('fe-play-pause').onclick = (e) => {
+                isPlaying = !isPlaying;
+                e.target.innerText = isPlaying ? "⏸ PAUSE" : "▶PLAY";
+                if (isPlaying) lastTimestamp = 0;
+            };
+            
+            document.getElementById('fe-now').onclick = () => {
+                isPlaying = true;
+                document.getElementById('fe-play-pause').innerText = "⏸PAUSE";
+                simTime = new Date();
+                lastTimestamp = 0;
+            };
+
+            const addTime = (ms) => {
+                isPlaying = false;
+                document.getElementById('fe-play-pause').innerText = "▶ PLAY";
+                simTime = new Date(simTime.getTime() + ms);
+                lastTimestamp = 0;
+            };
+
+            document.getElementById('fe-next-hr').onclick = () => addTime(3600000);
+            document.getElementById('fe-prev-hr').onclick = () => addTime(-3600000);
+            document.getElementById('fe-next-day').onclick = () => addTime(86400000);
+            document.getElementById('fe-prev-day').onclick = () => addTime(-86400000);
+            document.getElementById('fe-next-mo').onclick = () => addTime(86400000 * 30);
+            document.getElementById('fe-prev-mo').onclick = () => addTime(-86400000 * 30);
+
+            // Speed
+            const speedBtn = document.getElementById('fe-speed');
+            const speeds = [1, 60, 600, 1440, 6000, 60000, 600000, 6000000];
+            let speedIndex = 0;
+            speedBtn.onclick = () => {
+                speedIndex = (speedIndex + 1) % speeds.length;
+                speedMultiplier = speeds[speedIndex];
+                speedBtn.innerText = `⚡ ${speedMultiplier}x`;
+                lastTimestamp = 0;
+            };
+
+            drawFlatEarth();
+        }
+        
+        initFlatEarthClock();
+
+
 
         // Automatically update the copyright year
         document.getElementById('year').textContent = new Date().getFullYear();

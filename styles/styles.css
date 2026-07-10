@@ -1,4 +1,4 @@
-        :root {
+:root {
             --bg-color: #121214;
             --text-color: #ececec;
             --clock-bg: #1a1a1d;
@@ -15,7 +15,7 @@
             overflow-x: hidden;            /* prevent horizontal scroll */
             overscroll-behavior: none;     /* disable pull-to-refresh */
             touch-action: pan-y pinch-zoom;/* control touch gestures */
-            /* Optional: disable text selection and tap highlight */
+            /* disable text selection and tap highlight */
             /* user-select: none; */
             /* -webkit-user-select: none; */
             /* -webkit-tap-highlight-color: transparent; */
@@ -65,7 +65,7 @@
             transition: background-image 0.8s ease-in-out;
         }
 
-        /* THE OVERLAY: This sits between your wallpaper and your clock/text */
+        /* THE OVERLAY: This sits between the wallpaper and the clock/text */
         body::before {
             content: '';
             position: fixed;
@@ -77,7 +77,7 @@
             /* 3. THE MASK: 0.75 opacity for that deep, dark premium look */
             background-color: rgba(0, 0, 0, 0.75); 
             
-            /* 4. THE FROST: Blur is subtle (1px) as you requested 
+            /* 4. THE FROST: Blur is subtle (1px) 
             backdrop-filter: blur(1px); /* 15px for that sleek look 
             -webkit-backdrop-filter: blur(1px); /* for safari */
             
@@ -90,18 +90,18 @@
             background-color: rgba(255, 255, 255, 0.255); 
         }
 
-        /* Zen mode for your clock (makes background transparent) */
+        /* Zen mode for the clock (makes background transparent) */
         .clock.zen-mode {
             background: transparent !important;
             box-shadow: none !important;
         }
 
-        /* Optional: make numbers glow more in Zen mode */
+        /* make numbers glow more in Zen mode */
         .clock.zen-mode .number {
             text-shadow: 0 0 15px rgba(255, 0, 255, 0.7);
         }
 
-        /* Optional: also make hands a bit more subtle */
+        /* also make hands a bit more subtle */
         .clock.zen-mode .hand {
             opacity: 0.8;
         }
@@ -165,7 +165,7 @@
         transform: translateX(16px);
         }
 
-        /* Optional text beside the switch 
+        /* text beside the switch 
         .switch-label {
         font-size: 0.9rem;
         color: #333;
@@ -260,7 +260,7 @@
         .name-plate.main-title {
             text-align: center;
             font-size: 1.7rem;  /* Adjust as you like */
-            letter-spacing: 2px;  /* Optional: a bit more spacing for impact */
+            letter-spacing: 2px;  /* a bit more spacing for impact */
             font-weight: bold;
             text-transform: uppercase;
             margin-bottom: 5px;
@@ -295,7 +295,7 @@
             text-align: center;
             width: 100%;
             max-width: 800px;
-            min-height: 500px;  /* Adjust based on your tallest image/text combo */
+            min-height: 500px;  /* Adjust based on the tallest image/text combo */
             position: relative;
             margin: 20px auto; /* 40px before */
             padding: 0 20px 100px 20px; /* Top, Right, Bottom (Large for footer space), Left */
@@ -374,7 +374,7 @@
         }
 
         #freeze-btn.frozen {
-            background: transparent; /* Your specific magenta-tint background */
+            background: transparent; /* specific magenta-tint background */
             color: #ffff00;        /* Yellow text for high contrast */
             font-weight: bold;
             opacity: 1;
@@ -415,7 +415,7 @@
             text-transform: uppercase;
             transition: all 0.3s ease;
             opacity: 0.7;
-            min-width: 140px;   /* gives them a consistent width (adjust if needed) */
+            min-width: 140px;   /* gives them a consistent width */
         }
 
         
@@ -425,7 +425,7 @@
             box-shadow: 0 0 15px rgb(255, 200, 0);
         }
 
-        /* Zen button active state (matches your 'frozen' style) */
+        /* Zen button active state (matches 'frozen' style) */
         #zen-toggle-btn.zen-active {
             background: transparent;
             color: #272627;
@@ -547,7 +547,7 @@
         }
 
 
-        /* Optional: style the paragraph text */
+        /* style the paragraph text */
         .block-text {
             text-align: center;
             font-size: small;
@@ -563,7 +563,7 @@
             top: 20px;
             left: 20px;
             font-size: 1.5rem;
-            color: #ff00ff; /* Magenta to match your theme */
+            color: #ff00ff; /* Magenta to match theme */
             text-shadow: 0 0 10px rgba(255, 0, 255, 0.8);
             opacity: 0;
             pointer-events: none; /* User can't accidentally click it */
@@ -582,7 +582,7 @@
             font-size: 7rem;               /* Much bigger, like a home screen */
             /*font-weight: 300;               /* 200 Thin/Light weight is the "Elite" look */
             /*letter-spacing: -2px;           /* Tighter spacing for modern feel */
-            /*color: #00fffb;                 /* Electric Cyan (match your theme) */
+            /*color: #00fffb;                 /* Electric Cyan (matches theme) */
             /*text-shadow: 0 0 30px rgba(0, 255, 251, 0.504);
             
             /* Using system fonts mimics the Android/Motorola OS font */
@@ -658,8 +658,8 @@
             align-items: center !important;
             flex-wrap: nowrap !important; /* Prevents stacking on smaller screens */
             margin: 0 auto; /* Standard horizontal centering */
-            font-size: 20rem; /* Massive, matching your digital font */
-            /* Colourful lines – same as your date row */
+            font-size: 20rem; /* Massive, matching digital font */
+            /* Colourful lines – same as date row */
             --cistercian-color-0: #ffffff;   /* centre line – white */
             --cistercian-color-1: #ff5733;   /* top line – orange-red */
             --cistercian-color-2: #33ff57;   /* NW‑SE diagonal – green */
@@ -692,7 +692,7 @@
         .cistercian-date-row cistercian-number {
             font-size: 2rem;         /* was 2.8rem – smaller */
             --cistercian-width: 2px;
-            /* Keep your colours or change them */
+            /* Keep colours or change them */
             --cistercian-color-0: #ffffff;
             --cistercian-color-1: #ff5733;
             --cistercian-color-2: #33ff57;
@@ -729,7 +729,208 @@
             --cistercian-color-5: #00ccff;
         }
 
+        /* ===== Standalone Cosmic (not in glass mode) ===== */
+        #cosmic-canvas {
+            width: 50vw;           /* to be adjusted like: 40%, 50vw, etc. */
+            max-width: 90vw;
+            height: auto;
+            aspect-ratio: 1 / 1;
+            cursor: crosshair;
+        }
 
+        /* ===== COSMIC MAZZAROTH STYLES ===== */
+        /* ===== COSMIC-GLASS OVERLAY – FIXED ALIGNMENT ===== */
+        #cosmic-canvas, #fe-canvas {
+            max-width: 90vw;
+            height: auto;
+            aspect-ratio: 1 / 1;
+            cursor: crosshair;
+        }
+
+        .cosmic-btn {
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 6px 10px;
+            font-size: 0.65rem;
+            font-family: monospace;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .cosmic-btn:hover, .cosmic-btn.active-speed {
+            background: var(--accent-color);
+            color: #000;
+            box-shadow: 0 0 10px var(--accent-color);
+        }
+
+        /* ===== COSMIC-GLASS OVERLAY – FIXED ALIGNMENT ===== */
+        .timepiece-wrapper.cosmic-glass-active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            position: relative;
+            padding-top: 20px;
+            min-height: 400px;   /* same as canvas size */
+            height: auto;
+        }
+
+        /* The cosmic wrapper – main container */
+        .timepiece-wrapper.cosmic-glass-active #cosmic-wrapper {
+            position: relative;
+            width: 400px;
+            height: auto;                /* Let it expand for controls */
+            max-width: 90vw;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: transparent !important;
+        }
+
+        /* The cosmic canvas fills the wrapper */
+        .timepiece-wrapper.cosmic-glass-active #cosmic-canvas {
+            position: relative;
+            width: 400px !important;
+            height: 400px !important;
+            max-width: 90vw !important;
+            max-height: 90vw !important;
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+            z-index: 1;
+            pointer-events: auto;
+            aspect-ratio: 1 / 1;
+        }
+
+        /* The analog clock – centered perfectly over the cosmic canvas, NO EGG SHAPE */
+        .timepiece-wrapper.cosmic-glass-active #analog-clock {
+            position: absolute;
+            /* 20px padding-top + exactly half of the canvas width (which is min(400px, 90vw)) */
+            top: calc(80px + min(200px, 45vw)) !important; 
+            left: 50%;
+            
+            /* Translate ensures it stays perfectly centered on that absolute point */
+            transform: translate(-50%, -50%);
+            
+            /* Increased to 80% to fit perfectly within the Mazzaroth ring */
+            width: 320px !important;
+            max-width: 72vw !important;
+            
+            /* Height auto + aspect-ratio = PERFECT CIRCLE, NO OVAL */
+            height: auto !important; 
+            aspect-ratio: 1 / 1;
+            
+            /* Wipe out any conflicting margins */
+            margin: 0 !important;
+            
+            background: transparent !important;
+            box-shadow: none !important;
+            z-index: 2;
+            pointer-events: none;
+            border-radius: 50%;
+        }
+
+        /* ===== Celestial Clock – Mirror Mode Override ===== */
+        body.mirror-mode .timepiece-wrapper.cosmic-glass-active #analog-clock {
+            top: calc(40px + min(200px, 45vw)) !important;
+        }
+
+        /* Clock inner ring */
+        .timepiece-wrapper.cosmic-glass-active #analog-clock::before {
+            width: 90% !important;
+            height: 90% !important;
+            top: 5%;
+            left: 5%;
+            border-radius: 50%;
+            box-shadow: inset 3px 3px 10px rgba(0,0,0,0.3), inset -3px -3px 10px rgba(255,255,255,0.03);
+        }
+
+        /* Numbers */
+        .timepiece-wrapper.cosmic-glass-active #analog-clock .number {
+            font-size: 0.6rem !important;
+        }
+        .timepiece-wrapper.cosmic-glass-active #analog-clock .num-12 { top: 5% !important; }
+        .timepiece-wrapper.cosmic-glass-active #analog-clock .num-3 { right: 5% !important; }
+        .timepiece-wrapper.cosmic-glass-active #analog-clock .num-6 { bottom: 5% !important; }
+        .timepiece-wrapper.cosmic-glass-active #analog-clock .num-9 { left: 5% !important; }
+
+        /* Hands – relative to clock size */
+        .timepiece-wrapper.cosmic-glass-active #analog-clock .hour {
+            height: 25% !important;
+        }
+        .timepiece-wrapper.cosmic-glass-active #analog-clock .minute {
+            height: 35% !important;
+        }
+        .timepiece-wrapper.cosmic-glass-active #analog-clock .second {
+            height: 45% !important;
+        }
+        .timepiece-wrapper.cosmic-glass-active #analog-clock .center-dot {
+            width: 16px !important;
+            height: 16px !important;
+        }
+
+        /* Controls stay below */
+        .timepiece-wrapper.cosmic-glass-active .cosmic-controls {
+            position: relative;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 400px;
+            pointer-events: auto;
+            z-index: 3;
+        }
+
+
+        /* ===== FLAT EARTH PROJECTION DOME STYLES ===== */
+        /* ===== FLAT EARTH PROJECTION (Double) ===== */
+        #flat-earth-section {
+            padding: 0 15px;
+            box-sizing: border-box;
+        }
+
+        #fe-canvas {
+            background: transparent !important;
+            max-width: 90vw;
+            height: auto;
+            aspect-ratio: 1 / 1;
+            cursor: crosshair;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            border-radius: 50%;
+        }
+
+        /* ===== STRETCHED FLAT EARTH (Glass + Dark Hue) ===== */
+        #fe-stretched-canvas {
+            width: 100% !important;
+            height: 100% !important;
+            display: block;
+            background: transparent !important;
+            cursor: crosshair;
+        }
+
+        /* The elliptical container */
+        #flat-earth-section .stretched-wrapper {
+            width: 100%;
+            max-width: 90vw;
+            aspect-ratio: 1.7 / 1;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 0 35px rgba(0, 240, 255, 0.15);
+            background: rgba(6, 6, 12, 0.75);
+            margin: 30px auto 0 auto;
+        }
+
+        /* subtle glow around the stretched canvas */
+        #fe-stretched-canvas {
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.08);
+        }
+
+
+        
         #hide-info-btn {
             background: transparent;
             color: #f6ff00;
@@ -775,7 +976,7 @@
         .footer-line {
             width: 50px;
             height: 1px;
-            background: var(--accent-color); /* Matches your Cyber-Cyan or Magenta */
+            background: var(--accent-color); /* Matches Cyber-Cyan or Magenta */
             margin: 0 auto 20px;
             border-radius: 2px;
         }
@@ -927,7 +1128,7 @@
         }
 
         #system-info span[style*="color: var(--accent-color)"] {
-            color: #73ff00 !important;   /* your desired label color */
+            color: #73ff00 !important;   /* desired label color */
         }
 
         
@@ -981,7 +1182,7 @@
 
         body.mirror-mode #tao-quote-container {
             display: block !important;   /* ensure it's visible */
-            margin-top: 0;               /* optional – adjust spacing */
+            margin-top: 0;               /* adjust spacing */
         }
 
         .mirror-mode-btn {
@@ -1669,7 +1870,97 @@
                 gap: 4px;
             }
 
-             /* --- Fastfetch panel – tight spacing, readable font (8px) --- */
+            #cosmic-canvas, #fe-canvas {
+                width: 75% !important;
+                max-width: 85vw;
+            }
+            .cosmic-controls button {
+                font-size: 0.6rem;
+                padding: 4px 8px;
+                
+            }
+            #cosmic-lat, #cosmic-lon, #fe-lat, #fe-lon {
+                width: 70px;
+                font-size: 0.7rem;
+            }
+
+            /* Responsive precision sizing to prevent oval shape */
+            .timepiece-wrapper.cosmic-glass-active #cosmic-wrapper {
+                width: 280px;
+                max-width: 85vw;
+                height: auto;
+            }
+            .timepiece-wrapper.cosmic-glass-active #cosmic-canvas {
+                width: 280px !important;
+                height: 280px !important;
+                max-width: 85vw !important;
+                max-height: 85vw !important;
+            }
+            .timepiece-wrapper.cosmic-glass-active #analog-clock {
+                /* 80% of 280px / 85vw */
+                width: 224px !important;
+                max-width: 68vw !important;
+                height: auto !important;
+                top: calc(80px + min(140px, 42.5vw)) !important; 
+                margin: 0 !important;
+                transform: translate(-50%, -50%);
+            }
+            /* Celestial Clock – Mirror Mode Override (mobile) */
+            body.mirror-mode .timepiece-wrapper.cosmic-glass-active #analog-clock {
+                top: calc(40px + min(140px, 42.5vw)) !important;
+            }
+        
+
+            /* ---- Cosmic Controls (Mazzaroth) ---- */
+            /* Anchor text */
+            #cosmic-wrapper .cosmic-controls div[style*="font-family: monospace; color: #ffaa00"] {
+                font-size: 6px !important;
+            }
+            /* Time display */
+            #cosmic-time-display {
+                font-size: 8px !important;
+            }
+            /* Inputs */
+            #cosmic-lat, #cosmic-lon {
+                width: 60px !important;
+                font-size: 0.6rem !important;
+                padding: 3px !important;
+            }
+            /* Buttons */
+            #cosmic-wrapper .cosmic-btn {
+                font-size: 0.55rem !important;
+                padding: 3px 6px !important;
+            }
+
+            /* ---- Flat Earth Controls ---- */
+            /* Anchor text */
+            #flat-earth-section .cosmic-controls div[style*="font-family: monospace; color: #00f0ff"] {
+                font-size: 8px !important;
+            }
+            /* Time display */
+            #fe-time-display {
+                font-size: 10px !important;
+            }
+            /* Inputs */
+            #fe-lat, #fe-lon {
+                width: 60px !important;
+                font-size: 0.6rem !important;
+                padding: 3px !important;
+            }
+            /* Buttons */
+            #flat-earth-section .cosmic-btn {
+                font-size: 0.55rem !important;
+                padding: 3px 6px !important;
+            }
+
+            /* Reduce gap between rows for tighter spacing */
+            .cosmic-controls {
+                gap: 4px !important;
+            }
+            
+            
+
+            /* --- Fastfetch panel – tight spacing, readable font (8px) --- */
             #cyber-fetch-terminal.fastfetch-mode #fetch-content {
                 gap: 4px;               /* logo and info stay close together */
             }
