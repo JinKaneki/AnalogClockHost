@@ -129,4 +129,4 @@ Built a minimalistic simple analog clock
 
 ---
 
-For a full detailed changelog with all changes, see the [CHANGELOG](https://github.com/JinKaneki/EliteGDX/CHANGELOG.md) for a complete version history.
+For a full detailed changelog with all changes, see the [CHANGELOG](https://github.com/JinKaneki/EliteGDX/blob/main/CHANGELOG.md) for a complete version history.

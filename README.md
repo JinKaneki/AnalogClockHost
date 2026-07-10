@@ -593,7 +593,7 @@ It is functionally complete, aesthetically cohesive, and ready for daily use as 
 - **v2.1 (Aesthetics)** – April 2026
 - **v1.0 (Genesis)** – Mars 2026
 
-For a full detailed changelog with all changes, see the [CHANGELOG](https://github.com/JinKaneki/EliteGDX/CHANGELOG.md) for a complete version history.
+For a full detailed changelog with all changes, see the [CHANGELOG](https://github.com/JinKaneki/EliteGDX/blob/main/CHANGELOG.md) for a complete version history.
 
 
 ## 🤝 Credits & Inspiration
