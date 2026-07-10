@@ -4,11 +4,22 @@
 **An "Always-On" productivity clock and personal gallery engineered for professional workspaces.**
 **An ambient, cyber‑punk inspired dashboard with multiple clock faces, a rotating image gallery, and a powerful built‑in terminal command runner(CLI).**
 
-Live at : [https://jinkaneki.github.io/EliteGDX/]
+## 🌐 Live Demo
+
+[https://jinkaneki.github.io/EliteGDX/](https://jinkaneki.github.io/EliteGDX/)
 
 ---
 
 ## 🚀 Key Features
+### 🕐 Clocks & Timepieces
+- **Analog Clock** – Classic face with glowing second hand.
+- **Glass Mode** – Transparent glass analog clock.
+- **Digital Clock** – Minimalist, stack‑style digital display.
+- **Cistercian Clock** – Medieval monk numerals (0–9999) with a modern twist.
+- **Cosmic Wheel** – Live Mazzaroth zodiac wheel with accurate planetary positions.
+- **Celestial Clock** – Glass analog clock overlaid on the Cosmic Wheel.
+- **Flat Earth Projection** – Circular and stretched azimuthal projections with day/night spotlight.
+
 
 - **Always-On Display:** Integrated Screen Wake Lock API prevents display dimming.
 - **Dual-Mode Backgrounds:**
@@ -24,10 +35,18 @@ Live at : [https://jinkaneki.github.io/EliteGDX/]
   - Year, month, and day displayed as three separate Cistercian numerals below the main clock.
   - Rainbow-colored strokes with natural spacing.
 
-- **Three‑State Clean View:**
-  - **OFF:** All text and images visible.
-  - **Text Off:** Info text hidden, images remain.
-  - **Full Clean:** Both text and images hidden – only the clock floats on the wallpaper.
+### 🌍 Astrological & Cosmic Tools
+- **Mazzaroth Wheel** – Live zodiac wheel with AC/MC lines and planetary positions.
+- **Flat Earth Projection** – Two views (circular & stretched) with day/night spotlight.
+- **Ephemeris Engine** – Self‑hosted, fallback‑ready planetary data.
+
+### 🎛️ Controls
+- **Freeze Moment** – Pause the image rotation.
+- **BG Toggle** – Sync background with slideshow or cycle independent images.
+- **Style Toggle** – Cycle through 6 clock modes (Classic, Glass, Digital, Cistercian, Cosmic, Celestial).
+- **Clean View** – Hide text or images for a pure viewing experience.
+- **Mirror Mode** – Minimalist full‑screen display for any clock mode.
+
 - **Stealth Controls (Ghost UI):**
   - **Double‑Click Background:** Freezes/Unfreezes the background immediately.
   - **Key ``:** Keyboard shortcut for the same stealth freeze.
@@ -89,8 +108,8 @@ hides/shows all five control buttons:
 
 
 #### Cycle Clock Styles
-- Use the `STYLE` button or press ` ` to cycle through **Classic → Glass → Digital → Cistercian**.
-- PRESS ` ` to freeze or pause Background Image or on Android double TAP on your screen on an empty space on the webpage, AVOID any element on the webpage while doing it.
+- Use the `STYLE` button or press ` ` to cycle through **Classic → Glass → Digital → Cistercian → Cosmic → Celestial**.
+- pause Background Image on Android, double TAP on your screen on an empty space on the webpage, AVOID any element on the webpage when doing it.
 
 ### 🧮 Cistercian Numerals – Technical Details
 
@@ -484,63 +503,6 @@ The **J_OS // AKASHIC ZERO-POINT KRYPTOS NEURAL CENTER** console now supports:
 
 It is functionally complete, aesthetically cohesive, and ready for daily use as an ambient always‑on companion for your workspace or as a fast information retrieval and communication tool.
 
-## version 1.0 Change Log(Base)
-## 📜 Version 2.1 Change Log(Aesthetics) (March 2026)
-
-The "Elite Update" focuses on UI symmetry, stealth interactions, and advanced state management.
-
-| Feature | Description | Interaction |
-| :--- | :--- | :--- |
-| **Clock Style Toggle** | Cycle between classic analog, glass analog, and digital. | `💎 STYLE` Button or `[Z]` |
-| **Clean View Toggle** | Three states: all visible, text hidden, images+text hidden. | `🖥️ CLEAN VIEW` Button    |
-| **Space Preservation** | Images fade out (opacity 0) instead of `display: none` – layout never shifts. | Automatic |
-| **Independent Mode** | Background cycles on a separate 30s timer from the gallery. | `🖼️ BG: SYNCED` Button |
-| **Stealth Freeze** | "Ghost UI" locks the background without extra buttons. | `Double‑Click` or `[B]` |
-| **Mechanical Sound 2.0** | Web Audio API generated ticks with percussive envelopes. | `playTick()` Function |
-| **Pyramid UI Layout** | Re‑architected 2x2 Control Deck for visual balance. | `.controls` Flexbox |
-| **Instant Mute** | One‑touch audio kill with volume memory. | `🔊` Icon Click |
-| **Ambient Landing** | Site starts with deep charcoal `#121214` solid background. | Automatic on Load |
-
-## version 3.0 Change Log(CyberAkashicMystic) (April 2026)
-| Date | Change |
-|------|--------|
-| 2026‑04‑11 | Added Cyber‑Fetch terminal with JOHAN_OS ASCII + maple leaf |
-| 2026‑04‑11 | Added ` ` keyboard shortcuts to toggle System Info panel |
-| 2026‑04‑11 | Made terminal bulletproof with try/catch and fallbacks |
-| 2026‑04‑11 | Fixed mobile overflow – horizontal scrolling or size reduction |
-| 2026‑04‑10 | Added Hide Controls button (top‑left) |
-| 2026‑04‑10 | Improved sticky footer and removed double scrollbars |
-| 2026‑04‑09 | Added responsive Cistercian clock sizes |
-| 2026‑04‑08 | Integrated rainbow colours for Cistercian numerals | 
-| 2026‑05‑23 | **Remote Viewing Commands** – `remoteview` (full text extraction), `grabimg` (image thumbnails), `fetchpage` (rich metadata), `portal` (interactive iframe embed) – inspired by cyberpunk OSINT fiction and CIA's Project stargate, use `api.allorigins.win` to bypass cross‑origin restrictions |
-| 2026‑05‑15 | **IPTV Enhancements** – Added ability to stream IPTV channels .|
-
-## 📜 Version 4.0 Change Log(CyberOps) (May 2026)
-
-The "Akashic Update" transforms the dashboard into a comprehensive information retrieval & cyber‑operations hub, with over 40 new commands, a full cipher suite, media playback, and live data feeds.
-
-| Feature | Description | Interaction |
-| :--- | :--- | :--- |
-| **Command Runner** | Built‑in terminal with sync/async router, HTML output, and fullscreen mode. | `💻 Command Runner` button, `⛶ Fullscreen` |
-| **Login & Identity** | Majestic Akashic splash with rotating header, typewriter names, and `whoami` personas. | Auto on terminal open, `login`, `whoami`, `motd`, `about` |
-| **News & Information** | BBC World News, Hacker News, curated tech headlines, weather. | `news`, `hackernews`, `technology` |
-| **Dictionary & Learning** | Full phonetic dictionary, physics/math formulas, electronics facts, engineering marvels, biology, space, CS tips. | `define`, `physics`, `electronics`, `engineering`, `biology`, `space`, `cstip`, `learn`, `fortune` |
-| **Engineering Diagnostics** | Resistor calculator, color code decoder, Ohm's Law, voltage divider, capacitor decoder, parallel/series. | `case` (interactive), `case resistor`, `case decode`, etc. |
-| **Wisdom & Spirituality** | Tao Te Ching, Bible verses, Buddhist sutras, Zen koans, Stoic quotes, Buddha quotes. | `tao`, `bible`, `verse`, `sutra`, `koan`, `stoic`, `buddha`, `wisdom` |
-| **Media Playback** | YouTube video/playlist/tv embedding, direct audio streaming, curated radio stations, live TV feeds (NASA, ISS, Lofi, Gumball). | `play youtube`, `play audio`, `radio [channel]`, `tv [channel]`, `stop` |
-| **Akashic Cipher Suite** | Base64 encode/decode, Caesar shift (with digit wrap), Binary/Hex streams, Vigenère cipher, Atbash mirror, AES‑256‑GCM vault with handshake password. | `encode`, `decode`, `shift`, `kryptos`, `vigenere`, `mirror`, `vault`, `handshake` |
-| **Steganography & Tag Store** | Hide secret messages inside normal text via zero‑width characters; permanent private tag dictionary. | `stegano hide/reveal`, `tag set/get/view/clear` |
-| **Kali Pentest Suite** | Real SHA‑256 hashing, simulated port scans, brute‑force cracking, payload injection, SSH keygen, Kali dragon banner. | `kali hash/scan/crack/inject/genkey/banner` |
-| **Fun & Utility** | Riddles with reveal, dad jokes, random facts, QR codes, anime top 10, poetry, cowsay, coinflip, 8‑ball, rainbow text. | `joke`, `riddle`, `fact`, `qr`, `anime`, `poem`, `cowsay` |
-| **Visual Effects** | Glitch matrix, terminal scroll bounce, animated fake hacking, React build simulator, text rotation scrambler. | `matrix`, `scroll`, `hack`, `react`, `rotate` |
-| **Timers & Diagnostics** | Countdown with Morse beeps, network ping (real), system monitor (`htop`), spinner animation. | `timer`, `ping`, `htop`, `spinner`/`stopspinner` |
-| **ASCII Art Gallery** | 5+ cyber‑mystical ASCII pieces: J_OS box, meditating monk, Debian swirl, Arch Linux, Kali dragon, Akashic emblem. Selectable by index. | `ascii`, `kali arch` |
-| **Factory Reset** | `nuke` command clears all local data, stops animations, and resets terminal to Zero‑Point. | `nuke` |
-| **UI & Mobile Polish** | Compressed terminal output for small screens, fixed ASCII wrapping, login splash responsive font, fullscreen support, `cipher` reference manual. | Automatic |
-
----
-- *Version 4.0 makes J_OS a fast persistent information retrieval and intelligence gathering tool, a personal cipher lab, and an ambient workspace companion, all accessible from a single CLI.* 
-
 ---
 
 ### 📱 PWA & Offline Support
@@ -554,6 +516,22 @@ The "Akashic Update" transforms the dashboard into a comprehensive information r
 1. **Images:** Drop your gallery images into `/images/`.
 2. **Independent Backgrounds:** Update the `independentBgImages` array in the script with your preferred ultra‑wide wallpapers (vertical layout recommended for mobile).
 3. **Colors:** Modify `:root` variables in the CSS to change the Cyan/Magenta neon theme.
+
+---
+
+## 🚀 Quick Start
+
+1. Clone the repo.
+2. Open `index.html` in your browser (no build step required).
+3. Type `help` in the terminal to explore all commands.
+4. Switch clock modes with the `🕰️ STYLE` button.
+5. Enter **Mirror Mode** for a distraction‑free display.
+
+---
+
+## 🌐 Live Demo
+
+[https://jinkaneki.github.io/EliteGDX/](https://jinkaneki.github.io/EliteGDX/)
 
 ---
 
@@ -582,6 +560,8 @@ The "Akashic Update" transforms the dashboard into a comprehensive information r
 - [QRCode Generator](https://github.com/kazuhikoarase/qrcode-generator) (via CDN)
 - Web Audio API – no external library.  
 - Wake Lock API – modern browsers only (fallback silently).
+- **Local Storage** – Graph data, tags, encryption keys, theme preference.
+- **Fallback Ephemeris** – Self‑hosted JSON with fallback to built‑in data.
 
 ### Public APIs (no keys required)
 
@@ -603,6 +583,17 @@ The "Akashic Update" transforms the dashboard into a comprehensive information r
 | Bootprint (Space) | [bootprint.space/api](https://bootprint.space/api/fact) |
 | icanhazdadjoke | [icanhazdadjoke.com](https://icanhazdadjoke.com/) |
 | Useless Facts | [uselessfacts.jsph.pl](https://uselessfacts.jsph.pl/) |
+
+# 📜 Changelog
+
+- **v4.2 (Celestial Update)** – July 2026 → [CHANGELOG](./CHANGELOG.md)
+- **v4.1 (Remote Viewing)** – May 2026
+- **v4.0 (CyberOps Akashic Update)** – May 2026
+- **v3.0 (CyberAkashicMystic)** – April 2026
+- **v2.1 (Aesthetics)** – April 2026
+- **v1.0 (Genesis)** – Mars 2026
+
+For a full detailed changelog with all changes, see the [CHANGELOG](https://github.com/JinKaneki/EliteGDX/CHANGELOG.md) for a complete version history.
 
 
 ## 🤝 Credits & Inspiration
