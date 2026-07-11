@@ -1749,6 +1749,67 @@
             background: #000 !important;
         }
 
+        /* ===== KABBALAH TREE OF LIFE ===== */
+        #kabbalah-container {
+            margin: 20px auto;
+            padding: 0 15px;
+            max-width: 500px;
+        }
+
+        #tree-of-life {
+            background: transparent !important;
+            box-shadow: none !important;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+        }
+
+
+        #sephirot-group circle.active {
+            filter: drop-shadow(0px 0px 25px rgba(255, 215, 0, 0.8)) !important;
+        }
+        #sephirot-group circle:hover {
+            filter: drop-shadow(0px 0px 18px rgba(255,255,255,0.4));
+        }
+
+
+        /* ============================================================ */
+        /* TYCHONIC & AZIMUTHAL – Responsive                          */
+        /* ============================================================ */
+
+        .ty-container,
+        .az-canvas-wrapper {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* ---- Desktop: full size ---- */
+        .ty-container svg,
+        .az-canvas-wrapper canvas {
+            width: 100%;
+            height: auto;
+        }
+
+
+        .tychonic-ui { text-align: center; font-family: monospace; background: #050505; color: #fff; padding: 20px;}
+        .cosmic-wheel-container { width: 100%; max-width: 800px; margin: 0 auto; }
+        button { background: #111; color: #00ffcc; border: 1px solid #00ffcc; padding: 10px 20px; cursor: pointer; font-size: 16px;}
+        button:hover { background: #00ffcc; color: #000; }
+
+        :root {
+        --play-state: paused; /* Starts motionless */
+        }
+
+        .celestial-wave {
+        animation: spin var(--speed) linear infinite;
+        animation-play-state: var(--play-state);
+        }
+
+        @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+        }
+
 
         
         /* MOBILE-FRIENDLY TWEAKS */
@@ -2156,6 +2217,76 @@
             .wiki-ref {
                 font-size: 0.7rem !important;
             }
+
+            #kabbalah-container {
+                margin: 15px auto;
+                padding: 0 10px;
+                max-width: 100%;
+            }
+            #tree-of-life {
+                border-radius: 12px;
+            }
+            #reflection-panel {
+                padding: 10px 12px;
+                min-height: 50px;
+            }
+            #reflection-title {
+                font-size: 0.85rem !important;
+            }
+            #reflection-text {
+                font-size: 0.7rem !important;
+            }
+
+            .tychonic-ui,
+            .azimuthal-dashboard {
+                padding: 10px !important;
+                max-width: 100% !important;
+            }
+            
+            .ty-container,
+            .az-canvas-wrapper {
+                max-width: 95vw !important;
+            }
+            
+            .ty-controls button,
+            .az-controls button {
+                font-size: 0.6rem !important;
+                padding: 4px 8px !important;
+            }
+            
+            .ty-controls,
+            .az-controls {
+                gap: 4px !important;
+            }
+            
+            #ty-time-display,
+            #az-time-display {
+                font-size: 10px !important;
+            }
+        
+
+            /* ---- Controls base style ---- */
+            .ty-controls button,
+            .az-controls button {
+                background: transparent;
+                border: 1px solid var(--accent-color);
+                color: var(--accent-color);
+                padding: 6px 12px;
+                font-size: 0.7rem;
+                font-family: monospace;
+                font-weight: bold;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+
+            .ty-controls button:hover,
+            .az-controls button:hover {
+                background: var(--accent-color);
+                color: #000;
+                box-shadow: 0 0 10px var(--accent-color);
+            }
+
 
             .site-footer {
             width: 100%;

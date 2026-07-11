@@ -9433,7 +9433,7 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
                     canvas.width = displayWidth;
                     canvas.height = displayHeight;
-                }
+                }                
 
                 if (!timestamp) timestamp = performance.now();
                 if (lastTimestamp === 0) lastTimestamp = timestamp;
@@ -10122,7 +10122,574 @@ ${pins.slice(0, 10).join('<br>')}<br>
         initFlatEarthClock();
 
 
+        // =========================================================================
+        // KABBALAH TREE OF LIFE – Canvas Visualization
+        // =========================================================================
+        function initTreeOfLife() {
+            const canvas = document.getElementById('tree-canvas');
+            const infoDiv = document.getElementById('tree-info');
+            if (!canvas || !infoDiv) return;
+            const ctx = canvas.getContext('2d');
 
+            // ---- Sephiroth Data (names, colors, positions in a 3‑column layout) ----
+            const sephiroth = [
+                // Column 1 (Kether – top centre)
+                { name: 'Kether', color: '#FFFFFF', x: 0.5, y: 0.05, desc: 'Crown – Divine Will' },
+                // Column 2 (Chokmah & Binah – top left/right)
+                { name: 'Chokmah', color: '#66CCFF', x: 0.2, y: 0.15, desc: 'Wisdom – Creative Energy' },
+                { name: 'Binah', color: '#FF6666', x: 0.8, y: 0.15, desc: 'Understanding – Formative Power' },
+                // Column 3 (Daath – hidden, but we skip it)
+                // Column 4 (Chesed & Geburah – middle left/right)
+                { name: 'Chesed', color: '#4466FF', x: 0.15, y: 0.35, desc: 'Mercy – Loving-kindness' },
+                { name: 'Geburah', color: '#FF4444', x: 0.85, y: 0.35, desc: 'Strength – Severity' },
+                // Column 5 (Tifereth – centre)
+                { name: 'Tifereth', color: '#FFD700', x: 0.5, y: 0.45, desc: 'Beauty – The Heart' },
+                // Column 6 (Netzach & Hod – lower left/right)
+                { name: 'Netzach', color: '#44FF44', x: 0.2, y: 0.65, desc: 'Victory – Endurance' },
+                { name: 'Hod', color: '#FF8800', x: 0.8, y: 0.65, desc: 'Glory – Splendour' },
+                // Column 7 (Yesod – centre bottom)
+                { name: 'Yesod', color: '#AA88FF', x: 0.5, y: 0.8, desc: 'Foundation – Connection' },
+                // Column 8 (Malkuth – bottom centre)
+                { name: 'Malkuth', color: '#CC8866', x: 0.5, y: 0.95, desc: 'Kingdom – Physical World' }
+            ];
+
+            // ---- Paths (connecting lines between Sephiroth) ----
+            // Indices refer to the array above
+            const paths = [
+                [0,1], [0,2], // Kether to Chokmah, Binah
+                [1,3], [2,4], // Chokmah to Chesed, Binah to Geburah
+                [1,5], [2,5], // Chokmah to Tifereth, Binah to Tifereth
+                [3,5], [4,5], // Chesed to Tifereth, Geburah to Tifereth
+                [3,6], [4,7], // Chesed to Netzach, Geburah to Hod
+                [5,6], [5,7], // Tifereth to Netzach, Tifereth to Hod
+                [6,8], [7,8], // Netzach to Yesod, Hod to Yesod
+                [8,9]         // Yesod to Malkuth
+            ];
+
+            let hoveredIndex = -1;
+
+            // ---- Resize and redraw ----
+            function resizeCanvas() {
+                const rect = canvas.parentElement.getBoundingClientRect();
+                const w = rect.width;
+                const h = rect.height;
+                if (canvas.width !== w || canvas.height !== h) {
+                    canvas.width = w;
+                    canvas.height = h;
+                }
+                drawTree();
+            }
+
+            function drawTree() {
+                const w = canvas.width;
+                const h = canvas.height;
+                ctx.clearRect(0, 0, w, h);
+
+                // ---- Draw paths ----
+                ctx.lineWidth = 2;
+                ctx.setLineDash([4, 6]);
+                ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+                for (const [i, j] of paths) {
+                    const p1 = sephiroth[i];
+                    const p2 = sephiroth[j];
+                    const x1 = p1.x * w;
+                    const y1 = p1.y * h;
+                    const x2 = p2.x * w;
+                    const y2 = p2.y * h;
+                    ctx.beginPath();
+                    ctx.moveTo(x1, y1);
+                    ctx.lineTo(x2, y2);
+                    ctx.stroke();
+                }
+                ctx.setLineDash([]);
+
+                // ---- Draw Sephiroth ----
+                const radius = Math.min(w, h) * 0.035;
+                for (let i = 0; i < sephiroth.length; i++) {
+                    const s = sephiroth[i];
+                    const x = s.x * w;
+                    const y = s.y * h;
+                    const isHover = (i === hoveredIndex);
+
+                    // Glow
+                    const glow = ctx.createRadialGradient(x, y, 0, x, y, radius * 2.5);
+                    glow.addColorStop(0, s.color + '60');
+                    glow.addColorStop(1, s.color + '00');
+                    ctx.fillStyle = glow;
+                    ctx.beginPath();
+                    ctx.arc(x, y, radius * 2.5, 0, 2 * Math.PI);
+                    ctx.fill();
+
+                    // Outer ring
+                    ctx.shadowColor = s.color;
+                    ctx.shadowBlur = isHover ? 30 : 15;
+                    ctx.beginPath();
+                    ctx.arc(x, y, radius, 0, 2 * Math.PI);
+                    ctx.fillStyle = '#1a1a2e';
+                    ctx.fill();
+                    ctx.strokeStyle = s.color;
+                    ctx.lineWidth = isHover ? 3 : 2;
+                    ctx.stroke();
+                    ctx.shadowBlur = 0;
+
+                    // Inner dot
+                    ctx.beginPath();
+                    ctx.arc(x, y, radius * 0.4, 0, 2 * Math.PI);
+                    ctx.fillStyle = s.color;
+                    ctx.fill();
+
+                    // Label (on hover or always for small number)
+                    if (isHover) {
+                        ctx.fillStyle = '#fff';
+                        ctx.font = 'bold 11px monospace';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+                        ctx.shadowColor = '#000';
+                        ctx.shadowBlur = 4;
+                        ctx.fillText(s.name, x, y - radius - 6);
+                        ctx.shadowBlur = 0;
+                    }
+                }
+            }
+
+            // ---- Mouse / Touch events ----
+            function handleHover(e) {
+                const rect = canvas.getBoundingClientRect();
+                const mx = (e.clientX || e.touches?.[0]?.clientX || 0) - rect.left;
+                const my = (e.clientY || e.touches?.[0]?.clientY || 0) - rect.top;
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                const cx = mx * scaleX;
+                const cy = my * scaleY;
+
+                let found = -1;
+                const radius = Math.min(canvas.width, canvas.height) * 0.035;
+                for (let i = 0; i < sephiroth.length; i++) {
+                    const s = sephiroth[i];
+                    const dx = cx - s.x * canvas.width;
+                    const dy = cy - s.y * canvas.height;
+                    if (dx*dx + dy*dy < (radius * 1.8) ** 2) {
+                        found = i;
+                        break;
+                    }
+                }
+
+                if (found !== hoveredIndex) {
+                    hoveredIndex = found;
+                    if (found !== -1) {
+                        infoDiv.innerHTML = `<span style="color:${sephiroth[found].color};">● ${sephiroth[found].name}</span> – ${sephiroth[found].desc}`;
+                    } else {
+                        infoDiv.innerHTML = 'Hover over a sphere';
+                    }
+                    drawTree();
+                }
+            }
+
+            canvas.addEventListener('mousemove', handleHover);
+            canvas.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                handleHover(e);
+            });
+            canvas.addEventListener('mouseleave', () => {
+                hoveredIndex = -1;
+                infoDiv.innerHTML = 'Hover over a sphere';
+                drawTree();
+            });
+
+            // ---- Resize observer ----
+            const resizeObserver = new ResizeObserver(resizeCanvas);
+            resizeObserver.observe(canvas.parentElement);
+            window.addEventListener('resize', resizeCanvas);
+
+            // ---- Initial draw ----
+            resizeCanvas();
+        }
+
+        initTreeOfLife ();
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tree of Life interaction
+            const treeSVG = document.getElementById('tree-of-life');
+            const reflectionTitle = document.getElementById('reflection-title');
+            const reflectionText = document.getElementById('reflection-text');
+
+            if (!treeSVG) return;
+
+            const reflections = {
+                kether: "The Crown of Stillness. The origin point where the Way of the Stride Still begins. Pure potential before form.",
+                chokmah: "The pure force of wisdom, untamed and expansive. The first spark of creation.",
+                binah: "The deep understanding that shapes force into form. The womb of structure.",
+                chesed: "Boundless mercy and the expansion of the spirit. Unconditional love flowing outward.",
+                geburah: "The strength of the Rose, fiercely guarded by its thorns. Discipline creates the boundaries of creation.",
+                tiphareth: "Radiating beauty and balance. Here, the Lys unfolds its petals, a centre of harmonic light.",
+                netzach: "The endurance of the Érable, deeply rooted and victorious through changing seasons.",
+                hod: "The intellect and glory of structure. The splendour of the mind.",
+                yesod: "The foundation of the Lotus, rising through the dark waters to blossom above.",
+                malkuth: "The physical realm, where energy settles into reality. Meditate on the circular waves of existence propagating outward."
+            };
+
+            // Use event delegation on the SVG itself
+            treeSVG.addEventListener('click', function(e) {
+                const target = e.target;
+                // Find the nearest circle (the sephirah node)
+                const circle = target.closest('circle');
+                if (!circle) return;
+                const nodeName = circle.getAttribute('data-node');
+                if (!nodeName) return;
+
+                // Update reflection
+                reflectionTitle.textContent = nodeName.toUpperCase();
+                reflectionText.textContent = reflections[nodeName] || "The wisdom of this sphere awaits your contemplation.";
+
+                // Remove active class from all circles
+                document.querySelectorAll('#sephirot-group circle').forEach(c => c.classList.remove('active'));
+                circle.classList.add('active');
+            });
+
+            // Hover effect – add glow via CSS class
+            treeSVG.addEventListener('mouseover', function(e) {
+                const circle = e.target.closest('circle');
+                if (circle) {
+                    circle.style.filter = 'drop-shadow(0px 0px 18px rgba(255,255,255,0.5))';
+                }
+            });
+            treeSVG.addEventListener('mouseout', function(e) {
+                const circle = e.target.closest('circle');
+                if (circle && !circle.classList.contains('active')) {
+                    circle.style.filter = '';
+                }
+            });
+        });
+    
+        // =========================================================================
+        // TYCHONIC MODEL ENGINE (with Zodiac Ring)
+        // =========================================================================
+        (function initTychonic() {
+            const wheel = document.getElementById('tychonic-wheel');
+            const playBtn = document.getElementById('ty-playpause');
+            const resetBtn = document.getElementById('ty-reset');
+            const speedBtn = document.getElementById('ty-speed');
+            const timeDisplay = document.getElementById('ty-time-display');
+
+            if (!wheel) return;
+
+            let isPlaying = false;
+            let speedMultiplier = 1;
+            const speeds = [1, 2, 5, 10, 20];
+            let speedIndex = 0;
+            let animationId = null;
+            let startTime = 0;
+            let elapsed = 0;
+
+            const waves = wheel.querySelectorAll('.ty-wave');
+            const zodiac = wheel.querySelector('.ty-zodiac');
+
+            // ---- Control functions ----
+            function setPlayState(playing) {
+                isPlaying = playing;
+                playBtn.textContent = isPlaying ? '⏸ Pause' : '▶ Play';
+                if (isPlaying) {
+                    startTime = performance.now() - elapsed;
+                    animateWaves();
+                } else {
+                    if (animationId) cancelAnimationFrame(animationId);
+                    animationId = null;
+                }
+            }
+
+            function animateWaves() {
+                if (!isPlaying) return;
+                const now = performance.now();
+                elapsed = now - startTime;
+
+                waves.forEach(wave => {
+                    const speed = parseFloat(wave.getAttribute('data-speed')) || 60;
+                    const degrees = (elapsed / 1000) * (360 / speed) * speedMultiplier;
+                    wave.setAttribute('transform', `rotate(${degrees % 360})`);
+                });
+
+                // Zodiac ring counterclockwise
+                if (zodiac) {
+                    const zodDeg = (elapsed / 1000) * (360 / 120) * speedMultiplier; // 120s per full rotation
+                    zodiac.setAttribute('transform', `rotate(${-zodDeg % 360})`);
+                }
+
+                // Update time display
+                const totalSeconds = elapsed / 1000 * speedMultiplier;
+                const days = Math.floor(totalSeconds / 86400);
+                const hours = Math.floor((totalSeconds % 86400) / 3600);
+                const mins = Math.floor((totalSeconds % 3600) / 60);
+                timeDisplay.textContent = `⏱️ ${days}d ${hours}h ${mins}m | Speed: ${speedMultiplier}x`;
+
+                animationId = requestAnimationFrame(animateWaves);
+            }
+
+            // ---- Reset ----
+            function resetAnimation() {
+                if (animationId) cancelAnimationFrame(animationId);
+                elapsed = 0;
+                startTime = 0;
+                waves.forEach(wave => {
+                    wave.setAttribute('transform', 'rotate(0)');
+                });
+                if (zodiac) zodiac.setAttribute('transform', 'rotate(0)');
+                timeDisplay.textContent = '🌍 Tychonic System – Press Play to animate';
+                if (isPlaying) {
+                    isPlaying = false;
+                    playBtn.textContent = '▶ Play';
+                }
+            }
+
+            // ---- Speed toggle ----
+            speedBtn.addEventListener('click', () => {
+                speedIndex = (speedIndex + 1) % speeds.length;
+                speedMultiplier = speeds[speedIndex];
+                speedBtn.textContent = `⚡${speedMultiplier}x`;
+            });
+
+            // ---- Play/Pause ----
+            playBtn.addEventListener('click', () => {
+                setPlayState(!isPlaying);
+            });
+
+            // ---- Reset ----
+            resetBtn.addEventListener('click', resetAnimation);
+
+            // ---- Keyboard shortcut ----
+            document.addEventListener('keydown', (e) => {
+                if (e.key === ' ' || e.key === 'Space') {
+                    if (document.activeElement?.id === 'cmd-input') return;
+                    e.preventDefault();
+                    setPlayState(!isPlaying);
+                }
+            });
+
+            // ---- Initial state ----
+            resetAnimation();
+
+            console.log('🌀 Tychonic System loaded.');
+        })();
+        
+
+        // =========================================================================
+        // AZIMUTHAL FLAT EARTH ENGINE (with Full Date & Time)
+        // =========================================================================
+        (function initAzimuthal() {
+            const canvas = document.getElementById('azimuthal-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const timeDisplay = document.getElementById('az-time-display');
+
+            // ---- Canvas sizing ----
+            function sizeCanvas() {
+                const rect = canvas.parentElement.getBoundingClientRect();
+                const size = Math.min(rect.width, rect.height, 800);
+                canvas.width = size;
+                canvas.height = size;
+            }
+            sizeCanvas();
+            window.addEventListener('resize', sizeCanvas);
+
+            const center = { x: canvas.width / 2, y: canvas.height / 2 };
+            const baseRadius = canvas.width * 0.42;
+            const tropicCancerRadius = baseRadius * 0.38;
+            const equatorRadius = baseRadius * 0.68;
+            const tropicCapricornRadius = baseRadius * 0.92;
+
+            // ---- State ----
+            let dayOfYear = 0;
+            let timeOfDay = 0;
+            let year = 2026;
+            let isRunning = false;
+            let speedMultiplier = 1;
+            const speeds = [1, 2, 5, 10, 20, 60];
+            let speedIndex = 0;
+            let animationId = null;
+
+            // ---- Sync to actual time ----
+            function syncToActualTime() {
+                const now = new Date();
+                const start = new Date(now.getFullYear(), 0, 0);
+                const diff = now - start;
+                dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+                timeOfDay = now.getHours() + now.getMinutes() / 60 + now.getSeconds() / 3600;
+                year = now.getFullYear();
+                updateDisplay();
+            }
+            syncToActualTime();
+
+            // ---- Update display ----
+            function updateDisplay() {
+                const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                const month = months[Math.floor((dayOfYear / 365) * 12) % 12];
+                const day = Math.floor(dayOfYear % 30) + 1;
+                const hours = Math.floor(timeOfDay);
+                const mins = Math.floor((timeOfDay - hours) * 60);
+                const secs = Math.floor((timeOfDay - hours - mins/60) * 3600);
+                timeDisplay.textContent = `📅 ${month} ${day}, ${year} | 🕐 ${String(hours).padStart(2,'0')}:${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')} | ⚡ ${speedMultiplier}x`;
+            }
+
+            // ---- Advance time by days ----
+            function advanceDays(days) {
+                dayOfYear = (dayOfYear + days) % 365;
+                if (dayOfYear < 0) dayOfYear += 365;
+                // Handle year rollover
+                if (dayOfYear + days >= 365) year++;
+                else if (dayOfYear + days < 0) year--;
+                updateDisplay();
+            }
+
+            function advanceMonths(months) {
+                const daysToAdd = months * 30;
+                dayOfYear = (dayOfYear + daysToAdd) % 365;
+                if (dayOfYear < 0) dayOfYear += 365;
+                const yearShift = Math.floor((dayOfYear + daysToAdd) / 365);
+                year += yearShift;
+                updateDisplay();
+            }
+
+            function advanceYears(years) {
+                year += years;
+                // If we cross a leap year boundary, dayOfYear stays the same
+                updateDisplay();
+            }
+
+            // ---- Render loop ----
+            function render() {
+                if (isRunning) {
+                    timeOfDay += 0.01 * speedMultiplier;
+                    if (timeOfDay >= 24) {
+                        timeOfDay -= 24;
+                        dayOfYear = (dayOfYear + 1) % 365;
+                        if (dayOfYear === 0) year++;
+                    }
+                }
+
+                const w = canvas.width;
+                const h = canvas.height;
+                const cx = center.x;
+                const cy = center.y;
+
+                ctx.clearRect(0, 0, w, h);
+
+                // ---- Draw reference rings ----
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+                ctx.lineWidth = 1.5;
+                [tropicCancerRadius, equatorRadius, tropicCapricornRadius].forEach(r => {
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                    ctx.stroke();
+                });
+
+                // ---- Solar calculations ----
+                const raAngle = ((timeOfDay - 6) / 24) * Math.PI * 2;
+                const decFactor = Math.cos(((dayOfYear - 172) / 365) * Math.PI * 2);
+                const sunDist = equatorRadius - (decFactor * (equatorRadius - tropicCancerRadius));
+                const sunX = cx + sunDist * Math.cos(raAngle);
+                const sunY = cy + sunDist * Math.sin(raAngle);
+
+                // ---- Lunar calculations ----
+                const lunarDayProgress = timeOfDay / 24.84;
+                const moonRA = ((lunarDayProgress - (dayOfYear / 29.5) - 0.25)) * Math.PI * 2;
+                const moonDecFactor = Math.cos(((dayOfYear % 27.3) / 27.3) * Math.PI * 2);
+                const moonDist = equatorRadius - (moonDecFactor * (equatorRadius - tropicCancerRadius));
+                const moonX = cx + moonDist * Math.cos(moonRA);
+                const moonY = cy + moonDist * Math.sin(moonRA);
+
+                // ---- Daylight spotlight ----
+                const grad = ctx.createRadialGradient(sunX, sunY, 10, sunX, sunY, baseRadius * 1.1);
+                grad.addColorStop(0, 'rgba(255, 255, 200, 0.25)');
+                grad.addColorStop(0.15, 'rgba(255, 255, 150, 0.08)');
+                grad.addColorStop(0.6, 'rgba(0, 0, 0, 0.4)');
+                grad.addColorStop(1, 'rgba(0, 0, 0, 0.7)');
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(cx, cy, baseRadius * 1.05, 0, Math.PI * 2);
+                ctx.fill();
+
+                // ---- Draw Moon ----
+                ctx.shadowColor = '#fff';
+                ctx.shadowBlur = 20;
+                ctx.fillStyle = '#ddd';
+                ctx.beginPath();
+                ctx.arc(moonX, moonY, 8, 0, Math.PI * 2);
+                ctx.fill();
+
+                // ---- Draw Sun ----
+                ctx.shadowColor = '#FFD700';
+                ctx.shadowBlur = 35;
+                ctx.fillStyle = '#FFD700';
+                ctx.beginPath();
+                ctx.arc(sunX, sunY, 14, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                // ---- AC/MC line ----
+                ctx.strokeStyle = 'rgba(255,200,0,0.15)';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([4, 8]);
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.lineTo(cx + baseRadius * Math.cos(raAngle), cy + baseRadius * Math.sin(raAngle));
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                updateDisplay();
+                animationId = requestAnimationFrame(render);
+            }
+
+            // ---- Controls ----
+            const playBtn = document.getElementById('az-playpause');
+            const syncBtn = document.getElementById('az-sync');
+            const speedBtn = document.getElementById('az-speed');
+            const dayBtn = document.getElementById('az-day');
+            const sixMoBtn = document.getElementById('az-6mo');
+            const yearBtn = document.getElementById('az-year');
+            const resetBtn = document.getElementById('az-reset');
+
+            playBtn.addEventListener('click', () => {
+                isRunning = !isRunning;
+                playBtn.textContent = isRunning ? '⏸ Pause' : '▶ Play';
+                if (isRunning && !animationId) render();
+            });
+
+            syncBtn.addEventListener('click', syncToActualTime);
+
+            speedBtn.addEventListener('click', () => {
+                speedIndex = (speedIndex + 1) % speeds.length;
+                speedMultiplier = speeds[speedIndex];
+                speedBtn.textContent = `⚡${speedMultiplier}x`;
+            });
+
+            dayBtn.addEventListener('click', () => advanceDays(1));
+            sixMoBtn.addEventListener('click', () => advanceMonths(6));
+            yearBtn.addEventListener('click', () => advanceYears(1));
+
+            resetBtn.addEventListener('click', () => {
+                isRunning = false;
+                playBtn.textContent = '▶ Play';
+                if (animationId) cancelAnimationFrame(animationId);
+                animationId = null;
+                syncToActualTime();
+                render();
+            });
+
+            // ---- Keyboard shortcut ----
+            document.addEventListener('keydown', (e) => {
+                if (e.key === ' ' || e.key === 'Space') {
+                    if (document.activeElement?.id === 'cmd-input') return;
+                    e.preventDefault();
+                    playBtn.click();
+                }
+            });
+
+            // ---- Start ----
+            render();
+            console.log('🌍 Azimuthal Engine loaded.');
+        })();
+
+        
         // Automatically update the copyright year
         document.getElementById('year').textContent = new Date().getFullYear();
 
