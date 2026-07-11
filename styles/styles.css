@@ -1748,6 +1748,7 @@
         .iptv-video::backdrop {
             background: #000 !important;
         }
+        
 
         /* ===== KABBALAH TREE OF LIFE ===== */
         #kabbalah-container {
@@ -1763,7 +1764,6 @@
             border-radius: 16px;
         }
 
-
         #sephirot-group circle.active {
             filter: drop-shadow(0px 0px 25px rgba(255, 215, 0, 0.8)) !important;
         }
@@ -1772,22 +1772,23 @@
         }
 
 
+
         /* ============================================================ */
         /* TYCHONIC & AZIMUTHAL – Responsive                          */
         /* ============================================================ */
-
+        /* ---- Desktop: full size ---- */
         .ty-container,
         .az-canvas-wrapper {
             width: 100%;
-            max-width: 800px;
+            /* Let the HTML inline styles handle the max-width to 1000px */
             margin: 0 auto;
         }
 
-        /* ---- Desktop: full size ---- */
         .ty-container svg,
         .az-canvas-wrapper canvas {
-            width: 100%;
-            height: auto;
+            width: 100% !important;
+            height: 100% !important; /* Force it to fill the wrapper */
+            display: block;
         }
 
 
@@ -1798,6 +1799,22 @@
 
         :root {
         --play-state: paused; /* Starts motionless */
+        }
+
+        /* ============================================================ */
+        /* AZIMUTHAL ENGINE                                             */
+        /* ============================================================ */
+        #azimuthal-canvas {
+            width: 40vw;           /* to be adjusted (e.g., 40vw, 60vw) */
+            max-width: 90vw;
+            height: auto;
+            aspect-ratio: 1 / 1;
+            cursor: crosshair;
+            display: block;
+            margin: 0 auto;
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.1);
+            background: #06060c;    /* fallback if image not loaded */
         }
 
         .celestial-wave {
@@ -1932,8 +1949,8 @@
             }
 
             #cosmic-canvas, #fe-canvas {
-                width: 75% !important;
-                max-width: 85vw;
+                width: 85vw !important;
+                max-width: 90vw;
             }
             .cosmic-controls button {
                 font-size: 0.6rem;
@@ -2237,6 +2254,12 @@
                 font-size: 0.7rem !important;
             }
 
+            #azimuthal-canvas {
+                width: 85vw;          /* or 90vw, 75vw, */
+                max-width: 92vw;
+            }
+            
+            /* Triggers a bit earlier than 600px to avoid scrollbars on tablets */
             .tychonic-ui,
             .azimuthal-dashboard {
                 padding: 10px !important;
@@ -2245,23 +2268,18 @@
             
             .ty-container,
             .az-canvas-wrapper {
-                max-width: 95vw !important;
+                max-width: 92vw !important; /* Leaves a tiny bit of breathing room on the edges */
             }
             
             .ty-controls button,
             .az-controls button {
-                font-size: 0.6rem !important;
-                padding: 4px 8px !important;
-            }
-            
-            .ty-controls,
-            .az-controls {
-                gap: 4px !important;
+                font-size: 0.7rem !important;
+                padding: 6px 10px !important;
             }
             
             #ty-time-display,
             #az-time-display {
-                font-size: 10px !important;
+                font-size: 0.9rem !important;
             }
         
 

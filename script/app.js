@@ -10475,30 +10475,47 @@ ${pins.slice(0, 10).join('<br>')}<br>
         // =========================================================================
         // AZIMUTHAL FLAT EARTH ENGINE (with Full Date & Time)
         // =========================================================================
-        (function initAzimuthal() {
+        // =========================================================================
+        // AZIMUTHAL FLAT EARTH ENGINE (Scales Big)
+        // =========================================================================
+        (function initAzimuthalEngine() {
             const canvas = document.getElementById('azimuthal-canvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
             const timeDisplay = document.getElementById('az-time-display');
 
-            // ---- Canvas sizing ----
+            // ---- Size canvas to fill its container ----
+            // ---- Size canvas to match its CSS display size ----
             function sizeCanvas() {
-                const rect = canvas.parentElement.getBoundingClientRect();
-                const size = Math.min(rect.width, rect.height, 800);
-                canvas.width = size;
-                canvas.height = size;
+                const rect = canvas.getBoundingClientRect();
+                const displayWidth = rect.width;
+                const displayHeight = rect.height;
+                if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
+                    canvas.width = displayWidth;
+                    canvas.height = displayHeight;
+                }
             }
             sizeCanvas();
-            window.addEventListener('resize', sizeCanvas);
+            window.addEventListener('resize', () => {
+                sizeCanvas();
+                // Redraw immediately after resize
+                if (!isRunning) renderFrame();
+                else renderLoop(); // ensures continuous loop updates size
+            });
 
-            const center = { x: canvas.width / 2, y: canvas.height / 2 };
-            const baseRadius = canvas.width * 0.42;
-            const tropicCancerRadius = baseRadius * 0.38;
-            const equatorRadius = baseRadius * 0.68;
-            const tropicCapricornRadius = baseRadius * 0.92;
+            // ---- Coordinates & radii (relative to canvas size) ----
+            function getRadii() {
+                const r = canvas.width * 0.42;
+                return {
+                    cancer: r * 0.38,
+                    equator: r * 0.68,
+                    capricorn: r * 0.92,
+                    base: r
+                };
+            }
 
             // ---- State ----
-            let dayOfYear = 0;
+            let dayOfYear = 172;
             let timeOfDay = 0;
             let year = 2026;
             let isRunning = false;
@@ -10511,13 +10528,12 @@ ${pins.slice(0, 10).join('<br>')}<br>
             function syncToActualTime() {
                 const now = new Date();
                 const start = new Date(now.getFullYear(), 0, 0);
-                const diff = now - start;
-                dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+                dayOfYear = Math.floor((now - start) / (1000 * 60 * 60 * 24));
                 timeOfDay = now.getHours() + now.getMinutes() / 60 + now.getSeconds() / 3600;
                 year = now.getFullYear();
                 updateDisplay();
+                renderFrame();
             }
-            syncToActualTime();
 
             // ---- Update display ----
             function updateDisplay() {
@@ -10526,89 +10542,81 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 const day = Math.floor(dayOfYear % 30) + 1;
                 const hours = Math.floor(timeOfDay);
                 const mins = Math.floor((timeOfDay - hours) * 60);
-                const secs = Math.floor((timeOfDay - hours - mins/60) * 3600);
-                timeDisplay.textContent = `📅 ${month} ${day}, ${year} | 🕐 ${String(hours).padStart(2,'0')}:${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')} | ⚡ ${speedMultiplier}x`;
+                timeDisplay.textContent = `📅 ${month} ${day}, ${year} | 🕐 ${String(hours).padStart(2,'0')}:${String(mins).padStart(2,'0')} | ⚡ ${speedMultiplier}x`;
             }
 
-            // ---- Advance time by days ----
-            function advanceDays(days) {
-                dayOfYear = (dayOfYear + days) % 365;
-                if (dayOfYear < 0) dayOfYear += 365;
-                // Handle year rollover
-                if (dayOfYear + days >= 365) year++;
-                else if (dayOfYear + days < 0) year--;
-                updateDisplay();
-            }
+            // ---- Load map image ----
+            const mapImage = new Image();
+            mapImage.src = './images/Azimuthal_Equidistant_N90.jpg';
+            let mapLoaded = false;
+            mapImage.onload = () => {
+                mapLoaded = true;
+                // Redraw if already running
+                renderFrame();
+            };
+            mapImage.onerror = () => {
+                console.warn('⚠️ Map image not found – check path');
+            };
 
-            function advanceMonths(months) {
-                const daysToAdd = months * 30;
-                dayOfYear = (dayOfYear + daysToAdd) % 365;
-                if (dayOfYear < 0) dayOfYear += 365;
-                const yearShift = Math.floor((dayOfYear + daysToAdd) / 365);
-                year += yearShift;
-                updateDisplay();
-            }
 
-            function advanceYears(years) {
-                year += years;
-                // If we cross a leap year boundary, dayOfYear stays the same
-                updateDisplay();
-            }
-
-            // ---- Render loop ----
-            function render() {
-                if (isRunning) {
-                    timeOfDay += 0.01 * speedMultiplier;
-                    if (timeOfDay >= 24) {
-                        timeOfDay -= 24;
-                        dayOfYear = (dayOfYear + 1) % 365;
-                        if (dayOfYear === 0) year++;
-                    }
-                }
-
+            // ---- Render frame ----
+            function renderFrame() {
                 const w = canvas.width;
                 const h = canvas.height;
-                const cx = center.x;
-                const cy = center.y;
+                const cx = w / 2;
+                const cy = h / 2;
+                const r = getRadii();
 
+                // Clear canvas (transparent -> shows page background)
                 ctx.clearRect(0, 0, w, h);
 
-                // ---- Draw reference rings ----
+                // Draw the map background
+                if (mapLoaded) {
+                    ctx.drawImage(mapImage, 0, 0, w, h);
+                } else {
+                    ctx.fillStyle = '#06060c';
+                    ctx.fillRect(0, 0, w, h);
+                }
+
+
+                
+
+                // ---- 1. Draw reference rings ----
                 ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
                 ctx.lineWidth = 1.5;
-                [tropicCancerRadius, equatorRadius, tropicCapricornRadius].forEach(r => {
+                [r.cancer, r.equator, r.capricorn].forEach(rad => {
                     ctx.beginPath();
-                    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                    ctx.arc(cx, cy, rad, 0, Math.PI * 2);
                     ctx.stroke();
                 });
 
-                // ---- Solar calculations ----
+                // ---- 2. Solar position ----
                 const raAngle = ((timeOfDay - 6) / 24) * Math.PI * 2;
                 const decFactor = Math.cos(((dayOfYear - 172) / 365) * Math.PI * 2);
-                const sunDist = equatorRadius - (decFactor * (equatorRadius - tropicCancerRadius));
+                const sunDist = r.equator - (decFactor * (r.equator - r.cancer));
                 const sunX = cx + sunDist * Math.cos(raAngle);
                 const sunY = cy + sunDist * Math.sin(raAngle);
 
-                // ---- Lunar calculations ----
+                // ---- 3. Lunar position ----
                 const lunarDayProgress = timeOfDay / 24.84;
                 const moonRA = ((lunarDayProgress - (dayOfYear / 29.5) - 0.25)) * Math.PI * 2;
                 const moonDecFactor = Math.cos(((dayOfYear % 27.3) / 27.3) * Math.PI * 2);
-                const moonDist = equatorRadius - (moonDecFactor * (equatorRadius - tropicCancerRadius));
+                const moonDist = r.equator - (moonDecFactor * (r.equator - r.cancer));
                 const moonX = cx + moonDist * Math.cos(moonRA);
                 const moonY = cy + moonDist * Math.sin(moonRA);
 
-                // ---- Daylight spotlight ----
-                const grad = ctx.createRadialGradient(sunX, sunY, 10, sunX, sunY, baseRadius * 1.1);
+                // ---- 4. Daylight spotlight ----
+                const grad = ctx.createRadialGradient(sunX, sunY, 10, sunX, sunY, r.base * 1.1);
                 grad.addColorStop(0, 'rgba(255, 255, 200, 0.25)');
                 grad.addColorStop(0.15, 'rgba(255, 255, 150, 0.08)');
                 grad.addColorStop(0.6, 'rgba(0, 0, 0, 0.4)');
                 grad.addColorStop(1, 'rgba(0, 0, 0, 0.7)');
                 ctx.fillStyle = grad;
                 ctx.beginPath();
-                ctx.arc(cx, cy, baseRadius * 1.05, 0, Math.PI * 2);
+                ctx.arc(cx, cy, r.base * 1.05, 0, Math.PI * 2);
                 ctx.fill();
 
-                // ---- Draw Moon ----
+                // ---- 5. Draw Moon ----
                 ctx.shadowColor = '#fff';
                 ctx.shadowBlur = 20;
                 ctx.fillStyle = '#ddd';
@@ -10616,7 +10624,7 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 ctx.arc(moonX, moonY, 8, 0, Math.PI * 2);
                 ctx.fill();
 
-                // ---- Draw Sun ----
+                // ---- 6. Draw Sun ----
                 ctx.shadowColor = '#FFD700';
                 ctx.shadowBlur = 35;
                 ctx.fillStyle = '#FFD700';
@@ -10625,18 +10633,48 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 ctx.fill();
                 ctx.shadowBlur = 0;
 
-                // ---- AC/MC line ----
+                // ---- 7. AC/MC line ----
                 ctx.strokeStyle = 'rgba(255,200,0,0.15)';
                 ctx.lineWidth = 1;
                 ctx.setLineDash([4, 8]);
                 ctx.beginPath();
                 ctx.moveTo(cx, cy);
-                ctx.lineTo(cx + baseRadius * Math.cos(raAngle), cy + baseRadius * Math.sin(raAngle));
+                ctx.lineTo(cx + r.base * Math.cos(raAngle), cy + r.base * Math.sin(raAngle));
                 ctx.stroke();
                 ctx.setLineDash([]);
 
+                // ---- 8. Polaris center ----
+                ctx.beginPath();
+                ctx.arc(cx, cy, 4, 0, Math.PI * 2);
+                ctx.fillStyle = '#00ffff';
+                ctx.shadowColor = '#00ffff';
+                ctx.shadowBlur = 12;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
                 updateDisplay();
-                animationId = requestAnimationFrame(render);
+            }
+
+            // ---- Main loop ----
+            function renderLoop() {
+                if (isRunning) {
+                    timeOfDay += 0.01 * speedMultiplier;
+                    if (timeOfDay >= 24) {
+                        timeOfDay -= 24;
+                        dayOfYear = (dayOfYear + 1) % 365;
+                        if (dayOfYear === 0) year++;
+                    }
+                    renderFrame();
+                    animationId = requestAnimationFrame(renderLoop);
+                }
+                // ---- Load and draw map image ----
+                const mapImage = new Image();
+                mapImage.src = './images/Azimuthal_Equidistant_N90.jpg';
+                mapImage.onload = function() {
+                    // Draw the map on the canvas before anything else
+                    ctx.drawImage(mapImage, 0, 0, canvas.width, canvas.height);
+                    renderFrame();
+                };
             }
 
             // ---- Controls ----
@@ -10651,7 +10689,11 @@ ${pins.slice(0, 10).join('<br>')}<br>
             playBtn.addEventListener('click', () => {
                 isRunning = !isRunning;
                 playBtn.textContent = isRunning ? '⏸ Pause' : '▶ Play';
-                if (isRunning && !animationId) render();
+                if (isRunning) {
+                    renderLoop();
+                } else {
+                    if (animationId) cancelAnimationFrame(animationId);
+                }
             });
 
             syncBtn.addEventListener('click', syncToActualTime);
@@ -10662,17 +10704,29 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 speedBtn.textContent = `⚡${speedMultiplier}x`;
             });
 
-            dayBtn.addEventListener('click', () => advanceDays(1));
-            sixMoBtn.addEventListener('click', () => advanceMonths(6));
-            yearBtn.addEventListener('click', () => advanceYears(1));
+            dayBtn.addEventListener('click', () => {
+                dayOfYear = (dayOfYear + 1) % 365;
+                if (dayOfYear === 0) year++;
+                renderFrame();
+            });
+
+            sixMoBtn.addEventListener('click', () => {
+                dayOfYear = (dayOfYear + 180) % 365;
+                if (dayOfYear === 0) year++;
+                renderFrame();
+            });
+
+            yearBtn.addEventListener('click', () => {
+                year++;
+                renderFrame();
+            });
 
             resetBtn.addEventListener('click', () => {
+                if (animationId) cancelAnimationFrame(animationId);
                 isRunning = false;
                 playBtn.textContent = '▶ Play';
-                if (animationId) cancelAnimationFrame(animationId);
-                animationId = null;
                 syncToActualTime();
-                render();
+                renderFrame();
             });
 
             // ---- Keyboard shortcut ----
@@ -10685,9 +10739,12 @@ ${pins.slice(0, 10).join('<br>')}<br>
             });
 
             // ---- Start ----
-            render();
+            syncToActualTime();
+            renderFrame();
             console.log('🌍 Azimuthal Engine loaded.');
         })();
+
+
 
         
         // Automatically update the copyright year
