@@ -1610,6 +1610,14 @@
             const cosmicCanvas = document.getElementById('cosmic-canvas');
             const cosmicControls = cosmicWrapper ? cosmicWrapper.querySelector('.cosmic-controls') : null;
             const feSection = document.getElementById('flat-earth-section');
+
+            // Helper: Get the relevant containers
+            const azControls = document.querySelector('.azimuthal-dashboard .az-controls');
+            const azTimeDisplay = document.getElementById('az-time-display');
+            const astrolabeControls = document.querySelector('.astrolabe-dashboard .engine-controls');
+            const astrolabeToggles = document.querySelector('.astrolabe-dashboard .engine-controls.bottom');
+            const astrolabeTitle = document.querySelector('.astrolabe-dashboard .astrolabe-title');
+            const astrolabeDivider = document.querySelector('.astrolabe-dashboard .dashboard-divider');
             
             if (cleanViewMode === 0) {
                 // ---- ALL VISIBLE ----
@@ -1644,6 +1652,14 @@
                     if (feStretched) feStretched.style.display = '';
                 }
 
+                // ---- SHOW ALL CONTROLS ----
+                if (azControls) azControls.style.display = '';
+                if (azTimeDisplay) azTimeDisplay.style.display = '';
+                if (astrolabeControls) astrolabeControls.style.display = '';
+                if (astrolabeToggles) astrolabeToggles.style.display = '';
+                if (astrolabeTitle) astrolabeTitle.style.display = '';
+                if (astrolabeDivider) astrolabeDivider.style.display = '';
+
                 hideBtn.innerText = '🖥️ CLEANVIEW: OFF';
                 hideBtn.style.color = '#f6ff00'; // Solid Yellow/Magenta
             } else if (cleanViewMode === 1) {
@@ -1676,6 +1692,14 @@
                     if (feCanvas) feCanvas.style.display = '';
                     if (feStretched) feStretched.style.display = '';
                 }
+
+                // ---- SHOW ALL CONTROLS ----
+                if (azControls) azControls.style.display = '';
+                if (azTimeDisplay) azTimeDisplay.style.display = '';
+                if (astrolabeControls) astrolabeControls.style.display = '';
+                if (astrolabeToggles) astrolabeToggles.style.display = '';
+                if (astrolabeTitle) astrolabeTitle.style.display = '';
+                if (astrolabeDivider) astrolabeDivider.style.display = '';
 
                 hideBtn.innerText = '🖥️CLEANVIEW:(text off)';
                 hideBtn.style.color = '#ffb835'; // Orange
@@ -1715,6 +1739,13 @@
                     if (feStretched) feStretched.style.display = 'block';
                 }
                 
+                // ---- HIDE CONTROLS, KEEP CANVASES ----
+                if (azControls) azControls.style.display = 'none';
+                if (azTimeDisplay) azTimeDisplay.style.display = 'none';
+                if (astrolabeControls) astrolabeControls.style.display = 'none';
+                if (astrolabeToggles) astrolabeToggles.style.display = 'none';
+                if (astrolabeTitle) astrolabeTitle.style.display = 'none';
+                if (astrolabeDivider) astrolabeDivider.style.display = 'none';
                 hideBtn.innerText = '🖥️CLEANVIEW: ON(full)';
                 hideBtn.style.color = '#00fffb'; // Cyber Cyan
             }
@@ -8088,6 +8119,10 @@ ${pins.slice(0, 10).join('<br>')}<br>
             document.getElementById('toggle-fetch-btn').parentElement.style.display = 'block';
             // Bring back the fastfetch container (MUST be 'flex' to preserve layout!)
             document.getElementById('neofetch-container').style.display = 'flex';
+            // After all visibility is restored: refresh astrolab
+            if (window.refreshAstrolabe) {
+                window.refreshAstrolabe();
+            }
 
             // Restore active clock display after exiting mirror
             const mode = clockModes[currentModeIndex];
@@ -9338,7 +9373,7 @@ ${pins.slice(0, 10).join('<br>')}<br>
 
 
         // =========================================================================
-        // === COSMIC MAZZAROTH WHEEL ENGINE (Glass Mode) ===
+        // COSMIC MAZZAROTH WHEEL ENGINE (Glass Mode) – DPI‑SCALED (High‑Quality Retina)
         // =========================================================================
         function initCosmicClock() {
             window._cosmicInit = true;
@@ -9349,9 +9384,8 @@ ${pins.slice(0, 10).join('<br>')}<br>
             const latInput = document.getElementById('cosmic-lat');
             const lonInput = document.getElementById('cosmic-lon');
 
-
-            // Zodiac data
-            const ZODIAC = ['♈︎','♉︎','♊︎','♋︎','♌︎','♍︎','♎︎','♏︎','♐︎','♑︎','♒︎','♓︎'];
+            // ---- Zodiac data ----
+            const ZODIAC = ['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
             const ELEMENTS = ['Fire','Earth','Air','Water','Fire','Earth','Air','Water','Fire','Earth','Air','Water'];
             const ELEMENT_COLORS = {
                 Fire: '#ff6666',
@@ -9373,13 +9407,14 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 'Pluto':  { sym: '♇', col: '#8b4513' }
             };
 
+            // ---- State ----
             let simTime = new Date();
             let isPlaying = true;
             let speedMultiplier = 1;
             let animFrame;
             let lastTimestamp = 0;
 
-            // ---- Astronomical helpers ----
+            // ---- Helpers (using global EPHEMERIS) ----
             function getJulianDay(date) {
                 const year = date.getUTCFullYear();
                 const month = date.getUTCMonth() + 1;
@@ -9387,8 +9422,7 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 let a = Math.floor((14 - month) / 12);
                 let y = year + 4800 - a;
                 let m = month + 12 * a - 3;
-                let jd = day + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
-                return jd;
+                return day + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
             }
 
             function getGMST(jd) {
@@ -9408,32 +9442,38 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 const gmstDeg = getGMST(jd);
                 let lst = (gmstDeg + lon) % 360;
                 if (lst < 0) lst += 360;
-
                 const lstRad = lst * Math.PI / 180;
                 const latRad = lat * Math.PI / 180;
                 const epsRad = 23.439 * Math.PI / 180;
-
                 let mcRad = Math.atan2(Math.sin(lstRad), Math.cos(lstRad) * Math.cos(epsRad));
                 let mcDeg = ((mcRad * 180 / Math.PI) % 360 + 360) % 360;
-
                 let num = Math.cos(lstRad);
                 let den = -(Math.sin(lstRad) * Math.cos(epsRad) + Math.tan(latRad) * Math.sin(epsRad));
                 let acRad = Math.atan2(num, den);
                 let acDeg = ((acRad * 180 / Math.PI) % 360 + 360) % 360;
-
                 return { ac: acDeg, mc: mcDeg };
             }
 
-            // ---- Drawing ----
+            // ---- DRAWING with DPI scaling ----
             function drawCosmicClock(timestamp) {
-                // ---- 1. Match canvas size to display ----
+                // ---- DPI SCALING: match canvas to display size × devicePixelRatio ----
+                const dpr = window.devicePixelRatio || 1;
                 const rect = canvas.getBoundingClientRect();
+
+                // 🛑 1. EARLY ABORT: If the canvas is hidden, stop immediately.
+                if (rect.width === 0 || rect.height === 0) return;
+                
                 const displayWidth = rect.width;
                 const displayHeight = rect.height;
-                if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
-                    canvas.width = displayWidth;
-                    canvas.height = displayHeight;
-                }                
+
+                // Only update the internal drawing buffer, DO NOT apply inline CSS styles
+                if (canvas.width !== displayWidth * dpr || canvas.height !== displayHeight * dpr) {
+                    canvas.width = displayWidth * dpr;
+                    canvas.height = displayHeight * dpr;
+
+                    ctx.setTransform(1, 0, 0, 1, 0, 0); // reset transform
+                    ctx.scale(dpr, dpr);
+                }
 
                 if (!timestamp) timestamp = performance.now();
                 if (lastTimestamp === 0) lastTimestamp = timestamp;
@@ -9445,16 +9485,15 @@ ${pins.slice(0, 10).join('<br>')}<br>
                     simTime = new Date(simTime.getTime() + deltaMs);
                 }
 
-                const cx = canvas.width / 2;
-                const cy = canvas.height / 2;
-                const rOuter = Math.min(canvas.width, canvas.height) * 0.42;
+                // ---- All measurements use DISPLAY pixels (not canvas pixels) ----
+                const cx = displayWidth / 2;
+                const cy = displayHeight / 2;
+                const rOuter = Math.min(displayWidth, displayHeight) * 0.42;
                 const rZodiac = rOuter * 0.88;
                 const rPlanets = rOuter * 0.68;
                 const rTicks = rOuter * 0.92;
-                
 
-                // ---- COMPLETELY CLEAR with NO background ----
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.clearRect(0, 0, displayWidth, displayHeight);
 
                 const lat = parseFloat(latInput.value) || 29.9792;
                 const lon = parseFloat(lonInput.value) || 31.1342;
@@ -9471,7 +9510,7 @@ ${pins.slice(0, 10).join('<br>')}<br>
 
                 const getAngle = (lonDeg) => Math.PI - (lonDeg * Math.PI / 180);
 
-                // ---- Draw transparent zodiac segments ----
+                // ---- Zodiac segments ----
                 for (let i = 0; i < 12; i++) {
                     const startAngle = getAngle(i * 30);
                     const endAngle = getAngle((i + 1) * 30);
@@ -9481,11 +9520,11 @@ ${pins.slice(0, 10).join('<br>')}<br>
                     ctx.arc(cx, cy, rZodiac - 5, endAngle, startAngle);
                     ctx.arc(cx, cy, rZodiac - 30, startAngle, endAngle, true);
                     ctx.closePath();
-                    ctx.fillStyle = color + '15'; // 15% opacity
+                    ctx.fillStyle = color + '15';
                     ctx.fill();
                 }
 
-                // ---- Outer Ring (thin) ----
+                // ---- Outer ring ----
                 ctx.lineWidth = 1.5;
                 ctx.strokeStyle = 'rgba(255,255,255,0.15)';
                 ctx.beginPath();
@@ -9495,7 +9534,7 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 ctx.arc(cx, cy, rZodiac - 5, 0, 2 * Math.PI);
                 ctx.stroke();
 
-                // ---- Degree Tick Marks (millimeter bars) ----
+                // ---- Degree ticks ----
                 for (let i = 0; i < 360; i += 5) {
                     const angle = getAngle(i);
                     const outer = i % 30 === 0 ? rTicks + 8 : (i % 10 === 0 ? rTicks + 4 : rTicks);
@@ -9524,23 +9563,24 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 ctx.stroke();
                 ctx.setLineDash([]);
 
-                // ---- Zodiac Signs (with custom colors) ----
-                ctx.font = '24px Arial';
+                // ---- Zodiac signs (with glow) ----
+                ctx.font = '24px "Segoe UI Symbol", "Arial Unicode MS", Arial, sans-serif';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 for (let i = 0; i < 12; i++) {
                     const symAngle = getAngle(i * 30 + 15);
                     const elem = ELEMENTS[i];
                     const color = ELEMENT_COLORS[elem];
-                    ctx.fillStyle = color;
+                    const pulse = Math.sin(Date.now() / 3000 + i) * 4 + 16; // subtle pulse
                     ctx.shadowColor = color;
-                    ctx.shadowBlur = 12;
+                    ctx.shadowBlur = pulse;
+                    ctx.fillStyle = color;
                     ctx.fillText(ZODIAC[i], cx + (rZodiac + 3) * Math.cos(symAngle), cy + (rZodiac + 3) * Math.sin(symAngle));
                 }
                 ctx.shadowBlur = 0;
 
                 // ---- Planets ----
-                ctx.font = '20px Arial';
+                ctx.font = '20px "Segoe UI Symbol", "Arial Unicode MS", Arial, sans-serif';
                 for (const p in planetData) {
                     const lonDeg = planetData[p];
                     const angle = getAngle(lonDeg);
@@ -9553,16 +9593,15 @@ ${pins.slice(0, 10).join('<br>')}<br>
 
                     ctx.fillStyle = PLANETS[p].col;
                     ctx.shadowColor = PLANETS[p].col;
-                    ctx.shadowBlur = 15;
+                    ctx.shadowBlur = 18;
                     ctx.fillText(PLANETS[p].sym, cx + rPlanets * Math.cos(angle), cy + rPlanets * Math.sin(angle));
                 }
                 ctx.shadowBlur = 0;
 
-                // ---- AC / MC Crosshair ----
+                // ---- AC / MC ----
                 const acAngle = getAngle(ac);
                 const mcAngle = getAngle(mc);
 
-                // AC = Orange/Yellow
                 ctx.lineWidth = 2.5;
                 ctx.strokeStyle = 'rgba(255, 200, 0, 0.6)';
                 ctx.shadowColor = '#ffaa00';
@@ -9576,7 +9615,6 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 ctx.shadowBlur = 12;
                 ctx.fillText('AC', cx + (rOuter + 18) * Math.cos(acAngle), cy + (rOuter + 18) * Math.sin(acAngle));
 
-                // MC = Royal blue
                 ctx.strokeStyle = 'rgba(65, 105, 225, 0.6)';
                 ctx.shadowColor = '#4169e1';
                 ctx.beginPath();
@@ -9597,7 +9635,7 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 ctx.lineWidth = 1.5;
                 ctx.stroke();
 
-                // Title
+                // ---- Title ----
                 ctx.fillStyle = '#FFD700';
                 ctx.font = 'bold 12px monospace';
                 ctx.shadowColor = '#FFD700';
@@ -9610,7 +9648,7 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 animFrame = requestAnimationFrame(drawCosmicClock);
             }
 
-            // ---- 3. Resize handling ----
+            // ---- Resize handler ----
             const resizeObserver = new ResizeObserver(() => {
                 if (animFrame) cancelAnimationFrame(animFrame);
                 lastTimestamp = 0;
@@ -9623,9 +9661,6 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 lastTimestamp = 0;
                 drawCosmicClock();
             });
-
-            // ---- 4. Start the loop ----
-            drawCosmicClock();
 
             // ---- Controls ----
             document.getElementById('c-play-pause').onclick = (e) => {
@@ -9652,7 +9687,6 @@ ${pins.slice(0, 10).join('<br>')}<br>
             document.getElementById('c-next-mo').onclick = () => addTime(86400000 * 30);
             document.getElementById('c-prev-mo').onclick = () => addTime(-86400000 * 30);
 
-            // ---- Speed cycle: 1x → 60x → 600x →1440x → 6000x  → 60000x → 600000x ----
             const speedBtn = document.getElementById('c-speed');
             const speeds = [1, 60, 600, 1440, 6000, 60000, 600000, 6000000];
             let speedIndex = 0;
@@ -9669,6 +9703,8 @@ ${pins.slice(0, 10).join('<br>')}<br>
 
 
 
+
+        
         // =========================================================================
         // === FLAT EARTH PROJECTION – CIRCULAR + STRETCHED (Glass + Dark Hue) ===
         // =========================================================================
@@ -9811,7 +9847,7 @@ ${pins.slice(0, 10).join('<br>')}<br>
                     
 
                 // ---- Zodiac signs (circular, subtle glow) ----
-                const zR = rDisc * 0.97;
+                const zR = rDisc * 1.03;
                 ctx.font = '16px Arial';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
@@ -10316,17 +10352,52 @@ ${pins.slice(0, 10).join('<br>')}<br>
 
             if (!treeSVG) return;
 
-            const reflections = {
-                kether: "The Crown of Stillness. The origin point where the Way of the Stride Still begins. Pure potential before form.",
-                chokmah: "The pure force of wisdom, untamed and expansive. The first spark of creation.",
-                binah: "The deep understanding that shapes force into form. The womb of structure.",
-                chesed: "Boundless mercy and the expansion of the spirit. Unconditional love flowing outward.",
-                geburah: "The strength of the Rose, fiercely guarded by its thorns. Discipline creates the boundaries of creation.",
-                tiphareth: "Radiating beauty and balance. Here, the Lys unfolds its petals, a centre of harmonic light.",
-                netzach: "The endurance of the Érable, deeply rooted and victorious through changing seasons.",
-                hod: "The intellect and glory of structure. The splendour of the mind.",
-                yesod: "The foundation of the Lotus, rising through the dark waters to blossom above.",
-                malkuth: "The physical realm, where energy settles into reality. Meditate on the circular waves of existence propagating outward."
+            // ---- Authentic Kabbalah Teachings ----
+            const kabbalahTeachings = {
+                kether: {
+                    title: "KETHER (Crown)",
+                    text: "The infinite light of the Ein Sof. It is the Divine Will, the breath before the word is spoken. Here lies absolute unity, beyond human comprehension and beyond form."
+                },
+                chokhmah: {
+                    title: "CHOKHMAH (Wisdom)",
+                    text: "The primordial spark of creation. It is the masculine principle of raw, unformed insight—a flash of divine brilliance and the seed from which all existence expands."
+                },
+                binah: {
+                    title: "BINAH (Understanding)",
+                    text: "The Palace of Mirrors. The feminine womb of creation that takes the raw spark of Chokhmah and gives it structure, breadth, and depth. It is the origin of time and form."
+                },
+                daat: {
+                    title: "DA'AT (Knowledge)",
+                    text: "The hidden sphere. Da'at is not a true Sephirah, but the mystical bridge where Wisdom and Understanding unite. It represents the state of perfect, internalized consciousness."
+                },
+                chesed: {
+                    title: "CHESED (Mercy / Loving-kindness)",
+                    text: "The boundless outpouring of divine grace. It is the desire to share, expand, and bestow unconditional love without limit or restriction."
+                },
+                gevurah: {
+                    title: "GEVURAH (Severity / Judgment)",
+                    text: "The vessel that contains the light. Gevurah is discipline, restriction, and awe. It provides the necessary boundaries so the boundless expansion of Chesed does not overwhelm creation."
+                },
+                tiphareth: {
+                    title: "TIPHARETH (Beauty / Harmony)",
+                    text: "The heart of the Tree. Tiferet perfectly balances the mercy of Chesed and the severity of Gevurah, generating compassion. It is the shining sun of the spiritual architecture."
+                },
+                netzach: {
+                    title: "NETZACH (Eternity / Victory)",
+                    text: "The relentless drive of nature and emotion. Netzach is endurance, the urge to overcome obstacles, and the passionate energy that pushes divine will into action."
+                },
+                hod: {
+                    title: "HOD (Splendor / Surrender)",
+                    text: "The intellect and the mold of form. Hod represents submission to a higher purpose, breaking down the ego to allow the divine light to reflect purely and symmetrically."
+                },
+                yesod: {
+                    title: "YESOD (Foundation)",
+                    text: "The astral blueprint. Yesod gathers all the higher energies of the Sephirot and acts as the funnel, translating the spiritual forces into a language the physical world can understand."
+                },
+                malkuth: {
+                    title: "MALKUTH (Kingdom)",
+                    text: "The physical realm. Malkuth possesses no light of its own, but receives the culmination of all upper emanations. It is the Shekhinah, the indwelling, manifested presence of the Divine."
+                }
             };
 
             // Use event delegation on the SVG itself
@@ -10338,145 +10409,27 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 const nodeName = circle.getAttribute('data-node');
                 if (!nodeName) return;
 
-                // Update reflection
-                reflectionTitle.textContent = nodeName.toUpperCase();
-                reflectionText.textContent = reflections[nodeName] || "The wisdom of this sphere awaits your contemplation.";
+                // Get the teaching data
+                const data = kabbalahTeachings[nodeName];
+                if (data) {
+                    // Update reflection with the authentic title and text
+                    reflectionTitle.textContent = data.title;
+                    reflectionText.textContent = data.text;
+                } else {
+                    reflectionTitle.textContent = nodeName.toUpperCase();
+                    reflectionText.textContent = "The wisdom of this sphere awaits your contemplation.";
+                }
 
                 // Remove active class from all circles
                 document.querySelectorAll('#sephirot-group circle').forEach(c => c.classList.remove('active'));
                 circle.classList.add('active');
             });
-
-            // Hover effect – add glow via CSS class
-            treeSVG.addEventListener('mouseover', function(e) {
-                const circle = e.target.closest('circle');
-                if (circle) {
-                    circle.style.filter = 'drop-shadow(0px 0px 18px rgba(255,255,255,0.5))';
-                }
-            });
-            treeSVG.addEventListener('mouseout', function(e) {
-                const circle = e.target.closest('circle');
-                if (circle && !circle.classList.contains('active')) {
-                    circle.style.filter = '';
-                }
-            });
         });
-    
-        // =========================================================================
-        // TYCHONIC MODEL ENGINE (with Zodiac Ring)
-        // =========================================================================
-        (function initTychonic() {
-            const wheel = document.getElementById('tychonic-wheel');
-            const playBtn = document.getElementById('ty-playpause');
-            const resetBtn = document.getElementById('ty-reset');
-            const speedBtn = document.getElementById('ty-speed');
-            const timeDisplay = document.getElementById('ty-time-display');
 
-            if (!wheel) return;
 
-            let isPlaying = false;
-            let speedMultiplier = 1;
-            const speeds = [1, 2, 5, 10, 20];
-            let speedIndex = 0;
-            let animationId = null;
-            let startTime = 0;
-            let elapsed = 0;
-
-            const waves = wheel.querySelectorAll('.ty-wave');
-            const zodiac = wheel.querySelector('.ty-zodiac');
-
-            // ---- Control functions ----
-            function setPlayState(playing) {
-                isPlaying = playing;
-                playBtn.textContent = isPlaying ? '⏸ Pause' : '▶ Play';
-                if (isPlaying) {
-                    startTime = performance.now() - elapsed;
-                    animateWaves();
-                } else {
-                    if (animationId) cancelAnimationFrame(animationId);
-                    animationId = null;
-                }
-            }
-
-            function animateWaves() {
-                if (!isPlaying) return;
-                const now = performance.now();
-                elapsed = now - startTime;
-
-                waves.forEach(wave => {
-                    const speed = parseFloat(wave.getAttribute('data-speed')) || 60;
-                    const degrees = (elapsed / 1000) * (360 / speed) * speedMultiplier;
-                    wave.setAttribute('transform', `rotate(${degrees % 360})`);
-                });
-
-                // Zodiac ring counterclockwise
-                if (zodiac) {
-                    const zodDeg = (elapsed / 1000) * (360 / 120) * speedMultiplier; // 120s per full rotation
-                    zodiac.setAttribute('transform', `rotate(${-zodDeg % 360})`);
-                }
-
-                // Update time display
-                const totalSeconds = elapsed / 1000 * speedMultiplier;
-                const days = Math.floor(totalSeconds / 86400);
-                const hours = Math.floor((totalSeconds % 86400) / 3600);
-                const mins = Math.floor((totalSeconds % 3600) / 60);
-                timeDisplay.textContent = `⏱️ ${days}d ${hours}h ${mins}m | Speed: ${speedMultiplier}x`;
-
-                animationId = requestAnimationFrame(animateWaves);
-            }
-
-            // ---- Reset ----
-            function resetAnimation() {
-                if (animationId) cancelAnimationFrame(animationId);
-                elapsed = 0;
-                startTime = 0;
-                waves.forEach(wave => {
-                    wave.setAttribute('transform', 'rotate(0)');
-                });
-                if (zodiac) zodiac.setAttribute('transform', 'rotate(0)');
-                timeDisplay.textContent = '🌍 Tychonic System – Press Play to animate';
-                if (isPlaying) {
-                    isPlaying = false;
-                    playBtn.textContent = '▶ Play';
-                }
-            }
-
-            // ---- Speed toggle ----
-            speedBtn.addEventListener('click', () => {
-                speedIndex = (speedIndex + 1) % speeds.length;
-                speedMultiplier = speeds[speedIndex];
-                speedBtn.textContent = `⚡${speedMultiplier}x`;
-            });
-
-            // ---- Play/Pause ----
-            playBtn.addEventListener('click', () => {
-                setPlayState(!isPlaying);
-            });
-
-            // ---- Reset ----
-            resetBtn.addEventListener('click', resetAnimation);
-
-            // ---- Keyboard shortcut ----
-            document.addEventListener('keydown', (e) => {
-                if (e.key === ' ' || e.key === 'Space') {
-                    if (document.activeElement?.id === 'cmd-input') return;
-                    e.preventDefault();
-                    setPlayState(!isPlaying);
-                }
-            });
-
-            // ---- Initial state ----
-            resetAnimation();
-
-            console.log('🌀 Tychonic System loaded.');
-        })();
-        
 
         // =========================================================================
-        // AZIMUTHAL FLAT EARTH ENGINE (with Full Date & Time)
-        // =========================================================================
-        // =========================================================================
-        // AZIMUTHAL FLAT EARTH ENGINE (Scales Big)
+        // AZIMUTHAL FLAT EARTH ENGINE (DPI scales big)
         // =========================================================================
         (function initAzimuthalEngine() {
             const canvas = document.getElementById('azimuthal-canvas');
@@ -10484,17 +10437,38 @@ ${pins.slice(0, 10).join('<br>')}<br>
             const ctx = canvas.getContext('2d');
             const timeDisplay = document.getElementById('az-time-display');
 
-            // ---- Size canvas to fill its container ----
-            // ---- Size canvas to match its CSS display size ----
+            // ---- Store CSS pixel dimensions (for DPI scaling) ----
+            let cssWidth = 0;
+            let cssHeight = 0;
+
+            // ---- Size canvas to match its CSS display size (with DPI scaling) ----
             function sizeCanvas() {
                 const rect = canvas.getBoundingClientRect();
                 const displayWidth = rect.width;
                 const displayHeight = rect.height;
-                if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
-                    canvas.width = displayWidth;
-                    canvas.height = displayHeight;
+
+                // Guard against zero dimensions
+                if (displayWidth === 0 || displayHeight === 0) return;
+
+                const dpr = window.devicePixelRatio || 1;
+                cssWidth = displayWidth;
+                cssHeight = displayHeight;
+
+                // Set canvas internal size (backing store) to DPR-scaled values
+                const newWidth = displayWidth * dpr;
+                const newHeight = displayHeight * dpr;
+
+                if (canvas.width !== newWidth || canvas.height !== newHeight) {
+                    canvas.width = newWidth;
+                    canvas.height = newHeight;
+                    canvas.style.width = displayWidth + 'px';
+                    canvas.style.height = displayHeight + 'px';
+                    // Reset transform and scale to map CSS pixels to canvas pixels
+                    ctx.setTransform(1, 0, 0, 1, 0, 0);
+                    ctx.scale(dpr, dpr);
                 }
             }
+
             sizeCanvas();
             window.addEventListener('resize', () => {
                 sizeCanvas();
@@ -10503,9 +10477,9 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 else renderLoop(); // ensures continuous loop updates size
             });
 
-            // ---- Coordinates & radii (relative to canvas size) ----
+            // ---- Coordinates & radii (relative to CSS display size) ----
             function getRadii() {
-                const r = canvas.width * 0.42;
+                const r = Math.min(cssWidth, cssHeight) * 0.48;
                 return {
                     cancer: r * 0.38,
                     equator: r * 0.68,
@@ -10520,17 +10494,19 @@ ${pins.slice(0, 10).join('<br>')}<br>
             let year = 2026;
             let isRunning = false;
             let speedMultiplier = 1;
-            const speeds = [1, 2, 5, 10, 20, 60];
+            const speeds = [1, 2, 5, 10, 20, 60, 100];
             let speedIndex = 0;
             let animationId = null;
 
             // ---- Sync to actual time ----
             function syncToActualTime() {
                 const now = new Date();
-                const start = new Date(now.getFullYear(), 0, 0);
-                dayOfYear = Math.floor((now - start) / (1000 * 60 * 60 * 24));
-                timeOfDay = now.getHours() + now.getMinutes() / 60 + now.getSeconds() / 3600;
-                year = now.getFullYear();
+                // Use UTC to avoid timezone issues
+                const start = new Date(Date.UTC(now.getUTCFullYear(), 0, 0));
+                const diff = now.getTime() - start.getTime();
+                dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+                timeOfDay = now.getUTCHours() + now.getUTCMinutes() / 60 + now.getUTCSeconds() / 3600;
+                year = now.getUTCFullYear();
                 updateDisplay();
                 renderFrame();
             }
@@ -10541,8 +10517,11 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 const month = months[Math.floor((dayOfYear / 365) * 12) % 12];
                 const day = Math.floor(dayOfYear % 30) + 1;
                 const hours = Math.floor(timeOfDay);
-                const mins = Math.floor((timeOfDay - hours) * 60);
-                timeDisplay.textContent = `📅 ${month} ${day}, ${year} | 🕐 ${String(hours).padStart(2,'0')}:${String(mins).padStart(2,'0')} | ⚡ ${speedMultiplier}x`;
+                const totalMinutes = (timeOfDay - hours) * 60;
+                const mins = Math.floor(totalMinutes);
+                const secs = Math.floor((totalMinutes - mins) * 60);
+                // Show GMT explicitly
+                timeDisplay.textContent = `📅 ${month} ${day}, ${year} (GMT) | 🕐 ${String(hours).padStart(2,'0')}:${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')} | ⚡ ${speedMultiplier}x`;
             }
 
             // ---- Load map image ----
@@ -10558,11 +10537,13 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 console.warn('⚠️ Map image not found – check path');
             };
 
-
-            // ---- Render frame ----
+            // ---- Render frame (using CSS dimensions) ----
             function renderFrame() {
-                const w = canvas.width;
-                const h = canvas.height;
+                // Guard against zero dimensions (avoid canvas corruption)
+                if (cssWidth === 0 || cssHeight === 0) return;
+
+                const w = cssWidth;
+                const h = cssHeight;
                 const cx = w / 2;
                 const cy = h / 2;
                 const r = getRadii();
@@ -10577,9 +10558,6 @@ ${pins.slice(0, 10).join('<br>')}<br>
                     ctx.fillStyle = '#06060c';
                     ctx.fillRect(0, 0, w, h);
                 }
-
-
-                
 
                 // ---- 1. Draw reference rings ----
                 ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
@@ -10668,13 +10646,8 @@ ${pins.slice(0, 10).join('<br>')}<br>
                     animationId = requestAnimationFrame(renderLoop);
                 }
                 // ---- Load and draw map image ----
-                const mapImage = new Image();
-                mapImage.src = './images/Azimuthal_Equidistant_N90.jpg';
-                mapImage.onload = function() {
-                    // Draw the map on the canvas before anything else
-                    ctx.drawImage(mapImage, 0, 0, canvas.width, canvas.height);
-                    renderFrame();
-                };
+                // (Duplicate code removed – we already load the image once above)
+                // If you still want to keep it for some reason, it's redundant.
             }
 
             // ---- Controls ----
@@ -10710,6 +10683,16 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 renderFrame();
             });
 
+            document.getElementById('az-prev-mo').addEventListener('click', () => {
+                dayOfYear = (dayOfYear - 30 + 365) % 365;
+                renderFrame();
+            });
+
+            document.getElementById('az-next-mo').addEventListener('click', () => {
+                dayOfYear = (dayOfYear + 30) % 365;
+                renderFrame();
+            });
+
             sixMoBtn.addEventListener('click', () => {
                 dayOfYear = (dayOfYear + 180) % 365;
                 if (dayOfYear === 0) year++;
@@ -10741,13 +10724,671 @@ ${pins.slice(0, 10).join('<br>')}<br>
             // ---- Start ----
             syncToActualTime();
             renderFrame();
-            console.log('🌍 Azimuthal Engine loaded.');
+            console.log('Azimuthal Engine loaded.');
         })();
 
 
 
+
+
+        // =====================================================================
+        // UNIFIED ASTROLABE ENGINE – Azimuthal + Cosmic (DPI‑scaled)
+        // =====================================================================
+        (function initAstrolabe() {
+
+            // ---------- Ephemeris (same as before) ----------
+            const EPHEMERIS = {
+                refDate: new Date(2020, 0, 1).getTime(),
+                refLon: {
+                    'Sun': 280.0, 'Moon': 180.0, 'Mercury': 180.0, 'Venus': 200.0,
+                    'Mars': 120.0, 'Jupiter': 290.0, 'Saturn': 320.0, 'Uranus': 30.0,
+                    'Neptune': 340.0, 'Pluto': 260.0
+                },
+                dailyMotion: {
+                    'Sun': 0.9856, 'Moon': 13.176, 'Mercury': 1.383, 'Venus': 1.602,
+                    'Mars': 0.524, 'Jupiter': 0.083, 'Saturn': 0.033, 'Uranus': 0.012,
+                    'Neptune': 0.006, 'Pluto': 0.004
+                }
+            };
+
+            // ---------- DOM refs ----------
+            const azCanvas = document.getElementById('azimuthal-layer');
+            const cosCanvas = document.getElementById('cosmic-layer');
+            const azCtx = azCanvas.getContext('2d');
+            const cosCtx = cosCanvas.getContext('2d');
+            const timeDisplay = document.getElementById('shared-time-display');
+
+            // ---------- Shared state ----------
+            let simTime = new Date();
+            let isRunning = true;
+            let speedMultiplier = 1;
+            const speeds = [1, 20, 60, 600, 3600, 36000, 72000, 360000, 720000];
+            let speedIndex = 0;
+
+            // Toggles
+            let showZodiac = true;
+            let showPlanets = true;
+            let showACMC = true;
+
+            // ---------- Cosmic helpers (same as before) ----------
+            const ZODIAC = ['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+            const ELEMENTS = ['Fire','Earth','Air','Water','Fire','Earth','Air','Water','Fire','Earth','Air','Water'];
+            const ELEMENT_COLORS = { Fire: '#ff6666', Earth: '#66ff66', Air: '#777d80', Water: '#0565ff' };
+            const PLANETS = {
+                'Sun': { sym: '☉', col: '#ffaa00' },
+                'Moon': { sym: '☽', col: '#ececec' },
+                'Mercury': { sym: '☿', col: '#00f0ff' },
+                'Venus': { sym: '♀', col: '#ff00ff' },
+                'Mars': { sym: '♂', col: '#ff3333' },
+                'Jupiter': { sym: '♃', col: '#4aff9e' },
+                'Saturn': { sym: '♄', col: '#ffd733' },
+                'Uranus': { sym: '♅', col: '#00ced1' },
+                'Neptune': { sym: '♆', col: '#4169e1' },
+                'Pluto': { sym: '♇', col: '#8b4513' }
+            };
+
+            function getJulianDay(date) {
+                const year = date.getUTCFullYear();
+                const month = date.getUTCMonth() + 1;
+                const day = date.getUTCDate() + (date.getUTCHours() + date.getUTCMinutes()/60 + date.getUTCSeconds()/3600)/24;
+                let a = Math.floor((14 - month) / 12);
+                let y = year + 4800 - a;
+                let m = month + 12 * a - 3;
+                return day + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
+            }
+            function getGMST(jd) {
+                const T = (jd - 2451545.0) / 36525.0;
+                let gmst = 280.46061837 + 360.98564736629 * (jd - 2451545.0) + 0.000387933 * T * T - T * T * T / 38710000.0;
+                return ((gmst % 360) + 360) % 360;
+            }
+            function getPlanetPosition(planet, date) {
+                const days = (date - EPHEMERIS.refDate) / (1000 * 60 * 60 * 24);
+                const lon = EPHEMERIS.refLon[planet] + EPHEMERIS.dailyMotion[planet] * days;
+                return ((lon % 360) + 360) % 360;
+            }
+            function getACMC(date, lat, lon) {
+                const jd = getJulianDay(date);
+                const gmstDeg = getGMST(jd);
+                let lst = (gmstDeg + lon) % 360;
+                if (lst < 0) lst += 360;
+                const lstRad = lst * Math.PI / 180;
+                const latRad = lat * Math.PI / 180;
+                const epsRad = 23.439 * Math.PI / 180;
+                let mcRad = Math.atan2(Math.sin(lstRad), Math.cos(lstRad) * Math.cos(epsRad));
+                let mcDeg = ((mcRad * 180 / Math.PI) % 360 + 360) % 360;
+                let num = Math.cos(lstRad);
+                let den = -(Math.sin(lstRad) * Math.cos(epsRad) + Math.tan(latRad) * Math.sin(epsRad));
+                let acRad = Math.atan2(num, den);
+                let acDeg = ((acRad * 180 / Math.PI) % 360 + 360) % 360;
+                return { ac: acDeg, mc: mcDeg };
+            }
+
+            // ---------- Load map image (for azimuthal) ----------
+            const mapImage = new Image();
+            mapImage.src = './images/Azimuthal_Equidistant_N90.jpg';
+            let mapLoaded = false;
+            mapImage.onload = () => { mapLoaded = true; };
+            mapImage.onerror = () => { console.warn('⚠️ Map image missing – using fallback'); };
+
+            // ---------- Render functions ----------
+
+            // 1. Azimuthal (DPI scaling)
+            function renderAzimuthal() {
+                const rect = azCanvas.getBoundingClientRect();
+                if (rect.width === 0 || rect.height === 0) return;
+
+                const dpr = window.devicePixelRatio || 1;
+                const displayWidth = rect.width;
+                const displayHeight = rect.height;
+
+                // Set canvas size with DPI scaling
+                if (azCanvas.width !== displayWidth * dpr || azCanvas.height !== displayHeight * dpr) {
+                    azCanvas.width = displayWidth * dpr;
+                    azCanvas.height = displayHeight * dpr;
+                    azCanvas.style.width = displayWidth + 'px';
+                    azCanvas.style.height = displayHeight + 'px';
+                    azCtx.setTransform(1, 0, 0, 1, 0, 0);
+                    azCtx.scale(dpr, dpr);
+                }
+
+                const w = displayWidth, h = displayHeight;
+                const cx = w / 2, cy = h / 2;
+                const r = Math.min(w, h) * 0.48;
+                const radii = {
+                    cancer: r * 0.38,
+                    equator: r * 0.68,
+                    capricorn: r * 0.92,
+                    base: r
+                };
+
+                // Clear
+                azCtx.clearRect(0, 0, w, h);
+                if (mapLoaded) {
+                    azCtx.drawImage(mapImage, 0, 0, w, h);
+                } else {
+                    azCtx.fillStyle = '#06060c';
+                    azCtx.fillRect(0, 0, w, h);
+                }
+
+                // Compute dayOfYear and timeOfDay from simTime
+                const startOfYear = new Date(Date.UTC(simTime.getUTCFullYear(), 0, 0));
+                const diff = simTime.getTime() - startOfYear.getTime();
+                const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const timeOfDay = simTime.getUTCHours() + simTime.getUTCMinutes() / 60 + simTime.getUTCSeconds() / 3600;
+
+                // Rings
+                azCtx.strokeStyle = 'rgba(255,255,255,0.12)';
+                azCtx.lineWidth = 1.5;
+                [radii.cancer, radii.equator, radii.capricorn].forEach(rad => {
+                    azCtx.beginPath();
+                    azCtx.arc(cx, cy, rad, 0, Math.PI * 2);
+                    azCtx.stroke();
+                });
+
+                // Sun
+                const raAngle = ((timeOfDay - 6) / 24) * Math.PI * 2;
+                const decFactor = Math.cos(((dayOfYear - 172) / 365) * Math.PI * 2);
+                const sunDist = radii.equator - (decFactor * (radii.equator - radii.cancer));
+                const sunX = cx + sunDist * Math.cos(raAngle);
+                const sunY = cy + sunDist * Math.sin(raAngle);
+
+                // Moon
+                const lunarDayProgress = timeOfDay / 24.84;
+                const moonRA = ((lunarDayProgress - (dayOfYear / 29.5) - 0.25)) * Math.PI * 2;
+                const moonDecFactor = Math.cos(((dayOfYear % 27.3) / 27.3) * Math.PI * 2);
+                const moonDist = radii.equator - (moonDecFactor * (radii.equator - radii.cancer));
+                const moonX = cx + moonDist * Math.cos(moonRA);
+                const moonY = cy + moonDist * Math.sin(moonRA);
+
+                // Daylight gradient
+                const grad = azCtx.createRadialGradient(sunX, sunY, 10, sunX, sunY, radii.base * 1.1);
+                grad.addColorStop(0, 'rgba(255,255,200,0.25)');
+                grad.addColorStop(0.15, 'rgba(255,255,150,0.08)');
+                grad.addColorStop(0.6, 'rgba(0,0,0,0.4)');
+                grad.addColorStop(1, 'rgba(0,0,0,0.7)');
+                azCtx.fillStyle = grad;
+                azCtx.beginPath();
+                azCtx.arc(cx, cy, radii.base * 1.05, 0, Math.PI * 2);
+                azCtx.fill();
+
+                // Moon
+                azCtx.shadowColor = '#fff';
+                azCtx.shadowBlur = 20;
+                azCtx.fillStyle = '#ddd';
+                azCtx.beginPath();
+                azCtx.arc(moonX, moonY, 8, 0, Math.PI * 2);
+                azCtx.fill();
+
+                // Sun
+                azCtx.shadowColor = '#FFD700';
+                azCtx.shadowBlur = 35;
+                azCtx.fillStyle = '#FFD700';
+                azCtx.beginPath();
+                azCtx.arc(sunX, sunY, 14, 0, Math.PI * 2);
+                azCtx.fill();
+                azCtx.shadowBlur = 0;
+
+                // AC/MC line (using RA as proxy)
+                azCtx.strokeStyle = 'rgba(255,200,0,0.15)';
+                azCtx.lineWidth = 1;
+                azCtx.setLineDash([4, 8]);
+                azCtx.beginPath();
+                azCtx.moveTo(cx, cy);
+                azCtx.lineTo(cx + radii.base * Math.cos(raAngle), cy + radii.base * Math.sin(raAngle));
+                azCtx.stroke();
+                azCtx.setLineDash([]);
+
+                // Polaris
+                azCtx.beginPath();
+                azCtx.arc(cx, cy, 4, 0, Math.PI * 2);
+                azCtx.fillStyle = '#00ffff';
+                azCtx.shadowColor = '#00ffff';
+                azCtx.shadowBlur = 12;
+                azCtx.fill();
+                azCtx.shadowBlur = 0;
+
+                // Update time display (once per frame)
+                updateTimeDisplay();
+            }
+
+            // 2. Cosmic (DPI‑scaled)
+            function renderCosmic() {
+                const rect = cosCanvas.getBoundingClientRect();
+                if (rect.width === 0 || rect.height === 0) return;
+                
+                const dpr = window.devicePixelRatio || 1;
+                const displayWidth = rect.width;
+                const displayHeight = rect.height;
+
+                // Set canvas size with DPI scaling
+                if (cosCanvas.width !== displayWidth * dpr || cosCanvas.height !== displayHeight * dpr) {
+                    cosCanvas.width = displayWidth * dpr;
+                    cosCanvas.height = displayHeight * dpr;
+                    cosCanvas.style.width = displayWidth + 'px';
+                    cosCanvas.style.height = displayHeight + 'px';
+                    cosCtx.setTransform(1, 0, 0, 1, 0, 0);
+                    cosCtx.scale(dpr, dpr);
+                }
+
+                const cx = displayWidth / 2, cy = displayHeight / 2;
+                const rOuter = Math.min(displayWidth, displayHeight) * 0.52;
+                const rZodiac = rOuter * 0.88;
+                const rPlanets = rOuter * 0.68;
+                const rTicks = rOuter * 0.92;
+
+                // Clear (transparent)
+                cosCtx.clearRect(0, 0, displayWidth, displayHeight);
+
+                // Use fixed lat/lon from inputs (if they exist) – otherwise default Giza
+                const latInput = document.getElementById('cosmic-lat');
+                const lonInput = document.getElementById('cosmic-lon');
+                const lat = latInput ? parseFloat(latInput.value) || 29.9792 : 29.9792;
+                const lon = lonInput ? parseFloat(lonInput.value) || 31.1342 : 31.1342;
+
+                const planetData = {};
+                for (const p in PLANETS) {
+                    planetData[p] = getPlanetPosition(p, simTime);
+                }
+                const angles = getACMC(simTime, lat, lon);
+                const ac = angles.ac;
+                const mc = angles.mc;
+
+                const getAngle = (lonDeg) => Math.PI - (lonDeg * Math.PI / 180);
+
+                // ---- Zodiac segments (toggle) ----
+                if (showZodiac) {
+                    for (let i = 0; i < 12; i++) {
+                        const startAngle = getAngle(i * 30);
+                        const endAngle = getAngle((i + 1) * 30);
+                        const elem = ELEMENTS[i];
+                        const color = ELEMENT_COLORS[elem];
+                        cosCtx.beginPath();
+                        cosCtx.arc(cx, cy, rZodiac - 5, endAngle, startAngle);
+                        cosCtx.arc(cx, cy, rZodiac - 30, startAngle, endAngle, true);
+                        cosCtx.closePath();
+                        cosCtx.fillStyle = color + '15';
+                        cosCtx.fill();
+                    }
+                }
+
+                // Outer rings
+                cosCtx.lineWidth = 1.5;
+                cosCtx.strokeStyle = 'rgba(255,255,255,0.15)';
+                cosCtx.beginPath();
+                cosCtx.arc(cx, cy, rOuter, 0, 2 * Math.PI);
+                cosCtx.stroke();
+                cosCtx.beginPath();
+                cosCtx.arc(cx, cy, rZodiac - 5, 0, 2 * Math.PI);
+                cosCtx.stroke();
+
+                // Degree ticks
+                for (let i = 0; i < 360; i += 5) {
+                    const angle = getAngle(i);
+                    const outer = i % 30 === 0 ? rTicks + 8 : (i % 10 === 0 ? rTicks + 4 : rTicks);
+                    const inner = rTicks - 4;
+                    cosCtx.beginPath();
+                    cosCtx.moveTo(cx + outer * Math.cos(angle), cy + outer * Math.sin(angle));
+                    cosCtx.lineTo(cx + inner * Math.cos(angle), cy + inner * Math.sin(angle));
+                    cosCtx.strokeStyle = i % 30 === 0 ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.15)';
+                    cosCtx.lineWidth = i % 30 === 0 ? 2 : 1;
+                    cosCtx.stroke();
+                }
+
+                // Cardinal axes
+                cosCtx.lineWidth = 1;
+                cosCtx.setLineDash([4, 6]);
+                cosCtx.strokeStyle = 'rgba(255,255,255,0.08)';
+                const a0 = getAngle(0);
+                cosCtx.beginPath();
+                cosCtx.moveTo(cx + (rOuter - 5) * Math.cos(a0), cy + (rOuter - 5) * Math.sin(a0));
+                cosCtx.lineTo(cx - (rOuter - 5) * Math.cos(a0), cy - (rOuter - 5) * Math.sin(a0));
+                cosCtx.stroke();
+                const a90 = getAngle(90);
+                cosCtx.beginPath();
+                cosCtx.moveTo(cx + (rOuter - 5) * Math.cos(a90), cy + (rOuter - 5) * Math.sin(a90));
+                cosCtx.lineTo(cx - (rOuter - 5) * Math.cos(a90), cy - (rOuter - 5) * Math.sin(a90));
+                cosCtx.stroke();
+                cosCtx.setLineDash([]);
+
+                // ---- Zodiac signs (toggle) ----
+                if (showZodiac) {
+                    cosCtx.font = '24px "Segoe UI Symbol", "Arial Unicode MS", Arial, sans-serif';
+                    cosCtx.textAlign = 'center';
+                    cosCtx.textBaseline = 'middle';
+                    for (let i = 0; i < 12; i++) {
+                        const symAngle = getAngle(i * 30 + 15);
+                        const elem = ELEMENTS[i];
+                        const color = ELEMENT_COLORS[elem];
+                        const pulse = Math.sin(Date.now() / 3000 + i) * 4 + 16;
+                        cosCtx.shadowColor = color;
+                        cosCtx.shadowBlur = pulse;
+                        cosCtx.fillStyle = color;
+                        cosCtx.fillText(ZODIAC[i], cx + (rZodiac + 3) * Math.cos(symAngle), cy + (rZodiac + 3) * Math.sin(symAngle));
+                    }
+                    cosCtx.shadowBlur = 0;
+                }
+
+                // ---- Planets (toggle) ----
+                if (showPlanets) {
+                    cosCtx.font = '20px "Segoe UI Symbol", "Arial Unicode MS", Arial, sans-serif';
+                    for (const p in planetData) {
+                        const lonDeg = planetData[p];
+                        const angle = getAngle(lonDeg);
+                        cosCtx.beginPath();
+                        cosCtx.moveTo(cx + 30 * Math.cos(angle), cy + 30 * Math.sin(angle));
+                        cosCtx.lineTo(cx + rPlanets * Math.cos(angle), cy + rPlanets * Math.sin(angle));
+                        cosCtx.strokeStyle = 'rgba(255,255,255,0.04)';
+                        cosCtx.stroke();
+                        cosCtx.fillStyle = PLANETS[p].col;
+                        cosCtx.shadowColor = PLANETS[p].col;
+                        cosCtx.shadowBlur = 18;
+                        cosCtx.fillText(PLANETS[p].sym, cx + rPlanets * Math.cos(angle), cy + rPlanets * Math.sin(angle));
+                    }
+                    cosCtx.shadowBlur = 0;
+                }
+
+                // ---- AC / MC (toggle) ----
+                if (showACMC) {
+                    const acAngle = getAngle(ac);
+                    const mcAngle = getAngle(mc);
+
+                    cosCtx.lineWidth = 2.5;
+                    cosCtx.strokeStyle = 'rgba(255, 200, 0, 0.6)';
+                    cosCtx.shadowColor = '#ffaa00';
+                    cosCtx.shadowBlur = 10;
+                    cosCtx.beginPath();
+                    cosCtx.moveTo(cx + (rOuter - 10) * Math.cos(acAngle), cy + (rOuter - 10) * Math.sin(acAngle));
+                    cosCtx.lineTo(cx - (rOuter - 10) * Math.cos(acAngle), cy - (rOuter - 10) * Math.sin(acAngle));
+                    cosCtx.stroke();
+                    cosCtx.fillStyle = '#ffaa00';
+                    cosCtx.font = '13px monospace';
+                    cosCtx.shadowBlur = 12;
+                    cosCtx.fillText('AC', cx + (rOuter + 18) * Math.cos(acAngle), cy + (rOuter + 18) * Math.sin(acAngle));
+
+                    cosCtx.strokeStyle = 'rgba(65, 105, 225, 0.6)';
+                    cosCtx.shadowColor = '#4169e1';
+                    cosCtx.beginPath();
+                    cosCtx.moveTo(cx + (rOuter - 10) * Math.cos(mcAngle), cy + (rOuter - 10) * Math.sin(mcAngle));
+                    cosCtx.lineTo(cx - (rOuter - 10) * Math.cos(mcAngle), cy - (rOuter - 10) * Math.sin(mcAngle));
+                    cosCtx.stroke();
+                    cosCtx.fillStyle = '#4169e1';
+                    cosCtx.shadowBlur = 10;
+                    cosCtx.fillText('MC', cx + (rOuter + 18) * Math.cos(mcAngle), cy + (rOuter + 18) * Math.sin(mcAngle));
+                    cosCtx.shadowBlur = 0;
+                }
+
+                // ---- Glass analog clock overlay (toggle) ----
+                if (showClock) {
+                    const clockRadius = rOuter * 1.0;   // fit within the cosmic ring
+                    const cxClock = cx;
+                    const cyClock = cy;
+
+                    // ---- Draw transparent clock face ----
+                    cosCtx.save();
+                    cosCtx.beginPath();
+                    cosCtx.arc(cxClock, cyClock, clockRadius, 0, 2 * Math.PI);
+                    cosCtx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+                    cosCtx.fill();
+                    cosCtx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+                    cosCtx.lineWidth = 1.5;
+                    cosCtx.stroke();
+
+                    // ---- Numbers 1–12 ----
+                    cosCtx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                    cosCtx.font = `${clockRadius * 0.06}px "Segoe UI", Arial, sans-serif`;
+                    cosCtx.textAlign = 'center';
+                    cosCtx.textBaseline = 'middle';
+                    for (let i = 1; i <= 12; i++) {
+                        const angle = (i / 12) * 2 * Math.PI - Math.PI / 2;
+                        const numRadius = clockRadius * 0.85;
+                        const x = cxClock + numRadius * Math.cos(angle);
+                        const y = cyClock + numRadius * Math.sin(angle);
+                        cosCtx.fillText(i.toString(), x, y);
+                    }
+
+                    // ---- Get current time (GMT) from simTime ----
+                    const hours = simTime.getUTCHours() % 12;
+                    const minutes = simTime.getUTCMinutes();
+                    const seconds = simTime.getUTCSeconds();
+
+                    // ---- Hour hand ----
+                    const hourAngle = (hours / 12) * 2 * Math.PI + (minutes / 60) * (2 * Math.PI / 12) - Math.PI / 2;
+                    const hourLen = clockRadius * 0.5;
+                    cosCtx.beginPath();
+                    cosCtx.moveTo(cxClock, cyClock);
+                    cosCtx.lineTo(cxClock + hourLen * Math.cos(hourAngle), cyClock + hourLen * Math.sin(hourAngle));
+                    cosCtx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+                    cosCtx.lineWidth = 4;
+                    cosCtx.shadowColor = 'rgba(255, 255, 255, 0.3)';
+                    cosCtx.shadowBlur = 8;
+                    cosCtx.stroke();
+
+                    // ---- Minute hand ----
+                    const minuteAngle = (minutes / 60) * 2 * Math.PI - Math.PI / 2;
+                    const minLen = clockRadius * 0.7;
+                    cosCtx.beginPath();
+                    cosCtx.moveTo(cxClock, cyClock);
+                    cosCtx.lineTo(cxClock + minLen * Math.cos(minuteAngle), cyClock + minLen * Math.sin(minuteAngle));
+                    cosCtx.strokeStyle = 'rgba(200, 200, 255, 0.8)';
+                    cosCtx.lineWidth = 3;
+                    cosCtx.shadowBlur = 6;
+                    cosCtx.stroke();
+
+                    // ---- Second hand ----
+                    const secondAngle = (seconds / 60) * 2 * Math.PI - Math.PI / 2;
+                    const secLen = clockRadius * 0.75;
+                    cosCtx.beginPath();
+                    cosCtx.moveTo(cxClock, cyClock);
+                    cosCtx.lineTo(cxClock + secLen * Math.cos(secondAngle), cyClock + secLen * Math.sin(secondAngle));
+                    cosCtx.strokeStyle = 'rgba(255, 80, 80, 0.9)';
+                    cosCtx.lineWidth = 1.5;
+                    cosCtx.shadowColor = 'rgba(255, 0, 0, 0.5)';
+                    cosCtx.shadowBlur = 10;
+                    cosCtx.stroke();
+
+                    // ---- Center dot ----
+                    cosCtx.beginPath();
+                    cosCtx.arc(cxClock, cyClock, 6, 0, 2 * Math.PI);
+                    cosCtx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                    cosCtx.shadowBlur = 12;
+                    cosCtx.fill();
+
+                    cosCtx.restore();
+                }
+
+                // Center dot
+                cosCtx.beginPath();
+                cosCtx.arc(cx, cy, 12, 0, 2 * Math.PI);
+                cosCtx.fillStyle = 'rgba(10,10,26,0.6)';
+                cosCtx.fill();
+                cosCtx.strokeStyle = 'rgba(0, 240, 255, 0.3)';
+                cosCtx.lineWidth = 1.5;
+                cosCtx.stroke();
+
+                // Small icon
+                cosCtx.fillStyle = '#FFD700';
+                cosCtx.font = 'bold 12px monospace';
+                cosCtx.shadowColor = '#FFD700';
+                cosCtx.shadowBlur = 8;
+                cosCtx.textAlign = 'center';
+                cosCtx.textBaseline = 'middle';
+                cosCtx.fillText('🌀', cx, cy - 2);
+                cosCtx.shadowBlur = 0;
+            }
+
+            // ---------- Update time display ----------
+            function updateTimeDisplay() {
+                const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                const month = months[simTime.getUTCMonth()];
+                const day = simTime.getUTCDate();
+                const year = simTime.getUTCFullYear();
+                const hours = String(simTime.getUTCHours()).padStart(2, '0');
+                const mins = String(simTime.getUTCMinutes()).padStart(2, '0');
+                const secs = String(simTime.getUTCSeconds()).padEnd(2, '0')
+                timeDisplay.textContent = `📅 ${month} ${day}, ${year} (GMT) | 🕐 ${hours}:${mins}:${secs} | ⚡ ${speedMultiplier}x`;
+            }
+
+            // ---------- Main loop ----------
+            let lastTimestamp = 0;
+
+            function mainLoop(timestamp) {
+                if (!timestamp) timestamp = performance.now();
+                if (lastTimestamp === 0) lastTimestamp = timestamp;
+                const delta = (timestamp - lastTimestamp) / 1000;
+                lastTimestamp = timestamp;
+
+                if (isRunning) {
+                    const deltaMs = delta * 1000 * speedMultiplier;
+                    simTime = new Date(simTime.getTime() + deltaMs);
+                }
+
+                renderAzimuthal();
+                renderCosmic();
+                requestAnimationFrame(mainLoop);
+            }
+
+            // ---------- Controls ----------
+            const playBtn = document.getElementById('astro-playpause');
+            const syncBtn = document.getElementById('astro-sync');
+            const speedBtn = document.getElementById('astro-speed');
+            const dayBtn = document.getElementById('astro-day');
+            const prevMoBtn = document.getElementById('astro-prev-mo');
+            const nextMoBtn = document.getElementById('astro-next-mo');
+            const sixMoBtn = document.getElementById('astro-6mo');
+            const yearBtn = document.getElementById('astro-year');
+            const resetBtn = document.getElementById('astro-reset');
+
+            function addTime(ms) {
+                isRunning = false;
+                playBtn.textContent = '▶ Play';
+                simTime = new Date(simTime.getTime() + ms);
+            }
+
+            playBtn.addEventListener('click', () => {
+                isRunning = !isRunning;
+                playBtn.textContent = isRunning ? '⏸ Pause' : '▶ Play';
+                if (isRunning) lastTimestamp = 0;
+            });
+
+            syncBtn.addEventListener('click', () => {
+                isRunning = true;
+                playBtn.textContent = '⏸ Pause';
+                simTime = new Date();
+                lastTimestamp = 0;
+            });
+
+            speedBtn.addEventListener('click', () => {
+                speedIndex = (speedIndex + 1) % speeds.length;
+                speedMultiplier = speeds[speedIndex];
+                speedBtn.textContent = `⚡${speedMultiplier}x`;
+            });
+
+            dayBtn.addEventListener('click', () => addTime(86400000));
+            prevMoBtn.addEventListener('click', () => addTime(-86400000 * 30));
+            nextMoBtn.addEventListener('click', () => addTime(86400000 * 30));
+            sixMoBtn.addEventListener('click', () => addTime(86400000 * 180));
+            yearBtn.addEventListener('click', () => addTime(86400000 * 365));
+
+            resetBtn.addEventListener('click', () => {
+                isRunning = false;
+                playBtn.textContent = '▶ Play';
+                simTime = new Date();
+                speedMultiplier = 1;
+                speedIndex = 0;
+                speedBtn.textContent = '⚡1x';
+                lastTimestamp = 0;
+                // Optionally reset lat/lon inputs if they exist
+                const latInput = document.getElementById('cosmic-lat');
+                const lonInput = document.getElementById('cosmic-lon');
+                if (latInput) latInput.value = '29.9792';
+                if (lonInput) lonInput.value = '31.1342';
+            });
+
+            // Toggle buttons
+            document.getElementById('toggle-zodiac').addEventListener('click', function() {
+                showZodiac = !showZodiac;
+                this.textContent = `Zodiac: ${showZodiac ? 'ON' : 'OFF'}`;
+            });
+            document.getElementById('toggle-planets').addEventListener('click', function() {
+                showPlanets = !showPlanets;
+                this.textContent = `Planets: ${showPlanets ? 'ON' : 'OFF'}`;
+            });
+            document.getElementById('toggle-acmc').addEventListener('click', function() {
+                showACMC = !showACMC;
+                this.textContent = `AC/MC: ${showACMC ? 'ON' : 'OFF'}`; 
+            });
+
+            // ---------- Clock toggle ----------
+            let showClock = true;
+            document.getElementById('toggle-clock').addEventListener('click', function() {
+                showClock = !showClock;
+                this.textContent = `Clock: ${showClock ? 'ON' : 'OFF'}`;
+            });
+
+            // Keyboard shortcut (Space)
+            document.addEventListener('keydown', (e) => {
+                if ((e.key === ' ' || e.key === 'Space') && document.activeElement?.tagName !== 'INPUT') {
+                    e.preventDefault();
+                    playBtn.click();
+                }
+            });
+
+            // ---------- Resize handler ----------
+            function resizeCanvases() {
+                renderAzimuthal();
+                renderCosmic();
+            }
+            
+            // ---------- Centralised refresh ----------
+            function refreshAstrolabe() {
+                // Wait one frame to let the browser finish layout
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => { // double RAF for safety
+                        resizeCanvases();
+                    });
+                });
+            }
+            window.addEventListener('resize', resizeCanvases);
+
+
+            // ---------- Visibility fix for Mirror Mode ----------
+            // ---------- ResizeObserver (primary) ----------
+            const astrolabeContainer = document.querySelector('.astrolabe-dashboard');
+            if (astrolabeContainer) {
+                let resizeTimer = null;
+                const resizeObserver = new ResizeObserver((entries) => {
+                    for (let entry of entries) {
+                        if (entry.contentRect.width > 0 && entry.contentRect.height > 0) {
+                            clearTimeout(resizeTimer);
+                            resizeTimer = setTimeout(() => {
+                                resizeCanvases();
+                            }, 20);
+                        }
+                    }
+                });
+                resizeObserver.observe(astrolabeContainer);
+            }
+
+            // ---------- Mirror exit fallback (just in case) ----------
+            const exitMirrorBtn = document.getElementById('mirror-exit-btn');
+            if (exitMirrorBtn) {
+                exitMirrorBtn.addEventListener('click', () => {
+                    refreshAstrolabe(); // RAF handles the delay
+                });
+            }
+
+            // ---------- Start ----------
+            simTime = new Date();
+            isRunning = true;
+            playBtn.textContent = '⏸ Pause';
+            renderAzimuthal();
+            renderCosmic();
+            requestAnimationFrame(mainLoop);
+
+            console.log('🌍🌀 Unified Astrolabe Engine initialized.');
+        })();
         
-        // Automatically update the copyright year
+        // Automatically update copyright year
         document.getElementById('year').textContent = new Date().getFullYear();
 
         if ('serviceWorker' in navigator) {

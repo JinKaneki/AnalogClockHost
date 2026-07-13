@@ -729,18 +729,11 @@
             --cistercian-color-5: #00ccff;
         }
 
+
+
         /* ===== Standalone Cosmic (not in glass mode) ===== */
         #cosmic-canvas {
-            width: 50vw;           /* to be adjusted like: 40%, 50vw, etc. */
-            max-width: 90vw;
-            height: auto;
-            aspect-ratio: 1 / 1;
-            cursor: crosshair;
-        }
-
-        /* ===== COSMIC MAZZAROTH STYLES ===== */
-        /* ===== COSMIC-GLASS OVERLAY – FIXED ALIGNMENT ===== */
-        #cosmic-canvas, #fe-canvas {
+            width: 50vw;           /* to be adjusted: 40%, 50vw, etc. */
             max-width: 90vw;
             height: auto;
             aspect-ratio: 1 / 1;
@@ -766,6 +759,7 @@
             box-shadow: 0 0 10px var(--accent-color);
         }
 
+        
         /* ===== COSMIC-GLASS OVERLAY – FIXED ALIGNMENT ===== */
         .timepiece-wrapper.cosmic-glass-active {
             display: flex;
@@ -885,51 +879,6 @@
         }
 
 
-        /* ===== FLAT EARTH PROJECTION DOME STYLES ===== */
-        /* ===== FLAT EARTH PROJECTION (Double) ===== */
-        #flat-earth-section {
-            padding: 0 15px;
-            box-sizing: border-box;
-        }
-
-        #fe-canvas {
-            background: transparent !important;
-            max-width: 90vw;
-            height: auto;
-            aspect-ratio: 1 / 1;
-            cursor: crosshair;
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
-            border-radius: 50%;
-        }
-
-        /* ===== STRETCHED FLAT EARTH (Glass + Dark Hue) ===== */
-        #fe-stretched-canvas {
-            width: 100% !important;
-            height: 100% !important;
-            display: block;
-            background: transparent !important;
-            cursor: crosshair;
-        }
-
-        /* The elliptical container */
-        #flat-earth-section .stretched-wrapper {
-            width: 100%;
-            max-width: 90vw;
-            aspect-ratio: 1.7 / 1;
-            border-radius: 50%;
-            overflow: hidden;
-            box-shadow: 0 0 35px rgba(0, 240, 255, 0.15);
-            background: rgba(6, 6, 12, 0.75);
-            margin: 30px auto 0 auto;
-        }
-
-        /* subtle glow around the stretched canvas */
-        #fe-stretched-canvas {
-            box-shadow: 0 0 40px rgba(0, 240, 255, 0.08);
-        }
-
-
         
         #hide-info-btn {
             background: transparent;
@@ -982,7 +931,8 @@
         }
 
         .footer-subtext {
-            font-size: 0.7rem;
+            font-size: 0.9rem;
+            font-weight: 700;
             letter-spacing: 2px;
             text-transform: uppercase;
             margin-top: 10px;
@@ -1111,11 +1061,12 @@
         /* Fastfetch button style */
         .action-btn {
             background: transparent;
-            color:#0dff00 ; /* var(--accent-color)*/
+            color:#ffff00 ; /* var(--accent-color)*/
+            font-weight: 700;
             border: 2px solid var(--clock-border);
             border-radius: 20px;
             padding: 8px 16px;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -1228,7 +1179,7 @@
             background: rgba(0, 0, 0, 0.555);
             backdrop-filter: blur(2px);
             border: 1px solid var(--accent-color);
-            border-radius: 48px;
+            border-radius: 50px;
             /*height: 80dvh;*/
             padding: 16px 20px;
             margin: 20px auto;
@@ -1790,6 +1741,41 @@
             height: 100% !important; /* Force it to fill the wrapper */
             display: block;
         }
+        
+        .az-controls {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 25px;
+        max-width: 700px;
+        }
+
+        /* Base button styling */
+        .az-btn {
+        background: transparent;
+        padding: 8px 12px;
+        font-family: monospace;
+        font-weight: bold;
+        font-size: 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-transform: uppercase;
+        }
+
+        /* Custom Button Colors */
+        .btn-gold { color: #ffaa00; border: 1px solid #ffaa00; }
+        .btn-gold:hover { background: #ffaa00; color: #000; box-shadow: 0 0 12px #ffaa00; }
+
+        .btn-green { color: #0f0; border: 1px solid #0f0; }
+        .btn-green:hover { background: #0f0; color: #000; box-shadow: 0 0 12px #0f0; }
+
+        .btn-cyan { color: #00f0ff; border: 1px solid #00f0ff; }
+        .btn-cyan:hover { background: #00f0ff; color: #000; box-shadow: 0 0 12px #00f0ff; }
+
+        .btn-white { color: #fff; border: 1px solid #555; }
+        .btn-white:hover { background: #fff; color: #000; box-shadow: 0 0 12px #fff; border-color: #fff;}
 
 
         .tychonic-ui { text-align: center; font-family: monospace; background: #050505; color: #fff; padding: 20px;}
@@ -1805,15 +1791,17 @@
         /* AZIMUTHAL ENGINE                                             */
         /* ============================================================ */
         #azimuthal-canvas {
-            width: 40vw;           /* to be adjusted (e.g., 40vw, 60vw) */
-            max-width: 90vw;
-            height: auto;
+            width: 100% !important; 
+            max-width: 800px;           /* to be adjusted (e.g., 40vw, 60vw) */
+            display: flex;
+            justify-content: center;
+            align-items: center;   
+            height: auto !important;
             aspect-ratio: 1 / 1;
             cursor: crosshair;
-            display: block;
             margin: 0 auto;
             border-radius: 50%;
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.1);
+            box-shadow:none;
             background: #06060c;    /* fallback if image not loaded */
         }
 
@@ -1828,7 +1816,442 @@
         }
 
 
+        /* ===== FLAT EARTH PROJECTION DASHBOARD STYLES ===== */
+        :root {
+        --fe-cyan: #00f0ff;
+        --fe-gold: #ffaa00;
+        --fe-green: #00ff33;
+        --fe-bg: rgba(10, 15, 20, 0.55);
+        --fe-border: rgba(0, 240, 255, 0.12);
+        --fe-glow: rgba(0, 240, 255, 0.08);
+        }
+
+        .fe-dashboard {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        margin: 40px auto 60px auto;
+        max-width: 900px;
+        padding: 20px;
+        box-sizing: border-box;
+        font-family: monospace;
+        }
+
+        .fe-title {
+        color: var(--fe-cyan);
+        margin-bottom: 25px;
+        font-size: 1.3rem;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        text-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+        }
+
+        /* ===== CANVAS WRAPPERS ===== */
+        .fe-canvas-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: radial-gradient(circle at center, rgba(0, 240, 255, 0.03) 0%, transparent 70%);
+        border: 1px solid var(--fe-border);
+        box-shadow: 0 0 30px var(--fe-glow), inset 0 0 20px rgba(0, 240, 255, 0.03);
+        }
+
+        .fe-circular {
+        width: 100%;
+        max-width: 500px;
+        aspect-ratio: 1 / 1;
+        }
+
+        .fe-elliptical {
+        width: 100%;
+        max-width: 600px;
+        aspect-ratio: 1.7 / 1;
+        border-radius: 50%;
+        margin-top: 40px;
+        }
+
+        .fe-canvas-wrapper canvas {
+        width: 100% !important;
+        height: 100% !important;
+        display: block;
+        cursor: crosshair;
+        border-radius: inherit;
+        background: transparent;
+        }
+
+        /* ===== FLOATING CONTROLS (no box) ===== */
+        .fe-controls {
+        margin-top: 30px;
+        width: 100%;
+        max-width: 550px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 0;
+        }
+
+        .fe-anchor-label {
+        color: var(--fe-cyan);
+        font-size: 9px;
+        letter-spacing: 3px;
+        text-align: center;
+        opacity: 0.6;
+        }
+
+        .fe-coords-row {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        }
+
+        .fe-input {
+        width: 100px;
+        background: rgba(0, 0, 0, 0.5);
+        color: var(--fe-cyan);
+        border: 1px solid var(--fe-border);
+        padding: 6px 8px;
+        text-align: center;
+        border-radius: 4px;
+        font-family: monospace;
+        font-size: 13px;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(4px);
+        }
+
+        .fe-input:focus {
+        outline: none;
+        border-color: var(--fe-cyan);
+        box-shadow: 0 0 15px var(--fe-glow);
+        background: rgba(0, 0, 0, 0.7);
+        }
+
+        .fe-time-display {
+        color: #fff;
+        font-size: 13px;
+        text-align: center;
+        padding: 6px 16px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 4px;
+        text-shadow: 0 0 10px var(--fe-cyan);
+        letter-spacing: 1px;
+        backdrop-filter: blur(4px);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        /* ===== BUTTONS Glowing ===== */
+        .fe-btn-group {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: center;
+        }
+
+        .fe-btn {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 5px 12px;
+        font-family: monospace;
+        font-weight: bold;
+        font-size: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* Specific Button Colors */
+        .fe-btn-cyan { color: var(--fe-cyan); border: 1px solid var(--fe-cyan); }
+        .fe-btn-cyan:hover { background: var(--fe-cyan); color: #000; box-shadow: 0 0 10px var(--fe-cyan); }
+
+        .fe-btn-gold { color: var(--fe-gold); border: 1px solid var(--fe-gold); }
+        .fe-btn-gold:hover { background: var(--fe-gold); color: #000; box-shadow: 0 0 10px var(--fe-gold); }
+
+        .fe-btn-green { color: var(--fe-green); border: 1px solid var(--fe-green); }
+        .fe-btn-green:hover { background: var(--fe-green); color: #000; box-shadow: 0 0 10px var(--fe-green); }
+
+        .fe-label-bottom {
+            color: var(--fe-gold);
+            font-size: 12px;
+            margin-top: 15px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 8px rgba(255, 170, 0, 0.3);
+        }
+
+        /* ===== UNIFIED ASTROLABE DASHBOARD ===== */
+        .astrolabe-dashboard {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(10, 15, 20, 0.85);
+            border: 1px solid rgba(0, 240, 255, 0.15);
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 900px;
+            margin: 40px auto;
+            font-family: monospace;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 240, 255, 0.05);
+            backdrop-filter: blur(5px);
+        }
+
+        .astrolabe-title {
+            color: #00f0ff; 
+            letter-spacing: 3px; 
+            margin-bottom: 10px; 
+            text-shadow: 0 0 10px rgba(0,255,255,0.3);
+            text-transform: uppercase;
+        }
+
+        #shared-time-display {
+            color: #0f0; 
+            font-size: 1.1rem; 
+            margin-bottom: 15px; 
+            padding: 8px 16px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 4px;
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            text-shadow: 0 0 10px rgba(0,255,0,0.4);
+        }
+
+        .engine-controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 750px;
+        }
+        .engine-controls.top { margin-bottom: 25px; }
+        .engine-controls.bottom { margin-top: 15px; }
+
+        /* Buttons */
+        .az-btn {
+            background: rgba(0,0,0,0.6);
+            padding: 8px 14px;
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+        .btn-gold { color: #ffaa00; border: 1px solid #ffaa00; }
+        .btn-gold:hover { background: #ffaa00; color: #000; box-shadow: 0 0 12px #ffaa00; }
+        .btn-green { color: #0f0; border: 1px solid #0f0; }
+        .btn-green:hover { background: #0f0; color: #000; box-shadow: 0 0 12px #0f0; }
+        .btn-cyan { color: #00f0ff; border: 1px solid #00f0ff; }
+        .btn-cyan:hover { background: #00f0ff; color: #000; box-shadow: 0 0 12px #00f0ff; }
+        .btn-magenta { color: magenta; border: 1px solid #ff0095; }
+        .btn-magenta:hover { background:#ff00ff; color: #000; box-shadow: 0 0 12px #ff0095; }
+        .btn-white { color: #fff; border: 1px solid #777; }
+        .btn-white:hover { background: #fff; color: #000; box-shadow: 0 0 12px #fff; border-color:#fff;}
+
+        /* Superposed Canvas Wrapper */
+        .superposed-canvas-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 1 / 1;
+            margin: 10px auto;
+            border-radius: 50%;
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.15), 0 0 0 2px rgba(0, 240, 255, 0.3);
+        }
+
+        .superposed-canvas-wrapper canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 50%;
+            display: block;
+        }
+
+        #azimuthal-layer { z-index: 1; cursor: crosshair; }
+        #cosmic-layer { z-index: 2; pointer-events: none; } /* Lets you click through to the map if needed */
+
+        .dashboard-divider {
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.3), transparent);
+            margin: 25px 0;
+        }
+
         
+        /* ---- Combined System ---- */
+        #combined-system {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* ---- Shared Controls ---- */
+        .shared-btn {
+            background: transparent;
+            padding: 6px 12px;
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 0.7rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .btn-cyan {
+            color: #00f0ff;
+            border-color: rgba(0, 240, 255, 0.2);
+        }
+        .btn-cyan:hover {
+            background: rgba(0, 240, 255, 0.15);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+        }
+
+        .btn-gold {
+            color: #ffaa00;
+            border-color: rgba(255, 170, 0, 0.2);
+        }
+        .btn-gold:hover {
+            background: rgba(255, 170, 0, 0.15);
+            box-shadow: 0 0 10px rgba(255, 170, 0, 0.2);
+        }
+
+        .btn-green {
+            color: #00ff33;
+            border-color: rgba(0, 255, 51, 0.2);
+        }
+        .btn-green:hover {
+            background: rgba(0, 255, 51, 0.15);
+            box-shadow: 0 0 10px rgba(0, 255, 51, 0.2);
+        }
+
+        .btn-white {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        .btn-white:hover {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+        }
+
+
+
+        /* ===== UNIFIED ASTROLABE DASHBOARD ===== */
+        .astrolabe-dashboard {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: transparent;
+            border: none;
+            padding: 25px;
+            max-width: 900px;
+            margin: 40px auto;
+            font-family: monospace;
+            box-shadow: none;
+            backdrop-filter: none;
+        }
+
+
+        .astrolabe-title {
+            color: #ffff00;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+            text-transform: uppercase;
+        }
+
+        #shared-time-display {
+            color: #0f0;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            padding: 8px 16px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
+        }
+
+        .engine-controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 750px;
+        }
+        .engine-controls.top { margin-bottom: 25px; }
+        .engine-controls.bottom { margin-top: 15px; }
+
+        /* Buttons (reuse .az-btn from existing) */
+        .az-btn {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 8px 14px;
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+        .btn-gold { color: #ffaa00; border: 1px solid #ffaa00; }
+        .btn-gold:hover { background: #ffaa00; color: #000; box-shadow: 0 0 12px #ffaa00; }
+        .btn-green { color: #0f0; border: 1px solid #0f0; }
+        .btn-green:hover { background: #0f0; color: #000; box-shadow: 0 0 12px #0f0; }
+        .btn-cyan { color: #00f0ff; border: 1px solid #00f0ff; }
+        .btn-cyan:hover { background: #00f0ff; color: #000; box-shadow: 0 0 12px #00f0ff; }
+        .btn-white { color: #fff; border: 1px solid #777; }
+        .btn-white:hover { background: #fff; color: #000; box-shadow: 0 0 12px #fff; border-color: #fff; }
+
+        /* Superposed Canvas Wrapper */
+        .superposed-canvas-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 1 / 1;
+            margin: 10px auto;
+            border: none;
+            box-shadow: none;
+        }
+
+        .superposed-canvas-wrapper canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 50%;
+            display: block;
+        }
+
+        #azimuthal-layer {
+            z-index: 1;
+            cursor: crosshair;
+            background: #06060c; /* fallback */
+        }
+        #cosmic-layer {
+            z-index: 2;
+            pointer-events: none; /* allow click‑through to the map if needed */
+        }
+
+        .dashboard-divider {
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.3), transparent);
+            margin: 25px 0;
+        }
+
+
+
         /* MOBILE-FRIENDLY TWEAKS */
         @media (max-width: 600px) {
             /* Theme toggle (right side) */
@@ -1948,6 +2371,8 @@
                 gap: 4px;
             }
 
+
+
             #cosmic-canvas, #fe-canvas {
                 width: 85vw !important;
                 max-width: 90vw;
@@ -1969,14 +2394,14 @@
                 height: auto;
             }
             .timepiece-wrapper.cosmic-glass-active #cosmic-canvas {
-                width: 280px !important;
-                height: 280px !important;
+                width: 300px !important;
+                height: 300px !important;
                 max-width: 85vw !important;
                 max-height: 85vw !important;
             }
             .timepiece-wrapper.cosmic-glass-active #analog-clock {
                 /* 80% of 280px / 85vw */
-                width: 224px !important;
+                width: 224px !important; 
                 max-width: 68vw !important;
                 height: auto !important;
                 top: calc(80px + min(140px, 42.5vw)) !important; 
@@ -2091,7 +2516,7 @@
                 width: 95% !important;
                 padding: 12px !important;
                 margin: 10px auto !important;
-                border-radius: 24px !important;
+                border-radius: 36px !important;
                 display: flex;
                 flex-direction: column !important;
                 height: 90dvh !important;  /* Use dynamic viewport, not 100% to leave some space */
@@ -2235,6 +2660,47 @@
                 font-size: 0.7rem !important;
             }
 
+            
+            .fe-dashboard {
+                margin: 20px auto 40px auto;
+                padding: 10px;
+            }
+            .fe-title {
+                font-size: 1rem;
+                letter-spacing: 2px;
+            }
+            .fe-circular {
+                max-width: 90vw;
+            }
+            .fe-elliptical {
+                max-width: 90vw;
+            }
+            .fe-controls {
+                max-width: 100%;
+                padding: 8px 0;
+            }
+            .fe-input {
+                width: 70px;
+                font-size: 10px;
+                padding: 4px 6px;
+            }
+            .fe-time-display {
+                font-size: 10px;
+                padding: 4px 10px;
+            }
+            .fe-btn {
+                font-size: 6px;
+                padding: 4px 8px;
+            }
+            .fe-btn-group {
+                gap: 4px;
+            }
+            .fe-anchor-label {
+                font-size: 8px;
+            }
+
+
+
             #kabbalah-container {
                 margin: 15px auto;
                 padding: 0 10px;
@@ -2254,12 +2720,17 @@
                 font-size: 0.7rem !important;
             }
 
+            
             #azimuthal-canvas {
-                width: 85vw;          /* or 90vw, 75vw, */
-                max-width: 92vw;
+                width: 80vw !important;          /* or 90vw, 75vw, */
+                max-width: 85vw;
+            }
+            .az-btn {
+                font-size: 6px;
+                padding: 4px 6px;
             }
             
-            /* Triggers a bit earlier than 600px to avoid scrollbars on tablets */
+            /* Triggers a bit earlier than 600px to avoid scrollbars on tablets /
             .tychonic-ui,
             .azimuthal-dashboard {
                 padding: 10px !important;
@@ -2268,7 +2739,7 @@
             
             .ty-container,
             .az-canvas-wrapper {
-                max-width: 92vw !important; /* Leaves a tiny bit of breathing room on the edges */
+                max-width: 92vw !important; /* Leaves a tiny bit of breathing room on the edges /
             }
             
             .ty-controls button,
@@ -2280,10 +2751,10 @@
             #ty-time-display,
             #az-time-display {
                 font-size: 0.9rem !important;
-            }
+            } */
         
 
-            /* ---- Controls base style ---- */
+            /* ---- Controls base style ---- 
             .ty-controls button,
             .az-controls button {
                 background: transparent;
@@ -2303,6 +2774,43 @@
                 background: var(--accent-color);
                 color: #000;
                 box-shadow: 0 0 10px var(--accent-color);
+            } */
+
+
+            #combined-system {
+                padding: 10px;
+                margin: 30px auto;
+            }
+            #shared-time-display {
+                font-size: 0.9rem;
+            }
+            .shared-btn {
+                font-size: 0.6rem;
+                padding: 4px 8px;
+            }
+            #stacked-container {
+                max-width: 92vw;
+            }
+
+            
+
+            .astrolabe-dashboard {
+                padding: 15px;
+                margin: 20px auto;
+            }
+            #shared-time-display {
+                font-size: 0.9rem;
+                padding: 6px 12px;
+            }
+            .az-btn {
+                font-size: 10px;
+                padding: 6px 10px;
+            }
+            .engine-controls {
+                gap: 6px;
+            }
+            .superposed-canvas-wrapper {
+                max-width: 85vw;
             }
 
 
