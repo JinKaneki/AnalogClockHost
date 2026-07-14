@@ -298,11 +298,11 @@
         .content-blocks {
             text-align: center;
             width: 100%;
+            margin: 60px auto 40px auto; /* top, right, bottom, left */
+            padding: 20px 20px 100px 20px;
             max-width: 800px;
-            min-height: 500px;  /* Adjust based on the tallest image/text combo */
+            min-height: 500px;  /* to be Adjusted based on the tallest image/text combo */
             position: relative;
-            margin: 20px auto; /* 40px before */
-            padding: 0 20px 100px 20px; /* Top, Right, Bottom (Large for footer space), Left */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -553,12 +553,10 @@
 
         /* style the paragraph text */
         .block-text {
-            flex-direction: column;
             text-align: center;
             align-items: center;
             font-size: 1rem;
             line-height: 1.6;
-            max-width: 600px;
             margin: 0 auto 40px auto;      
             padding: 0 10px;
         }
@@ -2384,8 +2382,12 @@
                 margin-bottom: 60px; /* was 10*/
             }
             .block-text {
-                text-align: center;
                 font-size: 0.7rem;
+                text-align: center;
+                align-items: center;
+                line-height: 1.4;
+                margin: 0 auto 40px auto;     
+                padding: 0 10px;
             }
 
             /* Optional: make the image block a bit smaller if it's too wide */
