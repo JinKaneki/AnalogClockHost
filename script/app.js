@@ -83,6 +83,89 @@
         let tranceFloatAnimationId = null;
         let tranceSpiralAnimationId = null;
 
+        // Global Audio Engine variable
+        let tactileAudioCtx = null;
+
+        // The core feedback function
+        function triggerTactileFeedback() {
+            // 1. TACTILE HAPTICS (Vibration)
+            if (navigator.vibrate) {
+                navigator.vibrate(10); // 10ms mechanical click
+            }
+
+            // 2. SYNTH BLIP (Web Audio API)
+            try {
+                // Initialize the audio engine on the first click to bypass browser blocks
+                if (!tactileAudioCtx) {
+                    tactileAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                // Wake it up if the browser put it to sleep
+                if (tactileAudioCtx.state === 'suspended') {
+                    tactileAudioCtx.resume();
+                }
+
+                // Create the sound wave
+                const osc = tactileAudioCtx.createOscillator();
+                const gainNode = tactileAudioCtx.createGain();
+                
+                osc.type = 'sine'; // Clean retro beep
+                
+                // Pitch drop effect (800Hz down to 150Hz in 80ms)
+                osc.frequency.setValueAtTime(800, tactileAudioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(150, tactileAudioCtx.currentTime + 0.08);
+                
+                // Volume fade out
+                gainNode.gain.setValueAtTime(0.15, tactileAudioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, tactileAudioCtx.currentTime + 0.08);
+                
+                osc.connect(gainNode);
+                gainNode.connect(tactileAudioCtx.destination);
+                
+                // Play the sound
+                osc.start();
+                osc.stop(tactileAudioCtx.currentTime + 0.08);
+                
+            } catch (error) {
+                console.warn("Audio feedback blocked or unsupported", error);
+            }
+        }
+
+        // List of button IDs that should get the reactive class
+        const reactiveButtons = [
+            'az-playpause', 'az-sync', 'az-speed', 'az-day', 'az-prev-mo', 'az-next-mo',
+            'az-6mo', 'az-year', 'az-reset',
+            'astro-playpause', 'astro-sync', 'astro-speed', 'astro-day',
+            'astro-prev-mo', 'astro-next-mo', 'astro-6mo', 'astro-year', 'astro-reset',
+            'toggle-zodiac', 'toggle-planets', 'toggle-acmc', 'toggle-clock',
+            'fe-play-pause', 'fe-now', 'fe-speed', 'fe-next-hr', 'fe-prev-hr',
+            'fe-next-day', 'fe-prev-day', 'fe-next-mo', 'fe-prev-mo', 'fe-6mo', 'fe-year', 'fe-reset',
+            'hide-controls-btn', 'hide-info-btn', 'freeze-btn', 'bg-toggle-btn',
+            'zen-toggle-btn', 'magic-mirror-btn', 'mirror-exit-btn',
+            'open-fetch-btn', 'toggle-fetch-btn', 'open-cmd-runner', 'close-cmd-runner'
+        ];
+
+        // Also include any buttons with specific classes (e.g., .cosmic-btn inside #cosmic-wrapper)
+        document.querySelectorAll('#cosmic-wrapper .cosmic-btn').forEach(btn => {
+            if (!reactiveButtons.includes(btn.id)) reactiveButtons.push(btn.id);
+        });
+
+        // Now apply the class
+        reactiveButtons.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.classList.add('reactive-btn');
+        });
+
+
+
+        // 3. THE AUTO-CONNECTOR
+        // automatically finds every button with the class 'reactive-btn' and attaches the feedback!
+        document.querySelectorAll('.reactive-btn').forEach(button => {
+            // We use 'pointerdown' instead of 'click' so the sound/vibration happens 
+            // the exact millisecond they press the screen/mouse, not when they release it.
+            button.addEventListener('pointerdown', triggerTactileFeedback);
+        });
+
+
         // --- 1. AUDIO CONTEXT SETUP ---
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 

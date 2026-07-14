@@ -553,12 +553,14 @@
 
         /* style the paragraph text */
         .block-text {
+            flex-direction: column;
             text-align: center;
+            align-items: center;
             font-size: 1rem;
             line-height: 1.6;
             max-width: 600px;
-            margin: 20px;       
-            padding: 10px;
+            margin: 0 auto 40px auto;      
+            padding: 0 10px;
         }
 
 
@@ -1774,24 +1776,24 @@
         }
         
         .az-controls {
-        display: flex;
-        gap: 6px;
-        flex-wrap: wrap;
-        justify-content: center;
-        margin-bottom: 25px;
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 25px;
         }
 
         /* Base button styling */
         .az-btn {
-        background: transparent;
-        padding: 8px 12px;
-        font-family: monospace;
-        font-weight: bold;
-        font-size: 10px;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        text-transform: uppercase;
+            background: transparent;
+            padding: 8px 12px;
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
         }
 
         /* Custom Button Colors */
@@ -2281,6 +2283,29 @@
 
 
 
+        /* RESPONSIVE BUTTON HAPTICS */ 
+        /* for any button to give it 3D depth and a click-compression effect */
+        .reactive-btn {
+            position: relative;
+            transition: transform 0.05s ease, box-shadow 0.05s ease;
+            
+            /* The 3D "sides" of the button (Using your cyber-cyan colors) */
+            box-shadow: 0 4px 0 #008b8b, 0 8px 15px rgba(0, 255, 251, 0.15);
+            
+            /* Ensure it moves slightly up off the page initially */
+            transform: translateY(-4px); 
+        }
+
+        /* When the button is physically pressed down */
+        .reactive-btn:active {
+            /* Push the button down into the page */
+            transform: translateY(0px);
+            
+            /* Flatten the shadow so it looks like it hit the floor */
+            box-shadow: 0 0px 0 #008b8b, 0 2px 5px rgba(0, 255, 251, 0.4);
+        }
+
+
         /* MOBILE-FRIENDLY TWEAKS */
         @media (max-width: 600px) {
             /* Theme toggle (right side) */
@@ -2435,13 +2460,13 @@
                 width: 224px !important; 
                 max-width: 68vw !important;
                 height: auto !important;
-                top: calc(80px + min(140px, 42.5vw)) !important; 
+                top: calc(82px + min(140px, 42.5vw)) !important; 
                 margin: 0 !important;
                 transform: translate(-50%, -50%);
             }
             /* Celestial Clock – Mirror Mode Override (mobile) */
             body.mirror-mode .timepiece-wrapper.cosmic-glass-active #analog-clock {
-                top: calc(40px + min(140px, 42.5vw)) !important;
+                top: calc(48px + min(140px, 42.5vw)) !important;
             }
         
 
