@@ -558,7 +558,7 @@
             font-size: 1rem;
             line-height: 1.6;
             margin: 0 auto 40px auto;      
-            padding: 0 10px;
+            padding: 0 20px;
         }
 
 
@@ -579,6 +579,19 @@
             opacity: 0.8;
         }
 
+        /* Static block */
+        .static-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+            margin: 120px auto 100px auto; /* generous top/bottom spacing */
+            padding: 20px 30px 20px 30px;
+            background: transparent;
+            box-sizing: border-box;
+            opacity: 1;
+        }
 
 
         /* Updated Digital Clock As on Android Flagship Look */
@@ -2021,7 +2034,7 @@
             border-radius: 12px;
             padding: 25px;
             max-width: 900px;
-            margin: 40px auto;
+            margin: 40px auto 60px auto;
             font-family: monospace;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 240, 255, 0.05);
             backdrop-filter: blur(5px);
@@ -2287,7 +2300,7 @@
             position: relative;
             transition: transform 0.05s ease, box-shadow 0.05s ease;
             
-            /* The 3D "sides" of the button (Using your cyber-cyan colors) */
+            /* The 3D "sides" of the button (Using cyber-cyan colors) */
             box-shadow: 0 4px 0 #008b8b, 0 8px 15px rgba(0, 255, 251, 0.15);
             
             /* Ensure it moves slightly up off the page initially */
@@ -2387,7 +2400,7 @@
                 align-items: center;
                 line-height: 1.4;
                 margin: 0 auto 40px auto;     
-                padding: 0 10px;
+                padding: 0 20px;
             }
 
             /* Optional: make the image block a bit smaller if it's too wide */

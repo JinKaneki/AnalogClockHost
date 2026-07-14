@@ -896,7 +896,7 @@
                 if (fetchContainer.style.visibility === 'hidden') {
                     if (!dataFetched) await fetchSystemInfo();
                     fetchContainer.style.visibility = 'visible';
-                    playTick(true);   // optional sound feedback (uses existing playTick)
+                    playTick(true);   // sound feedback (uses existing playTick)
                 } else {
                     fetchContainer.style.visibility = 'hidden';
                     playTick(true);
@@ -1492,8 +1492,8 @@
         }
 
         fetchDailyQuote();
-        // Optional: refresh every 10 minutes
-        setInterval(fetchDailyQuote, 600000);
+        // Optional: refresh every 30 minutes
+        setInterval(fetchDailyQuote, 1800000);
 
         // --- TAO TE CHING RANDOM CHAPTER ---
         let taoChapters = [];

@@ -850,31 +850,31 @@
     </div>
 
 
-    <div class="content-blocks" style="margin-top: 60px; padding-top: 375px; padding-bottom: 425px;"> <!-- border-top: 1px solid var(--clock-border);-->
+    <div class="static-block">
         <div class="block active" style="position: relative; opacity: 1; display: flex; flex-direction: column;">
             <h3 class="title-accent">Project Intent</h3>
-            <p class="block-text" style="color: #ffe75d;">
-                This dashboard is designed as a <b>Persistent Ambient Display & Interactive Shell</b>. 
-                The goal is to bridge the gap between a functional cyberpunk-themed timepiece, live media feeds, and retro telemetry, 
-                serving as an "Always-On" companion terminal for a professional workspace.
+            <p class="block-text" style="color: #ffe75d; font-weight: 700;">
+                This dashboard is designed as a <b style="color: #0ff;">Persistent Ambient Display & Interactive Shell</b>.
+                The goal is to bridge the gap between a functional cyberpunk-themed timepiece,live media feeds, and retro telemetry, 
+                serving as an <b style="color:#ffffff;">"Always-On"</b> companion terminal for a professional workspace.
             </p>
             
             <h3 class="title-accent" style="font-size: 1rem; margin-top: 20px;">Technical Architecture</h3>
             <ul class="block-text">
-                <li><b>Zero-Dependency Vanilla Stack:</b> Built entirely using native HTML5, CSS3, and pure Vanilla JavaScript. This ensures a lightweight footprint, instantaneous load times, and flawless performance on low-power secondary displays without NPM package overhead.</li>
-                <li><b>Interactive CLI Terminal Shell:</b> A custom-built, in-browser terminal emulator that parses keyboard inputs and commands, allowing real-time state manipulation, Canvas swaps, and slideshow controller overrides directly from a simulated command line.</li>
-                <li><b>HLS Stream & IPTV Pipeline:</b> Integrates live video streams using `hls.js` with structured channel parsing from custom JSON files. Features robust error-handling, such as a 10-second timeout recovery system to handle stream drops elegantly in an ambient setting.</li>
-                <li><b>HTML5 Canvas Telemetry Engine:</b> A performance-optimized canvas engine that renders complex real-time animations, including a simulated NetOrbit global network visualizer, using pure mathematical drawing loops to minimize CPU overhead.</li>
-                <li><b>Screen Wake Lock API:</b> Prevents the host device from entering sleep mode or dimming the display, ensuring the clock and terminal feeds remain fully active during long work sessions.</li>
-                <li><b>Fisher-Yates Shuffle:</b> An $O(n)$ complexity algorithm used to ensure an unbiased, non-repeating random sequence for the ambient background rotations.</li>
-                <li><b>Deterministic Minute-Reset:</b> State-management logic that synchronizes UI transitions precisely with the 00-second mark of the system clock.</li>
-                <li><b>Stealth Gesture & Ghost UI:</b> Implements double-click event listeners and global keyboard hotkeys to toggle diagnostic logs and interface states cleanly, leaving the screen completely free of persistent UI clutter.</li>
-                <li><b>Unified Astrolabe Engine:</b> A dual-layer canvas system that overlays a DPIscaled cosmic Mazzaroth wheel onto a flat-earth azimuthal projection. Both layers share a single UTC time source, providing a seamless celestial dashboard.</li>
-                <li><b>DPI-Aware Canvas Rendering:</b> All canvas elements now scale with devicePixelRatio, ensuring razor-sharp symbols, lines, and text on Retina and high-DPI displays.</li>
-                <li><b>Three-State Clean View & Mirror Mode:</b> A clean view cycle (text off,images off and full clean) hides all UI clutter, while Mirror Mode offers a distraction-free, full-screen meditative experience.</li>
-                <li><b>Interactive Cosmic Toggles:</b> Show/hide zodiac signs, planets, AC/MC lines, and a glass analog clock on the cosmic wheel, all in real time.</li>
-                <li><b>Hyper-Speed Simulation:</b> Time multipliers now scale up to <b>36000x</b>, allowing rapid navigation through celestial cycles.</li>
-                <li><b>Stretched Flat Earth Projection:</b> An elliptical version of the azimuthal map complements the circular view, giving a wider perspective on the celestial sphere.</li>
+                <li><b style="color: #33ff57;">Zero-Dependency Vanilla Stack:</b> Built entirely using native HTML5, CSS3, and pure Vanilla JavaScript. This ensures a lightweight footprint, instantaneous load times, and flawless performance on low-power secondary displays without NPM package overhead.</li>
+                <li><b style="color: #0ff;">Interactive CLI Terminal Shell:</b> A custom-built, in-browser terminal emulator that parses keyboard inputs and commands, allowing real-time state manipulation, Canvas swaps, and slideshow controller overrides directly from a simulated command line.</li>
+                <li><b style="color: #f033ff;">HLS Stream & IPTV Pipeline:</b> Integrates live video streams using `hls.js` with structured channel parsing from custom JSON files. Features robust error-handling, such as a 10-second timeout recovery system to handle stream drops elegantly in an ambient setting.</li>
+                <li><b style="color: #aaa;">HTML5 Canvas Telemetry Engine:</b> A performance-optimized canvas engine that renders complex real-time animations, including a simulated NetOrbit global network visualizer, using pure mathematical drawing loops to minimize CPU overhead.</li>
+                <li><b style="color: #ffe75d;">Screen Wake Lock API:</b> Prevents the host device from entering sleep mode or dimming the display, ensuring the clock and terminal feeds remain fully active during long work sessions.</li>
+                <li><b style="color: blue;">Fisher-Yates Shuffle:</b> An $O(n)$ complexity algorithm used to ensure an unbiased, non-repeating random sequence for the ambient background rotations.</li>
+                <li><b style="color: crimson;">Deterministic Minute-Reset:</b> State-management logic that synchronizes UI transitions precisely with the 00-second mark of the system clock.</li>
+                <li><b style="color: darkcyan;">Stealth Gesture & Ghost UI:</b> Implements double-click event listeners and global keyboard hotkeys to toggle diagnostic logs and interface states cleanly, leaving the screen completely free of persistent UI clutter.</li>
+                <li><b style="color: darkorange;">Unified Astrolabe Engine:</b> A dual-layer canvas system that overlays a DPIscaled cosmic Mazzaroth wheel onto a flat-earth azimuthal projection. Both layers share a single UTC time source, providing a seamless celestial dashboard.</li>
+                <li><b style="color: aqua;">DPI-Aware Canvas Rendering:</b> All canvas elements now scale with devicePixelRatio, ensuring razor-sharp symbols, lines, and text on Retina and high-DPI displays.</li>
+                <li><b style="color: magenta;">Three-State Clean View & Mirror Mode:</b> A clean view cycle (text off,images off and full clean) hides all UI clutter, while Mirror Mode offers a distraction-free, full-screen meditative experience.</li>
+                <li><b style="color: deeppink;">Interactive Cosmic Toggles:</b> Show/hide zodiac signs, planets, AC/MC lines, and a glass analog clock on the cosmic wheel, all in real time.</li>
+                <li><b style="color: dodgerblue;">Hyper-Speed Simulation:</b> Time multipliers now scale up to <b>36000x</b>, allowing rapid navigation through celestial cycles.</li>
+                <li><b style="color: forestgreen;">Stretched Flat Earth Projection:</b> An elliptical version of the azimuthal map complements the circular view, giving a wider perspective on the celestial sphere.</li>
             </ul>
         </div>
     </div>
