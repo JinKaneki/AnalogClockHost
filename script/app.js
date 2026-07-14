@@ -1642,23 +1642,54 @@
 
                 // FLAT EARTH – RESTORE CONTROLS FULL (all visible)
                 if (feSection) {
-                    const container = feSection.querySelector('.cosmic-controls');
-                    if (container) container.style.display = 'flex';
-                    const feControls = feSection.querySelectorAll('#fe-time-display, input, .cosmic-btn');
-                    feControls.forEach(el => el.style.display = '');
+                    // 1. Restore the main cosmic controls row
+                    const cosmicContainer = feSection.querySelector('.cosmic-controls');
+                    if (cosmicContainer) {
+                        cosmicContainer.style.display = 'flex'; 
+                        cosmicContainer.style.opacity = '1'; // <--- Forces visibility back
+                        cosmicContainer.style.pointerEvents = 'auto';
+                    }
+
+                    // 2. Restore the coordinates row
+                    const feCoordsRow = feSection.querySelector('.fe-coords-row');
+                    if (feCoordsRow) {
+                        feCoordsRow.style.display = 'flex'; 
+                        feCoordsRow.style.opacity = '1'; // <--- Forces visibility back
+                        feCoordsRow.style.pointerEvents = 'auto';
+                    }
+
+                    // 3. Restore the button group
+                    const feBtnGroup = feSection.querySelector('.fe-btn-group');
+                    if (feBtnGroup) {
+                        feBtnGroup.style.display = 'flex'; 
+                        feBtnGroup.style.opacity = '1'; // <--- Forces visibility back
+                        feBtnGroup.style.pointerEvents = 'auto';
+                    }
+                    
+                    // 4. Catch any stray inputs or buttons
+                    const feControls = feSection.querySelectorAll('#fe-time-display, input, .cosmic-btn, button');
+                    feControls.forEach(el => {
+                        el.style.display = ''; 
+                        el.style.opacity = '1'; // <--- Forces visibility back
+                        el.style.pointerEvents = 'auto';
+                    });
+
+                    // Keep canvases visible
                     const feCanvas = document.getElementById('fe-canvas');
                     const feStretched = document.getElementById('fe-stretched-canvas');
                     if (feCanvas) feCanvas.style.display = '';
                     if (feStretched) feStretched.style.display = '';
                 }
 
-                // ---- SHOW ALL CONTROLS ----
-                if (azControls) azControls.style.display = '';
-                if (azTimeDisplay) azTimeDisplay.style.display = '';
-                if (astrolabeControls) astrolabeControls.style.display = '';
-                if (astrolabeToggles) astrolabeToggles.style.display = '';
-                if (astrolabeTitle) astrolabeTitle.style.display = '';
-                if (astrolabeDivider) astrolabeDivider.style.display = '';
+                // ---- SHOW ALL CONTROLS, PRESERVE DASHBOARD STRUCTURAL WIDTH ----
+                const controlsToHide = [astrolabeControls, astrolabeToggles, astrolabeTitle, astrolabeDivider, azControls, azTimeDisplay];
+                
+                controlsToHide.forEach(el => {
+                    if (el) {
+                        el.style.opacity = '1';
+                        el.style.pointerEvents = 'auto';
+                    }
+                });
 
                 hideBtn.innerText = '🖥️ CLEANVIEW: OFF';
                 hideBtn.style.color = '#f6ff00'; // Solid Yellow/Magenta
@@ -1680,26 +1711,57 @@
                 } else if (mode === 'cosmic') {
                     analogClock.style.display = 'none';
                 } 
-
-                // FLAT EARTH CONTROLS – RESTORE FULL
+   
+                // FLAT EARTH – RESTORE CONTROLS FULL (all visible)
                 if (feSection) {
-                    const container = feSection.querySelector('.cosmic-controls');
-                    if (container) container.style.display = 'flex';
-                    const feControls = feSection.querySelectorAll('#fe-time-display, input, .cosmic-btn');
-                    feControls.forEach(el => el.style.display = '');
+                    // 1. Restore the main cosmic controls row
+                    const cosmicContainer = feSection.querySelector('.cosmic-controls');
+                    if (cosmicContainer) {
+                        cosmicContainer.style.display = 'flex'; 
+                        cosmicContainer.style.opacity = '1';
+                        cosmicContainer.style.pointerEvents = 'auto';
+                    }
+
+                    // 2. Restore the coordinates row
+                    const feCoordsRow = feSection.querySelector('.fe-coords-row');
+                    if (feCoordsRow) {
+                        feCoordsRow.style.display = 'flex'; 
+                        feCoordsRow.style.opacity = '1';
+                        feCoordsRow.style.pointerEvents = 'auto';
+                    }
+
+                    // 3. Restore the button group
+                    const feBtnGroup = feSection.querySelector('.fe-btn-group');
+                    if (feBtnGroup) {
+                        feBtnGroup.style.display = 'flex'; 
+                        feBtnGroup.style.opacity = '1';
+                        feBtnGroup.style.pointerEvents = 'auto';
+                    }
+                    
+                    // 4. Catch any stray inputs or buttons
+                    const feControls = feSection.querySelectorAll('#fe-time-display, input, .cosmic-btn, button');
+                    feControls.forEach(el => {
+                        el.style.display = ''; 
+                        el.style.opacity = '1';
+                        el.style.pointerEvents = 'auto';
+                    });
+
+                    // Keep canvases visible
                     const feCanvas = document.getElementById('fe-canvas');
                     const feStretched = document.getElementById('fe-stretched-canvas');
                     if (feCanvas) feCanvas.style.display = '';
                     if (feStretched) feStretched.style.display = '';
                 }
 
-                // ---- SHOW ALL CONTROLS ----
-                if (azControls) azControls.style.display = '';
-                if (azTimeDisplay) azTimeDisplay.style.display = '';
-                if (astrolabeControls) astrolabeControls.style.display = '';
-                if (astrolabeToggles) astrolabeToggles.style.display = '';
-                if (astrolabeTitle) astrolabeTitle.style.display = '';
-                if (astrolabeDivider) astrolabeDivider.style.display = '';
+                // ---- SHOW ALL CONTROLS
+                const controlsToHide = [astrolabeControls, astrolabeToggles, astrolabeTitle, astrolabeDivider, azControls, azTimeDisplay];
+                
+                controlsToHide.forEach(el => {
+                    if (el) {
+                        el.style.opacity = '1';
+                        el.style.pointerEvents = 'auto';
+                    }
+                });
 
                 hideBtn.innerText = '🖥️CLEANVIEW:(text off)';
                 hideBtn.style.color = '#ffb835'; // Orange
@@ -1727,25 +1789,49 @@
                     cosmicWrapper.style.display = 'none';
                 } 
 
-                // FLAT EARTH – keep canvases, hide controls
+                // FLAT EARTH – keep canvases, hide controls AND SHRINK CANVAS
                 if (feSection) {
-                    const container = feSection.querySelector('.cosmic-controls');
-                    if (container) container.style.display = 'none';
-                    const feControls = feSection.querySelectorAll('#fe-time-display, input, .cosmic-btn');
-                    feControls.forEach(el => el.style.display = 'none');
+                    // 1. Hide the main cosmic controls row
+                    const cosmicContainer = feSection.querySelector('.cosmic-controls');
+                    if (cosmicContainer) {
+                        cosmicContainer.style.display = 'none'; // Triggers shrink
+                    }
+
+                    // 2. Hide the coordinates row
+                    const feCoordsRow = feSection.querySelector('.fe-coords-row');
+                    if (feCoordsRow) {
+                        feCoordsRow.style.display = 'none'; // Triggers shrink
+                    }
+
+                    // 3. Hide the button group
+                    const feBtnGroup = feSection.querySelector('.fe-btn-group');
+                    if (feBtnGroup) {
+                        feBtnGroup.style.display = 'none'; // Triggers shrink
+                    }
+                    
+                    // 4. Catch and hide any stray inputs or buttons
+                    const feControls = feSection.querySelectorAll('#fe-time-display, input, .cosmic-btn, button');
+                    feControls.forEach(el => {
+                        el.style.display = 'none'; // Triggers shrink
+                    });
+
+                    // Keep canvases visible
                     const feCanvas = document.getElementById('fe-canvas');
                     const feStretched = document.getElementById('fe-stretched-canvas');
                     if (feCanvas) feCanvas.style.display = 'block';
                     if (feStretched) feStretched.style.display = 'block';
                 }
                 
-                // ---- HIDE CONTROLS, KEEP CANVASES ----
-                if (azControls) azControls.style.display = 'none';
-                if (azTimeDisplay) azTimeDisplay.style.display = 'none';
-                if (astrolabeControls) astrolabeControls.style.display = 'none';
-                if (astrolabeToggles) astrolabeToggles.style.display = 'none';
-                if (astrolabeTitle) astrolabeTitle.style.display = 'none';
-                if (astrolabeDivider) astrolabeDivider.style.display = 'none';
+                // ---- HIDE CONTROLS, PRESERVE DASHBOARD STRUCTURAL WIDTH ----
+                const controlsToHide = [astrolabeControls, astrolabeToggles, astrolabeTitle, astrolabeDivider, azControls, azTimeDisplay];
+                
+                controlsToHide.forEach(el => {
+                    if (el) {
+                        el.style.opacity = '0';
+                        el.style.pointerEvents = 'none';
+                    }
+                });
+                
                 hideBtn.innerText = '🖥️CLEANVIEW: ON(full)';
                 hideBtn.style.color = '#00fffb'; // Cyber Cyan
             }
@@ -9385,7 +9471,7 @@ ${pins.slice(0, 10).join('<br>')}<br>
             const lonInput = document.getElementById('cosmic-lon');
 
             // ---- Zodiac data ----
-            const ZODIAC = ['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+            const ZODIAC = ['♈︎','♉︎','♊︎','♋︎','♌︎','♍︎','♎︎','♏︎','♐︎','♑︎','♒︎','♓︎'];
             const ELEMENTS = ['Fire','Earth','Air','Water','Fire','Earth','Air','Water','Fire','Earth','Air','Water'];
             const ELEMENT_COLORS = {
                 Fire: '#ff6666',
@@ -9730,13 +9816,13 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 'Saturn': { sym: '♄', col: '#ffd733', size: 18 }
             };
 
-            const ZODIAC = ['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+            const ZODIAC = ['♈︎','♉︎','♊︎','♋︎','♌︎','♍︎','♎︎','♏︎','♐︎','♑︎','♒︎','♓︎'];
             const ZODIAC_STRETCHED = ['♈︎','♉︎','♊︎','♋︎','♌︎','♍︎','♎︎','♏︎','♐︎','♑︎','♒︎','♓︎'];
 
 
             // ---- State (shared) ----
             let simTime = new Date();
-            let isPlaying = true;
+            let isPlaying = false;
             let speedMultiplier = 1;
             const stretchFactor = 1.7;          // fixed stretch for elliptical version
             let lastTimestamp = 0;
@@ -9790,20 +9876,32 @@ ${pins.slice(0, 10).join('<br>')}<br>
             }
 
             // ============================================================
-            // 1. CIRCULAR FLAT EARTH
+            // 1. CIRCULAR FLAT EARTH (DPI‑scaled)
             // ============================================================
             function drawCircular() {
                 const rect = canvas.getBoundingClientRect();
-                if (canvas.width !== rect.width || canvas.height !== rect.height) {
-                    canvas.width = rect.width;
-                    canvas.height = rect.height;
+                const displayWidth = rect.width;
+                const displayHeight = rect.height;
+                if (displayWidth === 0 || displayHeight === 0) return;
+
+                const dpr = window.devicePixelRatio || 1;
+                const newWidth = displayWidth * dpr;
+                const newHeight = displayHeight * dpr;
+
+                if (canvas.width !== newWidth || canvas.height !== newHeight) {
+                    canvas.width = newWidth;
+                    canvas.height = newHeight;
+                    canvas.style.width = displayWidth + 'px';
+                    canvas.style.height = displayHeight + 'px';
+                    ctx.setTransform(1, 0, 0, 1, 0, 0);
+                    ctx.scale(dpr, dpr);
                 }
 
-                const cx = canvas.width / 2;
-                const cy = canvas.height / 2;
+                const cx = displayWidth / 2;
+                const cy = displayHeight / 2;
                 const rDisc = Math.min(cx, cy) * 0.92;
 
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.clearRect(0, 0, displayWidth, displayHeight);
 
                 // Background disc
                 ctx.beginPath();
@@ -9875,7 +9973,7 @@ ${pins.slice(0, 10).join('<br>')}<br>
                     ctx.arc(cx, cy, rDisc, 0, 2 * Math.PI);
                     ctx.clip();
                     ctx.fillStyle = 'rgba(3, 3, 12, 0.75)';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillRect(0, 0, displayWidth, displayHeight);
                     ctx.globalCompositeOperation = 'destination-out';
                     const spotRad = rDisc * 0.85;
                     const grad = ctx.createRadialGradient(sunX, sunY, 10, sunX, sunY, spotRad);
@@ -9947,7 +10045,7 @@ ${pins.slice(0, 10).join('<br>')}<br>
             }
 
             // ============================================================
-            // 2. STRETCHED FLAT EARTH (Glass + Dark Hue + Outer Ellipse)
+            // 2. STRETCHED FLAT EARTH (Glass + Dark Hue + Outer Ellipse) – DPI‑scaled
             // ============================================================
             function drawStretched() {
                 // Get the container size (not the canvas size directly)
@@ -9955,24 +10053,32 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 const rect = container.getBoundingClientRect();
                 const displayWidth = rect.width;
                 const displayHeight = rect.height;
-                
-                if (stretchedCanvas.width !== displayWidth || stretchedCanvas.height !== displayHeight) {
-                    stretchedCanvas.width = displayWidth;
-                    stretchedCanvas.height = displayHeight;
+                if (displayWidth === 0 || displayHeight === 0) return;
+
+                const dpr = window.devicePixelRatio || 1;
+                const newWidth = displayWidth * dpr;
+                const newHeight = displayHeight * dpr;
+
+                if (stretchedCanvas.width !== newWidth || stretchedCanvas.height !== newHeight) {
+                    stretchedCanvas.width = newWidth;
+                    stretchedCanvas.height = newHeight;
+                    stretchedCanvas.style.width = displayWidth + 'px';
+                    stretchedCanvas.style.height = displayHeight + 'px';
+                    stretchedCtx.setTransform(1, 0, 0, 1, 0, 0);
+                    stretchedCtx.scale(dpr, dpr);
                 }
 
-
-                const cx = stretchedCanvas.width / 2;
-                const cy = stretchedCanvas.height / 2;
+                const cx = displayWidth / 2;
+                const cy = displayHeight / 2;
                 const baseRadius = Math.min(cx, cy) * 0.92;
                 const rx = baseRadius * stretchFactor;
                 const ry = baseRadius / stretchFactor;
 
-                stretchedCtx.clearRect(0, 0, stretchedCanvas.width, stretchedCanvas.height);
+                stretchedCtx.clearRect(0, 0, displayWidth, displayHeight);
 
                 // ---- DARK HUE BACKGROUND (semi-transparent) ----
                 stretchedCtx.fillStyle = 'rgba(6, 6, 12, 0.75)';
-                stretchedCtx.fillRect(0, 0, stretchedCanvas.width, stretchedCanvas.height);
+                stretchedCtx.fillRect(0, 0, displayWidth, displayHeight);
 
                 // ---- OUTER ELLIPSE (clear, visible) ----
                 stretchedCtx.beginPath();
@@ -10089,7 +10195,7 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 stretchedCtx.font = '10px monospace';
                 stretchedCtx.textAlign = 'center';
                 stretchedCtx.textBaseline = 'bottom';
-                stretchedCtx.fillText('⬡ STRETCHED PROJECTION', cx, stretchedCanvas.height - 10);
+                stretchedCtx.fillText('⬡ STRETCHED PROJECTION', cx, displayHeight - 10);
             }
 
             // ---- Main Loop ----
@@ -10116,7 +10222,7 @@ ${pins.slice(0, 10).join('<br>')}<br>
             // ---- Controls ----
             document.getElementById('fe-play-pause').onclick = (e) => {
                 isPlaying = !isPlaying;
-                e.target.innerText = isPlaying ? "⏸ PAUSE" : "▶PLAY";
+                e.target.innerText = isPlaying ? "⏸PAUSE" : "▶PLAY";
                 if (isPlaying) lastTimestamp = 0;
             };
             
@@ -10129,7 +10235,7 @@ ${pins.slice(0, 10).join('<br>')}<br>
 
             const addTime = (ms) => {
                 isPlaying = false;
-                document.getElementById('fe-play-pause').innerText = "▶ PLAY";
+                document.getElementById('fe-play-pause').innerText = "▶PLAY";
                 simTime = new Date(simTime.getTime() + ms);
                 lastTimestamp = 0;
             };
@@ -10154,8 +10260,9 @@ ${pins.slice(0, 10).join('<br>')}<br>
 
             drawFlatEarth();
         }
-        
+
         initFlatEarthClock();
+
 
 
         // =========================================================================
@@ -10771,7 +10878,7 @@ ${pins.slice(0, 10).join('<br>')}<br>
             let showACMC = true;
 
             // ---------- Cosmic helpers (same as before) ----------
-            const ZODIAC = ['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+            const ZODIAC = ['♈︎','♉︎','♊︎','♋︎','♌︎','♍︎','♎︎','♏︎','♐︎','♑︎','♒︎','♓︎'];
             const ELEMENTS = ['Fire','Earth','Air','Water','Fire','Earth','Air','Water','Fire','Earth','Air','Water'];
             const ELEMENT_COLORS = { Fire: '#ff6666', Earth: '#66ff66', Air: '#777d80', Water: '#0565ff' };
             const PLANETS = {

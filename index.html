@@ -50,7 +50,7 @@
     {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "EliteGDX – Elite Gems Dashboard",
+        "name": "EliteGDX - Elite Gems Dashboard",
         "description": "An ambient cyber-deck dashboard with Cistercian numerals, analog & digital clocks, a full terminal command runner, cipher suite, media playback, games, and neural tools.",
         "author": { "@type": "Person", "name": "Jin Kaneki" },
         "applicationCategory": "Multimedia",
@@ -209,7 +209,7 @@
         
         <!-- MAIN QUOTE -->
         <div>
-            <span class="mobile-quote" style="font-family:Verdana; font-size: 0.9rem;color: #ff00dd; text-align: center;">"The supreme conversation is through silence."</span>
+            <span class="mobile-quote" style="font-family:Verdana; font-size: 1rem;color: #ff00dd; text-align: center;">"The supreme conversation is through silence."</span>
         </div>
     </div>   
 
@@ -788,12 +788,12 @@
 
     
     <!-- ===== AZIMUTHAL FLAT EARTH ENGINE ===== -->
-    <div class="azimuthal-dashboard" style="text-align: center; font-family: monospace; background: transparent; padding: 20px; max-width: 1100px; margin: 0 auto;">
+    <div class="azimuthal-dashboard" style="text-align: center; font-family: monospace; background: transparent; padding: 20px; max-width: 1000px; margin: 0 auto;">
         <h3 style="color: var(--accent-color);">AZIMUTHAL TRACKING ENGINE</h3>
         
-        <div id="az-time-display" style="color: #0f0; font-size: 1.1rem; margin-bottom: 10px; font-family: monospace; text-shadow: 0 0 10px rgba(0,255,0,0.2);">Syncing...</div>
+        <div id="az-time-display" style="color: #0f0; font-size: 1rem; margin-bottom: 10px; font-family: monospace; text-shadow: 0 0 10px rgba(0,255,0,0.2);">Syncing...</div>
         
-        <div class="az-controls" style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 15px;">
+        <div class="az-controls">
             <button id="az-playpause" class="az-btn btn-gold" style="color:#ffaa00; border-color:#ffaa00;">▶ Play</button>
             <button id="az-sync" class="az-btn btn-green" style="color:#0f0; border-color:#0f0;">⟳ Sync</button>
             <button id="az-speed" class="az-btn btn-cyan" style="color:#00f0ff;">⚡1x</button>
@@ -814,7 +814,7 @@
     <div class="astrolabe-dashboard">
 
         <!-- TOP: TIME CONTROLS -->
-        <h3 class="astrolabe-title" style="color:#ffaa00; font-size: 1.5rem;">MASTER'S ASTROLABE</h3>
+        <h3 class="astrolabe-title" style="color:#ffaa00; font-size: 1.3rem;">MASTER'S ASTROLABE</h3>
         <div id="shared-time-display">Syncing...</div>
 
         <div class="engine-controls top">
@@ -831,7 +831,7 @@
 
         <!-- MIDDLE: SUPERPOSED CANVASES -->
         <div class="superposed-canvas-wrapper">
-            <!-- Layer 1: The Azimuthal Map (no DPI scaling) -->
+            <!-- Layer 1: The Azimuthal Map (DPI scaling) -->
             <canvas id="azimuthal-layer"></canvas>
             <!-- Layer 2: The Cosmic Clock (DPI‑scaled) -->
             <canvas id="cosmic-layer"></canvas>
@@ -839,7 +839,7 @@
 
         <!-- BOTTOM: COSMIC OVERLAY TOGGLES -->
         <div class="dashboard-divider"></div>
-        <h3 style="color: #ffaa00; font-family: monospace; font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 15px;">COSMIC ARRAY TOGGLES</h3>
+        <h3 style="color: #ffaa00; font-family: monospace; font-size: 0.6rem; letter-spacing: 2px; margin-bottom: 15px;">COSMIC ARRAY TOGGLES</h3>
 
         <div class="engine-controls bottom">
             <button id="toggle-zodiac" class="az-btn btn-gold">Zodiac: ON</button>
@@ -854,18 +854,27 @@
         <div class="block active" style="position: relative; opacity: 1; display: flex; flex-direction: column;">
             <h3 class="title-accent">Project Intent</h3>
             <p class="block-text">
-                This dashboard is designed as a <b>Persistent Ambient Display</b>. 
-                The goal is to bridge the gap between a functional timepiece and a personal 
-                gallery, serving as an "Always-On" companion for a professional workspace.
+                This dashboard is designed as a <b>Persistent Ambient Display & Interactive Shell</b>. 
+                The goal is to bridge the gap between a functional cyberpunk-themed timepiece, live media feeds, and retro telemetry, 
+                serving as an "Always-On" companion terminal for a professional workspace.
             </p>
             
             <h3 class="title-accent" style="font-size: 1rem; margin-top: 20px;">Technical Architecture</h3>
             <ul class="block-text">
-                <li><b>Screen Wake Lock API:</b> Prevents the host device from entering sleep mode or dimming the display, ensuring the clock remains visible during long work sessions.</li>
-                <li><b>Fisher-Yates Shuffle:</b> An $O(n)$ complexity algorithm used to ensure an unbiased, non-repeating random sequence for the content rotation.</li>
+                <li><b>Zero-Dependency Vanilla Stack:</b> Built entirely using native HTML5, CSS3, and pure Vanilla JavaScript. This ensures a lightweight footprint, instantaneous load times, and flawless performance on low-power secondary displays without NPM package overhead.</li>
+                <li><b>Interactive CLI Terminal Shell:</b> A custom-built, in-browser terminal emulator that parses keyboard inputs and commands, allowing real-time state manipulation, Canvas swaps, and slideshow controller overrides directly from a simulated command line.</li>
+                <li><b>HLS Stream & IPTV Pipeline:</b> Integrates live video streams using `hls.js` with structured channel parsing from custom JSON files. Features robust error-handling, such as a 10-second timeout recovery system to handle stream drops elegantly in an ambient setting.</li>
+                <li><b>HTML5 Canvas Telemetry Engine:</b> A performance-optimized canvas engine that renders complex real-time animations, including a simulated NetOrbit global network visualizer, using pure mathematical drawing loops to minimize CPU overhead.</li>
+                <li><b>Screen Wake Lock API:</b> Prevents the host device from entering sleep mode or dimming the display, ensuring the clock and terminal feeds remain fully active during long work sessions.</li>
+                <li><b>Fisher-Yates Shuffle:</b> An $O(n)$ complexity algorithm used to ensure an unbiased, non-repeating random sequence for the ambient background rotations.</li>
                 <li><b>Deterministic Minute-Reset:</b> State-management logic that synchronizes UI transitions precisely with the 00-second mark of the system clock.</li>
-                <li><b>Hybrid Background Engine:</b> Supports both Synchronized (mirrored) and Independent background cycling with a deterministic state-management loop.</li>
-                <li><b>Stealth Gesture Layer:</b> Implements a "Ghost UI" using double-click event listeners and Keyboard Hotkeys to toggle state without persistent UI clutter.</li>
+                <li><b>Stealth Gesture & Ghost UI:</b> Implements double-click event listeners and global keyboard hotkeys to toggle diagnostic logs and interface states cleanly, leaving the screen completely free of persistent UI clutter.</li>
+                <li><b>Unified Astrolabe Engine:</b> A dual-layer canvas system that overlays a DPIscaled cosmic Mazzaroth wheel onto a flat-earth azimuthal projection. Both layers share a single UTC time source, providing a seamless celestial dashboard.</li>
+                <li><b>DPI-Aware Canvas Rendering:</b> All canvas elements now scale with devicePixelRatio, ensuring razor-sharp symbols, lines, and text on Retina and high-DPI displays.</li>
+                <li><b>Three-State Clean View & Mirror Mode:</b> A clean view cycle (text off,images off and full clean) hides all UI clutter, while Mirror Mode offers a distraction-free, full-screen meditative experience.</li>
+                <li><b>Interactive Cosmic Toggles:</b> Show/hide zodiac signs, planets, AC/MC lines, and a glass analog clock on the cosmic wheel, all in real time.</li>
+                <li><b>Hyper-Speed Simulation:</b> Time multipliers now scale up to <b>36000x</b>, allowing rapid navigation through celestial cycles.</li>
+                <li><b>Stretched Flat Earth Projection:</b> An elliptical version of the azimuthal map complements the circular view, giving a wider perspective on the celestial sphere.</li>
             </ul>
         </div>
     </div>
@@ -887,7 +896,7 @@
         <!-- ===== CONTROLS – FLOATING (no box) ===== -->
         <div class="fe-controls">
             
-            <div class="fe-anchor-label">ANCHOR: GREAT PYRAMID (GIZA)</div>
+            <!--div class="fe-anchor-label">ANCHOR: GREAT PYRAMID (GIZA)</div>-->
             
             <!-- Coordinates -->
             <div class="fe-coords-row">
@@ -1129,7 +1138,7 @@
                 <a href="https://linkedin.com/in/" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none; margin: 0 10px;">LinkedIn</a>
             </div>
             <p class="footer-subtext">All things serve the Beam!</p>
-            <p style="font-size: 13px;">Copyright &copy; <span id="year"></span> Jin Kaneki | All Rights Reserved</p>
+            <p style="font-size: 15px;">Copyright &copy; <span id="year"></span> Jin Kaneki | All Rights Reserved</p>
     </footer>
 
     <script src="./script/firebase-config.js" defer></script>

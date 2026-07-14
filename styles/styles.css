@@ -1,3 +1,7 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 :root {
             --bg-color: #121214;
             --text-color: #ececec;
@@ -550,11 +554,11 @@
         /* style the paragraph text */
         .block-text {
             text-align: center;
-            font-size: small;
+            font-size: 1rem;
             line-height: 1.6;
             max-width: 600px;
-            margin: 0 auto 20px;            /* Centers text block */
-            padding: 0 10px;
+            margin: 20px;       
+            padding: 10px;
         }
 
 
@@ -738,6 +742,8 @@
             height: auto;
             aspect-ratio: 1 / 1;
             cursor: crosshair;
+            display: block;
+            margin: 0 auto;
         }
 
         .cosmic-btn {
@@ -1703,23 +1709,46 @@
 
         /* ===== KABBALAH TREE OF LIFE ===== */
         #kabbalah-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             margin: 20px auto;
-            padding: 0 15px;
+            width: 100%;
             max-width: 500px;
+            text-align: center;
         }
+
 
         #tree-of-life {
+            display: block;               /* ensures margin auto works */
+            margin: 0 auto;               /* centers the SVG itself */
+            width: 100%;
+            height: auto;
             background: transparent !important;
+            border: none !important;
             box-shadow: none !important;
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 16px;
         }
 
-        #sephirot-group circle.active {
-            filter: drop-shadow(0px 0px 25px rgba(255, 215, 0, 0.8)) !important;
+        /* Smoothly animate all states */
+        #sephirot-group circle {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            transform-origin: center;
         }
+
+        /* Upgraded Hover State: Subtle scale and cyber-cyan glow */
         #sephirot-group circle:hover {
-            filter: drop-shadow(0px 0px 18px rgba(255,255,255,0.4));
+            filter: drop-shadow(0px 0px 15px rgba(0, 240, 255, 0.8));
+            transform: scale(1.05);
+            stroke: #00f0ff; 
+            stroke-width: 2px;
+        }
+
+        /* Upgraded Active State: Gold energy burst */
+        #sephirot-group circle.active {
+            filter: drop-shadow(0px 0px 25px rgba(255, 215, 0, 1)) !important;
+            transform: scale(1.05);
+            fill: #ffaa00; /* Solid gold fill when active */
         }
 
 
@@ -1731,8 +1760,10 @@
         .ty-container,
         .az-canvas-wrapper {
             width: 100%;
-            /* Let the HTML inline styles handle the max-width to 1000px */
+            /* Let HTML inline styles handle the max-width to 1000px */
             margin: 0 auto;
+            display: block; 
+
         }
 
         .ty-container svg,
@@ -1744,11 +1775,10 @@
         
         .az-controls {
         display: flex;
-        gap: 8px;
+        gap: 6px;
         flex-wrap: wrap;
         justify-content: center;
         margin-bottom: 25px;
-        max-width: 700px;
         }
 
         /* Base button styling */
@@ -1793,7 +1823,7 @@
         #azimuthal-canvas {
             width: 100% !important; 
             max-width: 800px;           /* to be adjusted (e.g., 40vw, 60vw) */
-            display: flex;
+            display: block;
             justify-content: center;
             align-items: center;   
             height: auto !important;
@@ -1806,8 +1836,8 @@
         }
 
         .celestial-wave {
-        animation: spin var(--speed) linear infinite;
-        animation-play-state: var(--play-state);
+            animation: spin var(--speed) linear infinite;
+            animation-play-state: var(--play-state);
         }
 
         @keyframes spin {
@@ -1818,150 +1848,149 @@
 
         /* ===== FLAT EARTH PROJECTION DASHBOARD STYLES ===== */
         :root {
-        --fe-cyan: #00f0ff;
-        --fe-gold: #ffaa00;
-        --fe-green: #00ff33;
-        --fe-bg: rgba(10, 15, 20, 0.55);
-        --fe-border: rgba(0, 240, 255, 0.12);
-        --fe-glow: rgba(0, 240, 255, 0.08);
+            --fe-cyan: #00f0ff;
+            --fe-gold: #ffaa00;
+            --fe-green: #00ff33;
+            --fe-bg: rgba(10, 15, 20, 0.55);
+            --fe-border: rgba(0, 240, 255, 0.12);
+            --fe-glow: rgba(0, 240, 255, 0.08);
         }
 
         .fe-dashboard {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        margin: 40px auto 60px auto;
-        max-width: 900px;
-        padding: 20px;
-        box-sizing: border-box;
-        font-family: monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin: 40px auto 60px auto;
+            max-width: 900px;
+            padding: 20px;
+            box-sizing: border-box;
+            font-family: monospace;
         }
 
         .fe-title {
-        color: var(--fe-cyan);
-        margin-bottom: 25px;
-        font-size: 1.3rem;
-        letter-spacing: 4px;
-        text-transform: uppercase;
-        text-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+            color: var(--fe-cyan);
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
         }
 
         /* ===== CANVAS WRAPPERS ===== */
         .fe-canvas-wrapper {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        background: radial-gradient(circle at center, rgba(0, 240, 255, 0.03) 0%, transparent 70%);
-        border: 1px solid var(--fe-border);
-        box-shadow: 0 0 30px var(--fe-glow), inset 0 0 20px rgba(0, 240, 255, 0.03);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(0, 240, 255, 0.03) 0%, transparent 70%);
+            border: 1px solid var(--fe-border);
+            box-shadow: 0 0 30px var(--fe-glow), inset 0 0 20px rgba(0, 240, 255, 0.03);
         }
 
         .fe-circular {
-        width: 100%;
-        max-width: 500px;
-        aspect-ratio: 1 / 1;
+            width: 100%;
+            max-width: 500px;
+            aspect-ratio: 1 / 1;
         }
 
         .fe-elliptical {
-        width: 100%;
-        max-width: 600px;
-        aspect-ratio: 1.7 / 1;
-        border-radius: 50%;
-        margin-top: 40px;
+            width: 100%;
+            max-width: 600px;
+            aspect-ratio: 1.7 / 1;
+            border-radius: 50%;
+            margin-top: 40px;
         }
 
         .fe-canvas-wrapper canvas {
-        width: 100% !important;
-        height: 100% !important;
-        display: block;
-        cursor: crosshair;
-        border-radius: inherit;
-        background: transparent;
+            width: 100% !important;
+            height: 100% !important;
+            display: block;
+            cursor: crosshair;
+            border-radius: inherit;
+            background: transparent;
         }
 
         /* ===== FLOATING CONTROLS (no box) ===== */
         .fe-controls {
-        margin-top: 30px;
-        width: 100%;
-        max-width: 550px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        padding: 10px 0;
+            margin-top: 30px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
         }
 
         .fe-anchor-label {
-        color: var(--fe-cyan);
-        font-size: 9px;
-        letter-spacing: 3px;
-        text-align: center;
-        opacity: 0.6;
+            color: var(--fe-cyan);
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-align: center;
+            opacity: 0.6;
         }
 
         .fe-coords-row {
-        display: flex;
-        gap: 12px;
-        justify-content: center;
+            display: none;
+            gap: 12px;
+            justify-content: center;
         }
 
         .fe-input {
-        width: 100px;
-        background: rgba(0, 0, 0, 0.5);
-        color: var(--fe-cyan);
-        border: 1px solid var(--fe-border);
-        padding: 6px 8px;
-        text-align: center;
-        border-radius: 4px;
-        font-family: monospace;
-        font-size: 13px;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(4px);
+            width: 100px;
+            background: rgba(0, 0, 0, 0.5);
+            color: var(--fe-cyan);
+            border: 1px solid var(--fe-border);
+            padding: 6px 8px;
+            text-align: center;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
         }
 
         .fe-input:focus {
-        outline: none;
-        border-color: var(--fe-cyan);
-        box-shadow: 0 0 15px var(--fe-glow);
-        background: rgba(0, 0, 0, 0.7);
+            outline: none;
+            border-color: var(--fe-cyan);
+            box-shadow: 0 0 15px var(--fe-glow);
+            background: rgba(0, 0, 0, 0.7);
         }
 
         .fe-time-display {
-        color: #fff;
-        font-size: 13px;
-        text-align: center;
-        padding: 6px 16px;
-        background: rgba(0, 0, 0, 0.3);
-        border-radius: 4px;
-        text-shadow: 0 0 10px var(--fe-cyan);
-        letter-spacing: 1px;
-        backdrop-filter: blur(4px);
-        border: 1px solid rgba(255, 255, 255, 0.04);
+            color: #fff;
+            font-size: 13px;
+            text-align: center;
+            padding: 6px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            text-shadow: 0 0 10px var(--fe-cyan);
+            letter-spacing: 1px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
         /* ===== BUTTONS Glowing ===== */
         .fe-btn-group {
-        display: flex;
-        gap: 6px;
-        flex-wrap: wrap;
-        justify-content: center;
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .fe-btn {
-        background: rgba(0, 0, 0, 0.3);
-        padding: 5px 12px;
-        font-family: monospace;
-        font-weight: bold;
-        font-size: 10px;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 5px 12px;
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         /* Specific Button Colors */
@@ -2304,8 +2333,8 @@
             .second { height: 115px; }
 
             .center-dot {
-            width: 16px;
-            height: 16px;
+                width: 16px;
+                height: 16px;
             }
 
         
@@ -2331,7 +2360,7 @@
             }
             .block-text {
                 text-align: center;
-                font-size: small;
+                font-size: 0.7rem;
             }
 
             /* Optional: make the image block a bit smaller if it's too wide */
@@ -2376,6 +2405,8 @@
             #cosmic-canvas, #fe-canvas {
                 width: 85vw !important;
                 max-width: 90vw;
+                display: block;  
+                margin: 0 auto;
             }
             .cosmic-controls button {
                 font-size: 0.6rem;
@@ -2639,25 +2670,25 @@
             }
 
             .controls button {
-                font-size: 0.5rem !important;
+                font-size: 0.6rem !important;
             }
 
             /* Magic Mirror button (Enter Mirror Mode) */
             .mirror-mode-btn {
-                font-size: 0.7rem !important;
+                font-size: 0.8rem !important;
                 padding: 4px 8px;
             }
 
             /* RUN JOHAN_OS button (action-btn) */
             .action-btn {
-                font-size: 0.7rem !important;
+                font-size: 0.8rem !important;
                 padding: 4px 8px;
             }
             .mobile-quote {
-                font-size: 0.5rem !important;
+                font-size: 0.7rem !important;
             }
             .wiki-ref {
-                font-size: 0.7rem !important;
+                font-size: 0.8rem !important;
             }
 
             
@@ -2689,7 +2720,7 @@
                 padding: 4px 10px;
             }
             .fe-btn {
-                font-size: 6px;
+                font-size: 8px;
                 padding: 4px 8px;
             }
             .fe-btn-group {
@@ -2724,6 +2755,8 @@
             #azimuthal-canvas {
                 width: 80vw !important;          /* or 90vw, 75vw, */
                 max-width: 85vw;
+                display: block;
+                margin: 0 auto;
             }
             .az-btn {
                 font-size: 6px;
@@ -2747,11 +2780,11 @@
                 font-size: 0.7rem !important;
                 padding: 6px 10px !important;
             }
-            
+            */
             #ty-time-display,
             #az-time-display {
-                font-size: 0.9rem !important;
-            } */
+                font-size: 0.8rem !important;
+            }
         
 
             /* ---- Controls base style ---- 
@@ -2782,7 +2815,7 @@
                 margin: 30px auto;
             }
             #shared-time-display {
-                font-size: 0.9rem;
+                font-size: 0.8rem;
             }
             .shared-btn {
                 font-size: 0.6rem;
@@ -2799,8 +2832,8 @@
                 margin: 20px auto;
             }
             #shared-time-display {
-                font-size: 0.9rem;
-                padding: 6px 12px;
+                font-size: 0.8rem;
+                padding: 4px 6px;
             }
             .az-btn {
                 font-size: 10px;
@@ -2811,14 +2844,17 @@
             }
             .superposed-canvas-wrapper {
                 max-width: 85vw;
+                display: block;
+                margin: 0 auto;
             }
 
 
             .site-footer {
-            width: 100%;
-            padding: 40px 0 120px 0; 
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
+                width: 100%;
+                padding: 40px 0 120px 0; 
+                text-align: center;
+                position: relative;
+                z-index: 1;
+            }
+        
     }
