@@ -2475,7 +2475,7 @@
                 width: 224px !important; 
                 max-width: 68vw !important;
                 height: auto !important;
-                top: calc(84px + min(140px, 42.5vw)) !important; 
+                top: calc(86px + min(140px, 42.5vw)) !important; 
                 margin: 0 !important;
                 transform: translate(-50%, -50%);
             }

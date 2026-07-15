@@ -1685,7 +1685,8 @@
         const hideBtn = document.getElementById('hide-info-btn');
         const infoSection = document.getElementById('info-section');
         const contentBlocks = document.querySelectorAll('.content-blocks'); // both slideshow and the extra one
-        const staticBlocks = document.getElementById('static-block');
+        // Get static block
+        const staticBlock = document.getElementById('static-block');
         let cleanViewMode = 0; // 0 = all visible, 1 = info hidden, 2 = both hidden
         
         function updateCleanView() {
@@ -1779,6 +1780,13 @@
                     }
                 });
 
+                // ---- SHOW STATIC BLOCK ----
+                if (staticBlock) {
+                    staticBlock.style.opacity = '1';
+                    staticBlock.style.pointerEvents = 'auto';
+                    staticBlock.style.visibility = 'visible';
+                }
+
                 hideBtn.innerText = '🖥️ CLEANVIEW: OFF';
                 hideBtn.style.color = '#f6ff00'; // Solid Yellow/Magenta
             } else if (cleanViewMode === 1) {
@@ -1851,6 +1859,13 @@
                     }
                 });
 
+                // ---- SHOW STATIC BLOCK ----
+                if (staticBlock) {
+                    staticBlock.style.opacity = '1';
+                    staticBlock.style.pointerEvents = 'auto';
+                    staticBlock.style.visibility = 'visible';
+                }
+
                 hideBtn.innerText = '🖥️CLEANVIEW:(text off)';
                 hideBtn.style.color = '#ffb835'; // Orange
             } else { // mode 2: FULL CLEAN VIEW (info + images hidden)
@@ -1919,7 +1934,12 @@
                         el.style.pointerEvents = 'none';
                     }
                 });
-                
+
+                if (staticBlock) {
+                    staticBlock.style.opacity = '0';
+                    staticBlock.style.pointerEvents = 'none';
+                }          
+
                 hideBtn.innerText = '🖥️CLEANVIEW: ON(full)';
                 hideBtn.style.color = '#00fffb'; // Cyber Cyan
             }
@@ -10555,9 +10575,9 @@ ${pins.slice(0, 10).join('<br>')}<br>
                     title: "KETHER (Crown)",
                     text: "The infinite light of the Ein Sof. It is the Divine Will, the breath before the word is spoken. Here lies absolute unity, beyond human comprehension and beyond form."
                 },
-                chokhmah: {
+                chokmah: {
                     title: "CHOKHMAH (Wisdom)",
-                    text: "The primordial spark of creation. It is the masculine principle of raw, unformed insight—a flash of divine brilliance and the seed from which all existence expands."
+                    text: "The primordial spark of creation. It is the masculine principle of raw, unformed insight, a flash of divine brilliance and the seed from which all existence expands."
                 },
                 binah: {
                     title: "BINAH (Understanding)",
@@ -10571,8 +10591,8 @@ ${pins.slice(0, 10).join('<br>')}<br>
                     title: "CHESED (Mercy / Loving-kindness)",
                     text: "The boundless outpouring of divine grace. It is the desire to share, expand, and bestow unconditional love without limit or restriction."
                 },
-                gevurah: {
-                    title: "GEVURAH (Severity / Judgment)",
+                geburah: {
+                    title: "GEBURAH (Severity / Judgment)",
                     text: "The vessel that contains the light. Gevurah is discipline, restriction, and awe. It provides the necessary boundaries so the boundless expansion of Chesed does not overwhelm creation."
                 },
                 tiphareth: {
