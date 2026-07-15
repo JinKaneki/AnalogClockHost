@@ -148,6 +148,10 @@
         document.querySelectorAll('#cosmic-wrapper .cosmic-btn').forEach(btn => {
             if (!reactiveButtons.includes(btn.id)) reactiveButtons.push(btn.id);
         });
+        
+        document.querySelectorAll('#sephirot-group circle').forEach(circle => {
+            circle.classList.add('reactive-btn');
+        });
 
         // Now apply the class
         reactiveButtons.forEach(id => {
@@ -1681,6 +1685,7 @@
         const hideBtn = document.getElementById('hide-info-btn');
         const infoSection = document.getElementById('info-section');
         const contentBlocks = document.querySelectorAll('.content-blocks'); // both slideshow and the extra one
+        const staticBlocks = document.getElementById('static-block');
         let cleanViewMode = 0; // 0 = all visible, 1 = info hidden, 2 = both hidden
         
         function updateCleanView() {
@@ -10351,6 +10356,7 @@ ${pins.slice(0, 10).join('<br>')}<br>
         // =========================================================================
         // KABBALAH TREE OF LIFE – Canvas Visualization
         // =========================================================================
+       /*
         function initTreeOfLife() {
             const canvas = document.getElementById('tree-canvas');
             const infoDiv = document.getElementById('tree-info');
@@ -10532,7 +10538,8 @@ ${pins.slice(0, 10).join('<br>')}<br>
         }
 
         initTreeOfLife ();
-
+        
+        */
 
         document.addEventListener('DOMContentLoaded', function() {
             // Tree of Life interaction

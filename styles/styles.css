@@ -20,9 +20,9 @@
             overscroll-behavior: none;     /* disable pull-to-refresh */
             touch-action: pan-y pinch-zoom;/* control touch gestures */
             /* disable text selection and tap highlight */
-            /* user-select: none; */
-            /* -webkit-user-select: none; */
-            /* -webkit-tap-highlight-color: transparent; */
+            user-select: none; 
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent; 
         }
 
         body {
@@ -586,8 +586,8 @@
             align-items: center;
             width: 100%;
             max-width: 800px;
-            margin: 120px auto 100px auto; /* generous top/bottom spacing */
-            padding: 20px 30px 20px 30px;
+            margin: 220px auto 100px auto; /* generous top/bottom spacing */
+            padding: 20px 20px 20px 20px;
             background: transparent;
             box-sizing: border-box;
             opacity: 1;
@@ -1765,7 +1765,6 @@
         }
 
 
-
         /* ============================================================ */
         /* TYCHONIC & AZIMUTHAL – Responsive                          */
         /* ============================================================ */
@@ -2316,6 +2315,7 @@
             box-shadow: 0 0px 0 #008b8b, 0 2px 5px rgba(0, 255, 251, 0.4);
         }
 
+        
 
         /* MOBILE-FRIENDLY TWEAKS */
         @media (max-width: 600px) {
@@ -2475,7 +2475,7 @@
                 width: 224px !important; 
                 max-width: 68vw !important;
                 height: auto !important;
-                top: calc(82px + min(140px, 42.5vw)) !important; 
+                top: calc(84px + min(140px, 42.5vw)) !important; 
                 margin: 0 !important;
                 transform: translate(-50%, -50%);
             }
@@ -2737,7 +2737,7 @@
                 padding: 10px;
             }
             .fe-title {
-                font-size: 1rem;
+                font-size: 0.7rem;
                 letter-spacing: 2px;
             }
             .fe-circular {
