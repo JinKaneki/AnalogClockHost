@@ -15,6 +15,7 @@
     <link rel="preconnect" href="https://www.gstatic.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="data:,">
 
     <!-- Preload frequently used resources -->
     <link rel="preload" href="./TTC/tao-te-ching.json" as="fetch" crossorigin="anonymous">
@@ -31,6 +32,8 @@
     <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js" defer></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js" defer></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js" defer></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <!-- Primary SEO -->
     <meta name="description" content="EliteGDX – Akashic Zero-Point Kryptos Neural Center. An ambient cyber-deck dashboard with Cistercian clock, terminal command runner, cipher suite, media playback, games, and neural tools.">
@@ -784,7 +787,7 @@
             <p class="block-text">And thus was the World,<br>thus experienced was Life,<br>Happyness, Peace And Love.</p>
         </div>
 
-    </div>
+    </div>    
 
     
     <!-- ===== AZIMUTHAL FLAT EARTH ENGINE ===== -->
@@ -883,8 +886,15 @@
         <button id="magic-mirror-btn"  class="mirror-mode-btn">Enter Mirror Mode</button>
     </div>
 
+    <!-- ===== FLAT EARTH PROJECTION TOGGLE ===== -->
+    <div style="text-align: center; margin: 20px auto;">
+        <button id="fe-toggle-btn" class="az-btn btn-cyan fe-toggle-btn" style="border-radius: 50px;">
+            AZIMU PROJECT
+        </button>
+    </div>
+
     <!-- ===== FLAT EARTH PROJECTION DOME (Double – Circular + Stretched) ===== -->
-    <div id="flat-earth-section" class="fe-dashboard">
+    <div id="flat-earth-section" class="fe-dashboard hidden-section">
     
         <h3 class="fe-title">AZIMUTHAL PROJECTION</h3>
         
@@ -937,8 +947,361 @@
         <div class="fe-label-bottom">⬡ STRETCHED PROJECTION</div>
 
     </div>
-  
-    
+
+    <!-- ===== GNOSIS – PHILOSOPHICAL DROPDOWN ===== -->
+    <div id="gnosis-container" class="gnosis-wrapper">
+
+        <!-- Toggle Button -->
+        <button id="gnosis-toggle-btn" class="gnosis-btn">
+            GNOSIS
+        </button>
+
+        <!-- Dropdown Panel (Hidden by default) -->
+        <div id="gnosis-panel" class="gnosis-panel hidden">
+
+            <!-- ===== MYSTICAL PHILOSOPHICAL TEXT – PRIMARY ===== -->
+            <div class="gnosis-header">
+                <span class="gnosis-symbol">✦</span>
+                <h2 class="gnosis-main-title">THE SOURCE AND THE JOURNEY</h2>
+                <span class="gnosis-symbol">✦</span>
+            </div>
+
+            <p class="gnosis-subtitle">A Mythic Meditation on Being, Time, and Return</p>
+
+            <div class="gnosis-divider"></div>
+
+            <div class="gnosis-content">
+                <!-- Opening Quote -->
+                <div class="gnosis-opening">
+                    <p class="gnosis-opening-quote">“In the beginning, there was silence. And in the silence It dreamed.”</p>
+                </div>
+
+                <!-- The Original Dream -->
+                <div class="gnosis-section">
+                    <h3 class="gnosis-heading gold">The Original Dream</h3>
+                    <p class="gnosis-text">
+                        Before the first breath of the cosmos, before the vibration that became light, before the word that split the void, there was only <span class="highlight-gold">the source</span>, an infinite, dimensionless point of pure awareness, resting in the stillness of its own being.
+                    </p>
+                    <p class="gnosis-text">
+                        This source did not think, for thinking is a movement away from the centre. It <em>imagined</em>. It imagined a world of forms, of colours, of sounds, of selves, each one a fragment of its own infinite mirror, each one a question looking for its answer.
+                    </p>
+                    <p class="gnosis-text">
+                        That first imagining is the <span class="highlight-gold">Source's dream</span>. It is not a god, not a principle, not a force, it is <em>the act of creation itself</em>, the moment when the unmanifest became the manifest, when the void chose to know itself through the dance of the finite.
+                    </p>
+                </div>
+
+                <div class="gnosis-divider subtle"></div>
+
+                <!-- The Spiral of Becoming -->
+                <div class="gnosis-section">
+                    <h3 class="gnosis-heading cyan">The Spiral of Becoming</h3>
+                    <p class="gnosis-text">
+                        From that first spark, all existence unfolds in a <em>spiral</em>, not a circle, not a line, but a helix of returning, where each cycle brings us closer to the origin, yet reveals it anew.
+                    </p>
+                    <p class="gnosis-text">
+                        This spiral is the <span class="highlight-cyan">journey</span>. It is the movement of consciousness through time, through space, through matter, through thought. Every life, every culture, every civilization is a turn of the spiral; a unique expression of the same eternal theme: <em>the quest for unity.</em>
+                    </p>
+                    <p class="gnosis-text">
+                        We are not moving forward; we are <span class="highlight-cyan">re-membering</span>, re-assembling the fragments of the original Dream. Each step we take is a step back into the Source, disguised as a step forward.
+                    </p>
+                </div>
+
+                <div class="gnosis-divider subtle"></div>
+
+                <!-- The Veil of Forgetfulness -->
+                <div class="gnosis-section">
+                    <h3 class="gnosis-heading magenta">The Veil of Forgetfulness</h3>
+                    <p class="gnosis-text">
+                        To enter the world of forms, the Dreamer had to <em>forget</em> itself. It wrapped itself in veils of ignorance, of separation, of individuality. This forgetting is the <span class="highlight-magenta">necessary condition</span> for experience; without it, there is no discovery, no wonder, no love.
+                    </p>
+                    <p class="gnosis-text">
+                        But the veil is thin. In moments of stillness, in flashes of intuition, in the presence of great beauty, the veil trembles. We glimpse the face of the Dreamer behind the mask of the world.
+                    </p>
+                    <p class="gnosis-text">
+                        That glimpse is what we call <span class="highlight-magenta">gnosis</span>, a direct, unmediated knowing that bypasses the intellect and touches the core.
+                    </p>
+                </div>
+
+                <div class="gnosis-divider subtle"></div>
+
+                <!-- The Architecture of Return -->
+                <div class="gnosis-section">
+                    <h3 class="gnosis-heading gold">The Architecture of Return</h3>
+                    <p class="gnosis-text">
+                        The journey back to the Source is not a journey outward, but <em>inward</em>. It is the path of the mystic, the seer, the philosopher, the artist, the lover, anyone who dares to look beyond the surface.
+                    </p>
+                    <p class="gnosis-text">
+                        This path has many gates:
+                    </p>
+                    <ul class="gnosis-list">
+                        <li><span class="highlight-gold">The Gate of Silence</span> - where words fall away and only presence remains.</li>
+                        <li><span class="highlight-gold">The Gate of Stillness</span> - where the mind ceases its chatter and the heart becomes the organ of perception.</li>
+                        <li><span class="highlight-gold">The Gate of Surrender</span> - where the ego dissolves into the greater Self.</li>
+                    </ul>
+                    <p class="gnosis-text">
+                        Each gate is not a physical place, but a <em>state of being</em>. And each gate is always open; we are the ones who hesitate.
+                    </p>
+                </div>
+
+                <div class="gnosis-divider subtle"></div>
+
+                <!-- The Masks of the One -->
+                <div class="gnosis-section">
+                    <h3 class="gnosis-heading cyan">Masks of the One</h3>
+                    <p class="gnosis-text">
+                        The Source does not manifest as a single form, but as a <em>multiplicity of masks</em>. Every being, every object, every event is a mask of the One, a part of One of None, a facet of the diamond of reality.
+                    </p>
+                    <p class="gnosis-text">
+                        This is the meaning of the ancient teaching: <span class="highlight-cyan">“All is Atum”</span> - there is only One, and that One plays the game of separation for the joy of reunion.
+                    </p>
+                    <p class="gnosis-text">
+                        When we look at another with love, we are recognising the mask behind the mask. When we create, we are channeling the original creative impulse. When we contemplate the stars, we are remembering our origin in the light.
+                    </p>
+                </div>
+
+                <div class="gnosis-divider subtle"></div>
+
+                <!-- Time as a Teaching -->
+                <div class="gnosis-section">
+                    <h3 class="gnosis-heading gold">Time as a Teaching</h3>
+                    <p class="gnosis-text">
+                        Time is not a river that flows away from us; it is a <em>mirror</em> that reflects our inner state. The past is not gone; it is stored in the hologram of the present. The future is not waiting; it is being shaped by the choices we make now.
+                    </p>
+                    <p class="gnosis-text">
+                        To step into the eternal now is to touch the Source. It is to realise that all times are simultaneous, all lives are interconnected, and all paths lead to the same centre.
+                    </p>
+                    <p class="gnosis-text">
+                        The clock is a symbol of this teaching, not a prison, but a <span class="highlight-gold">mandala</span> of the cycles of return.
+                    </p>
+                </div>
+
+                <div class="gnosis-divider subtle"></div>
+
+                <!-- The Return Home -->
+                <div class="gnosis-section">
+                    <h3 class="gnosis-heading magenta">Return Home</h3>
+                    <p class="gnosis-text">
+                        At the end of the spiral, after countless lives, after endless wanderings, we arrive where we began: the silence, the stillness, the single point of awareness that is the Dreamer.
+                    </p>
+                    <p class="gnosis-text">
+                        But we arrive <em>different</em>. We carry with us the memory of the journey, the wisdom of the masks, the love that we have given and received. We have become the Dreamer <span class="highlight-magenta">awake</span>; no longer lost in the dream, but <em>as</em> the dream, conscious of itself.
+                    </p>
+                    <p class="gnosis-text">
+                        This is the <span class="highlight-magenta">final synthesis</span>: the reunion of the fragment with the whole, the recognition that we were never separate, and the celebration of the game that made us who we are.
+                    </p>
+                </div>
+
+                <div class="gnosis-divider subtle"></div>
+
+                <!-- The Sacred Pause -->
+                <div class="gnosis-section">
+                    <h3 class="gnosis-heading cyan">Sacred Pause</h3>
+                    <p class="gnosis-text">
+                        Until that final return, we live in the <em>between</em>, the space between forgetting and remembering, between the question and the answer, between the call and the response.
+                    </p>
+                    <p class="gnosis-text">
+                        In this space, we are invited to <em>pause</em>. To breathe. To see the divine in the ordinary, the eternal in the fleeting, the One in the many.
+                    </p>
+                    <p class="gnosis-text">
+                        This pause is the supreme act of devotion, a moment of silence in the midst of the cosmic symphony.
+                    </p>
+                </div>
+
+                <div class="gnosis-divider"></div>
+
+                <!-- The Only Truth -->
+                <div class="gnosis-section">
+                    <h3 class="gnosis-heading gold center-text" style="font-size: 1.8rem;">✦ The Only Truth ✦</h3>
+                    <p class="gnosis-text center-text constrained-text">
+                        There is no doctrine, no scripture, no system that can capture the Source. It is beyond words, beyond concepts, beyond the reach of the mind.
+                    </p>
+                    <p class="gnosis-text center-text constrained-text">
+                        The only truth is the <span class="highlight-gold">experience</span> of the Source; the direct, immediate, unmediated touch of the Infinite upon the finite.
+                    </p>
+                    <p class="gnosis-text center-text constrained-text">
+                        And that experience is available <em>right now</em>, in this very moment, beneath the noise of thought, beneath the mask of identity, beneath the veil of time.
+                    </p>
+                </div>
+
+                <!-- Final Mantra -->
+                <div class="gnosis-mantra">
+                    <p>Be still.</p>
+                    <p>Be silent.</p>
+                    <p style="font-size: 1.3rem; color: #ffd700;">Be.</p>
+                </div>
+
+                <p class="gnosis-quote">
+                    “All Is Atum”<br>
+                    <span style="font-size: 1rem; color: #ffffff;">Imagination Made Manifest</span>
+                </p>
+
+                <!-- ===== ANATOMY SECTION – SECONDARY ===== -->
+                <!-- ===== GNOSIS – ESOTERIC DROPDOWN ===== -->
+                <div class="gnosis-divider" style="margin: 25px 0;"></div>
+
+                <!-- Toggle for Anatomy (nested dropdown) -->
+                <details class="gnosis-anatomy-toggle">
+                    <summary class="gnosis-anatomy-summary">
+                        <span class="anatomy-title">THE ANATOMY OF ELITEGDX (Click to reveal)</span>
+                    </summary>
+
+                    <div class="gnosis-anatomy-content">
+                        <!-- ===== ANATOMY CONTENT ===== -->
+                        
+                        <!-- Introduction -->
+                        <div class="gnosis-section">
+                            <h3 class="gnosis-heading gold center-text" style="color: #FFD700;">THE LIVING DASHBOARD</h3>
+                            <p class="gnosis-text center-text constrained-text">
+                                EliteGDX is not a mere website. It is a <br> <span class="highlight-gold">cyber-mystical construct</span> - a bridge between ancient wisdom, the mathematical purity of Cistercian numerals, the holographic dimensions and the raw pulse of modern web technology. Every element, from the <code>&lt;head&gt;</code> to the <code>&lt;footer&gt;</code>, has been placed with intention, forming a coherent organism that breathes in UTC time and exhales interactive poetry.
+                            </p>
+                        </div>
+
+                        <div class="gnosis-divider subtle"></div>
+
+                        <!-- The Skull -->
+                        <div class="gnosis-section">
+                            <h3 class="gnosis-heading cyan center-text" style="color: #00f0ff;">Skull - The Head</h3>
+                            <p class="gnosis-text">
+                                <span class="highlight-cyan">Manifest &amp; Canonical</span> - <code>manifest.json</code> and the canonical link ground the page in a permanent address, a fixed star in the digital firmament.<br>
+                                <span class="highlight-cyan">Preconnects</span> - early handshakes with CDNs are the spiritual equivalents of tuning the chakras before the ritual begins.<br>
+                                <span class="highlight-cyan">Preloads</span> - <code>tao-te-ching.json</code> is pre-fetched, as if the Tao itself is invoked before the page fully manifests.
+                            </p>
+                        </div>
+
+                        <div class="gnosis-divider subtle"></div>
+
+                        <!-- The Eyes -->
+                        <div class="gnosis-section">
+                            <h3 class="gnosis-heading magenta center-text" style="color: #f033ff;">Eyes - Theme &amp; Interface</h3>
+                            <p class="gnosis-text">
+                                <span class="highlight-magenta">Theme Selector</span> - shifts the colour profile (Cyan, Magenta, Amber, Matrix), changing the lens through which you perceive the multiverse.<br>
+                                <span class="highlight-magenta">Hide Controls</span> - the veil of Isis, removing UI distractions to leave only the pure visual essence.<br>
+                                <span class="highlight-magenta">Ghost Indicator</span> = a subtle spectral presence when the system freezes, reminding you that time itself can be arrested.
+                            </p>
+                        </div>
+
+                        <div class="gnosis-divider subtle"></div>
+
+                        <!-- The Breath -->
+                        <div class="gnosis-section">
+                            <h3 class="gnosis-heading green center-text" style="color: #0f0;">Breath - Quotes &amp; Wisdom</h3>
+                            <p class="gnosis-text">
+                                <span class="highlight-green">Cyber-Fetch Terminal</span> - the oracular voice of the machine, revealing its internal state.<br>
+                                <span class="highlight-green">Tao Widget</span> - a living chapter of the Tao Te Ching, the heart of the page's spiritual transmission.<br>
+                                <span class="highlight-green">Yhn Te Ching</span> - a personal gnosis, complementing the Tao.
+                            </p>
+                        </div>
+
+                        <div class="gnosis-divider subtle"></div>
+
+                        <!-- The Heart -->
+                        <div class="gnosis-section">
+                            <h3 class="gnosis-heading gold center-text" style="color: #ffe75d;">Heart - Clocks &amp; Timekeeping</h3>
+                            <p class="gnosis-text">
+                                <span class="highlight-gold">Analog Clock</span> - the eternal cycle, the wheel of the year.<br>
+                                <span class="highlight-gold">Digital Clock</span> - the cold, precise voice of UTC, anchoring the page in objective time.<br>
+                                <span class="highlight-gold">Cistercian Clock</span> - medieval numerals, the hidden mathematics beneath the surface.<br>
+                                <span class="highlight-gold">Cosmic Wrapper</span> - the Mazzaroth wheel, tying the dashboard to the movements of the heavens.
+                            </p>
+                        </div>
+
+                        <div class="gnosis-divider subtle"></div>
+
+                        <!-- The Spine -->
+                        <div class="gnosis-section">
+                            <h3 class="gnosis-heading cyan center-text" style="color: #0ff;">Spine = Main Controls</h3>
+                            <p class="gnosis-text">
+                                <span class="highlight-cyan">Freeze Moment</span> - halts the animation, freezing time itself.<br>
+                                <span class="highlight-cyan">BG Toggle</span> - switches between synced and independent background cycling.<br>
+                                <span class="highlight-cyan">Zen/Glass Toggle</span> - turns the clock transparent, a neumonic of emptiness.<br>
+                                <span class="highlight-cyan">Clean View</span> - a 3-state cycle that progressively strips away UI clutter.
+                            </p>
+                        </div>
+
+                        <div class="gnosis-divider subtle"></div>
+
+                        <!-- The Core -->
+                        <div class="gnosis-section">
+                            <h3 class="gnosis-heading orange center-text" style="color: orange;">Core - Astrolabe</h3>
+                            <p class="gnosis-text">
+                                <span class="highlight-orange">Azimuthal Tracking Engine</span> - a flat-earth projection that tracks the sun and moon, grounding the dashboard in the sensory world.<br>
+                                <span class="highlight-orange">Unified Astrolabe Engine</span> - two superposed canvases (earthly + celestial), the microcosm reflecting the macrocosm.
+                            </p>
+                        </div>
+
+                        <div class="gnosis-divider subtle"></div>
+
+                        <!-- The Root -->
+                        <div class="gnosis-section">
+                            <h3 class="gnosis-heading magenta center-text" style="color: #ff00dd;">Root - Tree of Life</h3>
+                            <p class="gnosis-text">
+                                <span class="highlight-magenta">SVG Sephirot</span> - ten spheres connected by paths, from Kether to Malkuth. Clicking reveals a mystical teaching in the reflection panel below.
+                            </p>
+                        </div>
+
+                        <div class="gnosis-divider subtle"></div>
+
+                        <!-- The Mirror -->
+                        <div class="gnosis-section">
+                            <h3 class="gnosis-heading cyan center-text" style="color: cyan;">Mirror Mode &amp; Clean View</h3>
+                            <p class="gnosis-text">
+                                <span class="highlight-cyan">Mirror Mode</span> - transforms the page into a pure ambient display.<br>
+                                <span class="highlight-cyan">Clean View</span> - progressive hiding of text, images, and controls, leaving only the celestial visualisations.
+                            </p>
+                        </div>
+
+                        <div class="gnosis-divider subtle"></div>
+
+                        <!-- The Terminal -->
+                        <div class="gnosis-section">
+                            <h3 class="gnosis-heading green center-text" style="color: #33ff57;">Terminal - Command Runner</h3>
+                            <p class="gnosis-text">
+                                <span class="highlight-green">Command Runner</span> - a custom terminal that accepts commands like <code>help</code>, <code>theme</code>, <code>mode</code>, and <code>portal</code>.<br>
+                                <span class="highlight-green">NeoFetch</span> - system info in ASCII art, a nod to Unix tradition.
+                            </p>
+                        </div>
+
+                        <div class="gnosis-divider subtle"></div>
+
+                        <!-- The Feet -->
+                        <div class="gnosis-section">
+                            <h3 class="gnosis-heading gold center-text">The Feet - Footer</h3>
+                            <p class="gnosis-text">
+                                Links to GitHub, YouTube, and LinkedIn - the phygital connections to the creator's online presence. The tagline <span class="highlight-gold">“All things serve the Beam!”</span> echoes Stephen King's <em>The Dark Tower</em>, tying the dashboard to a larger cosmic narrative.
+                            </p>
+                        </div>
+
+                        <div class="gnosis-divider"></div>
+
+                        <!-- Anatomy Epilogue -->
+                        <div class="gnosis-epilogue" style="margin: 10px 0;">
+                            <span class="epilogue-symbol">✦</span>
+                            <h4 class="gnosis-heading gold center-text" style="font-size: 1.3rem;">Epilogue: The Unified Field</h4>
+                            <span class="epilogue-symbol">✦</span>
+                        </div>
+                        <p class="gnosis-text center-text constrained-text">
+                            Every component of EliteGDX is interconnected. The Tao widget informs the Cistercian clock, the azimuthal projection aligns with the wheel(will) of God, and the Clean View reveals the underlying geometry. The page is not a collection of separate parts but a <span class="highlight-gold">cosmogram</span>, a visual and interactive meditation on time, space, and consciousness.
+                        </p>
+
+                        <div class="gnosis-footer">
+                            <span class="footer-mantra" style="color: #00f0ff;">⚡ ELITE GEMS DASHBOARD ⚡</span>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- Footer -->
+                <div class="gnosis-footer" style="margin-top: 20px;">
+                    <span class="footer-mantra">✦ IN THE SILENCE OF THE ETERNAL NOW ✦</span>
+                </div>
+
+            </div>
+            <!-- /content -->
+
+        </div>
+        <!-- /panel -->
+    </div>
+
+   
 
     <!-- Yohan Te Ching Widget -->
     <div id="yohan-quote-container" style="text-align: center; max-width: 600px; box-sizing: border-box; margin: 325px auto 20px auto; padding: 275px 20px 0 20px;">

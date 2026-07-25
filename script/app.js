@@ -140,8 +140,9 @@
             'fe-play-pause', 'fe-now', 'fe-speed', 'fe-next-hr', 'fe-prev-hr',
             'fe-next-day', 'fe-prev-day', 'fe-next-mo', 'fe-prev-mo', 'fe-6mo', 'fe-year', 'fe-reset',
             'hide-controls-btn', 'hide-info-btn', 'freeze-btn', 'bg-toggle-btn',
-            'zen-toggle-btn', 'magic-mirror-btn', 'mirror-exit-btn',
-            'open-fetch-btn', 'toggle-fetch-btn', 'open-cmd-runner', 'close-cmd-runner'
+            'zen-toggle-btn', 'magic-mirror-btn', 'mirror-exit-btn', 'fe-toggle-btn',
+            'open-fetch-btn', 'toggle-fetch-btn', 'open-cmd-runner', 'close-cmd-runner',
+            'gnosis-toggle-btn'
         ];
 
         // Also include any buttons with specific classes (e.g., .cosmic-btn inside #cosmic-wrapper)
@@ -3220,7 +3221,12 @@ slide [src|next|prev|pause|resume] : Control the overlay slideshow<br>
                     };
 
                     sendBtn.addEventListener('click', sendMessage);
-                    input.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
+                    input.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();   // prevents accidental form submission
+                            sendMessage();
+                        }
+                    });
 
                     // Auto focus
                     setTimeout(() => input.focus(), 50);
@@ -3366,7 +3372,12 @@ slide [src|next|prev|pause|resume] : Control the overlay slideshow<br>
                     };
 
                     sendBtn.addEventListener('click', sendP2PMessage);
-                    msgInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendP2PMessage(); });
+                    msgInput.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            sendP2PMessage();
+                        }
+                    });
 
                     setTimeout(() => msgInput.focus(), 50);
                     return '';
@@ -3481,8 +3492,11 @@ slide [src|next|prev|pause|resume] : Control the overlay slideshow<br>
                     };
 
                     sendBtn.addEventListener('click', sendMessage);
-                    msgInput.addEventListener('keypress', (e) => {
-                        if (e.key === 'Enter') sendMessage();
+                    msgInput.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            sendMessage();
+                        }
                     });
 
                     return '';
@@ -6933,7 +6947,7 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 { name: "Snell's Law", eq: "n₁ sin θ₁ = n₂ sin θ₂", desc: "Refraction of light at an interface." },
                 { name: "Lorentz Force", eq: "F = q(E + v×B)", desc: "Force on a charged particle in electromagnetic fields." },
                 { name: "Bernoulli's Principle", eq: "P + ½ρv² + ρgh = constant", desc: "Pressure decreases as fluid speed increases." },
-                { name: "Navier‑Stokes Equation", eq: "ρ(∂v/∂t + v·∇v) = -∇P + μ∇²v + f", desc: "Fluid motion (unsolved for general 3D)." },
+                { name: "Navier-Stokes Equation", eq: "ρ(∂v/∂t + v·∇v) = -∇P + μ∇²v + f", desc: "Fluid motion (unsolved for general 3D)." },
                 { name: "Kepler's Third Law", eq: "T² ∝ a³", desc: "The square of orbital period is proportional to the cube of semi‑major axis." },
                 { name: "Escape Velocity", eq: "v_e = √(2GM/r)", desc: "Minimum speed to escape a planet's gravity." },
                 { name: "Schwarzschild Radius", eq: "R_s = 2GM/c²", desc: "Radius of a black hole's event horizon." },
@@ -6951,8 +6965,8 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 { name: "Fick's First Law of Diffusion", eq: "J = -D ∇φ", desc: "Flux proportional to concentration gradient." },
                 { name: "Einstein Relation", eq: "D = μ k_B T", desc: "Diffusion coefficient related to mobility and temperature." },
                 { name: "Nernst Equation", eq: "E = E° - (RT/nF) ln Q", desc: "Cell potential under non‑standard conditions." },
-                { name: "Henderson‑Hasselbalch Equation", eq: "pH = pKa + log([A⁻]/[HA])", desc: "Buffer pH calculation." },
-                { name: "Michaelis‑Menten Equation", eq: "v = (V_max [S]) / (K_m + [S])", desc: "Enzyme kinetics." },
+                { name: "Henderson-Hasselbalch Equation", eq: "pH = pKa + log([A⁻]/[HA])", desc: "Buffer pH calculation." },
+                { name: "Michaelis-Menten Equation", eq: "v = (V_max [S]) / (K_m + [S])", desc: "Enzyme kinetics." },
                 { name: "Golden Ratio", eq: "φ = (1 + √5) / 2 ≈ 1.618", desc: "Proportions found in nature and art." },
                 { name: "Euler's Formula", eq: "e^(ix) = cos x + i sin x", desc: "Connects complex exponentials to trigonometric functions." },
                 { name: "Stirling's Approximation", eq: "ln(n!) ≈ n ln n - n", desc: "Approximates factorials for large n." },
@@ -9898,7 +9912,28 @@ ${pins.slice(0, 10).join('<br>')}<br>
 
 
 
-        
+        // ===== FLAT EARTH TOGGLE =====
+        (function initFlatEarthToggle() {
+            const toggleBtn = document.getElementById('fe-toggle-btn');
+            const section = document.getElementById('flat-earth-section');
+            if (!toggleBtn || !section) return;
+
+            let isVisible = false;
+
+            toggleBtn.addEventListener('click', () => {
+                isVisible = !isVisible;
+                section.classList.toggle('visible', isVisible);
+                toggleBtn.textContent = isVisible ? 'CLOSE SECTION' : 'AZIMU PROJECT';
+                toggleBtn.style.borderColor = isVisible ? '#ffd700' : '';
+                toggleBtn.style.color = isVisible ? '#ffd700' : '';
+                toggleBtn.style.boxShadow = isVisible ? '0 0 30px #ffd70033' : '';
+
+                if (isVisible && navigator.vibrate) navigator.vibrate(10);
+            });
+
+            console.log('Flat Earth Projection toggle ready.');
+        })();
+
         // =========================================================================
         // === FLAT EARTH PROJECTION – CIRCULAR + STRETCHED (Glass + Dark Hue) ===
         // =========================================================================
@@ -10929,15 +10964,6 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 renderFrame();
             });
 
-            // ---- Keyboard shortcut ----
-            document.addEventListener('keydown', (e) => {
-                if (e.key === ' ' || e.key === 'Space') {
-                    if (document.activeElement?.id === 'cmd-input') return;
-                    e.preventDefault();
-                    playBtn.click();
-                }
-            });
-
             // ---- Start ----
             syncToActualTime();
             renderFrame();
@@ -11542,13 +11568,6 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 this.textContent = `Clock: ${showClock ? 'ON' : 'OFF'}`;
             });
 
-            // Keyboard shortcut (Space)
-            document.addEventListener('keydown', (e) => {
-                if ((e.key === ' ' || e.key === 'Space') && document.activeElement?.tagName !== 'INPUT') {
-                    e.preventDefault();
-                    playBtn.click();
-                }
-            });
 
             // ---------- Resize handler ----------
             function resizeCanvases() {
@@ -11602,9 +11621,33 @@ ${pins.slice(0, 10).join('<br>')}<br>
             renderCosmic();
             requestAnimationFrame(mainLoop);
 
-            console.log('🌍🌀 Unified Astrolabe Engine initialized.');
+            console.log('🌀 Unified Astrolabe Engine initialized.');
         })();
         
+        // ===== GNOSIS TOGGLE =====
+        (function initGnosis() {
+            const toggleBtn = document.getElementById('gnosis-toggle-btn');
+            const panel = document.getElementById('gnosis-panel');
+            if (!toggleBtn || !panel) return;
+
+            let isVisible = false;
+
+            toggleBtn.addEventListener('click', () => {
+                isVisible = !isVisible;
+                panel.classList.toggle('visible', isVisible);
+                toggleBtn.textContent = isVisible ? 'CLOSES' : 'GNOSIS';
+                toggleBtn.style.borderColor = isVisible ? '#ffd700' : '';
+                toggleBtn.style.color = isVisible ? '#ffd700' : '';
+                toggleBtn.style.boxShadow = isVisible ? '0 0 30px #ffd70033' : '';
+
+                if (isVisible && navigator.vibrate) {
+                    navigator.vibrate(10);
+                }
+            });
+
+            console.log('Gnosis dropdown ready.');
+        })();
+
         // Automatically update copyright year
         document.getElementById('year').textContent = new Date().getFullYear();
 

@@ -1858,6 +1858,44 @@
         }
 
 
+        
+        /* ===== FLAT EARTH – HIDDEN SECTION ===== */
+        .fe-toggle-btn {
+            font-size: 7px;
+            padding: 10px 24px;
+            letter-spacing: 2px;
+        }
+        
+        .hidden-section {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0 20px;
+            margin: 0 auto;
+            transition: max-height 0.8s cubic-bezier(0, 1, 0, 1),
+                        opacity 0.6s ease,
+                        padding 0.6s ease,
+                        margin 0.6s ease;
+        }
+
+        .hidden-section.visible {
+            max-height: 2000px;   
+            opacity: 1;
+            padding: 20px;
+            margin: 20px auto;
+            overflow: visible;
+        }
+
+        /* Ensure the inner canvases don't break the transition */
+        .fe-dashboard.hidden-section .fe-canvas-wrapper {
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .fe-dashboard.hidden-section.visible .fe-canvas-wrapper {
+            opacity: 1;
+        }
+
         /* ===== FLAT EARTH PROJECTION DASHBOARD STYLES ===== */
         :root {
             --fe-cyan: #00f0ff;
@@ -2315,7 +2353,158 @@
             box-shadow: 0 0px 0 #008b8b, 0 2px 5px rgba(0, 255, 251, 0.4);
         }
 
+
+
+        /* ===== GNOSIS & MYSTCPHILOSOPHY ===== */
+        /* ===== CONTAINER & BUTTON ===== */
+        .gnosis-wrapper {
+            max-width: 850px;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        .gnosis-btn {
+            background: rgba(0, 0, 0, 0.5);
+            color: #00f0ff;
+            border: 1px solid rgba(255, 0, 0, 0.963);
+            font-family: 'VT323', monospace;
+            font-size: 1.2rem;
+            padding: 8px 16px;
+            letter-spacing: 4px;
+            cursor: pointer;
+            border-radius: 10px;  
+            text-transform: uppercase;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.1), inset 0 0 10px rgba(0, 240, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .gnosis-btn:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: #00f0ff;
+            color: #00ccff;
+            box-shadow: 0 0 25px rgb(0, 238, 255), inset 0 0 15px rgba(0, 240, 255, 0.2);
+            text-shadow: 0 0 8px #ffd900;
+            transform: translateY(-2px);
+        }
+
+        /* ---- Active state (panel open) ---- */
+        .gnosis-btn.active {
+            background: rgba(0, 0, 0, 0.8);
+            border-color: #ffd700;
+            color: #ffd700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3), inset 0 0 15px rgba(255, 215, 0, 0.1);
+            text-shadow: 0 0 12px #ffd700;
+        }
+
+        .gnosis-btn.active:hover {
+            background: rgba(255, 215, 0, 0.15);
+            border-color: #ffd700;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
+        }
+
+        /* ---- Panel ---- */
+        .gnosis-panel {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0 20px;
+            margin-top: 15px;
+            background: rgba(5, 5, 5, 0.777);
+            border: 1px solid rgba(0, 240, 255, 0);
+            border-radius: 50px;  
+            backdrop-filter: blur(4px);
+            transition: max-height 0.8s cubic-bezier(0, 1, 0, 1),
+                        opacity 0.5s ease,
+                        padding 0.5s ease,
+                        border-color 0.5s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), inset 0 0 40px rgba(0, 240, 255, 0.03);
+        }
+
+        .gnosis-panel.visible {
+            max-height: 3000px;
+            opacity: 1;
+            padding: 30px;
+            border-color: rgba(0, 240, 255, 0.2);
+            overflow-y: auto;
+            transition: max-height 1.2s ease-in-out, opacity 0.5s ease;
+        }
+
+        .gnosis-opening-quote {
+            font-family: 'Impact', sans-serif, Arial, monospace;
+            font-size: 1.5rem;
+            color: #ffd700;
+            margin: 0;
+            text-shadow: 0 0 30px #ffd70022;
+            letter-spacing: 1px;
+        }
+
+        /* ---- Custom Scrollbar ---- */
+        .gnosis-panel::-webkit-scrollbar {
+            width: 6px;
+        }
+        .gnosis-panel::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 3px;
+        }
+        .gnosis-panel::-webkit-scrollbar-thumb {
+            background: #00f0ff;
+            border-radius: 3px;
+            box-shadow: 0 0 10px #00f0ff44;
+        }
+
+        /* ---- Typography ---- */
+        .gnosis-text {
+            color: #c5c5d2;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin: 0 0 12px 0;
+            padding-left: 12px;
+            border-left: 2px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* ---- Highlights ---- */
+        .highlight-gold {
+            color: #ffd700;
+            font-weight: 600;
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+        }
+        .highlight-cyan {
+            color: #00f0ff;
+            font-weight: 600;
+            text-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+        }
+        .highlight-magenta {
+            color: #ff00ff;
+            font-weight: 600;
+            text-shadow: 0 0 12px rgba(255, 0, 255, 0.4);
+        }
+        .highlight-green {
+            color: #33ff57;
+            font-weight: 600;
+            text-shadow: 0 0 12px rgba(51, 255, 87, 0.4);
+        }
+        .highlight-orange {
+            color: #ff8800;
+            font-weight: 600;
+            text-shadow: 0 0 12px rgba(255, 136, 0, 0.4);
+        }
+
+        /* ---- Utility classes ---- */
+        .center-text { text-align: center; }
+        .constrained-text { max-width: 80%; margin: 0 auto 12px auto; }
+        .anatomy-title {
+            font-family: 'VT323', monospace;
+            color: #00f0ff;
+            letter-spacing: 2px;
+        }
+        .footer-mantra {
+            color: #ffd700;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+        }
         
+
 
         /* MOBILE-FRIENDLY TWEAKS */
         @media (max-width: 600px) {
@@ -2382,10 +2571,10 @@
                 letter-spacing: 2px;
             }
             #info-section .name-plate {
-                padding: 0 20px 0px 20px; /* Top, Right, Bottom, Left */
-                text-align: center;   /* keeps it neat */
-                font-size: 0.5rem;    /* slightly smaller if needed */
-                margin-bottom: 5px;  /* less bottom margin */
+                padding: 0 20px 0px 20px; 
+                text-align: center;   
+                font-size: 0.5rem;    
+                margin-bottom: 5px;  
             }
 
             
@@ -2888,6 +3077,56 @@
                 margin: 0 auto;
             }
 
+
+            .fe-toggle-btn {
+                font-size: 7px;
+                padding: 6px 16px;
+                letter-spacing: 1px;
+            }
+            
+            .gnosis-panel.visible {
+                padding: 18px 16px 20px;
+                border-radius: 50px;         
+            }
+
+            .gnosis-main-title {
+                font-size: 1.4rem;
+                letter-spacing: 3px;
+            }
+
+            .gnosis-header {
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+
+            .gnosis-symbol {
+                font-size: 1.2rem;
+            }
+
+            .gnosis-heading {
+                font-size: 1.1rem;
+            }
+
+            .gnosis-text {
+                font-size: 0.85rem;
+                padding-left: 4px;
+            }
+
+            .gnosis-quote {
+                font-size: 1.1rem;
+                padding: 10px;
+            }
+
+            .gnosis-btn {
+                font-size: 12px;
+                padding: 8px 16px;
+                border-radius: 50px;  
+            }
+
+            .gnosis-divider {
+                width: 90%;
+                margin: 14px auto;
+            }
 
             .site-footer {
                 width: 100%;
