@@ -1846,6 +1846,64 @@
             box-shadow:none;
             background: #06060c;    /* fallback if image not loaded */
         }
+        
+        /* ===== AZIMUTHAL DROPDOWN ===== */
+        #azimuthal-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        #azimuthal-toggle-btn {
+            font-size: 10px;
+            padding: 4px 4px;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+
+        #azimuthal-toggle-btn:hover {
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.3);
+            transform: scale(1.02);
+        }
+
+        /* ---- Panel (hidden by default) ---- */
+        .azimuthal-panel {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0 20px;
+            margin-top: 15px;
+            background: rgba(0, 0, 0, 0);
+            border-radius: 50px;
+            transition: opacity 0.35s ease,
+                        max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        padding 0.35s ease,
+                        border-color 0.4s ease;
+            will-change: opacity, max-height;
+            transform: translateZ(0);
+        }
+
+        .azimuthal-panel.visible {
+            max-height: 2000px;
+            opacity: 1;
+            padding: 25px 30px 30px;
+            overflow-y: auto;
+        }
+
+        /* Custom scrollbar */
+        .azimuthal-panel::-webkit-scrollbar {
+            width: 6px;
+        }
+        .azimuthal-panel::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 3px;
+        }
+        .azimuthal-panel::-webkit-scrollbar-thumb {
+            background: #00f0ff;
+            border-radius: 3px;
+            box-shadow: 0 0 10px #00f0ff44;
+        }
+
 
         .celestial-wave {
             animation: spin var(--speed) linear infinite;
@@ -1861,8 +1919,7 @@
         
         /* ===== FLAT EARTH – HIDDEN SECTION ===== */
         .fe-toggle-btn {
-            font-size: 7px;
-            padding: 10px 24px;
+            padding: 4px 2px;
             letter-spacing: 2px;
         }
         
@@ -2368,11 +2425,11 @@
             color: #00f0ff;
             border: 1px solid rgba(255, 0, 0, 0.963);
             font-family: 'VT323', monospace;
-            font-size: 1.2rem;
-            padding: 8px 16px;
+            font-size: 1.3rem;
+            padding: 20px 2px;
             letter-spacing: 4px;
             cursor: pointer;
-            border-radius: 10px;  
+            border-radius: 100px;  
             text-transform: uppercase;
             box-shadow: 0 0 15px rgba(0, 240, 255, 0.1), inset 0 0 10px rgba(0, 240, 255, 0.05);
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -2380,9 +2437,9 @@
 
         .gnosis-btn:hover {
             background: rgba(0, 240, 255, 0.1);
-            border-color: #00f0ff;
-            color: #00ccff;
-            box-shadow: 0 0 25px rgb(0, 238, 255), inset 0 0 15px rgba(0, 240, 255, 0.2);
+            border-color: #ff0000;
+            color: #00ddff;
+            box-shadow: 0 0 25px rgb(255, 0, 225), inset 0 0 15px rgba(0, 240, 255, 0.2);
             text-shadow: 0 0 8px #ffd900;
             transform: translateY(-2px);
         }
@@ -2412,7 +2469,7 @@
             background: rgba(5, 5, 5, 0.777);
             border: 1px solid rgba(0, 240, 255, 0);
             border-radius: 50px;  
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(2px);
             transition: max-height 0.8s cubic-bezier(0, 1, 0, 1),
                         opacity 0.5s ease,
                         padding 0.5s ease,
@@ -2421,7 +2478,7 @@
         }
 
         .gnosis-panel.visible {
-            max-height: 3000px;
+            max-height: 700px;
             opacity: 1;
             padding: 30px;
             border-color: rgba(0, 240, 255, 0.2);
@@ -2495,6 +2552,7 @@
         .constrained-text { max-width: 80%; margin: 0 auto 12px auto; }
         .anatomy-title {
             font-family: 'VT323', monospace;
+            font-size: 1.3rem;
             color: #00f0ff;
             letter-spacing: 2px;
         }
@@ -2991,7 +3049,11 @@
                 font-size: 6px;
                 padding: 4px 6px;
             }
-            
+            #azimuthal-toggle-btn {
+                font-size: 7px;
+                padding: 2px 2px;
+
+            }
             /* Triggers a bit earlier than 600px to avoid scrollbars on tablets /
             .tychonic-ui,
             .azimuthal-dashboard {
@@ -3078,19 +3140,23 @@
             }
 
 
+            .anatomy-title {
+            font-size: 1.1rem;
+            }
+
             .fe-toggle-btn {
-                font-size: 7px;
-                padding: 6px 16px;
+                padding: 3px 3px;
                 letter-spacing: 1px;
             }
             
             .gnosis-panel.visible {
+                margin: 0 20px 0 20px;
                 padding: 18px 16px 20px;
                 border-radius: 50px;         
             }
 
             .gnosis-main-title {
-                font-size: 1.4rem;
+                font-size: 1.3rem;
                 letter-spacing: 3px;
             }
 
@@ -3108,18 +3174,18 @@
             }
 
             .gnosis-text {
-                font-size: 0.85rem;
+                font-size: 0.75rem;
                 padding-left: 4px;
             }
 
-            .gnosis-quote {
-                font-size: 1.1rem;
+            .gnosis-opening-quote {
+                font-size: 1rem;
                 padding: 10px;
             }
 
             .gnosis-btn {
                 font-size: 12px;
-                padding: 8px 16px;
+                padding: 18px 2px;
                 border-radius: 50px;  
             }
 

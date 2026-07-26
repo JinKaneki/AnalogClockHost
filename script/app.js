@@ -142,7 +142,7 @@
             'hide-controls-btn', 'hide-info-btn', 'freeze-btn', 'bg-toggle-btn',
             'zen-toggle-btn', 'magic-mirror-btn', 'mirror-exit-btn', 'fe-toggle-btn',
             'open-fetch-btn', 'toggle-fetch-btn', 'open-cmd-runner', 'close-cmd-runner',
-            'gnosis-toggle-btn'
+            'gnosis-toggle-btn', 'azimuthal-toggle-btn',
         ];
 
         // Also include any buttons with specific classes (e.g., .cosmic-btn inside #cosmic-wrapper)
@@ -831,6 +831,7 @@
         //    }
         //});
 
+        
         // --- JOHAN_OS SYSTEM INFO (NEOFETCH STYLE) ---
         const fetchContainer = document.getElementById('neofetch-container');
         const toggleBtn = document.getElementById('toggle-fetch-btn');
@@ -1436,10 +1437,25 @@
 
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Double Click to Freeze/Unfreeze
+
+            // ============================================================
+            // HELPER: Check if user is typing in a text field
+            // ============================================================
+            function isTyping() {
+                const active = document.activeElement;
+                if (!active) return false;
+                const tag = active.tagName.toLowerCase();
+                // Check if it's an input, textarea, or contenteditable
+                if (tag === 'input' || tag === 'textarea') return true;
+                if (active.isContentEditable) return true;
+                return false;
+            }
+
+            // ============================================================
+            // DOUBLE CLICK: Freeze/Unfreeze (only on body background)
+            // ============================================================
             document.body.addEventListener('dblclick', (e) => {
-                // Note: If you have an overlay, e.target might be the body or a div.
-                // This ensures it triggers when clicking the background area.
+                // Only trigger when clicking the background (body or its direct children)
                 if (e.target === document.body || e.target.tagName === 'BODY') {
                     isBgFrozen = !isBgFrozen;
                     playTick(true);  // Deeper 'Tock' sound for confirmation
@@ -1448,15 +1464,21 @@
                 }
             });
 
-            // Key 'B' to Freeze/Unfreeze
-            //document.addEventListener('keydown', (e) => {
-            //    if (e.key.toLowerCase() === 'b') {
-            //        isBgFrozen = !isBgFrozen;
-            //        playTick(true); // Deeper 'Tock' sound for confirmation
-            //        triggerGhost(isBgFrozen);
-            //        if (!isBgFrozen) updateBackground();
-            //    }
-
+            // ============================================================
+            // KEYBOARD: 'B' to Freeze/Unfreeze (skip if typing)
+            // ============================================================
+            document.addEventListener('keydown', (e) => {
+                // Skip if user is typing in a text field
+                if (isTyping()) return;
+                
+                if (e.key.toLowerCase() === 'b') {
+                    e.preventDefault(); // Prevent 'b' from being typed
+                    isBgFrozen = !isBgFrozen;
+                    playTick(true); // Deeper 'Tock' sound for confirmation
+                    triggerGhost(isBgFrozen);
+                    if (!isBgFrozen) updateBackground();
+                }
+            });
         });
 
         // Hide Controls Toggle (top-left button)
@@ -10409,192 +10431,8 @@ ${pins.slice(0, 10).join('<br>')}<br>
 
 
         // =========================================================================
-        // KABBALAH TREE OF LIFE – Canvas Visualization
+        // KABBALAH TREE OF LIFE – SVG Canvas Visualization
         // =========================================================================
-       /*
-        function initTreeOfLife() {
-            const canvas = document.getElementById('tree-canvas');
-            const infoDiv = document.getElementById('tree-info');
-            if (!canvas || !infoDiv) return;
-            const ctx = canvas.getContext('2d');
-
-            // ---- Sephiroth Data (names, colors, positions in a 3‑column layout) ----
-            const sephiroth = [
-                // Column 1 (Kether – top centre)
-                { name: 'Kether', color: '#FFFFFF', x: 0.5, y: 0.05, desc: 'Crown – Divine Will' },
-                // Column 2 (Chokmah & Binah – top left/right)
-                { name: 'Chokmah', color: '#66CCFF', x: 0.2, y: 0.15, desc: 'Wisdom – Creative Energy' },
-                { name: 'Binah', color: '#FF6666', x: 0.8, y: 0.15, desc: 'Understanding – Formative Power' },
-                // Column 3 (Daath – hidden, but we skip it)
-                // Column 4 (Chesed & Geburah – middle left/right)
-                { name: 'Chesed', color: '#4466FF', x: 0.15, y: 0.35, desc: 'Mercy – Loving-kindness' },
-                { name: 'Geburah', color: '#FF4444', x: 0.85, y: 0.35, desc: 'Strength – Severity' },
-                // Column 5 (Tifereth – centre)
-                { name: 'Tifereth', color: '#FFD700', x: 0.5, y: 0.45, desc: 'Beauty – The Heart' },
-                // Column 6 (Netzach & Hod – lower left/right)
-                { name: 'Netzach', color: '#44FF44', x: 0.2, y: 0.65, desc: 'Victory – Endurance' },
-                { name: 'Hod', color: '#FF8800', x: 0.8, y: 0.65, desc: 'Glory – Splendour' },
-                // Column 7 (Yesod – centre bottom)
-                { name: 'Yesod', color: '#AA88FF', x: 0.5, y: 0.8, desc: 'Foundation – Connection' },
-                // Column 8 (Malkuth – bottom centre)
-                { name: 'Malkuth', color: '#CC8866', x: 0.5, y: 0.95, desc: 'Kingdom – Physical World' }
-            ];
-
-            // ---- Paths (connecting lines between Sephiroth) ----
-            // Indices refer to the array above
-            const paths = [
-                [0,1], [0,2], // Kether to Chokmah, Binah
-                [1,3], [2,4], // Chokmah to Chesed, Binah to Geburah
-                [1,5], [2,5], // Chokmah to Tifereth, Binah to Tifereth
-                [3,5], [4,5], // Chesed to Tifereth, Geburah to Tifereth
-                [3,6], [4,7], // Chesed to Netzach, Geburah to Hod
-                [5,6], [5,7], // Tifereth to Netzach, Tifereth to Hod
-                [6,8], [7,8], // Netzach to Yesod, Hod to Yesod
-                [8,9]         // Yesod to Malkuth
-            ];
-
-            let hoveredIndex = -1;
-
-            // ---- Resize and redraw ----
-            function resizeCanvas() {
-                const rect = canvas.parentElement.getBoundingClientRect();
-                const w = rect.width;
-                const h = rect.height;
-                if (canvas.width !== w || canvas.height !== h) {
-                    canvas.width = w;
-                    canvas.height = h;
-                }
-                drawTree();
-            }
-
-            function drawTree() {
-                const w = canvas.width;
-                const h = canvas.height;
-                ctx.clearRect(0, 0, w, h);
-
-                // ---- Draw paths ----
-                ctx.lineWidth = 2;
-                ctx.setLineDash([4, 6]);
-                ctx.strokeStyle = 'rgba(255,255,255,0.15)';
-                for (const [i, j] of paths) {
-                    const p1 = sephiroth[i];
-                    const p2 = sephiroth[j];
-                    const x1 = p1.x * w;
-                    const y1 = p1.y * h;
-                    const x2 = p2.x * w;
-                    const y2 = p2.y * h;
-                    ctx.beginPath();
-                    ctx.moveTo(x1, y1);
-                    ctx.lineTo(x2, y2);
-                    ctx.stroke();
-                }
-                ctx.setLineDash([]);
-
-                // ---- Draw Sephiroth ----
-                const radius = Math.min(w, h) * 0.035;
-                for (let i = 0; i < sephiroth.length; i++) {
-                    const s = sephiroth[i];
-                    const x = s.x * w;
-                    const y = s.y * h;
-                    const isHover = (i === hoveredIndex);
-
-                    // Glow
-                    const glow = ctx.createRadialGradient(x, y, 0, x, y, radius * 2.5);
-                    glow.addColorStop(0, s.color + '60');
-                    glow.addColorStop(1, s.color + '00');
-                    ctx.fillStyle = glow;
-                    ctx.beginPath();
-                    ctx.arc(x, y, radius * 2.5, 0, 2 * Math.PI);
-                    ctx.fill();
-
-                    // Outer ring
-                    ctx.shadowColor = s.color;
-                    ctx.shadowBlur = isHover ? 30 : 15;
-                    ctx.beginPath();
-                    ctx.arc(x, y, radius, 0, 2 * Math.PI);
-                    ctx.fillStyle = '#1a1a2e';
-                    ctx.fill();
-                    ctx.strokeStyle = s.color;
-                    ctx.lineWidth = isHover ? 3 : 2;
-                    ctx.stroke();
-                    ctx.shadowBlur = 0;
-
-                    // Inner dot
-                    ctx.beginPath();
-                    ctx.arc(x, y, radius * 0.4, 0, 2 * Math.PI);
-                    ctx.fillStyle = s.color;
-                    ctx.fill();
-
-                    // Label (on hover or always for small number)
-                    if (isHover) {
-                        ctx.fillStyle = '#fff';
-                        ctx.font = 'bold 11px monospace';
-                        ctx.textAlign = 'center';
-                        ctx.textBaseline = 'bottom';
-                        ctx.shadowColor = '#000';
-                        ctx.shadowBlur = 4;
-                        ctx.fillText(s.name, x, y - radius - 6);
-                        ctx.shadowBlur = 0;
-                    }
-                }
-            }
-
-            // ---- Mouse / Touch events ----
-            function handleHover(e) {
-                const rect = canvas.getBoundingClientRect();
-                const mx = (e.clientX || e.touches?.[0]?.clientX || 0) - rect.left;
-                const my = (e.clientY || e.touches?.[0]?.clientY || 0) - rect.top;
-                const scaleX = canvas.width / rect.width;
-                const scaleY = canvas.height / rect.height;
-                const cx = mx * scaleX;
-                const cy = my * scaleY;
-
-                let found = -1;
-                const radius = Math.min(canvas.width, canvas.height) * 0.035;
-                for (let i = 0; i < sephiroth.length; i++) {
-                    const s = sephiroth[i];
-                    const dx = cx - s.x * canvas.width;
-                    const dy = cy - s.y * canvas.height;
-                    if (dx*dx + dy*dy < (radius * 1.8) ** 2) {
-                        found = i;
-                        break;
-                    }
-                }
-
-                if (found !== hoveredIndex) {
-                    hoveredIndex = found;
-                    if (found !== -1) {
-                        infoDiv.innerHTML = `<span style="color:${sephiroth[found].color};">● ${sephiroth[found].name}</span> – ${sephiroth[found].desc}`;
-                    } else {
-                        infoDiv.innerHTML = 'Hover over a sphere';
-                    }
-                    drawTree();
-                }
-            }
-
-            canvas.addEventListener('mousemove', handleHover);
-            canvas.addEventListener('touchmove', (e) => {
-                e.preventDefault();
-                handleHover(e);
-            });
-            canvas.addEventListener('mouseleave', () => {
-                hoveredIndex = -1;
-                infoDiv.innerHTML = 'Hover over a sphere';
-                drawTree();
-            });
-
-            // ---- Resize observer ----
-            const resizeObserver = new ResizeObserver(resizeCanvas);
-            resizeObserver.observe(canvas.parentElement);
-            window.addEventListener('resize', resizeCanvas);
-
-            // ---- Initial draw ----
-            resizeCanvas();
-        }
-
-        initTreeOfLife ();
-        
-        */
 
         document.addEventListener('DOMContentLoaded', function() {
             // Tree of Life interaction
@@ -10970,6 +10808,48 @@ ${pins.slice(0, 10).join('<br>')}<br>
             console.log('Azimuthal Engine loaded.');
         })();
 
+        // ============================================================
+        // AZIMUTHAL DROPDOWN TOGGLE
+        // ============================================================
+        (function initAzimuthalDropdown() {
+            const toggleBtn = document.getElementById('azimuthal-toggle-btn');
+            const panel = document.getElementById('azimuthal-panel');
+            if (!toggleBtn || !panel) return;
+
+            let isVisible = false;
+            let isAnimating = false;
+
+            toggleBtn.addEventListener('click', () => {
+                if (isAnimating) return;
+                isAnimating = true;
+                isVisible = !isVisible;
+
+                requestAnimationFrame(() => {
+                    panel.classList.toggle('visible', isVisible);
+                    toggleBtn.textContent = isVisible ? 'CLOSE ENGINE' : 'AZMUT ENGINE';
+
+                    // ---- Lazy load: initialise the engine when opened for the first time ----
+                    if (isVisible && typeof window.initAzimuthalEngine === 'function') {
+                        // The engine will guard itself against double initialisation
+                        window.initAzimuthalEngine();
+                    }
+
+                    setTimeout(() => {
+                        isAnimating = false;
+                    }, 500);
+                });
+            });
+
+            // ---- Keyboard shortcut: 'A' for Azimuthal ----
+            document.addEventListener('keydown', (e) => {
+                if ((e.key === 'a' || e.key === 'A') && document.activeElement?.tagName !== 'INPUT') {
+                    e.preventDefault();
+                    toggleBtn.click();
+                }
+            });
+
+            console.log('Azimuthal dropdown ready.');
+        })();
 
 
 

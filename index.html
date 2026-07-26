@@ -789,30 +789,47 @@
 
     </div>    
 
-    
-    <!-- ===== AZIMUTHAL FLAT EARTH ENGINE ===== -->
-    <div class="azimuthal-dashboard" style="text-align: center; font-family: monospace; background: transparent; padding: 20px; max-width: 1000px; margin: 0 auto;">
-        <h3 style="color: var(--accent-color);">AZIMUTHAL TRACKING ENGINE</h3>
-        
-        <div id="az-time-display" style="color: #0f0; font-size: 1rem; margin-bottom: 10px; font-family: monospace; text-shadow: 0 0 10px rgba(0,255,0,0.2);">Syncing...</div>
-        
-        <div class="az-controls">
-            <button id="az-playpause" class="az-btn btn-gold" style="color:#ffaa00; border-color:#ffaa00;">▶ Play</button>
-            <button id="az-sync" class="az-btn btn-green" style="color:#0f0; border-color:#0f0;">⟳ Sync</button>
-            <button id="az-speed" class="az-btn btn-cyan" style="color:#00f0ff;">⚡1x</button>
-            <button id="az-prev-mo" class="az-btn btn-cyan">-1 Mo</button>
-            <button id="az-day" class="az-btn btn-cyan">+1 Day</button>
-            <button id="az-next-mo" class="az-btn btn-cyan">+1 Mo</button>
-            <button id="az-6mo" class="az-btn btn-cyan">+6 Mo</button>
-            <button id="az-year" class="az-btn btn-cyan">+1 Year</button>
-            <button id="az-reset" class="az-btn btn-white">↺ Reset</button>
-        </div>
-        
-        <!-- No wrapper – just the canvas -->
-        <canvas id="azimuthal-canvas"></canvas>
+
+
+    <div style="text-align: center; margin: 20px auto;">
+        <button id="magic-mirror-btn"  class="mirror-mode-btn">Enter Mirror Mode</button>
     </div>
 
-    <!-- ============================================================ -->
+    <!-- ===== AZIMUTHAL FLAT EARTH ENGINE (Dropdown) ===== -->
+    <div id="azimuthal-container" style="max-width: 1000px; margin: 40px auto; text-align: center;">
+
+        <!-- Toggle Button -->
+        <button id="azimuthal-toggle-btn" class="az-btn btn-cyan" style="border-radius: 50px; transition: all 0.3s ease;">
+            TRACKING ENGINE
+        </button>
+
+        <!-- Dropdown Panel -->
+        <div id="azimuthal-panel" class="azimuthal-panel hidden">
+
+            <div class="azimuthal-dashboard" style="text-align: center; font-family: monospace; background: transparent; padding: 20px; max-width: 1000px; margin: 0 auto;">
+                <h3 style="color: var(--accent-color);">AZIMUTHAL TRACKING ENGINE</h3>
+                
+                <div id="az-time-display" style="color: #0f0; font-size: 1rem; margin-bottom: 10px; font-family: monospace; text-shadow: 0 0 10px rgba(0,255,0,0.2);">Syncing...</div>
+                
+                <div class="az-controls">
+                    <button id="az-playpause" class="az-btn btn-gold" style="color:#ffaa00; border-color:#ffaa00;">▶ Play</button>
+                    <button id="az-sync" class="az-btn btn-green" style="color:#0f0; border-color:#0f0;">⟳ Sync</button>
+                    <button id="az-speed" class="az-btn btn-cyan" style="color:#00f0ff;">⚡1x</button>
+                    <button id="az-prev-mo" class="az-btn btn-cyan">-1 Mo</button>
+                    <button id="az-day" class="az-btn btn-cyan">+1 Day</button>
+                    <button id="az-next-mo" class="az-btn btn-cyan">+1 Mo</button>
+                    <button id="az-6mo" class="az-btn btn-cyan">+6 Mo</button>
+                    <button id="az-year" class="az-btn btn-cyan">+1 Year</button>
+                    <button id="az-reset" class="az-btn btn-white">↺ Reset</button>
+                </div>
+                
+                <canvas id="azimuthal-canvas"></canvas>
+            </div>
+
+        </div>
+    </div>
+
+
     <!-- ===== UNIFIED ASTROLABE ENGINE ===== -->
     <div class="astrolabe-dashboard">
 
@@ -881,14 +898,10 @@
             </ul>
         </div>
     </div>
-    
-    <div style="text-align: center; margin: 20px auto;">
-        <button id="magic-mirror-btn"  class="mirror-mode-btn">Enter Mirror Mode</button>
-    </div>
 
     <!-- ===== FLAT EARTH PROJECTION TOGGLE ===== -->
     <div style="text-align: center; margin: 20px auto;">
-        <button id="fe-toggle-btn" class="az-btn btn-cyan fe-toggle-btn" style="border-radius: 50px;">
+        <button id="fe-toggle-btn" class="az-btn btn-cyan fe-toggle-btn" style="border-radius: 50px; font-size: 7px;">
             AZIMU PROJECT
         </button>
     </div>
