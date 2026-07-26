@@ -264,15 +264,13 @@ And at the centre of it all is the **Silence**, the source from which all code e
 🔗 **Visit the live site:** [EliteGDX – Akashic Neural Center](https://jinkaneki.github.io/EliteGDX/)
 
 ---
-*Document created on July 16, 2026 – during the Age of Aquarius, under a 22° Cancer Moon.*
----
 
-
-*Thus was the World, thus experienced was Life, Happiness, Peace, and Love.*  
-*For all things serve all things.*
+ - *Thus was the World, thus experienced was Life, Happiness, Peace, and Love.*  
+ - *For all things serve all things.*
 
 ---
 
 — **EliteGDX**, *Akashic Neural Center*  
+*Document created on July 16, 2026 – under a 22° Cancer Moon.*
 *In the Age of Aquarius, under the eternal Light.*
 
