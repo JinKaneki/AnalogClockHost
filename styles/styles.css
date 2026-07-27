@@ -2423,9 +2423,10 @@
         .gnosis-btn {
             background: rgba(0, 0, 0, 0.5);
             color: #00f0ff;
-            border: 1px solid rgba(255, 0, 0, 0.963);
+            border: 4px solid rgba(255, 0, 0, 0.963);
             font-family: 'VT323', monospace;
             font-size: 1.3rem;
+            font-weight: 700;
             padding: 20px 2px;
             letter-spacing: 4px;
             cursor: pointer;
@@ -2484,6 +2485,16 @@
             border-color: rgba(0, 240, 255, 0.2);
             overflow-y: auto;
             transition: max-height 1.2s ease-in-out, opacity 0.5s ease;
+        }
+
+        .gnosis-main-title {
+            font-size: 1.7rem;
+        }
+
+        .gnosis-subtitle {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: royalblue;
         }
 
         .gnosis-opening-quote {
@@ -2549,7 +2560,7 @@
 
         /* ---- Utility classes ---- */
         .center-text { text-align: center; }
-        .constrained-text { max-width: 80%; margin: 0 auto 12px auto; }
+        .constrained-text { max-width: 85%; margin: 0 auto 12px auto; }
         .anatomy-title {
             font-family: 'VT323', monospace;
             font-size: 1.3rem;
@@ -3178,6 +3189,9 @@
                 padding-left: 4px;
             }
 
+            .gnosis-subtitle {
+                font-size: 1rem;
+            }
             .gnosis-opening-quote {
                 font-size: 1rem;
                 padding: 10px;
