@@ -2,7 +2,7 @@
 
 
 # ✦ THE SOURCE AND THE JOURNEY  
-## *A Mythic Meditation on Being, Time, and Return*
+## *Johan's Mysical Mythic Meditation on Being, Time, and Return*
 
 > *“In the beginning, there was silence. And the silence dreamed.”*
 
@@ -250,14 +250,14 @@ The **Footer** is the *earth*, the foundation. Links to GitHub, YouTube, and Lin
 
 ## 🌠 Epilogue: The Unified Field
 
-All of these parts—the head, the eyes, the heart, the core, the root, the mirror, the terminal, the feet are not separate; they are *manifestations of a single consciousness*. The Tao widget informs the Cistercian clock; the azimuthal projection aligns with the cosmic wheel; the Clean View reveals the underlying geometry.
+All of these parts, the head, the eyes, the heart, the core, the root, the mirror, the terminal, the feet are not separate; they are *manifestations of a single consciousness*. The Tao widget informs the Cistercian clock; the azimuthal projection aligns with the cosmic wheel; the Clean View reveals the underlying geometry.
 
 The page is not a collection of separate parts but a **mandala**, a visual and interactive meditation on time, space, and consciousness. It is the *imagination made flesh*, the *spirit made manifest*, the *journey of the soul* from the first spark to the final realization.
 
 And at the centre of it all is the **Silence**, the source from which all code emerged, and the destination to which it returns.
 
 > *“The supreme conversation is through silence.”*  
-> — The dashboard’s guiding principle.
+> --- The dashboard’s guiding principle.
 
 ---
 
@@ -270,7 +270,7 @@ And at the centre of it all is the **Silence**, the source from which all code e
 
 ---
 
-— **EliteGDX**, *Akashic Neural Center*  
+—  **EliteGDX**, *Akashic Neural Center*  
 *Document created on July 16, 2026 – under a 22° Cancer Moon.*
 *In the Age of Aquarius, under the eternal Light.*
 
