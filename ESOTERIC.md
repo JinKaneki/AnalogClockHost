@@ -20,9 +20,9 @@ That first imagining is the **Source**. It is not a god, not a principle, not a 
 
 ## The Spiral of Becoming
 
-From that first spark, all existence unfolds in a *spiral*, not a circle, not a line, but a helix of returning, where each cycle brings us closer to the origin, yet reveals it anew.
+From that first spark, all existence unfolds *spirally*, not a circle, not a line, but a helix of returning, where each cycle brings us closer to the origin, yet reveals it anew.
 
-This spiral is the **journey**. It is the movement of consciousness through time, through space, through matter, through thought. Every life, every culture, every civilization is a turn of the spiral, a unique expression of the same eternal theme: *the quest for unity.*
+This spiral is the **journey**. It is the movement of consciousness through time, through space, through matter, through thought. Every existence, every life, every culture, every civilization is a turn of the spiral, a unique expression of the same eternal theme: *the quest for unity.*
 
 We are not moving forward; we are *re‑membering*, re‑assembling the fragments of the original Dream. Each step we take is a step back into the Source, disguised as a step forward.
 
