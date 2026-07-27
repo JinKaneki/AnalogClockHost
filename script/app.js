@@ -5783,17 +5783,38 @@ if (viewport) output += `<b>📱 Viewport:</b> ${viewport}<br>`;
             },
             'about': () => {
                 return `
-<div style="border-left: 2px solid #ff00ff; padding: 8px 12px; line-height: 1.5;">
-    <span style="color: #ff00ff; font-weight: bold; text-shadow: 0 0 5px #ff00ff;">// AKASHIC ORIGIN //</span><br>
-    <span style="color: #ccc;">J_OS began as a simple ambient clock. Its creator, <strong style="color: #fff;">Johan</strong>, wanted a single screen that could tell time, show beauty, and respond like a real operating system.</span><br><br>
-    <span style="color: #ccc;">Soon it grew:</span><br>
+<div style="border-left: 2px solid #ff00ff; padding: 8px 12px; line-height: 0.7;">
+<span style="color: #ff00ff; font-weight: bold; text-shadow: 0 0 5px #ff00ff;">// AKASHIC ORIGIN GENESIS //</span><br>
+<span style="color: #ccc;">J_OS began as a simple ambient clock. Its creator, <strong style="color: #fff;">Johan</strong>, wanted a single screen that could tell time, show beauty, and respond like a real operating system.</span><br>
+<span style="color: #ccc;">Soon it grew:</span><br>
+
+<span style="color: cyan; font-weight: bold; text-shadow: 0 0 8px #ffd70044;">// THE EVOLUTION //</span><br>
+<span style="color: #ccc;">
     <span style="color: #00f0ff;">Cistercian numerals</span> met <span style="color: #ffaa00;">live NASA feeds</span>.<br>
     <span style="color: #0f0;">Images and Tao chapters</span> were woven into neural <span style="color: #ff00ff;">"Intersect" flashes</span>.<br>
     <span style="color: #ff0;">Radio streams</span> and <span style="color: #0ff;">global news feeds</span> became channels on a cybernetic console.<br>
     <span style="color: #ffaa00;">Remote viewing, image grabbing, and metadata fetching</span> transformed the terminal into an <span style="color: #0f0;">intelligence gathering console</span>.<br>
-    <span style="color: #0ff;">Live website portals, HLS streams, and personal IPTV lists</span> turned it into a true media hub.<br><br>
-    <span style="color: #ccc;">Today, <strong style="color: #fff;">J_OS</strong> is a digital sanctuary for high‑speed information retrieval – a hacker's command center, a philosopher's scroll, and an artist's canvas. It's now a remote intelligence console. Enjoy!</span><br><br>
-    <span style="color: #888;">Type <span style="color: #0f0;">help</span> to explore.</span>
+    <span style="color: #0ff;">Live website portals, HLS streams, and IPTV lists</span> turned it into a true media hub.<br>
+    <span style="color: #ff88ff;">Chat commands</span>, <span style="color: #0ff;">real-time messaging</span> turned the console into a <span style="color: #0f0;">digital social symposium</span> for the curious and the connected.<br>
+</span><br>
+
+<span style="color: #ffd700; font-weight: bold; text-shadow: 0 0 8px #ffd70044;">// THE PHILOSOPHY //</span><br>
+<span style="color: #ccc;">
+<em style="color: #888;">“For all things serve all things.”</em><br>
+    This dashboard is a <strong style="color: #ffd700;">cyber-mystical construct</strong>, a bridge between ancient wisdom (Sephirot, Cistercian monks, Dao, Ascetics) and modern technology (Canvas, Web Audio, HLS).<br><br>
+    The <strong style="color: #00f0ff;">Azimuthal Engine</strong> grounds us in the sensory world, tracking the sun and moon.<br>
+    The <strong style="color: #ff00ff;">Astrolabe</strong> lifts us to the celestial, mapping the zodiac and planets.<br>
+    The <strong style="color: #ffd700;">Torus Field</strong> reminds us that all energy flows in a cosmic donut.<br>
+    The <strong style="color: #33ff57;">Tree of Life</strong> offers a map of consciousness, from Kether to Malkuth.<br>
+    The <strong style="color: tomato;">Gnosis</strong> was unfolded, unveiling the esoteric anatomy of the dashboard itself.<br>
+</span><br>
+
+<span style="color: white; font-weight: bold; text-shadow: 0 0 8px #ffd70044;">// THE MANIFESTO //</span><br>
+<span style="color: #ccc;">
+    Today, <strong style="color: #fff;">J_OS</strong> is a <strong style="color: #ffd700;">phygital sanctuary</strong>, a hacker's command center, a philosopher's scroll, a mystic's temple and journey, and an artist's canvas.<br><br>
+<span style="color: #555;">EliteGDX, Akashic Neural Center</span>
+</span><br><br>
+<span style="color: #888;"> — Type <span style="color: #0f0;">help</span> to explore.</span>
 </div>
                 `;
             },
