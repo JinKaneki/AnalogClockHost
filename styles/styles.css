@@ -1856,7 +1856,7 @@
 
         #azimuthal-toggle-btn {
             font-size: 10px;
-            padding: 4px 4px;
+            padding: 8px 8px;
             letter-spacing: 2px;
             transition: all 0.3s ease;
         }
@@ -1919,7 +1919,7 @@
         
         /* ===== FLAT EARTH – HIDDEN SECTION ===== */
         .fe-toggle-btn {
-            padding: 4px 2px;
+            padding: 6px 3px;
             letter-spacing: 2px;
         }
         
@@ -2560,7 +2560,7 @@
 
         /* ---- Utility classes ---- */
         .center-text { text-align: center; }
-        .constrained-text { max-width: 85%; margin: 0 auto 12px auto; }
+        .constrained-text { max-width: 90%; margin: 0 auto 12px auto; }
         .anatomy-title {
             font-family: 'VT323', monospace;
             font-size: 1.3rem;
@@ -2573,6 +2573,63 @@
             letter-spacing: 3px;
         }
         
+        /* ===== ESOTERIC ALPHABET GRID ===== */
+        .alphabet-grid {
+            display: grid;
+            grid-template-columns: repeat(26, 1fr);
+            gap: 2px 0;
+            margin: 10px auto;
+            max-width: 100%;
+            font-family: 'VT323', monospace;
+            text-align: center;
+            align-items: center;
+        }
+
+        /* Letters – Row 1 */
+        .alphabet-grid .letter {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #fff;
+            padding: 2px 0;
+            text-shadow: 0 0 8px rgba(255,255,255,0.05);
+        }
+
+        .alphabet-grid .letter.highlight {
+            color: #ffd700;
+            text-shadow: 0 0 20px #ffd70044, 0 0 40px #ffd70022;
+        }
+
+        /* Words – Row 2 */
+        .alphabet-grid .word {
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: #aaa;
+            text-align: center;
+            padding: 4px 0;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.02);
+            white-space: nowrap;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            padding-top: 4px;
+        }
+
+        .alphabet-grid .hidden-word {
+            color: #ffd700;
+            text-shadow: 0 0 20px #ffd70033;
+            border-top-color: rgba(255, 215, 0, 0.15);
+        }
+
+        .alphabet-grid .unconquered-word {
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255,255,255,0.1);
+            border-top-color: rgba(255, 255, 255, 0.06);
+        }
+
+        /* Orange letters (Y & Z) */
+        .alphabet-grid .letter.orange {
+            color: #ff6622;
+            text-shadow: 0 0 20px #ff662244, 0 0 40px #ff662222;
+        }
 
 
         /* MOBILE-FRIENDLY TWEAKS */
@@ -3062,7 +3119,7 @@
             }
             #azimuthal-toggle-btn {
                 font-size: 7px;
-                padding: 2px 2px;
+                padding: 4px 4px;
 
             }
             /* Triggers a bit earlier than 600px to avoid scrollbars on tablets /
@@ -3156,7 +3213,7 @@
             }
 
             .fe-toggle-btn {
-                padding: 3px 3px;
+                padding: 4px 3px;
                 letter-spacing: 1px;
             }
             
@@ -3206,6 +3263,17 @@
             .gnosis-divider {
                 width: 90%;
                 margin: 14px auto;
+            }
+            .alphabet-grid {
+                gap: 1px 0;
+            }
+            .alphabet-grid .letter {
+                font-size: 1rem;
+            }
+            .alphabet-grid .word {
+                font-size: 0.6rem;
+                white-space: normal;
+                word-break: break-word;
             }
 
             .site-footer {
