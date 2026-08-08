@@ -10972,7 +10972,7 @@ ${pins.slice(0, 10).join('<br>')}<br>
             mapImage.src = './images/Azimuthal_Equidistant_N90.jpg';
             let mapLoaded = false;
             mapImage.onload = () => { mapLoaded = true; };
-            mapImage.onerror = () => { console.warn('⚠️ Map image missing – using fallback'); };
+            mapImage.onerror = () => { console.warn('⚠️ Map image missing - using fallback'); };
 
             // ---------- Render functions ----------
 
@@ -11036,13 +11036,130 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 const sunX = cx + sunDist * Math.cos(raAngle);
                 const sunY = cy + sunDist * Math.sin(raAngle);
 
+                // ---- Sun Ephemeris & Sync (Moved up to calculate Moon offset) ----
+                const refDate = new Date(Date.UTC(2000, 0, 1, 12, 0, 0));
+                const diffDays = (simTime.getTime() - refDate.getTime()) / (1000 * 60 * 60 * 24);
+
+                const meanSunAnomaly = (357.529 + 0.98560028 * diffDays) * Math.PI / 180;
+                const sunEclipticLon = (280.459 + 0.98564736 * diffDays + 1.915 * Math.sin(meanSunAnomaly)) * Math.PI / 180;
+                const obliquity = 23.439 * Math.PI / 180;
+
+                // Calculate Sun's Right Ascension for synchronization
+                let sunRA = Math.atan2(
+                    Math.sin(sunEclipticLon) * Math.cos(obliquity),
+                    Math.cos(sunEclipticLon)
+                );
+                if (sunRA < 0) sunRA += 2 * Math.PI;
+
                 // Moon
-                const lunarDayProgress = timeOfDay / 24.84;
-                const moonRA = ((lunarDayProgress - (dayOfYear / 29.5) - 0.25)) * Math.PI * 2;
-                const moonDecFactor = Math.cos(((dayOfYear % 27.3) / 27.3) * Math.PI * 2);
-                const moonDist = radii.equator - (moonDecFactor * (radii.equator - radii.cancer));
-                const moonX = cx + moonDist * Math.cos(moonRA);
-                const moonY = cy + moonDist * Math.sin(moonRA);
+                // ---- Improved Moon Position & Orbit ----
+                // Mean lunar elements (degrees)
+                let L = (218.3165 + 13.176396 * diffDays) * Math.PI / 180;
+                let M = (134.9634 + 13.064993 * diffDays) * Math.PI / 180;
+                let F = (93.2720 + 13.229350 * diffDays) * Math.PI / 180;
+                let Omega = (125.044 - 0.052954 * diffDays) * Math.PI / 180;
+
+                let argLat = F - Omega;
+                const eclipticLat = 5.145 * Math.PI / 180 * Math.sin(argLat);
+                const eclipticLon = L + 6.289 * Math.PI / 180 * Math.sin(M); 
+
+                // Convert to equatorial
+                const sinDec = Math.sin(eclipticLat) * Math.cos(obliquity) + 
+                            Math.cos(eclipticLat) * Math.sin(obliquity) * Math.sin(eclipticLon);
+                const moonDec = Math.asin(sinDec);
+
+                let moonRA = Math.atan2(
+                    Math.sin(eclipticLon) * Math.cos(obliquity) - Math.tan(eclipticLat) * Math.sin(obliquity),
+                    Math.cos(eclipticLon)
+                );
+                if (moonRA < 0) moonRA += 2 * Math.PI;
+
+                // Map to azimuthal coordinates with the Safety Clamp
+                const decDeg = moonDec * 180 / Math.PI;
+                const rawMoonDist = radii.equator - (decDeg / 23.44) * (radii.equator - radii.cancer);
+                const minDist = radii.cancer * 0.5; // Prevents the Moon from overlapping the center
+                const moonDist = Math.max(minDist, rawMoonDist); 
+
+                // Tie the Moon's angle to the Sun's daily rotation (raAngle) 
+                // offset by the celestial distance between the Moon and the Sun.
+                const moonAngle = raAngle - (moonRA - sunRA); 
+
+                const moonX = cx + moonDist * Math.cos(moonAngle);
+                const moonY = cy + moonDist * Math.sin(moonAngle);
+
+                // ---- Moon Phase Calculation ----
+                let phaseAngle = eclipticLon - sunEclipticLon;
+                phaseAngle = ((phaseAngle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI); // Normalize 0 to 2PI
+
+                // Calculate illumination (0.0 = New, 1.0 = Full)
+                const illumination = (1 - Math.cos(phaseAngle)) / 2;
+
+                // ---- Determine Phase Name ----
+                let phaseName = "";
+                const phaseDeg = phaseAngle * 180 / Math.PI;
+                if (phaseDeg < 10 || phaseDeg > 350) phaseName = "New Moon";
+                else if (phaseDeg >= 10 && phaseDeg < 80) phaseName = "Waxing Crescent";
+                else if (phaseDeg >= 80 && phaseDeg < 100) phaseName = "First Quarter";
+                else if (phaseDeg >= 100 && phaseDeg < 170) phaseName = "Waxing Gibbous";
+                else if (phaseDeg >= 170 && phaseDeg < 190) phaseName = "Full Moon";
+                else if (phaseDeg >= 190 && phaseDeg < 260) phaseName = "Waning Gibbous";
+                else if (phaseDeg >= 260 && phaseDeg < 280) phaseName = "Last Quarter";
+                else if (phaseDeg >= 280 && phaseDeg <= 350) phaseName = "Waning Crescent";
+
+                // ---- Draw Moon with Geometrically Accurate Phase ----
+                const moonRadius = 12;
+
+                azCtx.save();
+                azCtx.translate(moonX, moonY);
+
+                // Dynamic Intensity Glow
+                const glowIntensity = 0.1 + (0.7 * illumination); // up to 0.8 at full moon
+                azCtx.shadowColor = `rgba(255, 255, 255, ${glowIntensity})`;
+                azCtx.shadowBlur = 20 * (0.8 + illumination); // up to 36 at full moon
+                
+
+                // Base dark circle (Unilluminated side)
+                azCtx.beginPath();
+                azCtx.arc(0, 0, moonRadius, 0, 2 * Math.PI);
+                azCtx.fillStyle = '#1a1a1a'; 
+                azCtx.fill();
+
+                // Turn off main glow for the crisp geometry steps
+                azCtx.shadowBlur = 0; 
+
+                const isWaxing = phaseAngle < Math.PI;
+
+                // Draw the bright half-circle
+                azCtx.beginPath();
+                azCtx.arc(0, 0, moonRadius, isWaxing ? -Math.PI/2 : Math.PI/2, isWaxing ? Math.PI/2 : -Math.PI/2);
+                azCtx.fillStyle = '#e2e8f0'; 
+                azCtx.fill();
+
+                // Simple Terminator Line (No Tilt)
+                const termWidth = moonRadius * Math.abs(Math.cos(phaseAngle));
+                const isCrescent = (phaseAngle < Math.PI / 2) || (phaseAngle > 3 * Math.PI / 2);
+
+                azCtx.beginPath();
+                // Ellipse signature with 0 rotation: x, y, radiusX, radiusY, rotation, startAngle, endAngle
+                azCtx.ellipse(0, 0, termWidth, moonRadius, 0, 0, Math.PI * 2);
+
+                // Anti-aliasing trick
+                azCtx.shadowColor = isCrescent ? '#1a1a1a' : '#e2e8f0';
+                azCtx.shadowBlur = 1.5; 
+                azCtx.fillStyle = isCrescent ? '#1a1a1a' : '#e2e8f0';
+                azCtx.fill();
+
+                // Draw Phase Name Label
+                azCtx.shadowBlur = 0;
+                azCtx.fillStyle = 'rgba(0, 240, 255, 0.7)'; 
+                azCtx.font = '10px "VT323", monospace';
+                azCtx.textAlign = 'center';
+                azCtx.textBaseline = 'top';
+                azCtx.fillText(phaseName, 0, moonRadius + 8);
+
+                azCtx.restore();
+
+
 
                 // Daylight gradient
                 const grad = azCtx.createRadialGradient(sunX, sunY, 10, sunX, sunY, radii.base * 1.1);
@@ -11117,8 +11234,8 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 const cx = displayWidth / 2, cy = displayHeight / 2;
                 const rOuter = Math.min(displayWidth, displayHeight) * 0.52;
                 const rZodiac = rOuter * 0.88;
-                const rPlanets = rOuter * 0.68;
-                const rTicks = rOuter * 0.92;
+                const rPlanets = rOuter * 0.76;
+                const rTicks = rOuter * 0.94;
 
                 // Clear (transparent)
                 cosCtx.clearRect(0, 0, displayWidth, displayHeight);
@@ -11277,27 +11394,43 @@ ${pins.slice(0, 10).join('<br>')}<br>
                     cosCtx.lineWidth = 1.5;
                     cosCtx.stroke();
 
-                    // ---- Numbers 1–12 ----
+                    // ---- Numbers 1–24 (24‑hour clock) ----
                     cosCtx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-                    cosCtx.font = `${clockRadius * 0.06}px "Segoe UI", Arial, sans-serif`;
+                    cosCtx.font = `${clockRadius * 0.045}px "Segoe UI", Arial, sans-serif`; // smaller to fit 24
                     cosCtx.textAlign = 'center';
                     cosCtx.textBaseline = 'middle';
-                    for (let i = 1; i <= 12; i++) {
-                        const angle = (i / 12) * 2 * Math.PI - Math.PI / 2;
-                        const numRadius = clockRadius * 0.85;
+                    for (let i = 0; i <= 24; i++) {
+                        const angle = (i / 24) * 2 * Math.PI - Math.PI / 2;
+                        const numRadius = clockRadius * 0.68; // slightly inward
                         const x = cxClock + numRadius * Math.cos(angle);
                         const y = cyClock + numRadius * Math.sin(angle);
-                        cosCtx.fillText(i.toString(), x, y);
+                        cosCtx.fillText(i.toString().padStart(2, '0'), x, y);
+                    }
+
+                    // ---- Minute ticks (60 marks) ----
+                    const tickRadiusOuter = clockRadius * 0.82;
+                    const tickRadiusInner = clockRadius * 0.72;
+                    for (let i = 0; i < 60; i++) {
+                        const angle = (i / 60) * 2 * Math.PI - Math.PI / 2;
+                        const outer = i % 5 === 0 ? tickRadiusOuter : tickRadiusOuter * 0.97;
+                        const inner = i % 5 === 0 ? tickRadiusInner + 4 : tickRadiusInner;
+                        cosCtx.beginPath();
+                        cosCtx.moveTo(cxClock + outer * Math.cos(angle), cyClock + outer * Math.sin(angle));
+                        cosCtx.lineTo(cxClock + inner * Math.cos(angle), cyClock + inner * Math.sin(angle));
+                        cosCtx.strokeStyle = i % 5 === 0 ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.08)';
+                        cosCtx.lineWidth = i % 5 === 0 ? 1.5 : 0.8;
+                        cosCtx.stroke();
                     }
 
                     // ---- Get current time (GMT) from simTime ----
-                    const hours = simTime.getUTCHours() % 12;
+                    const hours24 = simTime.getUTCHours();      // 0–23
                     const minutes = simTime.getUTCMinutes();
                     const seconds = simTime.getUTCSeconds();
 
-                    // ---- Hour hand ----
-                    const hourAngle = (hours / 12) * 2 * Math.PI + (minutes / 60) * (2 * Math.PI / 12) - Math.PI / 2;
-                    const hourLen = clockRadius * 0.5;
+                    // ---- Hour hand (24‑hour angle) ----
+                    // Each hour = 15° (2π/24), plus minute offset
+                    const hourAngle = (hours24 / 24) * 2 * Math.PI + (minutes / 60) * (2 * Math.PI / 24) - Math.PI / 2;
+                    const hourLen = clockRadius * 0.45;          // slightly shorter for 24h display
                     cosCtx.beginPath();
                     cosCtx.moveTo(cxClock, cyClock);
                     cosCtx.lineTo(cxClock + hourLen * Math.cos(hourAngle), cyClock + hourLen * Math.sin(hourAngle));
@@ -11525,6 +11658,8 @@ ${pins.slice(0, 10).join('<br>')}<br>
             console.log('🌀 Unified Astrolabe Engine initialized.');
         })();
         
+
+
         // ===== GNOSIS TOGGLE =====
         (function initGnosis() {
             const toggleBtn = document.getElementById('gnosis-toggle-btn');
