@@ -18,7 +18,7 @@
 - **Cistercian Clock** – Medieval monk numerals (0–9999) with a modern twist.
 - **Cosmic Wheel** – Live Mazzaroth zodiac wheel with accurate planetary positions.
 - **Celestial Clock** – Glass analog clock overlaid on the Cosmic Wheel.
-- **Flat Earth Projection** – Circular and stretched azimuthal projections with day/night spotlight.
+
 
 
 - **Always-On Display:** Integrated Screen Wake Lock API prevents display dimming.
@@ -39,6 +39,7 @@
 - **Mazzaroth Wheel** – Live zodiac wheel with AC/MC lines and planetary positions.
 - **Flat Earth Projection** – Two views (circular & stretched) with day/night spotlight.
 - **Ephemeris Engine** – Self‑hosted, fallback‑ready planetary data.
+- **Flat Earth Projection** – Circular and stretched azimuthal projections with day/night spotlight.
 
 ### 🎛️ Controls
 - **Freeze Moment** – Pause the image rotation.
@@ -95,7 +96,7 @@ UI transitions are synchronized with the system clock, occurring precisely at `0
 hides/shows all five control buttons:
   - FREEZE MOMENT
   - BG: SYNCED / INDEPENDENT
-  - STYLE (Classic / Glass / Digital / Cistercian)
+  - STYLE (Classic / Glass / Digital / Cistercian/ Cosmic/ Celestial)
   - CLEAN VIEW
   - Volume slider & mute button
 - When hidden, the buttons **remain in the layout** (space is preserved) – no layout shift.
@@ -501,7 +502,7 @@ The **J_OS // AKASHIC ZERO-POINT KRYPTOS NEURAL CENTER** console now supports:
 - 🎭 **Fun & Entertainment** (`joke`, `riddle`, `poem`, `poetry`, `anime`, `qr`, `cowsay`, `ascii`, `hack`, `react`, `htop`, `fortune`, `rotate`)
 - ⚙️ **Utilities** (`theme`, `clear`, `sudo`, `fetch`, `neofetch`, `history`, `pause`, `shutdown`, `echo`, `ls`, `whoami`)
 
-It is functionally complete, aesthetically cohesive, and ready for daily use as an ambient always‑on companion for your workspace or as a fast information retrieval and communication tool.
+It is functionally complete, aesthetically cohesive, and ready for daily use as an ambient always‑on companion for a workspace or as a fast information retrieval and communication tool.
 
 ---
 
@@ -608,4 +609,4 @@ If you want to dive deep through the mysteries and esoteric secrets of this gem,
   > "All things serve the Steam. XD"
 
 This project demonstrated that even a simple utility like a clock can be elevated through high‑level engineering, browser‑specific APIs, and unique historical aesthetics. 
-Focused on **"The Tao of Ricing"** balancing high-tech aesthetics with low-distraction utility.
+Focused on **"The Dao of Ricing"** balancing high-tech aesthetics with low-distraction utility.
