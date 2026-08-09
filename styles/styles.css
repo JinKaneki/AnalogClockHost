@@ -1005,6 +1005,10 @@
             transition: opacity 0.3s ease;
         }
 
+        #neofetch-container {
+            padding: 200px;
+        }
+
         /* --- CYBER-FETCH TERMINAL --- */
         #cyber-fetch-terminal {
             position: fixed;
@@ -2508,7 +2512,7 @@
 
         /* ---- Custom Scrollbar ---- */
         .gnosis-panel::-webkit-scrollbar {
-            width: 6px;
+            width: 7px;
         }
         .gnosis-panel::-webkit-scrollbar-track {
             background: rgba(0, 0, 0, 0.3);
@@ -2569,7 +2573,7 @@
         }
         .footer-mantra {
             color: #ffd700;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             letter-spacing: 3px;
         }
         
@@ -3209,7 +3213,7 @@
 
 
             .anatomy-title {
-            font-size: 1.1rem;
+            font-size: 1rem;
             }
 
             .fe-toggle-btn {
@@ -3274,6 +3278,10 @@
                 font-size: 0.6rem;
                 white-space: normal;
                 word-break: break-word;
+            }
+            .footer-mantra {
+            font-size: 0.6rem;
+            letter-spacing: 2px;
             }
 
             .site-footer {
