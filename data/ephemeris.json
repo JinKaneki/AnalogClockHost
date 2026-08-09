@@ -1,27 +1,27 @@
 {
-    "refDate": "2026-07-08T22:34:00Z",
+    "refDate": "2026-01-01T00:00:00Z",
     "refLon": {
-        "Sun": 106.7667,
-        "Moon": 31.2,
-        "Mercury": 113.2833,
-        "Venus": 149.1333,
-        "Mars": 67.1667,
-        "Jupiter": 121.8833,
-        "Saturn": 14.4833,
-        "Uranus": 64.0833,
-        "Neptune": 4.4167,
-        "Pluto": 304.7
+        "Sun": 280.46,
+        "Moon": 45.2,
+        "Mercury": 300.8,
+        "Venus": 135.6,
+        "Mars": 112.3,
+        "Jupiter": 89.7,
+        "Saturn": 345.2,
+        "Uranus": 210.5,
+        "Neptune": 340.1,
+        "Pluto": 298.4
     },
     "dailyMotion": {
-        "Sun": 0.95972,
-        "Moon": 13.2986,
-        "Mercury": 1.00417,
-        "Venus": 0.97556,
-        "Mars": 0.66611,
-        "Jupiter": 0.2175,
-        "Saturn": -0.01917,
-        "Uranus": 0.02667,
-        "Neptune": -0.015,
-        "Pluto": -0.02139
+        "Sun": 0.9856,
+        "Moon": 13.176,
+        "Mercury": 1.383,
+        "Venus": 1.602,
+        "Mars": 0.524,
+        "Jupiter": 0.083,
+        "Saturn": -0.033,
+        "Uranus": 0.012,
+        "Neptune": -0.006,
+        "Pluto": -0.004
     }
 }
