@@ -1696,7 +1696,7 @@
         loadYohanTeChing();
 
 
-        // --- ELITE 4-STATE CLOCK TOGGLE (Classic / Glass / Digital / Cistercian) ---
+        // --- ELITE 6-STATE CLOCK TOGGLE (Classic / Glass / Digital / Cistercian/ Cosmic/ Celestial) ---
         const styleBtn = document.getElementById('zen-toggle-btn');
         const analogClock = document.getElementById('analog-clock');
         const digitalClock = document.getElementById('digital-clock');
@@ -1788,6 +1788,55 @@
                 triggerGhost(modeMessages[mode]);
             }
         });
+
+        // Swipe LEFT/RIGHT - Change Clock Mode
+        (function initSwipe() {
+            const wrapper = document.querySelector('.timepiece-wrapper');
+            if (!wrapper) return;
+
+            // Get the STYLE button 
+            const styleBtn = document.getElementById('zen-toggle-btn');
+            if (!styleBtn) return;
+
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let isSwiping = false;
+
+            wrapper.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+                touchStartY = e.changedTouches[0].screenY;
+                isSwiping = false;
+            }, { passive: true });
+
+            wrapper.addEventListener('touchmove', (e) => {
+                const deltaX = e.changedTouches[0].screenX - touchStartX;
+                const deltaY = e.changedTouches[0].screenY - touchStartY;
+                if (Math.abs(deltaX) > 10 && Math.abs(deltaX) > Math.abs(deltaY)) {
+                    isSwiping = true;
+                }
+            }, { passive: true });
+
+            wrapper.addEventListener('touchend', (e) => {
+                if (!isSwiping) return;
+                const deltaX = e.changedTouches[0].screenX - touchStartX;
+                const threshold = 50;
+
+                if (Math.abs(deltaX) > threshold) {
+                    // ---- Determine direction ----
+                    let direction = deltaX < 0 ? 1 : -1; // 1 = next, -1 = previous
+
+                    const clockModesLength = 6; // classic, glass, digital, cistercian, cosmic, celestial
+                    const clicks = direction === 1 ? 1 : clockModesLength - 1;
+
+                    for (let i = 0; i < clicks; i++) {
+                        styleBtn.click();
+                    }
+                }
+                isSwiping = false;
+            }, { passive: true });
+
+            console.log('Swipe gesture initialized (using style button).');
+        })();
 
 
 
@@ -8037,61 +8086,53 @@ ${pins.slice(0, 10).join('<br>')}<br>
         });
 
 
-        // --- FULLSCREEN TOGGLE FOR TERMINAL ---
-        const fullscreenBtn = document.getElementById('terminal-fullscreen-btn');
-        const terminalContainer = document.getElementById('command-runner');
+        // TERMINAL FULLSCREEN TOGGLE (Icons Only)
+        (function initTerminalFullscreen() {
+            const btn = document.getElementById('terminal-fullscreen-btn');
+            const terminal = document.getElementById('command-runner');
+            if (!btn || !terminal) return;
 
-        if (fullscreenBtn && terminalContainer) {
-            fullscreenBtn.addEventListener('click', () => {
-                if (!document.fullscreenElement) {
-                    terminalContainer.requestFullscreen().catch(err => console.warn(err));
-                    fullscreenBtn.textContent = '✕';          // tiny exit symbol
-                    fullscreenBtn.title = 'Exit Fullscreen';
+            const expandIcon = document.getElementById('term-fs-expand');
+            const compressIcon = document.getElementById('term-fs-compress');
+
+            function updateIcons(isFullscreen) {
+                if (isFullscreen) {
+                    expandIcon.style.display = 'none';
+                    compressIcon.style.display = 'block';
                 } else {
-                    document.exitFullscreen();
-                    fullscreenBtn.textContent = '⛶';          // tiny enter symbol
-                    fullscreenBtn.title = 'Toggle Fullscreen';
+                    expandIcon.style.display = 'block';
+                    compressIcon.style.display = 'none';
+                }
+            }
+
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation(); // prevent any parent handlers
+
+                const isTerminalFullscreen = document.fullscreenElement === terminal ||
+                                            (document.fullscreenElement && terminal.contains(document.fullscreenElement));
+
+                if (isTerminalFullscreen) {
+                    // Exit fullscreen completely 
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen().catch(err => console.warn(err));
+                    }
+                } else {
+                    // Request fullscreen on the terminal
+                    terminal.requestFullscreen()
+                        .then(() => updateIcons())
+                        .catch(err => console.warn('Terminal fullscreen error:', err.message));
                 }
             });
 
-            // Listen for fullscreen change (Esc key, etc.)
-            document.addEventListener('fullscreenchange', () => {
-                if (!document.fullscreenElement) {
-                    fullscreenBtn.textContent = '⛶';
-                    fullscreenBtn.title = 'Toggle Fullscreen';
-                }
-            });
-            document.addEventListener('webkitfullscreenchange', () => {
-                if (!document.webkitFullscreenElement) {
-                    fullscreenBtn.textContent = '⛶';
-                    fullscreenBtn.title = 'Toggle Fullscreen';
-                }
-            });
-        }
-        
-        document.addEventListener('fullscreenchange', () => {
-            if (!document.fullscreenElement && cmdVisible) {
-                // We just left fullscreen – scroll the terminal output into view
-                const runner = document.getElementById('command-runner');
-                if (runner) {
-                    runner.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    // also scroll the output to the bottom
-                    const output = document.getElementById('cmd-output');
-                    if (output) output.scrollTop = output.scrollHeight;
-                }
-            }
-        });
-        // Safari support
-        document.addEventListener('webkitfullscreenchange', () => {
-            if (!document.webkitFullscreenElement && cmdVisible) {
-                const runner = document.getElementById('command-runner');
-                if (runner) {
-                    runner.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    const output = document.getElementById('cmd-output');
-                    if (output) output.scrollTop = output.scrollHeight;
-                }
-            }
-        });
+            
+
+            // Listen for fullscreen changes (Esc key, page fullscreen button, etc.)
+            document.addEventListener('fullscreenchange', updateIcons);
+            document.addEventListener('webkitfullscreenchange', updateIcons); // Safari support
+
+            // Initial state
+            updateIcons();
+        })();
 
         function refreshSlideshowIfActive() {
             if (window._slideshowActive) {
@@ -11259,7 +11300,7 @@ ${pins.slice(0, 10).join('<br>')}<br>
                 const radii = {
                     cancer: r * 0.38,
                     equator: r * 0.55,
-                    capricorn: r * 0.70,
+                    capricorn: r * 0.72,
                     base: r
                 };
 
@@ -11967,6 +12008,63 @@ ${pins.slice(0, 10).join('<br>')}<br>
 
             console.log('Gnosis dropdown ready.');
         })();
+
+
+        // ============================================================
+        // FULLSCREEN TOGGLE (Clutter‑Free Ambient Mode)
+        // ============================================================
+        function toggleClutterFreeMode() {
+            const btn = document.getElementById('fullscreen-btn');
+            if (!btn) return;
+
+            const label = btn.querySelector('.fs-label');
+            const svg = btn.querySelector('svg');
+
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen()
+                    .then(() => {
+                        label.textContent = 'Exit';
+                        svg.innerHTML = `<path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>`;
+                    })
+                    .catch(err => {
+                        console.warn('Fullscreen error:', err.message);
+                    });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // ---- Listen for fullscreen changes (Esc key, etc.) ----
+        document.addEventListener('fullscreenchange', () => {
+            const btn = document.getElementById('fullscreen-btn');
+            if (!btn) return;
+
+            const label = btn.querySelector('.fs-label');
+            const svg = btn.querySelector('svg');
+
+            if (!document.fullscreenElement) {
+                label.textContent = '';
+                svg.innerHTML = `<path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>`;
+            } else {
+                label.textContent = '';
+                svg.innerHTML = `<path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>`;
+            }
+        });
+
+        // ---- Attach click event ----
+        document.getElementById('fullscreen-btn')?.addEventListener('click', toggleClutterFreeMode);
+        
+
+
+
+        // Confirm before leaving
+        /* window.addEventListener('beforeunload', (e) => {
+        e.preventDefault();
+        e.returnValue = 'Are you sure you want to leave EliteGDX? Your session will be lost.';
+        }); 
+        */
 
         // Automatically update copyright year
         document.getElementById('year').textContent = new Date().getFullYear();

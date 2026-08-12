@@ -175,6 +175,80 @@
         color: #333;
         }*/
         
+        /* ---- Fullscreen Icon Button (top-right) ---- */
+        .elite-fs-btn {
+            background: transparent;
+            border: none;
+            color: var(--accent-color, #00f0ff);
+            padding: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            border-radius: 4px;
+            width: 32px;
+            height: 32px;
+            margin-left: 6px;
+        }
+
+        .elite-fs-btn:hover {
+            background: rgba(0, 240, 255, 0.08);
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        .elite-fs-btn:active {
+            transform: scale(0.92);
+        }
+
+        .elite-fs-btn .fs-label {
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+        .elite-fs-btn .fs-icon {
+            display: block;
+            stroke: currentColor;
+            width: 16px;
+            height: 16px;
+        }
+        
+        
+        /* ---- Terminal Icon Buttons ---- */
+        .term-icon-btn {
+            background: transparent;
+            border: none;
+            color: var(--accent-color, #00f0ff);
+            padding: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            opacity: 0.6;
+        }
+
+        .term-icon-btn:hover {
+            background: rgb(60, 255, 0);
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .term-icon-btn:active {
+            transform: scale(0.92);
+        }
+
+        .term-icon-btn svg {
+            display: block;
+            stroke: currentColor;
+            width: 14px;
+            height: 14px;
+        }
+
+        
 
         /* Premium Clock Face */
         .clock {
@@ -1446,36 +1520,9 @@
 
 
 
-        /* Floating controls for fullscreen mode */
-        .term-controls {
-            position: fixed;
-            top: 40px;
-            right: 40px;
-            display: flex;
-            gap: 10px;
-            z-index: 9999;
-            opacity: 0.6;
-            transition: opacity 0.3s;
-        }
-        .term-controls:hover { opacity: 1; }
 
-        .zoom-btn {
-            background: rgba(0,0,0,0.7);
-            color: rgb(255, 200, 0);
-            border: 1px solid #0f0;
-            padding: 5px;
-            cursor: pointer;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            border-radius: 4px;
-        }
-        .mini-zoom {
-            font-size: 10px !important;
-            padding: 2px 6px !important;
-            min-width: 10px !important;
-            line-height: 1;
-            border-radius: 3px;
-        }
+
+
         #cmd-output,
         #cmd-output * {
             font-size: var(--term-font-size, 8px) !important;
@@ -2634,6 +2681,10 @@
             color: #ff6622;
             text-shadow: 0 0 20px #ff662244, 0 0 40px #ff662222;
         }
+
+
+
+
 
 
         /* MOBILE-FRIENDLY TWEAKS */
