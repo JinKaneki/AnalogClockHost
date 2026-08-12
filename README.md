@@ -4,11 +4,13 @@
 **An "Always-On" productivity clock and personal gallery engineered for professional workspaces.**
 **An ambient, cyber‑punk inspired dashboard with multiple clock faces, a rotating image gallery, and a powerful built‑in terminal command runner(CLI).**
 
-## 🌐 Live Demo
+## Live Demo
 
-[https://jinkaneki.github.io/EliteGDX/](https://jinkaneki.github.io/EliteGDX/)
-
+🌐 [https://jinkaneki.github.io/EliteGDX/](https://jinkaneki.github.io/EliteGDX/)
 ---
+📖 [User Operations Manual](https://jinkaneki.github.io/EliteGDX/guide.html)
+---
+
 
 ## 🚀 Key Features
 ### 🕐 Clocks & Timepieces
@@ -171,7 +173,7 @@ I set the following CSS custom properties to achieve the **rainbow line effect**
 
 ## ⌨️ CLI Reference
   "You know how some people have a clock screensaver? I made something way cooler. It's a web page I keep open that not only tells time but also lets me type commands. I can type 'weather Tokyo' and it shows me the forecast. I can type 'tv nasa' and it plays a live stream from the space station. It also shows inspirational quotes, plays music, and even has a secret 'Intersect' flash. It's like my own little command center." **-Jin Kaneki**
-### 💻 J_OS // AKASHIC ZERO-POINT KRYPTOS NEURAL CENTER (AZKNC)
+### ./ J_OS // AKASHIC ZERO-POINT KRYPTOS NEURAL CENTER (AZKNC)
 The built‑in command runner, a full‑featured terminal emulator with over 50 commands, fullscreen support, and a cyber‑mystical aesthetic.
 
 ### Command Categories
@@ -597,6 +599,8 @@ It is functionally complete, aesthetically cohesive, and ready for daily use as 
 For a full detailed changelog with all changes, see the [CHANGELOG](https://github.com/JinKaneki/EliteGDX/blob/main/CHANGELOG.md) for a complete version history.
 
 If you want to dive deep through the mysteries and esoteric secrets of this gem, see the [ESOTERIC](https://github.com/JinKaneki/EliteGDX/blob/main/ESOTERIC.md) part.
+
+**[User Operations Manual](https://jinkaneki.github.io/EliteGDX/guide.html)** – Complete guide to all features, clock modes, terminal commands, and engineering architecture.
 
 ## 🤝 Credits & Inspiration
 - Original Cistercian Web Components by **Hubert Sablonnière**.

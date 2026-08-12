@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EliteGDX - Operations Manual</title>
+    <!-- Comfortaa for that premium rounded look, Fira Code for terminal snippets -->
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ============================================================ */
+        /*  RESET & BASE VARIABLES                                      */
+        /* ============================================================ */
+        :root {
+            --bg-pure: #000000;
+            --bg-surface: #0f0f13;
+            --border-color: rgba(0, 255, 204, 0.265);
+            --text-primary: #ffffff;
+            --text-secondary: #9999a1;
+            --accent: #00ffcc;
+            --gold: #ffd700;
+            --font-main: 'Comfortaa', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-pure);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            font-weight: 400;
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ============================================================ */
+        /*  TYPOGRAPHY & CITATIONS                                      */
+        /* ============================================================ */
+        h1, h2, h3 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            letter-spacing: -0.03em;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            margin: 4rem 0 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin: 2rem 0 1rem;
+            color: var(--accent);
+        }
+
+        p, li {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 75ch;
+            margin-bottom: 1.2rem;
+            font-weight: 300;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #ffffff;
+        }
+
+        code, kbd {
+            font-family: var(--font-mono);
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 0.2em 0.6em;
+            border-radius: 8px;
+            font-size: 0.85em;
+            color: var(--accent);
+        }
+
+        /* ============================================================ */
+        /*  LAYOUT CONTAINERS & MEDIA                                   */
+        /* ============================================================ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5vw;
+        }
+
+        section {
+            padding: 4rem 0;
+        }
+
+        .placeholder-img {
+            width: 100%;
+            height: auto;
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 255, 204, 0.05);
+        }
+
+        /* ============================================================ */
+        /*  PROFESSIONAL STICKY HEADER                                  */
+        /* ============================================================ */
+        .site-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgb(0, 0, 0);
+            border-bottom: 1px solid var(--gold);
+            z-index: 1000;
+            padding: 1rem 5vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .brand-icon {
+            font-size: 2rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-menu a, .nav-menu button {
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .nav-menu a:hover, .nav-menu button:hover {
+            color: var(--accent);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--border-color);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            background: rgba(0, 255, 204, 0.1);
+            color: var(--accent) !important;
+        }
+
+        /* Hamburger Toggle Mechanism */
+        .nav-toggle, .nav-toggle-label {
+            display: none;
+        }
+
+        .hero p.sub {
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            color: #dddddd;  /* brighter for readability */
+            max-width: 800px;
+            line-height: 1.6;
+        }
+
+        .mantra {
+            display: inline-block;
+            margin-top: 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: royalblue;
+            padding: 0.8rem 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            letter-spacing: 0.05em;
+        }
+
+        @media (max-width: 900px) {
+            .nav-toggle-label {
+                display: block;
+                cursor: pointer;
+                width: 30px;
+                height: 20px;
+                position: relative;
+                z-index: 1001;
+            }
+
+            .nav-toggle-label span,
+            .nav-toggle-label span::before,
+            .nav-toggle-label span::after {
+                display: block;
+                background: var(--text-primary);
+                height: 2px;
+                width: 100%;
+                position: absolute;
+                transition: all 0.3s ease;
+            }
+
+            .nav-toggle-label span::before { content: ''; top: -8px; }
+            .nav-toggle-label span::after { content: ''; bottom: -8px; }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 100%;
+                max-width: 400px;
+                background: var(--bg-pure);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                border-left: 1px solid var(--border-color);
+            }
+
+            .nav-toggle:checked ~ .nav-menu { right: 0; }
+            .nav-toggle:checked ~ .nav-toggle-label span { background: transparent; }
+            .nav-toggle:checked ~ .nav-toggle-label span::before { transform: rotate(45deg); top: 0; }
+            .nav-toggle:checked ~ .nav-toggle-label span::after { transform: rotate(-45deg); bottom: 0; }
+        }
+
+        /* ============================================================ */
+        /*  TWO-COLUMN GRID                                             */
+        /* ============================================================ */
+        .grid-split {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 4rem;
+            margin-top: 2rem;
+        }
+
+        /* ============================================================ */
+        /*  ROUNDED J-OS TERMINAL TILES                                 */
+        /* ============================================================ */
+        .cmd-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .cmd-group {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            border-radius: 24px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cmd-group:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 255, 204, 0.08);
+        }
+
+        .cmd-group .label {
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cmd-group .cmds {
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 2;
+        }
+
+        /* ============================================================ */
+        /*  COMMAND REFERENCE – use gold for code                      */
+        /* ============================================================ */
+        .cmd-ref code {
+            color: var(--gold);
+        }
+
+        .cmd-ref p {
+            margin-bottom: 0.4rem;
+        }
+
+        /* ============================================================ */
+        /*  FOOTER                                                      */
+        /* ============================================================ */
+        footer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 2rem 0 1.5rem;
+            margin-top: 2rem;
+        }
+
+        footer .beam {
+            font-size: 1.1rem;
+            text-align: center;
+            color: var(--gold);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="site-header">
+        <div class="brand">
+            <span class="brand-icon">🌀</span>
+            <span>EliteGDX</span>
+            <span class="version-badge" style="font-size: small; color: gold;">v2.0 MANUAL</span>
+        </div>
+
+        <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+        <label for="nav-toggle" class="nav-toggle-label">
+            <span></span>
+        </label>
+
+        <nav class="nav-menu">
+            <!-- FULLSCREEN TOGGLE BUTTON -->
+            <button id="fullscreen-btn" class="btn-outline" onclick="toggleClutterFreeMode()" style="padding: 0.5rem 0.8rem; display: flex; align-items: center; justify-content: center;" title="Toggle Fullscreen">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+            </button>
+            <a href="#overview" onclick="document.getElementById('nav-toggle').checked = false;">Overview</a>
+            <a href="#features" onclick="document.getElementById('nav-toggle').checked = false;">Features</a>
+            <a href="#terminal" onclick="document.getElementById('nav-toggle').checked = false;">J_OS Terminal</a>
+            <a href="#engineering" onclick="document.getElementById('nav-toggle').checked = false;">Engineering</a>
+            <a href="#faq" onclick="document.getElementById('nav-toggle').checked = false;">FAQ</a>
+            <!-- State-Preserving Return Button -->
+            <button onclick="window.history.back()" class="btn-outline">← Return</button>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <!-- ===== HERO ===== -->
+        <section class="hero" id="overview" style="padding-top: 15vh;">
+            <h1>Elite Gems Dashboard</h1>
+            <p style="font-size: 1.4rem; color: gold; font-weight: 600;">
+                An ambient, cyber-punk inspired dashboard with multiple clock faces, a rotating image gallery, and a powerful built-in terminal command runner (CLI).
+            </p>
+            <p>
+                An "Always-On" productivity clock and personal gallery engineered for professional workspaces. The dashboard combines the serenity of a premium desk clock with the raw power of a hacker's command center - all in a single, persistent web page that never sleeps. The Screen Wake Lock API prevents your device from dimming or going to sleep while the tab is active, with visibilitychange listeners that re-acquire the lock when you return to the tab.
+            </p>
+
+            <!-- Placeholder for Main UI Screenshot -->
+            <img src="https://via.placeholder.com/1200x600/0f0f13/00ffcc?text=Dashboard+Main+Interface+Preview" alt="Dashboard Interface" class="placeholder-img" />
+
+        </section>
+
+        <!-- ===== OVERVIEW ===== -->
+        <section class="hero" id="overview">
+            <h1>Omnipresent Omniscient Dashboard</h1>
+            <p class="sub">
+                Real-time celestial physics · Ancient philosophy · UNIX emulation · Minimalist timekeeping
+            </p>
+            <p>
+                Whomever you are, a phygital nomad or a developer, EliteGDX offers a unique space to <span class="highlight-cyan">learn , meditate, reflect, contemplate time and explore the cosmos, track the luminaries and interact with a living system</span>.
+            </p>
+            <div class="mantra">“All things serve all things.”</div>
+
+            <h2 style="margin-top: 5rem;">System Overview</h2>
+            <p>
+                EliteGDX is an always-on workspace companion designed to eliminate distraction while offering
+                deep utility. It blends the visual language of a terminal operator view with accurate
+                planetary orbital dynamics and timeless wisdom modules.
+            </p>
+            <p>
+                Built with full touch-gesture mapping (swipe for clock transitions, double-tap for background lock)
+                and responsive canvas scaling – ready for monitors, tablets, or wall-mounted displays.
+            </p>
+        </section>
+
+        <!-- ===== FEATURES ===== -->
+        <section id="features">
+            <h2>Core Features & Displays</h2>
+
+            <div class="grid-split">
+                <div>
+                    <h3>🕐 Timepieces</h3>
+                    <ul>
+                        <li><strong>Analog Clock</strong> – Classic face with glowing second hand.</li>
+                        <li><strong>Glass Mode</strong> – Transparent glass analog clock.</li>
+                        <li><strong>Digital Clock</strong> – Minimalist, stack-style digital display.</li>
+                        <li><strong>Cistercian Clock</strong> – Displays the full time (hours + minutes + seconds) as a single medieval numeral with rainbow-coloured lines. The Cistercian numeral system, developed by 13th-century Cistercian monks, represents any number from 0 to 9999 using a single glyph constructed from horizontal, vertical, and diagonal strokes. Each digit occupies a quadrant, making the entire time readable at a glance once you learn the system.</li>
+                        <li><strong>Cosmic Wheel</strong> – Live Mazzaroth zodiac wheel with accurate planetary positions. Powered by a self-hosted ephemeris engine that calculates true planetary positions using J2000 orbital equations, the wheel displays the Sun, Moon, Mercury, Venus, Mars, Jupiter, and Saturn in their real-time zodiacal positions, along with AC/MC (Ascendant/Midheaven) lines for astrological chart work.</li>
+                        <li><strong>Celestial Clock</strong> – Glass analog clock overlaid on the Cosmic Wheel.</li>
+                    </ul>
+                    <p>
+                        <strong>Cistercian Date Display</strong> – Below the main clock, year, month, and day are displayed as three separate Cistercian numerals with rainbow-coloured strokes and natural spacing, turning the date into a piece of living medieval calligraphy.
+                    </p>
+                </div>
+                <div>
+                    <h3>🎛️ Interaction Protocols</h3>
+                    <ul>
+                        <li><strong>Mirror Mode</strong> – Minimalist full-screen display for any clock mode. Hides all UI elements except the active clock and the Tao Te Ching widget, adding a large empty space under the clock for pure aesthetic contemplation.</li>
+                        <li><strong>Stealth Controls</strong> – Double-click the background (avoiding any UI element) to freeze/unfreeze immediately with a Ghost UI indicator. The same effect is triggered by pressing the <kbd>B</kbd> key.</li>
+                        <li><strong>Hide Controls Toggle</strong> – A dedicated button in the top-left corner hides/shows all control buttons – FREEZE MOMENT, BG: SYNCED / INDEPENDENT, STYLE, CLEAN VIEW, and the volume slider. When hidden, the buttons remain in the layout (space is preserved) so there's no layout shift.</li>
+                        <li><strong>Mechanical Sound Engine</strong> – Web Audio API generated ticks/tocks with adjustable volume and instant mute. The sound provides satisfying auditory feedback for every clock tick, button press, and state change.</li>
+                        <li><strong>Cycle Clock Styles</strong> – Use the STYLE button to cycle through all six clock modes: Classic → Glass → Digital → Cistercian → Cosmic → Celestial.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Placeholder for Clock Displays -->
+            <img src="https://via.placeholder.com/1200x400/0f0f13/00ffcc?text=Clock+Styles+Gallery+(Cistercian,+Cosmic,+Glass)" alt="Clock Styles" class="placeholder-img" />
+
+            <div style="margin-top: 2rem;">
+                <h3>Astrological & Cosmic Tools</h3>
+                <ul>
+                    <li><strong>Mazzaroth Wheel</strong> – A live zodiac wheel with AC/MC lines and planetary positions. Toggle on/off via the Cosmic Array Toggles in the Unified Astrolabe Engine. The AC (Ascendant) line marks the eastern horizon, while the MC (Midheaven) marks the highest point in the sky – both are calculated in real-time based on your anchor coordinates (default: Great Pyramid of Giza).</li>
+                    <li><strong>Flat Earth Projection</strong> – Two views (circular and stretched) with a day/night spotlight that realistically dims the terrain in shadow. The azimuthal projection places you at the North Pole looking out, with the Sun and Moon tracking across the sky in real time.</li>
+                    <li><strong>Unified Astrolabe Engine</strong> – A dual-layer canvas system that overlays a DPI-scaled cosmic Mazzaroth wheel onto the flat-earth azimuthal projection. Both layers share a single UTC time source, providing a seamless celestial dashboard where the earthly and heavenly align perfectly.</li>
+                </ul>
+            </div>
+
+            <!-- Placeholder for Cosmic Wheel -->
+            <img src="https://via.placeholder.com/1200x400/0f0f13/00ffcc?text=Cosmic+Wheel+and+Azimuthal+Projection" alt="Cosmic Tools" class="placeholder-img" />
+
+            <div style="margin-top: 2rem;">
+                <h3>🖼️ Gallery & Background Engine</h3>
+                <ul>
+                    <li><strong>Dual-Mode Backgrounds</strong> – <strong>Synced</strong> mode mirrors the central gallery image, while <strong>Independent</strong> mode cycles backgrounds on its own 30-second timer, separate from the minute clock.</li>
+                    <li><strong>Fisher-Yates (Knuth) Shuffle</strong> – Gallery content is randomised with mathematical perfection. The O(n) algorithm ensures all items are shown exactly once before the deck is reshuffled – no repeats, no bias.</li>
+                    <li><strong>Freeze Moment</strong> – Pause the image rotation to pin a specific image or quote.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ===== J-OS TERMINAL DEEP DIVE ===== -->
+        <section id="terminal">
+            <h2>J_OS Terminal: Your Personal Command Center</h2>
+            <p>
+                <em>"You know how some people have a clock screensaver? I made something way cooler. It's a web page I keep open that not only tells time but also lets me type commands... It's like my own little command center."</em>
+            </p>
+            <p>
+                Don't let the hacker-style interface intimidate you. The built-in <strong>J_OS // AKASHIC ZERO-POINT KRYPTOS NEURAL CENTER (AZKNC)</strong> is a full-featured terminal emulator with over 100 commands, fullscreen support, and a cyber-mystical aesthetic. By simply typing short words, you can stream television, listen to the radio, play games, or talk to people around the world. Open it by clicking the <code>Command Runner</code> button.
+            </p>
+
+            <h3>⚡ Core Command Categories</h3>
+            <div class="cmd-grid">
+
+                <div class="cmd-group">
+                    <span class="label">📺 Streaming & Media</span>
+                    <p style="font-size: 0.9rem; margin-bottom: 1rem;">Turn your dashboard into an entertainment hub.</p>
+                    <div class="cmds">
+                        <code>play youtube [url]</code> – Embed a YouTube video or live stream in the terminal.<br>
+                        <code>tv [channel]</code> – Watch curated live TV: NASA, ISS, Lofi, Gumball, and more.<br>
+                        <code>radio [channel]</code> – Tune into curated Akashic radio frequencies (defcon, lofi, etc.).<br>
+                        <code>iptv all</code> – Browse all available IPTV channels by country or category.<br>
+                        <code>play iptv [url]</code> – Play a stream directly in the terminal.<br>
+                        <code>ipset</code> – Your personal curated list (Curiosity Now, MovieSphere, True History, Bon Appétit, France 24, BFM TV, 20 Minutes TV, Africa 24).<br>
+                        <code>stop</code> – Halts all playing media (YouTube, audio, IPTV).
+                    </div>
+                </div>
+
+                <div class="cmd-group">
+                    <span class="label">📻 Music & Audio</span>
+                    <p style="font-size: 0.9rem; margin-bottom: 1rem;">Listen to built-in presets or live global radio.</p>
+                    <div class="cmds">
+                        <code>play audio [preset]</code> – Start a built-in sound: <em>siren, bell, gong, ascension, medit, deeptown, elite, cote</em>.<br>
+                        <code>play audio [preset] -loop</code> – Loop a preset continuously (stop with <code>stop</code>).<br>
+                        <code>play audio [url]</code> – Play an external audio file (MP3, OGG, WAV).<br>
+                        <code>radio defcon</code> – Tune into the DEF CON radio frequency.<br>
+                        <code>siren</code> – Play the 1-minute civil defense siren.
+                    </div>
+                </div>
+
+                <div class="cmd-group">
+                    <span class="label">📡 Global Communication</span>
+                    <p style="font-size: 0.9rem; margin-bottom: 1rem;">Chat with others on live global frequencies.</p>
+                    <div class="cmds">
+                        <code>chat mqtt</code> – Global public frequency chat with an IoT / radio vibe.<br>
+                        <code>chat p2p</code> – Encrypted peer-to-peer direct tunnel.<br>
+                        <code>chat firebase</code> – Persistent chat archive with message history.<br>
+                        <code>chat -all</code> – Open all three chat channels at once.<br>
+                        <code>status</code> – Show live connection status for all chat protocols.<br>
+                        <code>disconnect</code> – Gracefully shut down all network connections.<br>
+                        <code>mesh</code> – Animated LoRa mesh topology simulator (canvas).<br>
+                        <code>netorbit</code> – Live world map (Braille-style dot matrix) with packet sniffing.
+                    </div>
+                </div>
+
+                <div class="cmd-group">
+                    <span class="label">🎮 Cyberpunk RPG & Games</span>
+                    <p style="font-size: 0.9rem; margin-bottom: 1rem;">Play games directly in the console text.</p>
+                    <div class="cmds">
+                        <code>run</code> – Start the cyberpunk text RPG. Play as Neo-J, a neural operative battling the rogue AI KRYPTOS. Three different endings await.<br>
+                        <code>game snake noclip</code> – Classic Snake with portal-wrapping walls (never die from walls or tail).<br>
+                        <code>game dino godmode</code> – Cyber-packet runner in god mode (invincible, obstacles pass through you).<br>
+                        <code>game [snake|dodge|marble|asteroids|flappy|dino]</code> – Play interactive canvas games with D-pad and gyro controls.<br>
+                        <code>piano</code> – Interactive on-screen piano with sustain, chords, and keyboard.<br>
+                        <code>sator</code> – Interactive 4x4 Sator word square puzzle.
+                    </div>
+                </div>
+
+                <div class="cmd-group">
+                    <span class="label">🔍 Intelligence & Utilities</span>
+                    <p style="font-size: 0.9rem; margin-bottom: 1rem;">Fetch live data, weather, or web content.</p>
+                    <div class="cmds">
+                        <code>weather [city]</code> – Get weather for any city (type alone for automatic IP-based location).<br>
+                        <code>news</code> – BBC World News headlines.<br>
+                        <code>hackernews</code> – Top 5 Hacker News stories.<br>
+                        <code>crypto [coin]</code> – Live cryptocurrency price.<br>
+                        <code>define [word]</code> – Full dictionary entry with phonetics, definitions, synonyms, antonyms.<br>
+                        <code>wiki [topic]</code> – Wikipedia summary lookup.<br>
+                        <code>remoteview [url]</code> – Extract text content from a webpage.<br>
+                        <code>portal [url]</code> – Embed a website inside the terminal.<br>
+                        <code>grabimg [url]</code> – Download images from the web.
+                    </div>
+                </div>
+
+                <div class="cmd-group">
+                    <span class="label">🧘 Wisdom & Spirituality</span>
+                    <p style="font-size: 0.9rem; margin-bottom: 1rem;">Take a moment to reflect and breathe.</p>
+                    <div class="cmds">
+                        <code>tao</code> – Random Tao Te Ching chapter (81 chapters).<br>
+                        <code>yhn</code> – Random YHN Te Ching chapter (81 chapters).<br>
+                        <code>buddha</code> – Quote from Buddha, Dogen, or Thich Nhat Hanh.<br>
+                        <code>koan</code> – Random Zen koan for contemplation.<br>
+                        <code>stoic</code> – Stoic wisdom from Marcus Aurelius and Seneca.<br>
+                        <code>bible / verse</code> – Random Bible verse.<br>
+                        <code>sutra</code> – Buddhist teaching from the Pali Canon.<br>
+                        <code>wisdom</code> – Inspirational quote.
+                    </div>
+                </div>
+
+                <div class="cmd-group">
+                    <span class="label">🔐 Cipher & Cryptography Suite</span>
+                    <p style="font-size: 0.9rem; margin-bottom: 1rem;">The Akashic Cipher Suite for the digitally initiated.</p>
+                    <div class="cmds">
+                        <code>cipher</code> – Full usage manual for all ciphers (encrypt/decrypt).<br>
+                        <code>vigenere [enc|dec] [key] [msg]</code> – Vigenère cipher (polyalphabetic).<br>
+                        <code>vault [enc|dec] [pw] [msg]</code> – AES-256-GCM real encryption (password-based).<br>
+                        <code>stegano [hide|reveal] "cover" "secret"</code> – Hide & extract secret messages inside normal text.<br>
+                        <code>mirror [msg]</code> – Atbash mirror cipher (self-inverse).<br>
+                        <code>shift [n] [msg]</code> – Caesar cipher (letters and digits wrap).<br>
+                        <code>kryptos [enc|dec] [bin|hex] [text]</code> – Convert text to/from binary or hex stream.<br>
+                        <code>tag [set|get|clear|view] [key] [value]</code> – Cipher dictionary – store, retrieve, list, or delete hidden key-value pairs.
+                    </div>
+                </div>
+
+                <div class="cmd-group">
+                    <span class="label">🖥️ Cyber Operations</span>
+                    <p style="font-size: 0.9rem; margin-bottom: 1rem;">Pentest toolbox simulations for the ethically curious.</p>
+                    <div class="cmds">
+                        <code>kali [module]</code> – Pentest toolbox: hash, scan, crack, inject, genkey, dragon, arch.<br>
+                        <code>wifite</code> – Wi-Fi attack simulation.<br>
+                        <code>airmon [iface]</code> – Monitor mode simulation.<br>
+                        <code>nmap [target]</code> – Nmap scan simulation.<br>
+                        <code>flipper [subghz|nfc|badusb|off]</code> – Flipper Zero emulator.<br>
+                        <code>raspberry</code> – Virtual Raspberry Pi system dashboard (temps, uptime, GPIO).<br>
+                        <code>gpio [status|on|off] [pin]</code> – Raspberry Pi GPIO pin simulator.
+                    </div>
+                </div>
+
+                <div class="cmd-group">
+                    <span class="label">🎨 Visuals & Effects</span>
+                    <p style="font-size: 0.9rem; margin-bottom: 1rem;">Cyber-mystical eye candy for the ambience.</p>
+                    <div class="cmds">
+                        <code>glitch</code> – Activate glitch effect for 10 seconds.<br>
+                        <code>intersect</code> – Neural-link flash sequence (45 sec).<br>
+                        <code>intersectslow</code> – Deep neural integration (60 sec).<br>
+                        <code>graph</code> – Toggle the live Obsidian-style command-co-occurrence overlay.<br>
+                        <code>image</code> – Display a random Picsum photo.<br>
+                        <code>walls</code> – Fetch a random wallpaper from 0xnotkyo/walls.<br>
+                        <code>rotate</code> – Matrix-style character scrambler animation.<br>
+                        <code>ascii [1-7]</code> – Display specific cyber-mystical ASCII art (random if no number).
+                    </div>
+                </div>
+
+                <div class="cmd-group">
+                    <span class="label">🧠 Neural Graph & Brain</span>
+                    <p style="font-size: 0.9rem; margin-bottom: 1rem;">Live command-co-occurrence visualisation.</p>
+                    <div class="cmds">
+                        <code>graph</code> – Toggle the live Obsidian-style graph overlay showing command relationships in real-time.<br>
+                        <code>brain clear</code> – Erase all nodes and connections from the neural graph.<br>
+                        <code>brain layout</code> – Toggle between freeform and circular layout for the graph.
+                    </div>
+                </div>
+
+            </div>
+
+            <h3>📋 Complete Command Reference</h3>
+            <p>
+                The J_OS terminal is constantly evolving. Here's the full command roster as of the current version:
+            </p>
+
+            <div class="cmd-ref" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 2rem; background: var(--bg-surface); border: 1px solid var(--gold); border-radius: 24px; padding: 2rem; margin-top: 1rem;">
+                <div>
+                    <p><code>help</code> – List all available commands</p>
+                    <p><code>about</code> – Read the story behind J_OS and its Akashic origin</p>
+                    <p><code>clear</code> – Clear terminal output</p>
+                    <p><code>echo [text]</code> – Print text</p>
+                    <p><code>whoami</code> – Rotating cyber-spiritual persona</p>
+                    <p><code>ls</code> – List fake directories</p>
+                    <p><code>history</code> – Show command history</p>
+                    <p><code>sudo</code> – Try to make a sandwich (say please)</p>
+                    <p><code>fetch</code> – Open the original gem-logo system panel</p>
+                    <p><code>neofetch</code> – Trigger the JOHAN_OS system info</p>
+                    <p><code>fastfetch</code> – Display system info with a random Linux logo (Debian, Arch, Kali)</p>
+                    <p><code>shutdown</code> – Enter Magic Mirror mode</p>
+                    <p><code>motd</code> – Message of the Day – random mystical status</p>
+                    <p><code>system</code> – Unified neural link status (auth, audio feed, uptime)</p>
+                    <p><code>ping</code> – Test network latency to Google</p>
+                    <p><code>date [utc|iso|unix]</code> – Display current date/time with optional formats</p>
+                    <p><code>spinner</code> – Start a terminal spinner animation</p>
+                    <p><code>timer [seconds]</code> – Start a countdown with Morse beeps (bigger font)</p>
+                    <p><code>theme [name]</code> – Switch color profile (cyan, magenta, amber, matrix)</p>
+                    <p><code>mode [name|off]</code> – Terminal theme (flipper, midnight, matrix, crimson, cyber)</p>
+                    <p><code>zoom [in|out|reset]</code> – Adjust output text size</p>
+                    <p><code>pause</code> – Freeze/unfreeze background</p>
+                </div>
+                <div>
+                    <p><code>learn</code> – Random educational fact</p>
+                    <p><code>physics</code> – Random physics/math formula</p>
+                    <p><code>electronics</code> – Electronics formulas and hardware facts</p>
+                    <p><code>engineering</code> – Engineering marvels and history</p>
+                    <p><code>biology</code> – Fascinating biology facts</p>
+                    <p><code>space</code> – Random astronomy fact</p>
+                    <p><code>cstip</code> – Computer science tip</p>
+                    <p><code>fortune</code> – Unix/coding fortune</p>
+                    <p><code>case</code> – Engineering diagnostics (resistor, decode, Ohm's Law, etc.)</p>
+                    <p><code>encode [msg]</code> – Base64 encode a message</p>
+                    <p><code>decode [b64]</code> – Decode a Base64 string</p>
+                    <p><code>handshake [set|clear] [key]</code> – Store or clear a personal encryption key locally</p>
+                    <p><code>joke</code> – Random dad joke</p>
+                    <p><code>riddle</code> – Riddle with hidden answer (click to reveal)</p>
+                    <p><code>poem / poetry</code> – Classic poetry</p>
+                    <p><code>anime</code> – Top 10 anime + currently airing</p>
+                    <p><code>qr [text]</code> – Generate scannable QR code</p>
+                    <p><code>cowsay [text]</code> – An ASCII cow speaks your message</p>
+                    <p><code>hack</code> – Simulate a fake hacking sequence (animated)</p>
+                    <p><code>htop</code> – Show a fake system monitor (CPU, memory, processes)</p>
+                    <p><code>react</code> – Simulate a React build process</p>
+                    <p><code>reverse [message]</code> – Reverse-text cipher (TENET inversion)</p>
+                    <p><code>palindrome [check|square|tenet|make]</code> – Palindrome verifier, maker & ancient Sator Square</p>
+                    <p><code>login</code> – Display the J_OS Akashic Zero-Point Kryptos Neural Center splash screen</p>
+                    <p><code>nuke</code> – Factory reset – clears localStorage, stops animations, resets terminal</p>
+                </div>
+            </div>
+
+            <!-- Placeholder for Terminal Interface -->
+            <img src="https://via.placeholder.com/1200x500/0f0f13/00ffcc?text=J_OS+Terminal+Showing+IPTV+and+Weather" alt="J_OS Terminal" class="placeholder-img" />
+
+        </section>
+
+        <!-- ===== ENGINEERING ===== -->
+        <section id="engineering">
+            <h2>Engineering & Architecture</h2>
+            <p>
+                EliteGDX isn't just a pretty interface; it demonstrates that even a simple utility like a clock can be elevated through high-level engineering and browser-specific APIs.
+            </p>
+
+            <div class="grid-split">
+                <div>
+                    <h3>🏗️ Software Architecture</h3>
+                    <ul>
+                        <li><strong>Frontend Core:</strong> Built entirely with pure vanilla HTML5, CSS3, and JavaScript, strictly eliminating the need for bulky external package managers.</li>
+                        <li><strong>Static Deployment:</strong> Employs optimised file routing and relative pathing configured specifically for seamless, high-performance static hosting on GitHub Pages.</li>
+                        <li><strong>Screen Wake Lock API:</strong> Prevents device dimming or sleep mode while the tab is active, automatically re-acquiring the lock if you switch away and return.</li>
+                        <li><strong>Deterministic State Management:</strong> UI transitions are synchronised precisely at <code>00</code> seconds of every minute, respecting the "Minute Reset" rule regardless of page load timing.</li>
+                        <li><strong>Router-Pattern Command Parser:</strong> Executes sync commands instantly, async commands with loading indicators. CORS-aware APIs use <code>rss2json</code> proxy for RSS feeds and direct fetch for CORS-enabled services.</li>
+                        <li><strong>PWA Support:</strong> Manifest and service worker (sw.js) enable offline caching and installable app behaviour.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>🧮 Systems & Simulation</h3>
+                    <ul>
+                        <li><strong>Ephemeris Physics Engine:</strong> Calculates true planetary positions using self-hosted mathematical ephemeris data and J2000 orbital equations to power the live Mazzaroth Wheel.</li>
+                        <li><strong>Fisher-Yates Shuffle:</strong> Gallery content is randomised with mathematical perfection, ensuring all items are shown exactly once before the deck is reshuffled.</li>
+                        <li><strong>Engineering Case Simulator:</strong> The <code>case</code> command acts as a field toolkit, calculating LED resistance stress tests, decoding resistor bands, and solving Ohm's law with live failure warnings.</li>
+                        <li><strong>Cistercian Numeral Engine:</strong> Implements the medieval monk numeral system (0-9999) using the <a href="https://github.com/hsablonniere/cistercian-numerals" target="_blank">cistercian-numerals</a> Web Components library, with custom rainbow styling.</li>
+                        <li><strong>Neural Graph Overlay:</strong> The <code>graph</code> command toggles a live Obsidian-style command-co-occurrence visualisation, mapping the relationships between every command you type in real-time.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <h3>🎨 Customisation & Theming</h3>
+                <ul>
+                    <li><strong>Color Themes</strong> – Choose from Cyan Night, Magenta Dream, Amber Glow, or Matrix Green. Your preference is saved in <code>localStorage</code> and persists across sessions.</li>
+                    <li><strong>Typewriter Effect</strong> – Terminal-style name-plate with custom typing/deletion speeds.</li>
+                    <li><strong>Neumorphic Design</strong> – Hybrid light/dark modes using CSS variables for smooth theme transitions.</li>
+                    <li><strong>Space Preservation</strong> – When clean view hides images, the layout reserves the exact space – the clock never jumps.</li>
+                </ul>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <h3>⏰ Cistercian Alarm</h3>
+                <ul>
+                    <li>Set a time (HH:MM). At the chosen time, a continuous beep plays and a full-screen overlay shows the alarm time as a Cistercian numeral. Dismiss stops the sound.</li>
+                </ul>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <h3>📜 Wisdom & Quotes</h3>
+                <ul>
+                    <li><strong>Online quote API</strong> – Random quotes from <code>dummyjson.com</code> (falls back to local cache).</li>
+                    <li><strong>Tao Te Ching widget</strong> – Random chapters from a local JSON file (81 chapters).</li>
+                    <li><strong>YHN Te Ching widget</strong> – Random chapters from a local JSON file (81 chapters).</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ===== FAQ ===== -->
+        <section id="faq">
+            <h2>Diagnostics & FAQ</h2>
+
+            <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 24px; padding: 2rem;">
+                <h3>Frequently Asked Questions</h3>
+
+                <div style="border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
+                    <p style="font-weight: 700; color: var(--text-primary); font-size: 1.2rem;">Q: How do I completely reset my dashboard preferences?</p>
+                    <p style="color: var(--text-secondary); font-size: 1.05rem;">A: Open the terminal and execute the command <code>nuke</code>. This wipes local storage, clears cached states, and reinitialises the UI.</p>
+                </div>
+
+                <div style="border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
+                    <p style="font-weight: 700; color: var(--text-primary); font-size: 1.2rem;">Q: Why does the Moon position differ slightly from simple calendar apps?</p>
+                    <p style="color: var(--text-secondary); font-size: 1.05rem;">A: EliteGDX calculates true astronomical orbital physics using J2000 equations rather than static rounded dates. The <code>fetch</code> command can refresh ephemeris feeds if needed.</p>
+                </div>
+
+                <div style="border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
+                    <p style="font-weight: 700; color: var(--text-primary); font-size: 1.2rem;">Q: How do updates reach ambient/always-on screens?</p>
+                    <p style="color: var(--text-secondary); font-size: 1.05rem;">A: Simply trigger a browser refresh. The Service Worker automatically updates assets in the background on launch.</p>
+                </div>
+
+                <div style="border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
+                    <p style="font-weight: 700; color: var(--text-primary); font-size: 1.2rem;">Q: How do I freeze the background?</p>
+                    <p style="color: var(--text-secondary); font-size: 1.05rem;">A: Double-tap the background (avoiding any UI element) or press <kbd>B</kbd>. A ghost indicator <code>👻 MESSAGE</code> will appear for confirmation.</p>
+                </div>
+
+                <div>
+                    <p style="font-weight: 700; color: var(--text-primary); font-size: 1.2rem;">Q: What's the difference between "Synced" and "Independent" background modes?</p>
+                    <p style="color: var(--text-secondary); font-size: 1.05rem;">A: <strong>Synced</strong> mode mirrors the central gallery image. <strong>Independent</strong> mode cycles backgrounds on its own 30-second timer, separate from the minute clock.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===== FOOTER ===== -->
+        <footer>
+            <div style="display: flex; gap: 1.5rem; justify-content: space-between; text-align: center; align-items: center; flex-wrap: wrap;">
+                <a href="https://github.com/JinKaneki/EliteGDX" class="btn-outline" style="font-size: 1rem; font-weight: 600;">🐙 GitHub</a>
+                <a href="https://jinkaneki.github.io/EliteGDX/" class="btn-outline" style="font-size: 1rem; font-weight: 600;">Live Dashboard 🌐</a>
+            </div>
+            <div class="beam" style="margin: 20px;">
+                Copyright &copy; <span id="year"></span> EliteGDX - All Rights Reserved
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // ---- Auto-update year ----
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // ---- Icon-only Fullscreen Toggle ----
+        function toggleClutterFreeMode() {
+            const btn = document.getElementById('fullscreen-btn');
+            const expandIcon = document.getElementById('fs-icon-expand');
+            const compressIcon = document.getElementById('fs-icon-compress');
+
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen()
+                    .then(() => {
+                        expandIcon.style.display = 'none';
+                        compressIcon.style.display = 'block';
+                    })
+                    .catch(err => console.warn('Fullscreen error:', err.message));
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen()
+                        .then(() => {
+                            expandIcon.style.display = 'block';
+                            compressIcon.style.display = 'none';
+                        });
+                }
+            }
+        }
+
+        // ---- Listen for fullscreen changes (Esc key, etc.) ----
+        document.addEventListener('fullscreenchange', () => {
+            const expandIcon = document.getElementById('fs-icon-expand');
+            const compressIcon = document.getElementById('fs-icon-compress');
+
+            if (!document.fullscreenElement) {
+                expandIcon.style.display = 'block';
+                compressIcon.style.display = 'none';
+            } else {
+                expandIcon.style.display = 'none';
+                compressIcon.style.display = 'block';
+            }
+        });
+    </script>
+
+</body>
+</html>
