@@ -3,6 +3,56 @@
             triggerGhost(bootStatuses[Math.floor(Math.random() * bootStatuses.length)]);
         });
 
+        // VERSION CHECK NOTIFICATION
+        const APP_VERSION = '4.2.0';
+
+        function checkVersion() {
+            const storedVersion = localStorage.getItem('eliteGDX_version');
+            if (storedVersion && storedVersion !== APP_VERSION) {
+                showUpdateNotification();
+            }
+            localStorage.setItem('eliteGDX_version', APP_VERSION);
+        }
+
+        function showUpdateNotification() {
+            // Remove existing banner if any
+            const existing = document.querySelector('.update-banner');
+            if (existing) existing.remove();
+
+            const banner = document.createElement('div');
+            banner.className = 'update-banner';
+            banner.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #1a1a2e;
+                border: 1px solid #0091ff;
+                padding: 12px 24px;
+                border-radius: 12px;
+                z-index: 99999;
+                color: #fff;
+                font-family: 'Comfortaa', sans-serif;
+                font-size: 0.95rem;
+                box-shadow: 0 4px 30px rgba(0,255,204,0.15);
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                backdrop-filter: blur(8px);
+                max-width: 90%;
+            `;
+            banner.innerHTML = `
+                <span>🔄 <strong style="color: #00ffcc;">EliteGDX v${APP_VERSION}</strong> is available!</span>
+                <button onclick="location.reload()" style="background:#00ffcc; color:#000; border:none; padding:6px 18px; border-radius:6px; cursor:pointer; font-weight:bold;">Refresh</button>
+                <button onclick="this.parentElement.remove()" style="background:transparent; color:#666; border:none; cursor:pointer; font-size:1.2rem;">✕</button>
+            `;
+            document.body.appendChild(banner);
+        }
+
+        // Call on page load
+        checkVersion();
+
+
         // --- SCREEN WAKE LOCK API ---
         let wakeLock = null;
 
@@ -2645,8 +2695,11 @@ chat mqtt : Global public frequency,<br>
 chat p2p : Encrypted peer to peer tunnel,<br>
 chat firebase : Persistent mainframe archive,<br>
 chat -all : Open all three channels at once,<br>
+ping : Start MQTT radar sweep - track active nodes on the subnet<br>
+pingstop : Stop the active radar sweep<br>
+online : Show who's online via Firebase presence<br>
 status : Live connection report (MQTT, P2P, Firebase),<br>
-disconnect : Terminate all network links safely,<br>
+disconnect : Shut down all network links & stop radar,<br>
 mesh : Visualize a simulated LoRa mesh network,<br>
 aprsmap [fi|direct] : Live amateur radio map (choose source),<br>
 netorbit [--green|--red|--violet] : Live world map + packet sniffing<br>
@@ -2704,6 +2757,9 @@ iptv cat [category] : Browse by category (animation, news, sports, music…),<br
 <strong style="color: var(--accent-color);">🖼️ VISUALS & EFFECTS</strong><br>
 image, walls, glitch, scroll, intersect, graph, intersectslow, slide,<br>
 slide [src|next|prev|pause|resume] : Control the overlay slideshow<br>
+
+clear          :- Wipes the terminal display
+stop :-Stop all active media, radio, or IPTV streams.
 <br>
 `;
             },
@@ -3181,7 +3237,25 @@ slide [src|next|prev|pause|resume] : Control the overlay slideshow<br>
                 const formatted = now.toLocaleDateString('en-US', options);
                 return `<span style="color: #0f0; text-shadow: 0 0 5px #0f0;">📅 ${formatted}</span>`;
             },
-
+            'moon': () => {
+                const now = new Date();
+                const phase = getMoonPhase(now);
+                const phaseName = getMoonPhaseName(phase);
+                const illumination = Math.round((1 - Math.cos(phase * 2 * Math.PI)) / 2 * 100);
+                // Calculate next new/full moon (simple approximation)
+                const daysUntilNew = phase < 0.5 ? (1 - phase) * 29.53058867 : (1 - phase) * 29.53058867;
+                const daysUntilFull = phase < 0.5 ? (0.5 - phase) * 29.53058867 : (1.5 - phase) * 29.53058867;
+                
+                return `
+<div style="border-left: 2px solid #ffd700; padding: 8px 12px; line-height: 1.6;">
+<span style="color: #ffd700; font-weight: bold;">🌙 MOON PHASE 🌙</span><br>
+<span style="font-size: 2rem;"><strong>${phaseName}</strong><br>
+<span style="color: #aaa;">Illumination: ${illumination}%</span><br>
+<span style="color: #888; font-size: 0.9rem;">Phase fraction: ${(phase * 100).toFixed(1)}% of cycle</span><br>
+<span style="color: #888; font-size: 0.9rem;">≈ ${daysUntilNew.toFixed(1)} days until next New Moon</span><br>
+<span style="color: #888; font-size: 0.9rem;">≈ ${Math.abs(daysUntilFull).toFixed(1)} days until next Full Moon</span>
+</div>`;
+            },
             'netorbit': (args) => {
                 // Parse theme
                 let theme = 'cyan';
@@ -3295,14 +3369,17 @@ slide [src|next|prev|pause|resume] : Control the overlay slideshow<br>
                     return `
 <div style="border-left: 3px solid var(--accent-color); padding-left: 10px;">
     <b style="color: var(--accent-color);">[ J_OS COMMUNICATION TRIAD ]</b><br>
-    <span style="color: #0f0;">chat mqtt</span>  :Global public frequency<br>
-    <span style="color: #d400ff;">chat p2p</span>  :Encrypted peer‑to‑peer tunnel<br>
-    <span style="color: #fca311;">chat firebase</span>  :Persistent mainframe archive<br><br>
-    <span style="color: #fff;">chat -all</span>  :Open all three channels at once<br>
-    <span style="color: #00a2ff;">status</span>  -Show live connection status for all chat protocols.<br>
-    <span style="color: #ff0077;">disconnect</span>  -Gracefully shut down all network connections.<br>
+    <span style="color: #0f0;">chat mqtt</span>  : Global public frequency (MQTT)<br>
+    <span style="color: #d400ff;">chat p2p</span>  : Encrypted peer-to-peer tunnel (WebRTC)<br>
+    <span style="color: #fca311;">chat firebase</span>  : Persistent mainframe archive (Firebase)<br><br>
+    <span style="color: #fff;">chat -all</span>  : Open all three channels at once<br>
+    <span style="color: #0f0;">online</span>  : Show who's online via Firebase presence<br>
+    <span style="color: #ffaa00;">ping</span>  : Start MQTT radar sweep - track active nodes on the subnet<br>
+    <span style="color: #ffaa00;">pingstop</span>  : Stop the active radar sweep<br>
+    <span style="color: #00a2ff;">status</span>  : Show live connection status for all chat protocols<br>
+    <span style="color: #ff0077;">disconnect</span>  : Gracefully shut down all network links & stop radar<br>
 </div>`;
-                }
+}
 
                 // 1. MQTT – The Global Frequency (Green #0f0)
                 if (sub === 'mqtt') {
@@ -3354,6 +3431,9 @@ slide [src|next|prev|pause|resume] : Control the overlay slideshow<br>
                     });
 
                     client.on('message', (topic, message) => {
+                        // GUARD: Ignore radar pings/pongs and only accept chat traffic
+                        if (topic !== 'elitegdx/chat/public') return;
+                        
                         const msg = message.toString();
                         if (window._mqttLastSent === msg) { window._mqttLastSent = null; return; }
                         
@@ -3550,9 +3630,8 @@ slide [src|next|prev|pause|resume] : Control the overlay slideshow<br>
                         old.remove();
                     }
 
-                    if (typeof db === 'undefined') {
-                        appendCommandOutput('Firebase not configured. Add your config to index.html.', true);
-                        return '';
+                    if (typeof firebase === 'undefined' || !firebase.database) {
+                        return '<span style="color:#f00;">⚠️ Firebase not configured. Ensure scripts are loaded in index.html.</span>';
                     }
 
                     // Create chat container
@@ -3587,7 +3666,7 @@ slide [src|next|prev|pause|resume] : Control the overlay slideshow<br>
 
                     // ---------- DATABASE REFERENCES ----------
                     // Write reference – used to push new messages
-                    const writeRef = window.db.ref('elitegdx/chat');
+                    const writeRef = firebase.database().ref('elitegdx/chat');
                     // Read reference – ordered by timestamp, limited to last 50
                     const readRef = writeRef.orderByChild('timestamp').limitToLast(50);
                     window._chatRef = readRef;  // store for cleanup later
@@ -3683,7 +3762,146 @@ slide [src|next|prev|pause|resume] : Control the overlay slideshow<br>
     <span style="color: #888;">LOCATION:</span> <span style="color:#fff;">[REDACTED]</span>
 </div>`;
             },
+            'online': () => {
+                if (!presenceRef) {
+                    return '⚠️ Presence not initialized. Firebase may not be loaded.';
+                }
+                const ref = firebase.database().ref('presence');
+                return new Promise((resolve) => {
+                    ref.once('value').then((snapshot) => {
+                        const data = snapshot.val();
+                        const onlineUsers = data ? Object.keys(data).length : 0;
+                        const users = data ? Object.entries(data) : [];
+                        let html = `<div style="border-left: 2px solid #00ffcc; padding: 8px 12px;">
+                            <strong style="color: #00ffcc;">📡 ONLINE USERS (Firebase): ${onlineUsers}</strong><br>`;
+                        users.forEach(([id, u]) => {
+                            html += `<span style="color: #aaa;">• ${id.substring(0,8)}... (${u.userAgent || 'unknown'})</span><br>`;
+                        });
+                        html += `</div>`;
+                        resolve(html);
+                    });
+                });
+            },
+            'ping': () => {
+                if (window._pingActive) {
+                    return '⚠️ Radar sweep already active. Type <span style="color:#ff0077;">pingstop</span> to halt.';
+                }
+
+                if (typeof mqtt === 'undefined' || !window._mqttClient || !window._mqttClient.connected) {
+                    return '⚠️ Network gateway offline. Type <span style="color:#0f0;">chat mqtt</span> first.';
+                }
+
+                const client = window._mqttClient;
+                const pingTopic = 'elitegdx/ping';
+                const pongTopic = 'elitegdx/pong';
+                const userId = 'NODE-' + Math.random().toString(16).slice(2, 6).toUpperCase();
+                const activeUsers = new Map();
+
+                window._pingActive = true;
+
+                // ---- Show the online counter ----
+                const statusEl = document.getElementById('online-count');
+                if (statusEl) {
+                    statusEl.style.display = 'inline';
+                    statusEl.textContent = '[ 1 NODE ONLINE ]';
+                }
+
+                // ---- Create terminal display ----
+                const output = document.getElementById('cmd-output');
+                const liveDisplay = document.createElement('div');
+                liveDisplay.id = 'mqtt-radar-display';
+                liveDisplay.style.cssText = 'border: 1px dashed #00ffcc; padding: 10px; margin-top: 10px; background: rgba(0, 255, 204, 0.05); font-family: monospace;';
+                liveDisplay.innerHTML = `
+                    <div style="color: #00ffcc; font-weight: bold;">📡 RADAR TELEMETRY ACTIVE [ID: ${userId}]</div>
+                    <div id="radar-status-text" style="color: #aaa; margin-top: 4px;">Scanning subnet for active nodes...</div>
+                `;
+                output.appendChild(liveDisplay);
+
+                // ---- Message handler ----
+                const messageHandler = (topic, message) => {
+                    if (!window._pingActive) return;
+                    try {
+                        const data = JSON.parse(message.toString());
+                        // Only respond to pings from others
+                        if (topic === pingTopic && data.userId !== userId) {
+                            client.publish(pongTopic, JSON.stringify({ userId, timestamp: Date.now() }));
+                        }
+                        // Only add pongs from others
+                        // NEW GUARD: Register incoming pongs ONLY if they aren't us, and aren't stale
+                        if (topic === pongTopic && data.userId !== userId && (Date.now() - data.timestamp) < 3000) {
+                            activeUsers.set(data.userId, data.timestamp);
+                        }
+                    } catch (e) { /* ignore malformed */ }
+                };
+
+                client.subscribe(pingTopic);
+                client.subscribe(pongTopic);
+                client.on('message', messageHandler);
+
+                // ---- Initial ping ----
+                client.publish(pingTopic, JSON.stringify({ userId, timestamp: Date.now() }));
+
+                // ---- Ping interval ----
+                const pingInterval = setInterval(() => {
+                    if (!window._pingActive) return;
+                    client.publish(pingTopic, JSON.stringify({ userId, timestamp: Date.now() }));
+
+                    const now = Date.now();
+                    for (const [id, ts] of activeUsers) {
+                        if (now - ts > 15000) activeUsers.delete(id);
+                    }
+
+                    const statusText = document.getElementById('radar-status-text');
+                    if (statusText) {
+                        const nodeList = Array.from(activeUsers.keys()).join(', ');
+                        statusText.innerHTML = `Active Peers (${activeUsers.size}): <span style="color:#fff;">${nodeList || 'No external peers detected'}</span>`;
+                    }
+
+                    if (statusEl) {
+                        statusEl.textContent = `[ ${activeUsers.size + 1} NODES ACTIVE ]`;
+                    }
+                }, 5000);
+
+                // ---- Stop function ----
+                window._stopPing = () => {
+                    window._pingActive = false;
+                    clearInterval(pingInterval);
+                    client.unsubscribe(pingTopic);
+                    client.unsubscribe(pongTopic);
+                    client.removeListener('message', messageHandler);
+
+                    // Hide counter
+                    if (statusEl) {
+                        statusEl.style.display = 'none';
+                        statusEl.textContent = '[ RADAR OFFLINE ]';
+                    }
+
+                    const display = document.getElementById('mqtt-radar-display');
+                    if (display) {
+                        display.style.borderColor = '#ff0077';
+                        display.innerHTML = '<span style="color: #ff0077;">🛑 RADAR TELEMETRY HALTED</span>';
+                    }
+
+                    window._stopPing = null;
+                    return '🛑 Radar sweep terminated. All ping listeners detached.';
+                };
+
+                return '';
+            },
+            'pingstop': () => {
+                if (window._stopPing) {
+                    const result = window._stopPing();
+                    window._stopPing = null;
+                    return result;
+                }
+                return '⚠️ No active radar sweep to stop.';
+            },
             'disconnect': () => {
+                // STOP RADAR PING
+                if (window._stopPing) {
+                    window._stopPing();
+                    window._stopPing = null;
+                }
                 // MQTT
                 if (window._mqttClient) {
                     window._mqttClient.end();
@@ -3709,7 +3927,7 @@ slide [src|next|prev|pause|resume] : Control the overlay slideshow<br>
                     const el = document.getElementById(id);
                     if (el) el.remove();
                 });
-                return '🔌 All network links terminated. Type <span style="color:#0f0;">chat</span> to reconnect.';
+                return '🔌 All network links terminated. Radar disabled. Type <span style="color:#0f0;">chat</span> to reconnect.';
             },
             'spinner': () => {
                 if (spinnerInterval) return 'A neural-link is already active. Type stopspinner to halt.';
@@ -6819,7 +7037,7 @@ ${pins.slice(0, 10).join('<br>')}<br>
                     return '⚠️ QR generation failed. Text too long?';
                 }
             },
-            'ping': async (args) => {
+            'pingg': async (args) => {
                 const target = args[0] || 'google.com';
                 const output = document.createElement('div');
                 cmdOutput.appendChild(output);
@@ -11982,7 +12200,28 @@ ${pins.slice(0, 10).join('<br>')}<br>
 
             console.log('🌀 Unified Astrolabe Engine initialized.');
         })();
+
         
+
+        // MOON PHASE CALCULATOR 
+        function getMoonPhase(date) {
+            // Reference: January 6, 2000 at 18:14 UTC was a New Moon
+            const refDate = new Date(Date.UTC(2000, 0, 6, 18, 14, 0));
+            const days = (date.getTime() - refDate.getTime()) / (1000 * 60 * 60 * 24);
+            const phase = ((days % 29.53058867) / 29.53058867);
+            return phase; // 0 = New, 0.25 = First Quarter, 0.5 = Full, 0.75 = Last Quarter, 1 = New again
+        }
+
+        function getMoonPhaseName(phase) {
+            if (phase < 0.03 || phase >= 0.97) return '🌑 New Moon';
+            if (phase < 0.22) return '🌒 Waxing Crescent';
+            if (phase < 0.28) return '🌓 First Quarter';
+            if (phase < 0.47) return '🌔 Waxing Gibbous';
+            if (phase < 0.53) return '🌕 Full Moon';
+            if (phase < 0.72) return '🌖 Waning Gibbous';
+            if (phase < 0.78) return '🌗 Last Quarter';
+            return '🌘 Waning Crescent';
+        }
 
 
         // ===== GNOSIS TOGGLE =====
@@ -12055,8 +12294,138 @@ ${pins.slice(0, 10).join('<br>')}<br>
 
         // ---- Attach click event ----
         document.getElementById('fullscreen-btn')?.addEventListener('click', toggleClutterFreeMode);
-        
 
+        
+        // ============================================================
+        // REAL-TIME PRESENCE – Firebase Initialization
+        // ============================================================
+        let presenceRef = null;
+        let presenceUserId = 'user_' + Math.random().toString(36).slice(2, 7);
+
+        function initPresence() {
+            if (typeof firebase === 'undefined' || !firebase.database) {
+                console.warn('Firebase not loaded – presence disabled');
+                return;
+            }
+            
+            presenceRef = firebase.database().ref('presence/' + presenceUserId);
+            const allPresenceRef = firebase.database().ref('presence');
+
+            // Generate a cool terminal-esque node name
+            const nodeTypes = ['Cyberdeck', 'Uplink Node', 'J_OS Terminal', 'Proxy'];
+            const randomNode = nodeTypes[Math.floor(Math.random() * nodeTypes.length)];
+
+            presenceRef.set({
+                online: true,
+                lastSeen: firebase.database.ServerValue.TIMESTAMP,
+                userAgent: randomNode 
+            });
+
+            // Clean up database automatically when user disconnects
+            presenceRef.onDisconnect().remove();
+
+            allPresenceRef.on('value', (snapshot) => {
+                const data = snapshot.val();
+                const onlineUsers = data ? Object.keys(data).length : 0;
+                
+                const countElement = document.getElementById('online-count');
+                if (countElement) {
+                    countElement.textContent = `${onlineUsers} online`;
+                }
+            });
+        }
+
+        // Start tracking on page load
+        if (document.readyState === 'complete') {
+            initPresence();
+        } else {
+            document.addEventListener('DOMContentLoaded', initPresence);
+        }
+
+
+                
+        // FIRST-TIME STEP‑BY‑STEP TOUR (auto‑shows on first visit)
+        (function initTour() {
+            const tourOverlay = document.getElementById('tour-overlay');
+            if (!tourOverlay) return;
+
+            // If user has already seen the tour, hide it and exit.
+            if (localStorage.getItem('eliteGDX_tour_seen')) {
+                tourOverlay.style.display = 'none';
+                return;
+            }
+
+            const tourSteps = [
+                { title: 'Welcome to EliteGDX', text: 'EliteGDX is an omnipresent ambient, cyber-mystical dashboard with multiple clock faces, a rotating image gallery, and a powerful built-in terminal command runner.' },
+                { title: 'Clocks & Timepieces', text: 'Six clock modes: Analog, Glass, Digital, Cistercian, Cosmic, and Celestial. Swipe left/right to cycle through them if on mobile device.' },
+                { title: 'Terminal Command Runner', text: 'Click Command Runner to open the J_OS terminal. Type help to see all available commands.' },
+                { title: 'Always-On Ambient Display', text: 'The Screen Wake Lock API keeps your display active. Mirror Mode, Hide controls and Clean View let you hide all UI elements for a pure contemplative ambient experience.' }
+            ];
+
+            let tourStep = 0;
+
+            function showTourStep(index) {
+                document.getElementById('tour-title').textContent = tourSteps[index].title;
+                document.getElementById('tour-text').textContent = tourSteps[index].text;
+                document.getElementById('tour-step-indicator').textContent = `${index + 1} / ${tourSteps.length}`;
+            }
+
+            function finishTour() {
+                tourOverlay.style.display = 'none';
+                localStorage.setItem('eliteGDX_tour_seen', 'true');
+            }
+
+            // Show the tour
+            tourOverlay.style.display = 'block';
+            showTourStep(0);
+
+            document.getElementById('tour-next').addEventListener('click', () => {
+                if (tourStep < tourSteps.length - 1) {
+                    tourStep++;
+                    showTourStep(tourStep);
+                } else {
+                    finishTour();
+                }
+            });
+
+            document.getElementById('tour-prev').addEventListener('click', () => {
+                if (tourStep > 0) {
+                    tourStep--;
+                    showTourStep(tourStep);
+                }
+            });
+
+            document.getElementById('tour-skip').addEventListener('click', finishTour);
+
+            console.log('🎯 Step tour initialized.');
+        })();
+
+
+        // GUIDE MODAL (opened by `?` button)
+        document.addEventListener('DOMContentLoaded', () => {
+            const helpBtn = document.getElementById('help-float-btn');
+            const guideOverlay = document.getElementById('guide-overlay');
+            if (!helpBtn || !guideOverlay) return;
+
+            // Show the `?` button only if the guide has NOT been shown before
+            if (!localStorage.getItem('eliteGDX_guide_shown')) {
+                helpBtn.style.display = 'block';
+            }
+
+            // Clicking the `?` button opens the guide modal
+            helpBtn.addEventListener('click', () => {
+                guideOverlay.style.display = 'block';
+            });
+
+            // Global function to close the guide modal
+            window.closeGuide = function() {
+                guideOverlay.style.display = 'none';
+                helpBtn.style.display = 'none';
+                localStorage.setItem('eliteGDX_guide_shown', 'true');
+            };
+        });
+
+        
 
 
         // Confirm before leaving
