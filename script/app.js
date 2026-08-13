@@ -4,7 +4,7 @@
         });
 
         // VERSION CHECK NOTIFICATION
-        const APP_VERSION = '4.2.0';
+        const APP_VERSION = '4.3.0';
 
         function checkVersion() {
             const storedVersion = localStorage.getItem('eliteGDX_version');
@@ -2679,16 +2679,17 @@ return `
 <strong style="color: var(--accent-color);">⚡ SYSTEM & UTILITY</strong><br>
 help, about, clear, echo [text], whoami, ls, sudo,<br>
 history, fastfetch, fetchpanel, fetch, neofetch, system,<br>
-ping, date [utc\|iso\|unix], spinner, stopspinner,<br>
+pingg, date [utc\|iso\|unix], spinner, stopspinner,<br>
 timer [seconds], stoptimer, shutdown, nuke :(factory reset)<br>
 <br>
 <strong style="color: var(--accent-color);">🧠 NEURAL GRAPH</strong><br>
-graph : Toggle live neural command graph (Obsidian‑style),<br>
+graph : Toggle live neural command graph (Obsidian-style),<br>
 brain : Info on how to toggle and Reset the graph<br>
 <br>
 <strong style="color: var(--accent-color);">🎨 THEME & UI</strong><br>
 theme [cyan|magenta|amber|matrix], zoom [in|out|reset],<br>
-mode [flipper|midnight|matrix|crimson|cyber|hologram|stealth|off], pause<br>
+mode [flipper|midnight|matrix|crimson|cyber|hologram|stealth|off],<br>
+flipper subghz, pause,<br>
 <br>
 <strong style="color: var(--accent-color);">📡 NETWORK & COMMUNICATION</strong><br>
 chat mqtt : Global public frequency,<br>
@@ -2697,7 +2698,6 @@ chat firebase : Persistent mainframe archive,<br>
 chat -all : Open all three channels at once,<br>
 ping : Start MQTT radar sweep - track active nodes on the subnet<br>
 pingstop : Stop the active radar sweep<br>
-online : Show who's online via Firebase presence<br>
 status : Live connection report (MQTT, P2P, Firebase),<br>
 disconnect : Shut down all network links & stop radar,<br>
 mesh : Visualize a simulated LoRa mesh network,<br>
@@ -2709,7 +2709,7 @@ news, hackernews, technology, weather[city],<br>
 crypto [coin], news -all (news,hackernews,technology)<br>
 <br>
 <strong style="color: var(--accent-color);">📚 LEARNING & REFERENCE</strong><br>
-define [word], learn, wiki [topic], electronics,<br>
+define [word], learn, wiki [topic], electronics, moon<br>
 engineering, physics, biology, space, cstip, fortune, motd<br>
 <br>
 <strong style="color: var(--accent-color);">⚙️ ENGINEERING TOOLS</strong><br>
@@ -2741,7 +2741,7 @@ raspberry, gpio [status|on|off] [pin]<br>
 portal, remoteview, grabimg, fetchpage<br>
 <br>
 <strong style="color: var(--accent-color);">🧘 WISDOM & SPIRITUALITY</strong><br>
-tao, stoic, buddha, bible, verse, koan, sutra, wisdom, yhn<br>
+tao, stoic, buddha, bible, verse, koan, sutra, wisdom, yhn,<br>
 <br>
 <strong style="color: var(--accent-color);">🎭 FUN & ENTERTAINMENT</strong><br>
 joke, riddle, poem, game, run (Role Player Game), poetry, anime,<br>
@@ -3250,10 +3250,10 @@ stop :-Stop all active media, radio, or IPTV streams.
 <div style="border-left: 2px solid #ffd700; padding: 8px 12px; line-height: 1.6;">
 <span style="color: #ffd700; font-weight: bold;">🌙 MOON PHASE 🌙</span><br>
 <span style="font-size: 2rem;"><strong>${phaseName}</strong><br>
-<span style="color: #aaa;">Illumination: ${illumination}%</span><br>
+<span style="color: #aaa; font-weight: bold;">Illumination: ${illumination}%</span><br>
 <span style="color: #888; font-size: 0.9rem;">Phase fraction: ${(phase * 100).toFixed(1)}% of cycle</span><br>
-<span style="color: #888; font-size: 0.9rem;">≈ ${daysUntilNew.toFixed(1)} days until next New Moon</span><br>
-<span style="color: #888; font-size: 0.9rem;">≈ ${Math.abs(daysUntilFull).toFixed(1)} days until next Full Moon</span>
+<span style="color: #fbff00; font-size: 0.9rem;">≈ ${daysUntilNew.toFixed(1)} days until next New Moon</span><br>
+<span style="color: #fcfcfc; font-size: 0.9rem; font-weight: bold;">≈ ${Math.abs(daysUntilFull).toFixed(1)} days until next Full Moon</span>
 </div>`;
             },
             'netorbit': (args) => {
@@ -3373,8 +3373,7 @@ stop :-Stop all active media, radio, or IPTV streams.
     <span style="color: #d400ff;">chat p2p</span>  : Encrypted peer-to-peer tunnel (WebRTC)<br>
     <span style="color: #fca311;">chat firebase</span>  : Persistent mainframe archive (Firebase)<br><br>
     <span style="color: #fff;">chat -all</span>  : Open all three channels at once<br>
-    <span style="color: #0f0;">online</span>  : Show who's online via Firebase presence<br>
-    <span style="color: #ffaa00;">ping</span>  : Start MQTT radar sweep - track active nodes on the subnet<br>
+    <span style="color: #0f0;">ping</span>  : Start MQTT radar sweep - track active nodes on the subnet, Show who's online<br>
     <span style="color: #ffaa00;">pingstop</span>  : Stop the active radar sweep<br>
     <span style="color: #00a2ff;">status</span>  : Show live connection status for all chat protocols<br>
     <span style="color: #ff0077;">disconnect</span>  : Gracefully shut down all network links & stop radar<br>
@@ -3761,26 +3760,6 @@ stop :-Stop all active media, radio, or IPTV streams.
     <span style="color: #888;">UPTIME:</span> ${Math.floor(performance.now() / 1000)}s<br>
     <span style="color: #888;">LOCATION:</span> <span style="color:#fff;">[REDACTED]</span>
 </div>`;
-            },
-            'online': () => {
-                if (!presenceRef) {
-                    return '⚠️ Presence not initialized. Firebase may not be loaded.';
-                }
-                const ref = firebase.database().ref('presence');
-                return new Promise((resolve) => {
-                    ref.once('value').then((snapshot) => {
-                        const data = snapshot.val();
-                        const onlineUsers = data ? Object.keys(data).length : 0;
-                        const users = data ? Object.entries(data) : [];
-                        let html = `<div style="border-left: 2px solid #00ffcc; padding: 8px 12px;">
-                            <strong style="color: #00ffcc;">📡 ONLINE USERS (Firebase): ${onlineUsers}</strong><br>`;
-                        users.forEach(([id, u]) => {
-                            html += `<span style="color: #aaa;">• ${id.substring(0,8)}... (${u.userAgent || 'unknown'})</span><br>`;
-                        });
-                        html += `</div>`;
-                        resolve(html);
-                    });
-                });
             },
             'ping': () => {
                 if (window._pingActive) {
@@ -12295,55 +12274,8 @@ ${pins.slice(0, 10).join('<br>')}<br>
         // ---- Attach click event ----
         document.getElementById('fullscreen-btn')?.addEventListener('click', toggleClutterFreeMode);
 
-        
-        // ============================================================
-        // REAL-TIME PRESENCE – Firebase Initialization
-        // ============================================================
-        let presenceRef = null;
-        let presenceUserId = 'user_' + Math.random().toString(36).slice(2, 7);
-
-        function initPresence() {
-            if (typeof firebase === 'undefined' || !firebase.database) {
-                console.warn('Firebase not loaded – presence disabled');
-                return;
-            }
+    
             
-            presenceRef = firebase.database().ref('presence/' + presenceUserId);
-            const allPresenceRef = firebase.database().ref('presence');
-
-            // Generate a cool terminal-esque node name
-            const nodeTypes = ['Cyberdeck', 'Uplink Node', 'J_OS Terminal', 'Proxy'];
-            const randomNode = nodeTypes[Math.floor(Math.random() * nodeTypes.length)];
-
-            presenceRef.set({
-                online: true,
-                lastSeen: firebase.database.ServerValue.TIMESTAMP,
-                userAgent: randomNode 
-            });
-
-            // Clean up database automatically when user disconnects
-            presenceRef.onDisconnect().remove();
-
-            allPresenceRef.on('value', (snapshot) => {
-                const data = snapshot.val();
-                const onlineUsers = data ? Object.keys(data).length : 0;
-                
-                const countElement = document.getElementById('online-count');
-                if (countElement) {
-                    countElement.textContent = `${onlineUsers} online`;
-                }
-            });
-        }
-
-        // Start tracking on page load
-        if (document.readyState === 'complete') {
-            initPresence();
-        } else {
-            document.addEventListener('DOMContentLoaded', initPresence);
-        }
-
-
-                
         // FIRST-TIME STEP‑BY‑STEP TOUR (auto‑shows on first visit)
         (function initTour() {
             const tourOverlay = document.getElementById('tour-overlay');
